@@ -1,326 +1,323 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Zep Swipe Merchants — Product Listings</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZepShop — Listing</title>
+  <meta name="description" content="ZepShop — student marketplace listing page. Buy digital services with USDC on Base." />
 
-<style>
-:root {
-  --zep-blue:#00f0ff;
-  --zep-violet:#9c4dff;
-  --zep-lime:#a6ff00;
-  --glass:rgba(255,255,255,0.06);
-  --bg:radial-gradient(circle at 25% 10%, #050018 0%, #000010 100%);
-}
-body {
-  font-family:'Poppins',sans-serif;
-  background:var(--bg);
-  color:#fff;
-  margin:0;
-  min-height:100vh;
-  overflow-x:hidden;
-  padding-bottom:90px;
-}
+  <!-- Ethers v6 -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
 
-/* ===== Header ===== */
-header {
-  display:flex; justify-content:space-between; align-items:center;
-  padding:14px 18px; background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,255,255,0.1);
-  position:sticky; top:0; z-index:60;
-  box-shadow:0 0 18px rgba(0,240,255,0.2);
-}
-.logo {
-  font-family:'Orbitron',sans-serif;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  font-weight:700;
-  font-size:1.2rem;
-}
-.logout-btn {
-  background:none; border:none; cursor:pointer;
-  filter:drop-shadow(0 0 8px var(--zep-blue)); transition:.25s;
-}
-.logout-btn:hover { transform:scale(1.1); filter:drop-shadow(0 0 12px var(--zep-violet)); }
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-/* ===== Glass Panel ===== */
-.glass {
-  background:var(--glass); backdrop-filter:blur(16px);
-  border-radius:16px; border:1px solid rgba(255,255,255,0.1);
-  padding:20px; margin:1.5rem;
-  box-shadow:0 0 20px rgba(0,240,255,0.15);
-  animation:glow 3s infinite alternate ease-in-out;
-}
-@keyframes glow {
-  0%{ box-shadow:0 0 12px rgba(0,240,255,0.2);}
-  100%{ box-shadow:0 0 35px rgba(156,77,255,0.4);}
-}
-.section-title {
-  font-family:'Orbitron'; font-size:1.1rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  margin-bottom:1rem;
-}
+  <style>
+    :root{
+      --zep-blue: #00f0ff;
+      --zep-violet: #9c4dff;
+      --bg-dark: #050018;
+      --card: rgba(255,255,255,0.04);
+      --glass-border: rgba(255,255,255,0.06);
+      --neon-shadow: 0 6px 30px rgba(0,240,255,0.07), inset 0 -6px 22px rgba(156,77,255,0.02);
+    }
 
-/* ===== Form ===== */
-form label { font-size:.9rem; opacity:.9; display:block; margin-bottom:6px; }
-form input, select, textarea {
-  width:100%; padding:10px 12px; border-radius:10px;
-  border:1px solid rgba(255,255,255,0.1);
-  background:rgba(255,255,255,0.05);
-  color:#fff; font-size:.9rem; margin-bottom:1rem;
-  outline:none;
-}
-form input:focus, textarea:focus, select:focus {
-  border-color:var(--zep-blue);
-  box-shadow:0 0 10px rgba(0,240,255,0.3);
-}
+    html,body{height:100%; margin:0; font-family:Poppins,system-ui; background: radial-gradient(circle at 10% 10%, #07021b, #010007 60%); color:#e6faff}
+    .container{max-width:1100px; margin:28px auto; padding:18px}
 
-/* ===== Image Preview ===== */
-.preview { text-align:center; margin-bottom:1rem; }
-.preview img {
-  width:90px; height:90px; object-fit:cover;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.2);
-  box-shadow:0 0 12px rgba(0,240,255,0.3);
-}
+    header{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px; border-radius:14px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid var(--glass-border); box-shadow: var(--neon-shadow)}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{ width:56px; height:56px; border-radius:12px; display:grid; place-items:center; font-family:Orbitron; font-weight:700; font-size:20px; background: linear-gradient(90deg,#00d7ff,#7f49ff); color:#030014; box-shadow:0 10px 30px rgba(0,240,255,0.12);}    
+    .nav-actions{display:flex; gap:8px; align-items:center}
+    .btn { border: none; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer; font-family:Orbitron; }
+    .btn-ghost{ background: transparent; color:#aeefff; border:1px solid rgba(174,239,255,0.06) }
+    .btn-primary{ background: linear-gradient(90deg,#00f0ff,#9c4dff); color:#050014; box-shadow:0 8px 30px rgba(156,77,255,0.06) }
 
-/* ===== Toggle ===== */
-.toggle {
-  display:flex; align-items:center; gap:8px; margin-top:.8rem;
-}
-.toggle input {
-  width:40px; height:20px;
-  appearance:none; background:rgba(255,255,255,0.2);
-  border-radius:999px; position:relative; outline:none;
-  cursor:pointer; transition:.3s;
-}
-.toggle input::before {
-  content:''; position:absolute; width:18px; height:18px; border-radius:50%;
-  background:#fff; top:1px; left:1px; transition:.3s;
-}
-.toggle input:checked { background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); }
-.toggle input:checked::before { transform:translateX(20px); background:#050018; }
+    .main{display:grid; grid-template-columns: 1fr 360px; gap:18px; margin-top:18px}
 
-/* ===== Buttons ===== */
-button.submit-btn {
-  width:100%; padding:12px;
-  border:none; border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  font-family:'Orbitron'; font-weight:700;
-  color:#050018;
-  cursor:pointer;
-  box-shadow:0 0 18px rgba(0,240,255,0.4);
-  transition:.3s;
-}
-button.submit-btn:hover { transform:scale(1.05); box-shadow:0 0 30px rgba(156,77,255,0.6); }
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:16px; border:1px solid var(--glass-border); box-shadow:0 12px 40px rgba(0,0,0,0.4)}
 
-/* ===== Listings Preview ===== */
-#productList {
-  margin:1.5rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px;
-}
-.card {
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:14px; text-align:center; padding:12px;
-  box-shadow:0 0 15px rgba(0,240,255,0.15);
-  animation:glow 3s infinite alternate ease-in-out;
-}
-.card img {
-  width:70px; height:70px; border-radius:8px;
-  filter:drop-shadow(0 0 10px rgba(0,240,255,0.4));
-}
-.card h3 { font-size:.95rem; margin:8px 0 2px; }
-.card p { font-size:.8rem; opacity:.8; margin:4px 0; }
-.delete-btn {
-  background:linear-gradient(90deg,#ff3c6f,#ff7a00);
-  color:#fff; border:none; border-radius:999px;
-  padding:6px 14px; cursor:pointer; font-size:.8rem;
-  font-family:'Poppins'; margin-top:6px;
-  box-shadow:0 0 15px rgba(255,60,111,0.4);
-  transition:.25s;
-}
-.delete-btn:hover { transform:scale(1.05); box-shadow:0 0 30px rgba(255,60,111,0.6); }
+    .listing-hero{display:flex; gap:18px; align-items:flex-start}
+    .media{width:360px; height:220px; border-radius:10px; background:linear-gradient(90deg,#0b0b14,#060616); display:flex; align-items:center; justify-content:center; font-weight:700; color:#e8faff}
 
-/* ===== Floating Ask Zep AI ===== */
-.ask-ai {
-  position:fixed; bottom:85px; right:20px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050018;
-  font-family:'Orbitron';
-  font-weight:700;
-  border:none; border-radius:999px;
-  padding:12px 24px;
-  box-shadow:0 0 25px rgba(0,240,255,0.5);
-  cursor:pointer;
-  z-index:999;
-  animation:pulse 2.4s ease-in-out infinite alternate;
-}
-@keyframes pulse {
-  0% { box-shadow:0 0 15px rgba(0,240,255,0.4); opacity:0.9; }
-  100% { box-shadow:0 0 40px rgba(156,77,255,0.8); opacity:1; }
-}
-.ask-ai:hover { transform:scale(1.08); }
+    .meta{flex:1}
+    .meta h2{margin:0 0 6px; font-size:20px; color:#ddfaff}
+    .meta .by{font-size:13px; color:#9fefff}
+    .price{font-weight:900; font-size:20px; color:#9cffff; margin-top:8px}
 
-/* ===== Footer ===== */
-footer {
-  position:fixed; bottom:0; left:0; width:100%;
-  background:rgba(15,15,30,0.9);
-  backdrop-filter:blur(12px);
-  border-top:1px solid rgba(255,255,255,0.1);
-  display:flex; justify-content:space-around; align-items:center;
-  padding:10px 0; z-index:50;
-}
-.footer-icon svg {
-  width:28px; height:28px; stroke:var(--zep-blue);
-  filter:drop-shadow(0 0 8px var(--zep-violet)); transition:.25s;
-}
-.footer-icon:hover svg {
-  stroke:var(--zep-violet); transform:scale(1.1);
-  filter:drop-shadow(0 0 12px var(--zep-blue));
-}
-</style>
+    .tags{display:flex; gap:8px; margin-top:10px}
+    .tag{padding:6px 8px; background:rgba(255,255,255,0.02); border-radius:8px; border:1px solid rgba(255,255,255,0.03); font-size:13px}
+
+    .description{margin-top:14px; color:#dff9ff}
+
+    .seller-row{display:flex; gap:12px; align-items:center; margin-top:12px}
+    .avatar{width:56px; height:56px; border-radius:10px; background:linear-gradient(90deg,#00d7ff,#7f49ff); display:grid; place-items:center; font-family:Orbitron; font-weight:700; color:#030014}
+
+    .sidebar .panel{margin-bottom:12px}
+    .buy-area{display:flex; gap:8px; align-items:center; margin-top:12px}
+    .buy-btn{padding:12px 14px; border-radius:12px; background:linear-gradient(90deg,#00f0ff,#9c4dff); color:#050014; font-weight:900; border:none; cursor:pointer}
+
+    .notes{margin-top:12px; font-size:13px; color:#bfefff}
+
+    .reviews{margin-top:12px}
+    .review{padding:10px; border-radius:8px; background:rgba(0,0,0,0.2); margin-bottom:8px}
+
+    footer{margin-top:30px; text-align:center; color:#95e9ff; opacity:0.7; font-size:13px}
+
+    @media(max-width:920px){
+      .main{grid-template-columns:1fr}
+      .media{width:100%; height:180px}
+    }
+  </style>
 </head>
-
 <body>
-<header>
-  <div class="logo">Zep Swipe — Product Listings</div>
-  <button class="logout-btn" onclick="window.location.href='index.html'" title="Logout">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#00f0ff" viewBox="0 0 24 24" width="26" height="26" stroke-width="1.8">
-      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-      <polyline points="10 17 15 12 10 7"/>
-      <line x1="15" y1="12" x2="3" y2="12"/>
-    </svg>
-  </button>
-</header>
-
-<main>
-  <div class="glass">
-    <h2 class="section-title">Add New Product</h2>
-    <form id="listingForm">
-      <div class="preview">
-        <img id="previewImage" src="https://cdn-icons-png.flaticon.com/512/1040/1040230.png" alt="Preview">
-      </div>
-      <label>Upload Product Image</label>
-      <input type="file" id="imageUpload" accept="image/*">
-
-      <label>Product Name</label>
-      <input type="text" id="productName" placeholder="Enter product title" required>
-
-      <label>Category</label>
-      <select id="category">
-        <option>Gadgets</option>
-        <option>Digital Products</option>
-        <option>Food & Cafeteria</option>
-        <option>Stationery</option>
-        <option>Others</option>
-      </select>
-
-      <label>Price</label>
-      <input type="number" id="price" placeholder="Enter price" required>
-
-      <label>Currency</label>
-      <select id="currency">
-        <option>USDT</option>
-        <option>$ZAC</option>
-      </select>
-
-      <label>Description</label>
-      <textarea id="desc" rows="3" placeholder="Describe your product..."></textarea>
-
-      <div class="toggle">
-        <label for="visibility">Visible to buyers:</label>
-        <input type="checkbox" id="visibility" checked>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">Z</div>
+        <div>
+          <div style="font-size:14px; opacity:0.95; font-family:Orbitron">ZepShop</div>
+          <div style="font-size:12px; color:#9fefff; margin-top:4px">Student Marketplace — Listing</div>
+        </div>
       </div>
 
-      <button type="submit" class="submit-btn">🚀 Publish Listing</button>
-    </form>
-  </div>
+      <div class="nav-actions">
+        <div id="userInfo" class="balance-card" style="display:none">
+          <div>
+            <div style="font-size:12px; color:#9fefff">Connected</div>
+            <strong id="walletShort">0x...abcd</strong>
+          </div>
+        </div>
 
-  <div class="glass">
-    <h2 class="section-title">Saved Listings</h2>
-    <div id="productList"></div>
-  </div>
-</main>
+        <button id="connectBtn" class="btn btn-primary">Connect Wallet</button>
+        <button id="backBtn" class="btn btn-ghost" onclick="location.href='index.html'">Back to Marketplace</button>
+      </div>
+    </header>
 
-<!-- Floating Ask Zep AI -->
-<button class="ask-ai" onclick="window.location.href='zep-ai.html'">💬 Ask Zep AI</button>
+    <div class="main">
+      <div>
+        <div class="card listing-hero">
+          <div class="media" id="mediaEl">SERVICE</div>
+          <div class="meta">
+            <h2 id="title">Listing title</h2>
+            <div class="by">by <span id="sellerShort">0x..seller</span></div>
+            <div class="price" id="price">USDC 0.00</div>
 
-<footer>
-  <a href="wallet.html" class="footer-icon" title="Wallet">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M16 12h4"/></svg>
-  </a>
-  <a href="listing.html" class="footer-icon" title="Sell">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 3v18m9-9H3"/></svg>
-  </a>
-  <a href="zepshop.html" class="footer-icon" title="Store">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M3 6h18l-2 12H5z"/></svg>
-  </a>
-  <a href="profile.html" class="footer-icon" title="Profile">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="7" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
-  </a>
-</footer>
+            <div class="tags" id="tags"></div>
 
-<script>
-// === Image Preview ===
-document.getElementById('imageUpload').addEventListener('change', function(e){
-  const file = e.target.files[0];
-  if(file){
-    const reader = new FileReader();
-    reader.onload = evt => document.getElementById('previewImage').src = evt.target.result;
-    reader.readAsDataURL(file);
-  }
-});
+            <div class="seller-row">
+              <div class="avatar" id="sellerAvatar">S</div>
+              <div>
+                <div style="font-weight:800" id="sellerName">Seller Student</div>
+                <div class="small" id="sellerBio" style="color:#bfefff">Student seller • 3 gigs • 98% positive</div>
+              </div>
+            </div>
 
-// === Load Saved Listings ===
-function loadListings(){
-  const list = JSON.parse(localStorage.getItem('zepListings')) || [];
-  const container = document.getElementById('productList');
-  container.innerHTML = list.map((p,i)=>`
-    <div class="card">
-      <img src="${p.image}" alt="${p.name}">
-      <h3>${p.name}</h3>
-      <p>${p.price} ${p.currency}</p>
-      <p><small>${p.category}</small></p>
-      <button class="delete-btn" onclick="deleteListing(${i})">Delete</button>
+            <div class="description" id="description">Full description of the service. Includes deliverables, timeline, and what the buyer will receive.</div>
+
+            <div class="notes">Delivery time: <strong id="delivery">24 hours</strong> • Revisions: <strong id="revisions">1</strong></div>
+          </div>
+        </div>
+
+        <div class="card reviews">
+          <h4 style="margin:0 0 8px">Reviews</h4>
+          <div id="reviewsList">
+            <!-- injected -->
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="card panel">
+          <h4 style="margin:0 0 6px">Quick Buy</h4>
+          <div style="color:#dff9ff; margin-top:6px">Pay the seller directly with USDC on Base. This demo uses a direct ERC-20 transfer (buyer → seller).</div>
+
+          <div style="margin-top:12px">
+            <label class="small">Buyer note (optional)</label>
+            <textarea id="buyerNote" placeholder="Add a short message for the seller" style="width:100%; min-height:80px; padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:#e6faff"></textarea>
+          </div>
+
+          <div class="buy-area">
+            <button id="buyBtn" class="buy-btn" disabled>Pay with USDC</button>
+            <button id="previewBtn" class="btn btn-ghost">Preview</button>
+          </div>
+
+          <div class="small" style="margin-top:10px; color:#bfefff">Note: For production use a marketplace contract or escrow for safer dispute handling.</div>
+        </div>
+
+        <div class="card panel">
+          <h4 style="margin:0 0 6px">Seller info</h4>
+          <div style="display:flex; gap:8px; align-items:center">
+            <div class="avatar">S</div>
+            <div>
+              <div style="font-weight:800">Seller Student</div>
+              <div class="small">Member since 2024 • Response time: 6h</div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px">
+            <button id="messageBtn" class="btn btn-ghost">Message seller</button>
+          </div>
+        </div>
+      </div>
     </div>
-  `).join('') || '<p style="opacity:0.7;">No listings yet.</p>';
-}
 
-// === Delete Listing ===
-function deleteListing(index){
-  let list = JSON.parse(localStorage.getItem('zepListings')) || [];
-  list.splice(index,1);
-  localStorage.setItem('zepListings', JSON.stringify(list));
-  loadListings();
-}
+    <footer>
+      © <span id="year"></span> ZepShop — Zep Swipe. Built on Base.
+    </footer>
+  </div>
 
-// === Save Listing ===
-document.getElementById('listingForm').addEventListener('submit', e=>{
-  e.preventDefault();
-  const data = {
-    name:document.getElementById('productName').value,
-    price:document.getElementById('price').value,
-    currency:document.getElementById('currency').value,
-    category:document.getElementById('category').value,
-    desc:document.getElementById('desc').value,
-    visible:document.getElementById('visibility').checked,
-    image:document.getElementById('previewImage').src
-  };
-  let list = JSON.parse(localStorage.getItem('zepListings')) || [];
-  list.push(data);
-  localStorage.setItem('zepListings', JSON.stringify(list));
-  document.getElementById('listingForm').reset();
-  document.getElementById('previewImage').src = "https://cdn-icons-png.flaticon.com/512/1040/1040230.png";
-  loadListings();
-  alert("✅ Product saved locally (Dev Mode)");
-});
+  <script>
+    // --- Config (same as index) ---
+    const ZAC_ADDRESS = '0xfe4119a9cac1425d808526905e92386b4234bf2a';
+    const USDC_ADDRESS = 'USDC_ON_BASE_ADDRESS'; // replace
+    const BASE_CHAIN_ID = 8453;
 
-loadListings();
-</script>
+    // Reuse PRODUCTS example (in a real app you'd fetch the product by id)
+    const PRODUCTS = [
+      { id: 'p1', title: '1-hour Tutoring: Calculus', priceUSDC: 12.00, seller: '0xSELLERADDRESS1', desc: 'Live 1-hour tutoring session covering calculus topics. Includes notes and practice problems.', tags:['tutoring','math','calculus'], delivery:'1 hour', revisions:1 },
+      { id: 'p2', title: 'Exam Notes — Marketing 101', priceUSDC: 5.00, seller: '0xSELLERADDRESS2', desc: 'Concise, syllabus-aligned exam notes for Marketing 101. PDF + study guide.', tags:['notes','marketing'], delivery:'6 hours', revisions:0 },
+      { id: 'p3', title: 'Logo design (student starter pack)', priceUSDC: 15.00, seller: '0xSELLERADDRESS3', desc: '3 logo concepts, 2 revisions, source files included (SVG/PNG).', tags:['design','logo'], delivery:'48 hours', revisions:2 },
+      { id: 'p4', title: 'Short coding gig — 1 page', priceUSDC: 8.50, seller: '0xSELLERADDRESS4', desc: 'Implement one static page with responsive layout. Includes basic accessibility.', tags:['web','frontend'], delivery:'24 hours', revisions:1 }
+    ];
+
+    // Small helper functions
+    const qParams = new URLSearchParams(window.location.search);
+    const getParam = (k, fallback=null) => qParams.get(k) || fallback;
+
+    const formatUSDC = (v) => Number(v).toFixed(2);
+    const short = (a) => a ? `${a.slice(0,6)}...${a.slice(-4)}` : '';
+
+    // UI refs
+    const connectBtn = document.getElementById('connectBtn');
+    const userInfo = document.getElementById('userInfo');
+    const walletShort = document.getElementById('walletShort');
+    const buyBtn = document.getElementById('buyBtn');
+    const previewBtn = document.getElementById('previewBtn');
+    const messageBtn = document.getElementById('messageBtn');
+    const sellerShort = document.getElementById('sellerShort');
+
+    const titleEl = document.getElementById('title');
+    const priceEl = document.getElementById('price');
+    const descEl = document.getElementById('description');
+    const tagsEl = document.getElementById('tags');
+    const sellerAvatar = document.getElementById('sellerAvatar');
+    const sellerName = document.getElementById('sellerName');
+    const deliveryEl = document.getElementById('delivery');
+    const revisionsEl = document.getElementById('revisions');
+    const mediaEl = document.getElementById('mediaEl');
+    const reviewsList = document.getElementById('reviewsList');
+
+    let provider=null, signer=null, currentAddress=null;
+    let product=null;
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // get product id from querystring or fallback to p1
+    const pid = getParam('id','p1');
+    product = PRODUCTS.find(p => p.id === pid) || PRODUCTS[0];
+    populateListing(product);
+
+    function populateListing(p){
+      titleEl.innerText = p.title;
+      priceEl.innerText = `USDC ${formatUSDC(p.priceUSDC)}`;
+      descEl.innerText = p.desc || '';
+      deliveryEl.innerText = p.delivery || '24 hours';
+      revisionsEl.innerText = p.revisions != null ? p.revisions : '—';
+      sellerShort.innerText = short(p.seller);
+      sellerAvatar.innerText = p.seller.slice(2,4).toUpperCase();
+      sellerName.innerText = `Student ${p.seller.slice(2,6)}`;
+      mediaEl.innerText = p.title.split(' ')[0].toUpperCase();
+
+      tagsEl.innerHTML = '';
+      (p.tags||[]).forEach(t => { const el = document.createElement('div'); el.className='tag'; el.innerText = t; tagsEl.appendChild(el); });
+
+      // demo reviews
+      const REVIEWS = [
+        { name:'Alex', rating:5, text:'Great quality, fast delivery.' },
+        { name:'Jamie', rating:4, text:'Good work — small revision requested.' }
+      ];
+      reviewsList.innerHTML = '';
+      REVIEWS.forEach(r => {
+        const d = document.createElement('div'); d.className='review';
+        d.innerHTML = `<div style="font-weight:800">${r.name} — ${'★'.repeat(r.rating)}</div><div style="margin-top:6px">${r.text}</div>`;
+        reviewsList.appendChild(d);
+      });
+    }
+
+    // --- Wallet connect logic (similar to index) ---
+    async function connectWallet(){
+      try{
+        if(!window.ethereum){ alert('No wallet detected. Install MetaMask or use Coinbase Wallet.'); return; }
+        provider = new ethers.BrowserProvider(window.ethereum);
+        await provider.send('eth_requestAccounts', []);
+        signer = await provider.getSigner();
+        currentAddress = await signer.getAddress();
+
+        // network check
+        const net = await provider.getNetwork();
+        if(net.chainId !== BASE_CHAIN_ID){
+          try{
+            await window.ethereum.request({ method:'wallet_switchEthereumChain', params:[{ chainId: '0x' + BASE_CHAIN_ID.toString(16) }] });
+            provider = new ethers.BrowserProvider(window.ethereum);
+            signer = await provider.getSigner();
+          } catch(e){ console.warn('Chain switch failed', e); }
+        }
+
+        localStorage.setItem('zepUser', JSON.stringify({ wallet: currentAddress, loggedIn:true }));
+        walletShort.innerText = short(currentAddress);
+        userInfo.style.display = 'flex';
+        connectBtn.style.display = 'none';
+        buyBtn.disabled = false;
+
+      } catch(e){ console.error(e); alert('Connection failed'); }
+    }
+
+    connectBtn.addEventListener('click', connectWallet);
+
+    window.addEventListener('load', async ()=>{
+      const user = JSON.parse(localStorage.getItem('zepUser')||'null');
+      if(user && user.loggedIn && window.ethereum){ try{ await connectWallet(); }catch(e){/* ignore */} }
+    });
+
+    previewBtn.addEventListener('click', ()=>{
+      alert(`Preview\n\n${product.title}\nPrice: USDC ${formatUSDC(product.priceUSDC)}\nSeller: ${short(product.seller)}`);
+    });
+
+    // buy flow (direct ERC-20 transfer)
+    buyBtn.addEventListener('click', async ()=>{
+      if(!signer) return alert('Connect wallet first');
+      if(USDC_ADDRESS === 'USDC_ON_BASE_ADDRESS') return alert('USDC contract address not set. Replace USDC_ON_BASE_ADDRESS with the real USDC contract address on Base.');
+
+      try{
+        const erc20 = ["function transfer(address to, uint256 amount) returns (bool)", "function decimals() view returns (uint8)"];
+        const usdc = new ethers.Contract(USDC_ADDRESS, erc20, signer);
+        const decimals = await usdc.decimals().catch(()=>6);
+        const amountUnits = ethers.parseUnits(String(product.priceUSDC), decimals);
+
+        const ok = confirm(`Confirm: pay USDC ${formatUSDC(product.priceUSDC)} to seller ${short(product.seller)}?`);
+        if(!ok) return;
+
+        buyBtn.disabled = true; buyBtn.innerText = 'Processing...';
+        const tx = await usdc.transfer(product.seller, amountUnits);
+        await tx.wait();
+
+        const note = document.getElementById('buyerNote').value||'';
+        const hist = JSON.parse(localStorage.getItem('zepshop_purchases')||'[]');
+        hist.unshift({ productId:product.id, txHash:tx.hash, note, time:Date.now(), buyer: currentAddress });
+        localStorage.setItem('zepshop_purchases', JSON.stringify(hist));
+
+        alert('Payment sent! TX: ' + tx.hash);
+      }catch(e){ console.error(e); alert('Payment failed or rejected.'); }
+      finally{ buyBtn.disabled=false; buyBtn.innerText='Pay with USDC'; }
+    });
+
+    // message seller (demo: prefilled email link or opens mailto)
+    messageBtn.addEventListener('click', ()=>{
+      const subject = encodeURIComponent('Question about your ZepShop listing: '+product.title);
+      const body = encodeURIComponent('Hi — I have a question about your listing: '+product.title+' (id: '+product.id+').');
+      window.location.href = `mailto:student@example.com?subject=${subject}&body=${body}`;
+    });
+
+  </script>
 </body>
 </html>
