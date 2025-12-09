@@ -3,57 +3,92 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Zep Swipe — Learn & Earn (Single-file Demo)</title>
-
-  <!--
-    Single-file demo:
-    - Zep Swipe theme (deep navy + violet -> cyan accents)
-    - 8 skills, micro-quests, capstone, "certify" flow
-    - Pending rewards stored in localStorage (reward-later)
-    - Claim simulation (wallet or relayer)
-    - Gate to dashboard-store.html unlocked after certification or XP threshold
-    - No backend required — all localStorage-based for prototyping
-  -->
-
+  <title>Zep Swipe — Learn & Earn (Neon Single-file Demo)</title>
+  <!-- Neon theme, responsive header (3D Z icon + Zep swipe text + 3D home button) -->
   <style>
     :root{
-      --bg-1:#061226;
-      --bg-2:#08142a;
+      --bg-1:#030417;
+      --bg-2:#061226;
       --card:#07172a;
       --muted:#9fb6d4;
-      --accent-1:#7c3aed;
-      --accent-2:#06b6d4;
+      --accent-1:#7c3aed; /* violet */
+      --accent-2:#06b6d4; /* cyan */
+      --neon:#19f0ff;
       --glass:rgba(255,255,255,0.03);
       --glass-2:rgba(255,255,255,0.02);
       --success:#10b981;
       --danger:#ef4444;
+      --max-w:1200px;
     }
     *{box-sizing:border-box}
+    html,body{height:100%;}
     body{
       margin:0;
       font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,var(--bg-1) 0%, var(--bg-2) 70%);
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.06), transparent),
+                  linear-gradient(180deg,var(--bg-1) 0%, var(--bg-2) 80%);
       color:#e6eef8;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-      padding:28px;
+      padding:18px;
+      display:flex;justify-content:center;
     }
 
-    /* Top header */
-    .header{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:16px;margin-bottom:18px}
-    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:20px}
-    .title{display:flex;flex-direction:column}
-    .title h1{margin:0;font-size:18px}
-    .title p{margin:0;color:var(--muted);font-size:13px}
+    /* Center container so content doesn't hug the sides on wide screens */
+    .container{width:100%;max-width:var(--max-w);}
+
+    /* Neon Header */
+    .neon-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 18px;padding:12px;border-radius:14px;position:relative;z-index:10;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005));
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 6px 30px rgba(12,18,34,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      overflow:hidden;
+    }
+
+    /* Pulsing glowing placeholder behind header (subtle) */
+    .neon-header::before{
+      content:'';position:absolute;left:-10%;top:-40%;width:140%;height:220%;background:radial-gradient(circle at 20% 30%, rgba(124,58,237,0.12), transparent 12%), radial-gradient(circle at 80% 70%, rgba(6,182,212,0.08), transparent 10%);
+      filter:blur(28px);opacity:0.9;animation:pulse 3.5s ease-in-out infinite;
+    }
+    @keyframes pulse{0%{transform:scale(1);opacity:0.85}50%{transform:scale(1.02);opacity:1}100%{transform:scale(1);opacity:0.85}}
+
+    .brand-left{display:flex;align-items:center;gap:12px}
+
+    /* 3D-ish logo */
+    .z-icon{
+      width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;position:relative;
+      transform-style:preserve-3d;perspective:800px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+      box-shadow: 0 6px 22px rgba(124,58,237,0.18), 0 0 18px rgba(6,182,212,0.06);
+      color:white;
+    }
+    /* Subtle 3D bevel using pseudo element */
+    .z-icon::after{
+      content:'';position:absolute;inset:2px;border-radius:10px;box-shadow:inset 0 -6px 18px rgba(0,0,0,0.45), inset 0 2px 6px rgba(255,255,255,0.04);
+      transform:translateZ(-10px);
+    }
+
+    .brand-title{display:flex;flex-direction:column;line-height:1}
+    .brand-title h1{margin:0;font-size:16px;letter-spacing:0.6px}
+    .brand-title p{margin:0;font-size:12px;color:var(--muted)}
+
+    /* Neon text accent */
+    .neon-text{font-weight:800;color:transparent;background:linear-gradient(90deg,var(--neon),var(--accent-2));-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 8px 28px rgba(25,240,255,0.06));}
+
+    /* Right side: home 3D button */
+    .home-btn{
+      display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:12px;text-decoration:none;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);box-shadow: 0 6px 20px rgba(6,182,212,0.04);backdrop-filter: blur(4px);
+    }
+    .home-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:white;transform:translateZ(0);box-shadow: 0 8px 30px rgba(6,182,212,0.08)}
 
     /* App layout */
-    .app{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:start}
-    @media (max-width:1000px){ .app{grid-template-columns:1fr;padding:12px} }
+    .app{display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:start}
+    @media (max-width:1100px){ .app{grid-template-columns:1fr;padding:0} }
 
-    /* Sidebar */
-    .sidebar{background:linear-gradient(180deg,var(--glass),transparent);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);min-height:720px}
+    .sidebar{background:linear-gradient(180deg,var(--glass),transparent);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);min-height:unset}
     .profile{display:flex;gap:12px;align-items:center}
     .avatar{width:56px;height:56px;border-radius:10px;background:linear-gradient(90deg,var(--accent-2),#3b82f6);display:flex;align-items:center;justify-content:center;font-size:22px}
+
     .stat{margin-top:12px}
     .stat-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.02);font-size:13px}
     .progress-bar{height:10px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;margin-top:8px}
@@ -66,8 +101,7 @@
     .connectBtn{padding:8px 10px;border-radius:8px;border:none;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;cursor:pointer}
     .ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
 
-    /* Main area */
-    .main{height:720px;overflow:auto;padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02)}
+    .main{min-height:360px;max-height:80vh;overflow:auto;padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02)}
 
     .row{display:flex;gap:12px}
     .col{display:flex;flex-direction:column;gap:12px}
@@ -104,166 +138,208 @@
     .muted{color:var(--muted)}
 
     .footer{display:flex;justify-content:space-between;align-items:center;padding-top:12px;color:var(--muted);font-size:13px;margin-top:12px}
+
+    /* Footer on small screens: stack */
+    @media (max-width:520px){ .footer{flex-direction:column;gap:8px;align-items:flex-start} }
+
+    /* Small tweaks for mobile touch targets */
+    @media (max-width:420px){
+      .z-icon{width:48px;height:48px}
+      .home-icon{width:40px;height:40px}
+      .brand-title h1{font-size:14px}
+      body{padding:12px}
+    }
+
+    /* Make sure clickable list items behave on mobile */
+    nav li{touch-action:manipulation}
+
+    /* Accessibility focus outlines */
+    a:focus, button:focus, nav li:focus{outline:3px solid rgba(6,182,212,0.14);outline-offset:2px}
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="logo">ZS</div>
-    <div class="title">
-      <h1>Zep Swipe — Learn & Earn (Demo)</h1>
-      <p class="muted">Practice real digital skills, prove competency, and sell verified services in your store.</p>
+  <div class="container">
+
+    <!-- Header with neon Z + text + home button linking to dashboard-student.html -->
+    <header class="neon-header" role="banner">
+      <div class="brand-left">
+        <div class="z-icon" aria-hidden="true">Z
+          <!-- Decorative: the Z has a subtle 3D feel via CSS pseudo-elements -->
+        </div>
+        <div class="brand-title">
+          <h1><span class="neon-text">Zep</span> <span style="opacity:0.9">swipe</span></h1>
+          <p class="muted">Practice. Prove. Sell — Learn & Earn</p>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px">
+        <!-- optional quick links on header -->
+        <nav aria-label="Top navigation" style="display:flex;gap:8px;align-items:center">
+          <button class="ghost" id="nav-home-btn" onclick="scrollToTop()" title="Home">Home</button>
+          <button class="ghost" id="nav-quests-btn" onclick="document.getElementById('questsContainer').scrollIntoView({behavior:'smooth',block:'center'})">Quests</button>
+        </nav>
+
+        <a class="home-btn" href="dashboard-student.html" title="Dashboard (student)">
+          <div class="home-icon" aria-hidden="true">🏠</div>
+          <div style="font-weight:700;color:white">Dashboard</div>
+        </a>
+      </div>
+    </header>
+
+    <div class="app">
+      <!-- SIDEBAR -->
+      <aside class="sidebar" aria-label="Sidebar">
+        <div class="profile">
+          <div class="avatar">👩🏾‍💻</div>
+          <div>
+            <div style="font-weight:700" id="displayName">Demo Student</div>
+            <div style="font-size:12px;color:var(--muted)">Wallet: <span id="addr">Not connected</span></div>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-row"><div>XP</div><div id="xp">0</div></div>
+          <div class="stat-row"><div>ZAC</div><div id="tokens">0</div></div>
+          <div class="stat-row"><div>Skills Certified</div><div id="badgeCount">0</div></div>
+          <div class="progress-bar" title="progress"><i id="progressFill"></i></div>
+        </div>
+
+        <nav>
+          <ul>
+            <li id="nav-home">Home</li>
+            <li id="nav-skills">My Skills</li>
+            <li id="nav-quests">Quests</li>
+            <li id="nav-market">Marketplace</li>
+            <li id="nav-rewards">Rewards</li>
+            <li id="nav-profile">Profile</li>
+          </ul>
+        </nav>
+
+        <div style="margin-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-size:13px;color:var(--muted)">Connect Wallet</div>
+            <button id="connectBtn" class="connectBtn">Connect</button>
+          </div>
+          <div style="margin-top:10px;font-size:13px">
+            <div style="color:var(--muted)">Store Access:</div>
+            <div id="storeGate" style="margin-top:8px"></div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <div style="font-size:13px;color:var(--muted);margin-bottom:8px">Quick Pending Rewards</div>
+          <div id="pendingPreview" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main" role="main">
+        <div class="cards-2">
+          <!-- LEFT: Skills & Quests -->
+          <div class="col">
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                  <div style="font-weight:700">Your Skill Tools</div>
+                  <div class="muted" style="font-size:13px">Practice, complete, and get certified.</div>
+                </div>
+                <div>
+                  <button id="resetProgress" class="secondary">Reset</button>
+                </div>
+              </div>
+
+              <div class="skills-grid" id="skillsGrid" style="margin-top:12px"></div>
+            </div>
+
+            <div class="card" style="margin-top:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                  <div style="font-weight:700">Quests</div>
+                  <div class="muted" style="font-size:13px">Micro-quests — each leads into a capstone for certification.</div>
+                </div>
+                <div><button id="unlockAll" class="secondary">Unlock All</button></div>
+              </div>
+
+              <div class="quests" id="questsContainer" style="margin-top:12px"></div>
+            </div>
+
+            <div class="card" style="margin-top:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                  <div style="font-weight:700">Capstones & Certification</div>
+                  <div class="muted" style="font-size:13px">Complete skill capstones to earn badges and unlock the store.</div>
+                </div>
+                <div><button id="viewCerts" class="secondary">View Badges</button></div>
+              </div>
+
+              <div id="certsArea" style="margin-top:12px"></div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Market & Pending -->
+          <div class="col">
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                  <div style="font-weight:700">Marketplace Preview</div>
+                  <div class="muted" style="font-size:13px">Once certified, create gigs tied to your proven skills.</div>
+                </div>
+                <div><button id="browseMarket" class="secondary">Open</button></div>
+              </div>
+
+              <div id="marketList" style="margin-top:12px"></div>
+            </div>
+
+            <div class="card" style="margin-top:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                  <div style="font-weight:700">Pending Rewards</div>
+                  <div class="muted" style="font-size:13px">Rewards stored locally — claim later on-chain.</div>
+                </div>
+                <div><button id="processAllRelayer" class="secondary">Simulate Relayer</button></div>
+              </div>
+
+              <div class="pending-list" id="pendingList" style="margin-top:12px"></div>
+              <div style="margin-top:8px;color:var(--muted);font-size:13px">Tip: Click "Claim (Wallet)" to simulate a wallet claim (requires MetaMask).</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div>Demo — persisted in your browser (localStorage). Share feedback to improve the flow.</div>
+          <div><button id="helpBtn" class="ghost">Help</button></div>
+        </div>
+      </main>
     </div>
-  </div>
-
-  <div class="app">
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="profile">
-        <div class="avatar">👩🏾‍💻</div>
-        <div>
-          <div style="font-weight:700" id="displayName">Demo Student</div>
-          <div style="font-size:12px;color:var(--muted)">Wallet: <span id="addr">Not connected</span></div>
-        </div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-row"><div>XP</div><div id="xp">0</div></div>
-        <div class="stat-row"><div>ZAC</div><div id="tokens">0</div></div>
-        <div class="stat-row"><div>Skills Certified</div><div id="badgeCount">0</div></div>
-        <div class="progress-bar" title="progress"><i id="progressFill"></i></div>
-      </div>
-
-      <nav>
-        <ul>
-          <li id="nav-home">Home</li>
-          <li id="nav-skills">My Skills</li>
-          <li id="nav-quests">Quests</li>
-          <li id="nav-market">Marketplace</li>
-          <li id="nav-rewards">Rewards</li>
-          <li id="nav-profile">Profile</li>
-        </ul>
-      </nav>
-
-      <div style="margin-top:12px">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div style="font-size:13px;color:var(--muted)">Connect Wallet</div>
-          <button id="connectBtn" class="connectBtn">Connect</button>
-        </div>
-        <div style="margin-top:10px;font-size:13px">
-          <div style="color:var(--muted)">Store Access:</div>
-          <div id="storeGate" style="margin-top:8px"></div>
-        </div>
-      </div>
-
-      <div style="margin-top:12px">
-        <div style="font-size:13px;color:var(--muted);margin-bottom:8px">Quick Pending Rewards</div>
-        <div id="pendingPreview" style="display:flex;gap:8px;flex-wrap:wrap"></div>
-      </div>
-    </aside>
-
-    <!-- MAIN -->
-    <main class="main">
-      <div class="cards-2">
-        <!-- LEFT: Skills & Quests -->
-        <div class="col">
-          <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div>
-                <div style="font-weight:700">Your Skill Tools</div>
-                <div class="muted" style="font-size:13px">Practice, complete, and get certified.</div>
-              </div>
-              <div>
-                <button id="resetProgress" class="secondary">Reset</button>
-              </div>
-            </div>
-
-            <div class="skills-grid" id="skillsGrid" style="margin-top:12px"></div>
-          </div>
-
-          <div class="card" style="margin-top:12px">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div>
-                <div style="font-weight:700">Quests</div>
-                <div class="muted" style="font-size:13px">Micro-quests — each leads into a capstone for certification.</div>
-              </div>
-              <div><button id="unlockAll" class="secondary">Unlock All</button></div>
-            </div>
-
-            <div class="quests" id="questsContainer" style="margin-top:12px"></div>
-          </div>
-
-          <div class="card" style="margin-top:12px">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div>
-                <div style="font-weight:700">Capstones & Certification</div>
-                <div class="muted" style="font-size:13px">Complete skill capstones to earn badges and unlock the store.</div>
-              </div>
-              <div><button id="viewCerts" class="secondary">View Badges</button></div>
-            </div>
-
-            <div id="certsArea" style="margin-top:12px"></div>
-          </div>
-        </div>
-
-        <!-- RIGHT: Market & Pending -->
-        <div class="col">
-          <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div>
-                <div style="font-weight:700">Marketplace Preview</div>
-                <div class="muted" style="font-size:13px">Once certified, create gigs tied to your proven skills.</div>
-              </div>
-              <div><button id="browseMarket" class="secondary">Open</button></div>
-            </div>
-
-            <div id="marketList" style="margin-top:12px"></div>
-          </div>
-
-          <div class="card" style="margin-top:12px">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div>
-                <div style="font-weight:700">Pending Rewards</div>
-                <div class="muted" style="font-size:13px">Rewards stored locally — claim later on-chain.</div>
-              </div>
-              <div><button id="processAllRelayer" class="secondary">Simulate Relayer</button></div>
-            </div>
-
-            <div class="pending-list" id="pendingList" style="margin-top:12px"></div>
-            <div style="margin-top:8px;color:var(--muted);font-size:13px">Tip: Click "Claim (Wallet)" to simulate a wallet claim (requires MetaMask).</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer">
-        <div>Demo — persisted in your browser (localStorage). Share feedback to improve the flow.</div>
-        <div><button id="helpBtn" class="ghost">Help</button></div>
-      </div>
-    </main>
   </div>
 
   <!-- Ethers (for wallet interactions; optional) -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
 
   <script>
-  /************************************************************************
-   * Zep Swipe — learn-earn single-file demo
-   * - localStorage driven (no backend)
-   * - shows learn -> prove -> certify -> unlock store flow
-   ************************************************************************/
+  /* ------------------ Keep original demo logic intact ------------------ */
+  /* Minimal glue added: header nav handlers + small responsive helpers */
 
-  /* ------------------ Configuration ------------------ */
+  // Expose a scroll-to-top used by header home button
+  function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+
+  // small helper to map left nav to sections (basic)
+  document.getElementById('nav-home').addEventListener('click', ()=>{ scrollToTop(); });
+  document.getElementById('nav-skills').addEventListener('click', ()=>{ document.getElementById('skillsGrid').scrollIntoView({behavior:'smooth',block:'center'}); });
+  document.getElementById('nav-quests').addEventListener('click', ()=>{ document.getElementById('questsContainer').scrollIntoView({behavior:'smooth',block:'center'}); });
+  document.getElementById('nav-market').addEventListener('click', ()=>{ document.getElementById('marketList').scrollIntoView({behavior:'smooth',block:'center'}); });
+  document.getElementById('nav-rewards').addEventListener('click', ()=>{ document.getElementById('pendingList').scrollIntoView({behavior:'smooth',block:'center'}); });
+  document.getElementById('nav-profile').addEventListener('click', ()=>{ document.getElementById('certsArea').scrollIntoView({behavior:'smooth',block:'center'}); });
+
+  // Original demo keys (unchanged)
   const PENDING_KEY = 'zepswipe_pending_rewards_v1';
   const BAL_KEY = 'zepswipe_balance_v1';
-  const PROFILE_KEY = 'zepswipe_profile_v1'; // stores badges & metadata
-  const XP_THRESHOLD_STORE = 200; // alternative unlock via XP
-
-  // Optional: If you set a contract + ABI, claimWithWallet will try to call it.
-  const CONTRACT_ADDRESS = ""; // set to your contract to enable real tx calls
-  const CONTRACT_ABI = [];     // set your claim ABI (e.g. claimReward(bytes32))
-
+  const PROFILE_KEY = 'zepswipe_profile_v1';
+  const XP_THRESHOLD_STORE = 200;
+  const CONTRACT_ADDRESS = "";
+  const CONTRACT_ABI = [];
   const DEMO_SIMULATE_ONCHAIN_IF_NO_CONTRACT = true;
 
-  /* ------------------ Demo content ------------------ */
   const SKILLS = [
     { id:'s1', title: 'AI Prompt Engineering', short:'Prompt design, chain-of-thought prompts' },
     { id:'s2', title: 'AI Content Generation', short:'Long-form + social content' },
@@ -288,7 +364,6 @@
     { id:'g3', title:'Small Business Chatbot', tokens:20, eta:'3 days' }
   ];
 
-  /* ------------------ Utilities ------------------ */
   function readPending(){ try{ return JSON.parse(localStorage.getItem(PENDING_KEY)) || []; }catch(e){ return []; } }
   function writePending(arr){ localStorage.setItem(PENDING_KEY, JSON.stringify(arr)); renderPending(); renderPendingPreview(); renderStoreGate(); }
   function readBalance(){ try{ return JSON.parse(localStorage.getItem(BAL_KEY)) || { xp:0, tokens:0, completed:{} }; }catch(e){ return { xp:0, tokens:0, completed:{} }; } }
@@ -299,33 +374,17 @@
   function genId(){ return 'r_' + Math.random().toString(36).slice(2,9); }
   function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
-  /* ------------------ Wallet (ethers v6) ------------------ */
-  let provider = null;
-  let signer = null;
-  let userAddr = null;
-
-  async function connectWallet(){
-    if(!window.ethereum){ alert('MetaMask not detected. You can still use the demo without wallet.'); return; }
-    try{
-      provider = new ethers.BrowserProvider(window.ethereum);
-      await provider.send('eth_requestAccounts', []);
-      signer = await provider.getSigner();
-      userAddr = await signer.getAddress();
-      document.getElementById('addr').textContent = userAddr;
-      document.getElementById('connectBtn').textContent = 'Connected';
-      renderPending(); renderStoreGate();
-    }catch(e){ console.error(e); alert('Wallet connect failed'); }
-  }
+  let provider = null; let signer = null; let userAddr = null;
+  async function connectWallet(){ if(!window.ethereum){ alert('MetaMask not detected. You can still use the demo without wallet.'); return; } try{ provider = new ethers.BrowserProvider(window.ethereum); await provider.send('eth_requestAccounts', []); signer = await provider.getSigner(); userAddr = await signer.getAddress(); document.getElementById('addr').textContent = userAddr; document.getElementById('connectBtn').textContent = 'Connected'; renderPending(); renderStoreGate(); }catch(e){ console.error(e); alert('Wallet connect failed'); } }
   document.getElementById('connectBtn').addEventListener('click', connectWallet);
 
-  /* ------------------ Rendering ------------------ */
   function renderSkills(){
     const root = document.getElementById('skillsGrid');
     root.innerHTML = '';
     const profile = readProfile();
     SKILLS.forEach((s, i) => {
       const badge = profile.badges.find(b=>b.skillId===s.id);
-      const progress = badge ? 100 : Math.min(90, (i+1)*10 + (badge?20:0)); // demo progress
+      const progress = badge ? 100 : Math.min(90, (i+1)*10 + (badge?20:0));
       const el = document.createElement('div'); el.className='skill';
       el.innerHTML = `<div class="title">${s.title}</div>
         <div class="muted" style="font-size:12px;margin-top:6px">${s.short}</div>
@@ -333,6 +392,7 @@
         <div style="margin-top:8px;display:flex;gap:8px">
           <button class="small primary" onclick="openSkill('${s.id}')">${badge? 'Practice' : 'Start'}</button>
           <button class="small secondary" onclick="previewSkill('${s.id}')">${badge? 'View Badge' : 'Syllabus'}</button>
+          <button class="small ghost" style="margin-left:auto" onclick="promptTakeCapstone('${s.id}')">Take Capstone</button>
         </div>`;
       root.appendChild(el);
     });
@@ -363,7 +423,6 @@
     root.innerHTML = '';
     const profile = readProfile();
     const badges = profile.badges || [];
-    // show gigs; indicate which require certification (demo: all gigs require at least 1 badge)
     GIGS.forEach(g=>{
       const el = document.createElement('div'); el.className='gig';
       el.innerHTML = `<div>
@@ -458,233 +517,66 @@
     }
   }
 
-  /* ------------------ Actions ------------------ */
-  window.openSkill = function(skillId){
-    alert('Open learning tool for ' + skillId + ' (demo). You can run micro-quests here.');
-  };
+  window.openSkill = function(skillId){ alert('Open learning tool for ' + skillId + ' (demo). You can run micro-quests here.'); };
+  window.previewSkill = function(skillId){ const skill = SKILLS.find(s=>s.id===skillId); alert(`${skill.title}\n\nSyllabus (demo):\n• 4 micro-quests\n• 1 capstone\n• Sample gigs you can sell`); };
+  window.createGigFromBadge = function(){ alert('Open Create Gig form — prefilled with a certified skill (demo).'); };
 
-  window.previewSkill = function(skillId){
-    const skill = SKILLS.find(s=>s.id===skillId);
-    alert(`${skill.title}\n\nSyllabus (demo):\n• 4 micro-quests\n• 1 capstone\n• Sample gigs you can sell`);
-  };
-
-  window.createGigFromBadge = function(){
-    alert('Open Create Gig form — prefilled with a certified skill (demo).');
-    // In production, open dashboard-store.html with prefilled skill selection
-  };
-
-  window.createGigFromBadge = window.createGigFromBadge; // expose
-
-  window.openQuest = function(qid){
-    const q = QUESTS.find(x=>x.id===qid);
-    if(!q) return;
-    const ans = prompt(`Quest: ${q.title}\n\n${q.desc}\n\nWrite/paste a short submission (demo):`);
-    if(ans === null) return;
-    submitQuest(qid, ans);
-  };
+  window.openQuest = function(qid){ const q = QUESTS.find(x=>x.id===qid); if(!q) return; const ans = prompt(`Quest: ${q.title}\n\n${q.desc}\n\nWrite/paste a short submission (demo):`); if(ans === null) return; submitQuest(qid, ans); };
 
   function submitQuest(qid, submissionText = ''){
-    const b = readBalance();
-    b.completed = b.completed || {};
-    if(b.completed[qid]) return alert('Quest already completed.');
-    // mark quest completed locally
-    b.completed[qid] = { when: Date.now(), submission: submissionText };
-    writeBalance(b);
-
-    // create a pending reward entry (reward-later)
+    const b = readBalance(); b.completed = b.completed || {}; if(b.completed[qid]) return alert('Quest already completed.'); b.completed[qid] = { when: Date.now(), submission: submissionText }; writeBalance(b);
     const q = QUESTS.find(x=>x.id===qid);
     const pending = readPending();
-    const item = {
-      id: genId(),
-      questId: qid,
-      questTitle: q.title,
-      xp: q.xp,
-      tokens: q.tokens,
-      createdAt: Date.now(),
-      status: 'pending',
-      claimedAt: null
-    };
-    pending.push(item);
-    writePending(pending);
-
+    const item = { id: genId(), questId: qid, questTitle: q.title, xp: q.xp, tokens: q.tokens, createdAt: Date.now(), status: 'pending', claimedAt: null };
+    pending.push(item); writePending(pending);
     alert(`Submission received. Reward stored as pending: ${q.xp} XP, ${q.tokens} ZAC. You can claim later.`);
     renderQuests(); renderPending(); renderPendingPreview(); renderBalance();
   }
 
-  window.submitQuest = submitQuest; // expose
+  window.submitQuest = submitQuest;
 
-  /* Simulated claim flows */
   async function claimWithWallet(rewardId){
     const pending = readPending();
     const item = pending.find(p=>p.id===rewardId);
     if(!item) return alert('Pending reward not found.');
-    // If no contract configured, simulate
     if(!CONTRACT_ADDRESS || CONTRACT_ABI.length === 0){
-      if(DEMO_SIMULATE_ONCHAIN_IF_NO_CONTRACT){
-        await sleep(700);
-        markPendingClaimedLocally(item);
-        alert('(Simulated) Claimed via wallet flow.');
-        return;
-      } else {
-        alert('No contract configured. Edit CONTRACT_ADDRESS & CONTRACT_ABI to enable real claim.');
-        return;
-      }
+      if(DEMO_SIMULATE_ONCHAIN_IF_NO_CONTRACT){ await sleep(700); markPendingClaimedLocally(item); alert('(Simulated) Claimed via wallet flow.'); return; } else { alert('No contract configured. Edit CONTRACT_ADDRESS & CONTRACT_ABI to enable real claim.'); return; }
     }
-
-    // If contract present attempt to call (example only)
     try{
       if(!signer){ await connectWallet(); if(!signer) return; }
       const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-      let tx;
-      try { tx = await contract.claimReward(item.id); } catch(e1){
-        try { tx = await contract.claimReward(ethers.utils.formatBytes32String(item.id)); } catch(e2){
-          throw new Error('claimReward call failed. Check ABI and method signature.');
-        }
-      }
-      alert('Transaction sent. Waiting for confirmation...');
-      await tx.wait();
-      markPendingClaimedLocally(item);
-      alert('On-chain claim confirmed. Local balance updated.');
+      let tx; try { tx = await contract.claimReward(item.id); } catch(e1){ try { tx = await contract.claimReward(ethers.utils.formatBytes32String(item.id)); } catch(e2){ throw new Error('claimReward call failed. Check ABI and method signature.'); } }
+      alert('Transaction sent. Waiting for confirmation...'); await tx.wait(); markPendingClaimedLocally(item); alert('On-chain claim confirmed. Local balance updated.');
     }catch(err){ console.error(err); alert('Claim failed: ' + (err.message || err)); }
   }
-  window.claimWithWallet = claimWithWallet; // expose
+  window.claimWithWallet = claimWithWallet;
 
-  async function simulateRelayer(rewardId){
-    const pending = readPending();
-    const item = pending.find(p=>p.id===rewardId);
-    if(!item) return alert('Pending not found.');
-    if(!confirm('Simulate relayer submitting on-chain tx (demo)?')) return;
-    await sleep(700);
-    markPendingClaimedLocally(item);
-    alert('Relayer simulated: reward processed and credited locally.');
-  }
+  async function simulateRelayer(rewardId){ const pending = readPending(); const item = pending.find(p=>p.id===rewardId); if(!item) return alert('Pending not found.'); if(!confirm('Simulate relayer submitting on-chain tx (demo)?')) return; await sleep(700); markPendingClaimedLocally(item); alert('Relayer simulated: reward processed and credited locally.'); }
   window.simulateRelayer = simulateRelayer;
 
-  function forfeitPending(id){
-    if(!confirm('Forfeit pending reward?')) return;
-    const pending = readPending().map(p => p.id === id ? { ...p, status: 'forfeit' } : p);
-    writePending(pending);
-    renderPending(); renderPendingPreview();
-  }
+  function forfeitPending(id){ if(!confirm('Forfeit pending reward?')) return; const pending = readPending().map(p => p.id === id ? { ...p, status: 'forfeit' } : p); writePending(pending); renderPending(); renderPendingPreview(); }
   window.forfeitPending = forfeitPending;
 
-  function markPendingClaimedLocally(item){
-    // credit local balances
-    const b = readBalance();
-    b.xp = (b.xp || 0) + item.xp;
-    b.tokens = (b.tokens || 0) + item.tokens;
-    writeBalance(b);
-    // mark pending claimed
-    const pending = readPending().map(p => p.id === item.id ? { ...p, status: 'claimed', claimedAt: Date.now() } : p);
-    writePending(pending);
-    // optionally check automatic certification condition
-    checkAutoCertifications();
-  }
+  function markPendingClaimedLocally(item){ const b = readBalance(); b.xp = (b.xp || 0) + item.xp; b.tokens = (b.tokens || 0) + item.tokens; writeBalance(b); const pending = readPending().map(p => p.id === item.id ? { ...p, status: 'claimed', claimedAt: Date.now() } : p); writePending(pending); checkAutoCertifications(); }
 
-  /* For demo: process all pending via relayer */
-  document.getElementById('processAllRelayer').addEventListener('click', async ()=>{
-    const pending = readPending().filter(p=>p.status==='pending');
-    if(pending.length === 0) return alert('No pending rewards.');
-    if(!confirm(`Simulate relayer for ${pending.length} pending rewards?`)) return;
-    for(const p of pending){ await sleep(250); markPendingClaimedLocally(p); }
-    alert('All pending processed (simulated).');
-  });
+  document.getElementById('processAllRelayer').addEventListener('click', async ()=>{ const pending = readPending().filter(p=>p.status==='pending'); if(pending.length === 0) return alert('No pending rewards.'); if(!confirm(`Simulate relayer for ${pending.length} pending rewards?`)) return; for(const p of pending){ await sleep(250); markPendingClaimedLocally(p); } alert('All pending processed (simulated).'); });
 
-  /* ------------------ Certification flow (capstone) ------------------ */
-  // For each skill we simulate a capstone: student must have completed at least one quest
-  // Here we provide a "Take Capstone" button for demonstration: if pass -> issue badge
-  function takeCapstoneForSkill(skillId){
-    // simple rule: require at least 1 completed quest for demo
-    const b = readBalance();
-    const completedCount = Object.keys(b.completed || {}).length;
-    if(completedCount < 1){
-      return alert('Complete at least one quest to attempt a capstone (demo rule).');
-    }
-    // simulate evaluation
-    if(!confirm('Submit capstone for review? (Demo: auto-pass)')) return;
-    // create badge on success
-    const profile = readProfile();
-    if(profile.badges && profile.badges.find(x=>x.skillId===skillId)){
-      return alert('You already have this badge.');
-    }
-    const skill = SKILLS.find(s=>s.id===skillId);
-    const badge = { id: genId(), skillId: skillId, skillTitle: skill.title, issuedAt: Date.now(), evidence: [] };
-    profile.badges = profile.badges || [];
-    profile.badges.push(badge);
-    writeProfile(profile);
-    alert(`Congrats — you earned the "${skill.title}" badge! The store is now unlocked.`);
-    // optional: credit a small reward for certification
-    const bal = readBalance(); bal.xp += 40; bal.tokens += 4; writeBalance(bal);
-  }
+  function takeCapstoneForSkill(skillId){ const b = readBalance(); const completedCount = Object.keys(b.completed || {}).length; if(completedCount < 1){ return alert('Complete at least one quest to attempt a capstone (demo rule).'); } if(!confirm('Submit capstone for review? (Demo: auto-pass)')) return; const profile = readProfile(); if(profile.badges && profile.badges.find(x=>x.skillId===skillId)){ return alert('You already have this badge.'); } const skill = SKILLS.find(s=>s.id===skillId); const badge = { id: genId(), skillId: skillId, skillTitle: skill.title, issuedAt: Date.now(), evidence: [] }; profile.badges = profile.badges || []; profile.badges.push(badge); writeProfile(profile); alert(`Congrats — you earned the "${skill.title}" badge! The store is now unlocked.`); const bal = readBalance(); bal.xp += 40; bal.tokens += 4; writeBalance(bal); }
   window.takeCapstoneForSkill = takeCapstoneForSkill;
 
-  function checkAutoCertifications(){
-    // Example: if user has >= 200 XP, auto-issue a generic badge (demo)
-    const bal = readBalance();
-    const profile = readProfile();
-    if(bal.xp >= XP_THRESHOLD_STORE && (!profile.badges || profile.badges.length === 0)){
-      // issue a generic "Platform Certified" badge
-      const badge = { id: genId(), skillId: 'platform', skillTitle: 'Platform Certified', issuedAt: Date.now(), evidence: [] };
-      profile.badges = profile.badges || [];
-      profile.badges.push(badge);
-      writeProfile(profile);
-      alert('Auto-certification: Platform Certified badge issued for reaching XP threshold.');
-    }
-  }
+  function checkAutoCertifications(){ const bal = readBalance(); const profile = readProfile(); if(bal.xp >= XP_THRESHOLD_STORE && (!profile.badges || profile.badges.length === 0)){ const badge = { id: genId(), skillId: 'platform', skillTitle: 'Platform Certified', issuedAt: Date.now(), evidence: [] }; profile.badges = profile.badges || []; profile.badges.push(badge); writeProfile(profile); alert('Auto-certification: Platform Certified badge issued for reaching XP threshold.'); } }
 
-  /* ------------------ Helpers (UI controls) ------------------ */
-  document.getElementById('unlockAll').addEventListener('click', ()=>{
-    const b = readBalance();
-    QUESTS.forEach(q => b.completed[q.id] = { when: Date.now() });
-    writeBalance(b);
-    alert('Unlocked and marked quests completed (dev). You can now take capstones.');
-  });
-
+  document.getElementById('unlockAll').addEventListener('click', ()=>{ const b = readBalance(); QUESTS.forEach(q => b.completed[q.id] = { when: Date.now() }); writeBalance(b); alert('Unlocked and marked quests completed (dev). You can now take capstones.'); });
   document.getElementById('browseMarket').addEventListener('click', ()=> alert('Open Marketplace (demo). If certified, you can create gigs here.'));
-
-  document.getElementById('resetProgress').addEventListener('click', ()=>{
-    if(!confirm('Reset demo data? This clears all local progress and badges.')) return;
-    localStorage.removeItem(PENDING_KEY);
-    localStorage.removeItem(BAL_KEY);
-    localStorage.removeItem(PROFILE_KEY);
-    init();
-    alert('Demo reset.');
-  });
-
+  document.getElementById('resetProgress').addEventListener('click', ()=>{ if(!confirm('Reset demo data? This clears all local progress and badges.')) return; localStorage.removeItem(PENDING_KEY); localStorage.removeItem(BAL_KEY); localStorage.removeItem(PROFILE_KEY); init(); alert('Demo reset.'); });
   document.getElementById('helpBtn').addEventListener('click', ()=> alert('Demo help: Complete quests -> submit -> pending reward -> claim later (wallet or relayer). Take capstone to certify and unlock store.'));
+  document.getElementById('viewCerts').addEventListener('click', ()=> { const profile = readProfile(); if(!profile.badges || profile.badges.length === 0) return alert('No badges yet.'); let txt = 'Your badges:\n'; profile.badges.forEach(b => txt += `• ${b.skillTitle} — issued ${new Date(b.issuedAt).toLocaleDateString()}\n`); alert(txt); });
 
-  document.getElementById('viewCerts').addEventListener('click', ()=> {
-    const profile = readProfile();
-    if(!profile.badges || profile.badges.length === 0) return alert('No badges yet.');
-    let txt = 'Your badges:\\n';
-    profile.badges.forEach(b => txt += `• ${b.skillTitle} — issued ${new Date(b.issuedAt).toLocaleDateString()}\\n`);
-    alert(txt);
-  });
+  window.promptTakeCapstone = function(skillId){ if(!confirm('Attempt capstone (demo)?')) return; takeCapstoneForSkill(skillId); };
 
-  /* small convenience: create badge quickly from UI when clicking a skill badge view */
-  window.promptTakeCapstone = function(skillId){
-    if(!confirm('Attempt capstone (demo)?')) return;
-    takeCapstoneForSkill(skillId);
-  };
+  function init(){ if(!localStorage.getItem(BAL_KEY)) localStorage.setItem(BAL_KEY, JSON.stringify({ xp:0, tokens:0, completed:{} })); if(!localStorage.getItem(PENDING_KEY)) localStorage.setItem(PENDING_KEY, JSON.stringify([])); if(!localStorage.getItem(PROFILE_KEY)) localStorage.setItem(PROFILE_KEY, JSON.stringify({ badges: [] })); renderSkills(); renderQuests(); renderMarket(); renderPending(); renderPendingPreview(); renderBalance(); renderCerts(); renderStoreGate(); }
 
-  /* ------------------ Init & render ------------------ */
-  function init(){
-    if(!localStorage.getItem(BAL_KEY)) localStorage.setItem(BAL_KEY, JSON.stringify({ xp:0, tokens:0, completed:{} }));
-    if(!localStorage.getItem(PENDING_KEY)) localStorage.setItem(PENDING_KEY, JSON.stringify([]));
-    if(!localStorage.getItem(PROFILE_KEY)) localStorage.setItem(PROFILE_KEY, JSON.stringify({ badges: [] }));
-    renderSkills(); renderQuests(); renderMarket(); renderPending(); renderPendingPreview(); renderBalance(); renderCerts(); renderStoreGate();
-  }
-
-  // Expose some functions to inline onclick handlers
-  window.openSkill = window.openSkill;
-  window.previewSkill = window.previewSkill;
-  window.openQuest = window.openQuest;
-  window.submitQuest = window.submitQuest;
-  window.claimWithWallet = window.claimWithWallet;
-  window.simulateRelayer = window.simulateRelayer;
-  window.forfeitPending = window.forfeitPending;
-  window.createGigFromBadge = window.createGigFromBadge;
-  window.promptTakeCapstone = window.promptTakeCapstone;
+  window.openSkill = window.openSkill; window.previewSkill = window.previewSkill; window.openQuest = window.openQuest; window.submitQuest = window.submitQuest; window.claimWithWallet = window.claimWithWallet; window.simulateRelayer = window.simulateRelayer; window.forfeitPending = window.forfeitPending; window.createGigFromBadge = window.createGigFromBadge; window.promptTakeCapstone = window.promptTakeCapstone;
 
   init();
   </script>
