@@ -6,13 +6,13 @@
   <title>Zep Swipe — Learn & Earn (Single-file Demo)</title>
 
   <!--
-    Single-file demo:
-    - Zep Swipe theme (deep navy + violet -> cyan accents)
-    - 8 skills, micro-quests, capstone, "certify" flow
-    - Pending rewards stored in localStorage (reward-later)
-    - Claim simulation (wallet or relayer)
-    - Gate to dashboard-store.html unlocked after certification or XP threshold
-    - No backend required — all localStorage-based for prototyping
+    Single-file demo (modified per request):
+    - Responsive (mobile & desktop friendly)
+    - Sleek header with pulsing glowing placeholder
+    - 3D Home button -> dashboard-student.html
+    - Profile link -> profile.html
+    - Profile picture, student name, university fetched from PROFILE_KEY localStorage (populated by profile.html)
+    - Core demo logic unchanged
   -->
 
   <style>
@@ -27,47 +27,73 @@
       --glass-2:rgba(255,255,255,0.02);
       --success:#10b981;
       --danger:#ef4444;
+      --glass-3: rgba(124,58,237,0.12);
     }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
       font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,var(--bg-1) 0%, var(--bg-2) 70%);
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.06), transparent),
+                  radial-gradient(1000px 500px at 90% 90%, rgba(6,182,212,0.03), transparent),
+                  linear-gradient(180deg,var(--bg-1) 0%, var(--bg-2) 70%);
       color:#e6eef8;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-      padding:28px;
+      padding:20px;
+      -webkit-font-feature-settings: "kern";
     }
 
-    /* Top header */
-    .header{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:16px;margin-bottom:18px}
-    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:20px}
+    /* Top header (sleek) */
+    .topbar{
+      max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;
+      padding:10px 14px;border-radius:14px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02);
+      box-shadow:0 6px 18px rgba(2,6,23,0.6);
+    }
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{width:58px;height:58px;border-radius:12px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:20px;box-shadow:0 6px 24px rgba(124,58,237,0.18)}
     .title{display:flex;flex-direction:column}
     .title h1{margin:0;font-size:18px}
     .title p{margin:0;color:var(--muted);font-size:13px}
 
+    /* pulsing glowing placeholder */
+    .glow-placeholder{width:220px;height:12px;border-radius:999px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));position:relative;overflow:hidden}
+    .glow-placeholder::after{content:'';position:absolute;left:-60%;top:0;bottom:0;width:60%;background:linear-gradient(90deg, rgba(124,58,237,0.22), rgba(6,182,212,0.20), rgba(124,58,237,0.22));transform:skewX(-20deg);animation:glow 2.6s linear infinite}
+    @keyframes glow{0%{left:-60%}50%{left:100%}100%{left:100%}}
+
     /* App layout */
-    .app{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:start}
+    .app{max-width:1200px;margin:14px auto 0;display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:start}
     @media (max-width:1000px){ .app{grid-template-columns:1fr;padding:12px} }
 
     /* Sidebar */
-    .sidebar{background:linear-gradient(180deg,var(--glass),transparent);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);min-height:720px}
+    .sidebar{background:linear-gradient(180deg,var(--glass),transparent);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);min-height:680px}
     .profile{display:flex;gap:12px;align-items:center}
-    .avatar{width:56px;height:56px;border-radius:10px;background:linear-gradient(90deg,var(--accent-2),#3b82f6);display:flex;align-items:center;justify-content:center;font-size:22px}
+    .avatar{width:56px;height:56px;border-radius:12px;background:linear-gradient(90deg,var(--accent-2),#3b82f6);display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden}
+    .avatar img{width:100%;height:100%;object-fit:cover;border-radius:10px}
+
     .stat{margin-top:12px}
     .stat-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.02);font-size:13px}
     .progress-bar{height:10px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;margin-top:8px}
     .progress-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));width:0%}
 
     nav ul{list-style:none;padding:0;margin:14px 0 0 0}
-    nav li{padding:10px;border-radius:8px;cursor:pointer;color:var(--muted);font-size:14px}
+    nav li{padding:10px;border-radius:8px;cursor:pointer;color:var(--muted);font-size:14px;display:flex;align-items:center;gap:10px}
     nav li:hover{background:rgba(255,255,255,0.02);color:#e6eef8}
 
-    .connectBtn{padding:8px 10px;border-radius:8px;border:none;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;cursor:pointer}
+    .connectBtn{padding:8px 10px;border-radius:8px;border:none;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;cursor:pointer;box-shadow:0 6px 18px rgba(7,16,37,0.6)}
     .ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
 
+    /* 3D home button */
+    .home-3d{
+      display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:linear-gradient(180deg,#091428,#071227);border:1px solid rgba(255,255,255,0.05);
+      transform:translateZ(0);box-shadow:0 10px 30px rgba(6,182,212,0.06), inset 0 -6px 18px rgba(7,16,37,0.6);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .home-3d:active{transform:translateY(2px) scale(.995); box-shadow:0 6px 14px rgba(6,182,212,0.04)}
+    .home-3d .icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:white;box-shadow:0 8px 24px rgba(124,58,237,0.18)}
+
     /* Main area */
-    .main{height:720px;overflow:auto;padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02)}
+    .main{min-height:680px;overflow:auto;padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02)}
 
     .row{display:flex;gap:12px}
     .col{display:flex;flex-direction:column;gap:12px}
@@ -104,38 +130,80 @@
     .muted{color:var(--muted)}
 
     .footer{display:flex;justify-content:space-between;align-items:center;padding-top:12px;color:var(--muted);font-size:13px;margin-top:12px}
+
+    /* Responsive tweaks for mobile */
+    @media (max-width:600px){
+      body{padding:12px}
+      .logo{width:48px;height:48px;font-size:18px}
+      .title h1{font-size:16px}
+      .avatar{width:48px;height:48px}
+      .connectBtn{padding:6px 8px}
+      .home-3d{padding:8px 10px}
+      .skill .title{font-size:13px}
+      .quests{grid-template-columns:1fr}
+      .skills-grid{grid-template-columns:repeat(2,1fr)}
+    }
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="logo">ZS</div>
-    <div class="title">
-      <h1>Zep Swipe — Learn & Earn (Demo)</h1>
-      <p class="muted">Practice real digital skills, prove competency, and sell verified services in your store.</p>
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">ZS</div>
+      <div class="title">
+        <h1>Zep Swipe — Learn & Earn</h1>
+        <p class="muted">Practice, prove, and sell verified services</p>
+      </div>
+    </div>
+
+    <!-- pulsing glowing placeholder (sleek) -->
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="glow-placeholder" title="Live status"></div>
+
+      <!-- 3D Home button -->
+      <a href="dashboard-student.html" class="home-3d" title="Home (Dashboard)">
+        <div class="icon">🏠</div>
+        <div style="display:flex;flex-direction:column">
+          <div style="font-weight:700;font-size:13px">Dashboard</div>
+          <div style="font-size:12px;color:var(--muted)">Go to student dashboard</div>
+        </div>
+      </a>
+
+      <!-- Profile preview in topbar: links to profile.html -->
+      <a href="profile.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit">
+        <div id="topAvatar" class="avatar" style="width:44px;height:44px;border-radius:10px;overflow:hidden">
+          <!-- inserted via JS -->
+        </div>
+        <div style="text-align:right">
+          <div id="topName" style="font-weight:700;font-size:13px">Demo Student</div>
+          <div id="topUniv" class="muted" style="font-size:12px">University</div>
+        </div>
+      </a>
     </div>
   </div>
 
+  <!-- APP -->
   <div class="app">
     <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar" role="navigation" aria-label="Sidebar">
       <div class="profile">
-        <div class="avatar">👩🏾‍💻</div>
+        <div id="sideAvatar" class="avatar" aria-hidden="true">👩🏾‍💻</div>
         <div>
           <div style="font-weight:700" id="displayName">Demo Student</div>
-          <div style="font-size:12px;color:var(--muted)">Wallet: <span id="addr">Not connected</span></div>
+          <div style="font-size:12px;color:var(--muted)"><a id="profileLink" href="profile.html" style="color:var(--muted);text-decoration:none">View profile</a></div>
         </div>
       </div>
 
-      <div class="stat">
+      <div class="stat" aria-hidden="true">
         <div class="stat-row"><div>XP</div><div id="xp">0</div></div>
         <div class="stat-row"><div>ZAC</div><div id="tokens">0</div></div>
         <div class="stat-row"><div>Skills Certified</div><div id="badgeCount">0</div></div>
         <div class="progress-bar" title="progress"><i id="progressFill"></i></div>
       </div>
 
-      <nav>
+      <nav aria-label="Main navigation">
         <ul>
-          <li id="nav-home">Home</li>
+          <li id="nav-home"><strong>Home</strong></li>
           <li id="nav-skills">My Skills</li>
           <li id="nav-quests">Quests</li>
           <li id="nav-market">Marketplace</li>
@@ -162,7 +230,7 @@
     </aside>
 
     <!-- MAIN -->
-    <main class="main">
+    <main class="main" role="main" aria-live="polite">
       <div class="cards-2">
         <!-- LEFT: Skills & Quests -->
         <div class="col">
@@ -246,15 +314,15 @@
 
   <script>
   /************************************************************************
-   * Zep Swipe — learn-earn single-file demo
+   * Zep Swipe — learn-earn single-file demo (responsive + header/profile)
    * - localStorage driven (no backend)
-   * - shows learn -> prove -> certify -> unlock store flow
+   * - enhanced per user request: mobile-friendly, pulsing header, 3D home button, profile links
    ************************************************************************/
 
   /* ------------------ Configuration ------------------ */
   const PENDING_KEY = 'zepswipe_pending_rewards_v1';
   const BAL_KEY = 'zepswipe_balance_v1';
-  const PROFILE_KEY = 'zepswipe_profile_v1'; // stores badges & metadata
+  const PROFILE_KEY = 'zepswipe_profile_v1'; // stores badges & metadata including name/university/avatar
   const XP_THRESHOLD_STORE = 200; // alternative unlock via XP
 
   // Optional: If you set a contract + ABI, claimWithWallet will try to call it.
@@ -263,7 +331,7 @@
 
   const DEMO_SIMULATE_ONCHAIN_IF_NO_CONTRACT = true;
 
-  /* ------------------ Demo content ------------------ */
+  /* ------------------ Demo content (unchanged) ------------------ */
   const SKILLS = [
     { id:'s1', title: 'AI Prompt Engineering', short:'Prompt design, chain-of-thought prompts' },
     { id:'s2', title: 'AI Content Generation', short:'Long-form + social content' },
@@ -293,8 +361,8 @@
   function writePending(arr){ localStorage.setItem(PENDING_KEY, JSON.stringify(arr)); renderPending(); renderPendingPreview(); renderStoreGate(); }
   function readBalance(){ try{ return JSON.parse(localStorage.getItem(BAL_KEY)) || { xp:0, tokens:0, completed:{} }; }catch(e){ return { xp:0, tokens:0, completed:{} }; } }
   function writeBalance(b){ localStorage.setItem(BAL_KEY, JSON.stringify(b)); renderBalance(); renderQuests(); renderCerts(); renderStoreGate(); }
-  function readProfile(){ try{ return JSON.parse(localStorage.getItem(PROFILE_KEY)) || { badges: [] }; }catch(e){ return { badges: [] }; } }
-  function writeProfile(p){ localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); renderCerts(); renderStoreGate(); }
+  function readProfile(){ try{ return JSON.parse(localStorage.getItem(PROFILE_KEY)) || { badges: [], name: 'Demo Student', university: '', avatar: '' }; }catch(e){ return { badges: [], name: 'Demo Student', university: '', avatar: '' }; } }
+  function writeProfile(p){ localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); renderCerts(); renderStoreGate(); renderProfileHeader(); }
 
   function genId(){ return 'r_' + Math.random().toString(36).slice(2,9); }
   function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
@@ -318,7 +386,34 @@
   }
   document.getElementById('connectBtn').addEventListener('click', connectWallet);
 
-  /* ------------------ Rendering ------------------ */
+  /* ------------------ Rendering (with header/profile hooks) ------------------ */
+  function renderProfileHeader(){
+    const profile = readProfile();
+    // top avatar
+    const topAvatar = document.getElementById('topAvatar');
+    topAvatar.innerHTML = '';
+    const sideAvatar = document.getElementById('sideAvatar');
+    sideAvatar.innerHTML = '';
+    if(profile.avatar){
+      const imgTop = document.createElement('img'); imgTop.src = profile.avatar; imgTop.alt = profile.name || 'avatar';
+      topAvatar.appendChild(imgTop);
+      const imgSide = document.createElement('img'); imgSide.src = profile.avatar; imgSide.alt = profile.name || 'avatar';
+      sideAvatar.appendChild(imgSide);
+    } else {
+      topAvatar.textContent = '👩🏾‍💻';
+      sideAvatar.textContent = '👩🏾‍💻';
+    }
+    // name & university
+    const name = profile.name || 'Demo Student';
+    const univ = profile.university || 'University';
+    document.getElementById('displayName').textContent = name;
+    document.getElementById('topName').textContent = name;
+    document.getElementById('topUniv').textContent = univ;
+    // profile link target still profile.html; allow profile.html to write to PROFILE_KEY
+    const profileLink = document.getElementById('profileLink');
+    if(profileLink) profileLink.href = 'profile.html';
+  }
+
   function renderSkills(){
     const root = document.getElementById('skillsGrid');
     root.innerHTML = '';
@@ -333,6 +428,7 @@
         <div style="margin-top:8px;display:flex;gap:8px">
           <button class="small primary" onclick="openSkill('${s.id}')">${badge? 'Practice' : 'Start'}</button>
           <button class="small secondary" onclick="previewSkill('${s.id}')">${badge? 'View Badge' : 'Syllabus'}</button>
+          <button class="small ghost" style="margin-left:auto" onclick="promptTakeCapstone('${s.id}')">Capstone</button>
         </div>`;
       root.appendChild(el);
     });
@@ -458,7 +554,7 @@
     }
   }
 
-  /* ------------------ Actions ------------------ */
+  /* ------------------ Actions (unchanged) ------------------ */
   window.openSkill = function(skillId){
     alert('Open learning tool for ' + skillId + ' (demo). You can run micro-quests here.');
   };
@@ -513,7 +609,7 @@
 
   window.submitQuest = submitQuest; // expose
 
-  /* Simulated claim flows */
+  /* Simulated claim flows (unchanged) */
   async function claimWithWallet(rewardId){
     const pending = readPending();
     const item = pending.find(p=>p.id===rewardId);
@@ -591,18 +687,13 @@
   });
 
   /* ------------------ Certification flow (capstone) ------------------ */
-  // For each skill we simulate a capstone: student must have completed at least one quest
-  // Here we provide a "Take Capstone" button for demonstration: if pass -> issue badge
   function takeCapstoneForSkill(skillId){
-    // simple rule: require at least 1 completed quest for demo
     const b = readBalance();
     const completedCount = Object.keys(b.completed || {}).length;
     if(completedCount < 1){
       return alert('Complete at least one quest to attempt a capstone (demo rule).');
     }
-    // simulate evaluation
     if(!confirm('Submit capstone for review? (Demo: auto-pass)')) return;
-    // create badge on success
     const profile = readProfile();
     if(profile.badges && profile.badges.find(x=>x.skillId===skillId)){
       return alert('You already have this badge.');
@@ -619,11 +710,9 @@
   window.takeCapstoneForSkill = takeCapstoneForSkill;
 
   function checkAutoCertifications(){
-    // Example: if user has >= 200 XP, auto-issue a generic badge (demo)
     const bal = readBalance();
     const profile = readProfile();
     if(bal.xp >= XP_THRESHOLD_STORE && (!profile.badges || profile.badges.length === 0)){
-      // issue a generic "Platform Certified" badge
       const badge = { id: genId(), skillId: 'platform', skillTitle: 'Platform Certified', issuedAt: Date.now(), evidence: [] };
       profile.badges = profile.badges || [];
       profile.badges.push(badge);
@@ -661,18 +750,49 @@
     alert(txt);
   });
 
-  /* small convenience: create badge quickly from UI when clicking a skill badge view */
   window.promptTakeCapstone = function(skillId){
     if(!confirm('Attempt capstone (demo)?')) return;
     takeCapstoneForSkill(skillId);
   };
 
+  /* ------------------ Profile fetch from profile.html (graceful) ------------------ */
+  // Profile page (profile.html) can write full profile JSON into localStorage under PROFILE_KEY.
+  // As a fallback, attempt to fetch profile.html and parse a <script id="zep-profile-json">...json...</script> block if present.
+  async function tryFetchProfileFromProfileHtml(){
+    try{
+      // try to fetch profile.html and locate script tag with ID zep-profile-json
+      const res = await fetch('profile.html', {cache: 'no-store'});
+      if(!res.ok) return;
+      const text = await res.text();
+      // simple parse: find <script id="zep-profile-json"> ... </script>
+      const markerStart = '<script id="zep-profile-json"';
+      const idx = text.indexOf(markerStart);
+      if(idx === -1) return;
+      const startTag = text.indexOf('>', idx) + 1;
+      const endTag = text.indexOf('</script>', startTag);
+      if(startTag === -1 || endTag === -1) return;
+      const jsonText = text.slice(startTag, endTag).trim();
+      if(!jsonText) return;
+      const profile = JSON.parse(jsonText);
+      if(profile) writeProfile(profile);
+    }catch(e){
+      // ignore fetch errors (profile.html might not exist or be same-origin blocked)
+      // console.debug('profile fetch failed', e);
+    }
+  }
+
   /* ------------------ Init & render ------------------ */
   function init(){
     if(!localStorage.getItem(BAL_KEY)) localStorage.setItem(BAL_KEY, JSON.stringify({ xp:0, tokens:0, completed:{} }));
     if(!localStorage.getItem(PENDING_KEY)) localStorage.setItem(PENDING_KEY, JSON.stringify([]));
-    if(!localStorage.getItem(PROFILE_KEY)) localStorage.setItem(PROFILE_KEY, JSON.stringify({ badges: [] }));
-    renderSkills(); renderQuests(); renderMarket(); renderPending(); renderPendingPreview(); renderBalance(); renderCerts(); renderStoreGate();
+    if(!localStorage.getItem(PROFILE_KEY)) {
+      // seed a demo profile that profile.html could overwrite later
+      localStorage.setItem(PROFILE_KEY, JSON.stringify({ badges: [], name: 'Demo Student', university: 'Demo University', avatar: '' }));
+    }
+    // try to fetch a richer profile from profile.html (non-blocking)
+    tryFetchProfileFromProfileHtml().finally(()=>{
+      renderProfileHeader(); renderSkills(); renderQuests(); renderMarket(); renderPending(); renderPendingPreview(); renderBalance(); renderCerts(); renderStoreGate();
+    });
   }
 
   // Expose some functions to inline onclick handlers
