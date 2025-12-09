@@ -8,8 +8,11 @@
   <!--
     Single-file demo (modified per request):
     - Responsive (mobile & desktop friendly)
-    - Sleek header with neon Zep Swipe text logo and 3D home button on the right
-    - Preserves all app logic and element IDs (no JS changes)
+    - Sleek header with pulsing glowing placeholder
+    - 3D Home button -> dashboard-student.html
+    - Profile link -> profile.html
+    - Profile picture, student name, university fetched from PROFILE_KEY localStorage (populated by profile.html)
+    - Core demo logic unchanged
   -->
 
   <style>
@@ -44,64 +47,25 @@
     /* Top header (sleek) */
     .topbar{
       max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;
-      padding:12px 18px;border-radius:14px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02);
+      padding:10px 14px;border-radius:14px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02);
       box-shadow:0 6px 18px rgba(2,6,23,0.6);
     }
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{width:58px;height:58px;border-radius:12px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:20px;box-shadow:0 6px 24px rgba(124,58,237,0.18)}
+    .title{display:flex;flex-direction:column}
+    .title h1{margin:0;font-size:18px}
+    .title p{margin:0;color:var(--muted);font-size:13px}
 
-    /* Neon Zep Swipe text logo */
-    .zep-logo {
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .zep-logo .mark {
-      width:54px;
-      height:54px;
-      border-radius:12px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:800;
-      color:white;
-      font-size:20px;
-      background: linear-gradient(135deg,var(--accent-1),var(--accent-2));
-      box-shadow: 0 8px 28px rgba(124,58,237,0.14), 0 0 26px rgba(6,182,212,0.06);
-    }
-    .zep-logo .text {
-      font-family: 'Inter', system-ui, -apple-system;
-      font-weight:800;
-      font-size:20px;
-      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 6px 20px rgba(124,58,237,0.08);
-    }
-
-    /* right header controls */
-    .header-right { display:flex; align-items:center; gap:12px; }
-
-    /* 3D home button */
-    .home-3d{
-      display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:linear-gradient(180deg,#091428,#071227);border:1px solid rgba(255,255,255,0.05);
-      transform:translateZ(0);box-shadow:0 10px 30px rgba(6,182,212,0.06), inset 0 -6px 18px rgba(7,16,37,0.6);
-      transition:transform .18s ease, box-shadow .18s ease;color:inherit;text-decoration:none;
-    }
-    .home-3d:active{transform:translateY(2px) scale(.995); box-shadow:0 6px 14px rgba(6,182,212,0.04)}
-    .home-3d .icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:white;box-shadow:0 8px 24px rgba(124,58,237,0.18)}
-
-    /* Keep hidden profile containers so JS has the expected elements (no logic changes) */
-    .header-hidden-profile{ display:none; }
-
-    /* pulsing glowing placeholder (kept for optional status) */
-    .glow-placeholder{width:140px;height:8px;border-radius:999px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));position:relative;overflow:hidden;margin-right:10px}
+    /* pulsing glowing placeholder */
+    .glow-placeholder{width:220px;height:12px;border-radius:999px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));position:relative;overflow:hidden}
     .glow-placeholder::after{content:'';position:absolute;left:-60%;top:0;bottom:0;width:60%;background:linear-gradient(90deg, rgba(124,58,237,0.22), rgba(6,182,212,0.20), rgba(124,58,237,0.22));transform:skewX(-20deg);animation:glow 2.6s linear infinite}
     @keyframes glow{0%{left:-60%}50%{left:100%}100%{left:100%}}
 
-    /* App layout (unchanged) */
+    /* App layout */
     .app{max-width:1200px;margin:14px auto 0;display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:start}
     @media (max-width:1000px){ .app{grid-template-columns:1fr;padding:12px} }
 
-    /* Sidebar etc. (kept intact) */
+    /* Sidebar */
     .sidebar{background:linear-gradient(180deg,var(--glass),transparent);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);min-height:680px}
     .profile{display:flex;gap:12px;align-items:center}
     .avatar{width:56px;height:56px;border-radius:12px;background:linear-gradient(90deg,var(--accent-2),#3b82f6);display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden}
@@ -119,8 +83,16 @@
     .connectBtn{padding:8px 10px;border-radius:8px;border:none;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;cursor:pointer;box-shadow:0 6px 18px rgba(7,16,37,0.6)}
     .ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
 
-    .home-3d .icon{font-size:18px}
+    /* 3D home button */
+    .home-3d{
+      display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:linear-gradient(180deg,#091428,#071227);border:1px solid rgba(255,255,255,0.05);
+      transform:translateZ(0);box-shadow:0 10px 30px rgba(6,182,212,0.06), inset 0 -6px 18px rgba(7,16,37,0.6);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .home-3d:active{transform:translateY(2px) scale(.995); box-shadow:0 6px 14px rgba(6,182,212,0.04)}
+    .home-3d .icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:white;box-shadow:0 8px 24px rgba(124,58,237,0.18)}
 
+    /* Main area */
     .main{min-height:680px;overflow:auto;padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02)}
 
     .row{display:flex;gap:12px}
@@ -174,38 +146,43 @@
   </style>
 </head>
 <body>
-  <!-- TOPBAR: simplified per request -->
-  <div class="topbar" role="banner" aria-label="Zep Swipe header">
-    <!-- Left: Neon Zep Swipe Text Logo -->
-    <div class="zep-logo" aria-hidden="false">
-      <div class="mark" aria-hidden="true">ZS</div>
-      <div class="text" aria-hidden="true">Zep Swipe</div>
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">ZS</div>
+      <div class="title">
+        <h1>Zep Swipe — Learn & Earn</h1>
+        <p class="muted">Practice, prove, and sell verified services</p>
+      </div>
     </div>
 
-    <!-- Right: simple controls (home button). Hidden profile elements included but visually hidden so JS keeps working -->
-    <div class="header-right">
-      <!-- optional status glow (small) -->
-      <div class="glow-placeholder" title="Live status" aria-hidden="true"></div>
+    <!-- pulsing glowing placeholder (sleek) -->
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="glow-placeholder" title="Live status"></div>
 
-      <!-- 3D Home button linking to dashboard-student.html -->
-      <a href="dashboard-student.html" class="home-3d" title="Home (Dashboard)" aria-label="Dashboard (Home)">
+      <!-- 3D Home button -->
+      <a href="dashboard-student.html" class="home-3d" title="Home (Dashboard)">
         <div class="icon">🏠</div>
         <div style="display:flex;flex-direction:column">
           <div style="font-weight:700;font-size:13px">Dashboard</div>
-          <div style="font-size:12px;color:var(--muted)">Open student dashboard</div>
+          <div style="font-size:12px;color:var(--muted)">Go to student dashboard</div>
         </div>
       </a>
 
-      <!-- Hidden profile placeholders so original JS won't error (IDs remain available) -->
-      <div class="header-hidden-profile" aria-hidden="true" style="display:none;">
-        <div id="topAvatar" class="avatar"></div>
-        <div id="topName">Demo Student</div>
-        <div id="topUniv" class="muted">University</div>
-      </div>
+      <!-- Profile preview in topbar: links to profile.html -->
+      <a href="profile.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit">
+        <div id="topAvatar" class="avatar" style="width:44px;height:44px;border-radius:10px;overflow:hidden">
+          <!-- inserted via JS -->
+        </div>
+        <div style="text-align:right">
+          <div id="topName" style="font-weight:700;font-size:13px">Demo Student</div>
+          <div id="topUniv" class="muted" style="font-size:12px">University</div>
+        </div>
+      </a>
     </div>
   </div>
 
-  <!-- APP (unchanged structure & IDs) -->
+  <!-- APP -->
   <div class="app">
     <!-- SIDEBAR -->
     <aside class="sidebar" role="navigation" aria-label="Sidebar">
@@ -339,7 +316,7 @@
   /************************************************************************
    * Zep Swipe — learn-earn single-file demo (responsive + header/profile)
    * - localStorage driven (no backend)
-   * - header simplified for Zep Swipe theme (no logic changed)
+   * - enhanced per user request: mobile-friendly, pulsing header, 3D home button, profile links
    ************************************************************************/
 
   /* ------------------ Configuration ------------------ */
@@ -402,46 +379,36 @@
       await provider.send('eth_requestAccounts', []);
       signer = await provider.getSigner();
       userAddr = await signer.getAddress();
-      document.getElementById('addr') && (document.getElementById('addr').textContent = userAddr);
-      document.getElementById('connectBtn') && (document.getElementById('connectBtn').textContent = 'Connected');
+      document.getElementById('addr').textContent = userAddr;
+      document.getElementById('connectBtn').textContent = 'Connected';
       renderPending(); renderStoreGate();
     }catch(e){ console.error(e); alert('Wallet connect failed'); }
   }
-  document.getElementById('connectBtn') && document.getElementById('connectBtn').addEventListener('click', connectWallet);
+  document.getElementById('connectBtn').addEventListener('click', connectWallet);
 
   /* ------------------ Rendering (with header/profile hooks) ------------------ */
   function renderProfileHeader(){
     const profile = readProfile();
-    // top avatar (may be hidden in header but we still set values so JS doesn't break)
+    // top avatar
     const topAvatar = document.getElementById('topAvatar');
-    if(topAvatar){
-      topAvatar.innerHTML = '';
-      if(profile.avatar){
-        const imgTop = document.createElement('img'); imgTop.src = profile.avatar; imgTop.alt = profile.name || 'avatar';
-        topAvatar.appendChild(imgTop);
-      } else {
-        topAvatar.textContent = '👩🏾‍💻';
-      }
-    }
+    topAvatar.innerHTML = '';
     const sideAvatar = document.getElementById('sideAvatar');
-    if(sideAvatar){
-      sideAvatar.innerHTML = '';
-      if(profile.avatar){
-        const imgSide = document.createElement('img'); imgSide.src = profile.avatar; imgSide.alt = profile.name || 'avatar';
-        sideAvatar.appendChild(imgSide);
-      } else {
-        sideAvatar.textContent = '👩🏾‍💻';
-      }
+    sideAvatar.innerHTML = '';
+    if(profile.avatar){
+      const imgTop = document.createElement('img'); imgTop.src = profile.avatar; imgTop.alt = profile.name || 'avatar';
+      topAvatar.appendChild(imgTop);
+      const imgSide = document.createElement('img'); imgSide.src = profile.avatar; imgSide.alt = profile.name || 'avatar';
+      sideAvatar.appendChild(imgSide);
+    } else {
+      topAvatar.textContent = '👩🏾‍💻';
+      sideAvatar.textContent = '👩🏾‍💻';
     }
     // name & university
     const name = profile.name || 'Demo Student';
     const univ = profile.university || 'University';
-    const disp = document.getElementById('displayName');
-    const topName = document.getElementById('topName');
-    const topUniv = document.getElementById('topUniv');
-    if(disp) disp.textContent = name;
-    if(topName) topName.textContent = name;
-    if(topUniv) topUniv.textContent = univ;
+    document.getElementById('displayName').textContent = name;
+    document.getElementById('topName').textContent = name;
+    document.getElementById('topUniv').textContent = univ;
     // profile link target still profile.html; allow profile.html to write to PROFILE_KEY
     const profileLink = document.getElementById('profileLink');
     if(profileLink) profileLink.href = 'profile.html';
@@ -789,11 +756,15 @@
   };
 
   /* ------------------ Profile fetch from profile.html (graceful) ------------------ */
+  // Profile page (profile.html) can write full profile JSON into localStorage under PROFILE_KEY.
+  // As a fallback, attempt to fetch profile.html and parse a <script id="zep-profile-json">...json...</script> block if present.
   async function tryFetchProfileFromProfileHtml(){
     try{
+      // try to fetch profile.html and locate script tag with ID zep-profile-json
       const res = await fetch('profile.html', {cache: 'no-store'});
       if(!res.ok) return;
       const text = await res.text();
+      // simple parse: find <script id="zep-profile-json"> ... </script>
       const markerStart = '<script id="zep-profile-json"';
       const idx = text.indexOf(markerStart);
       if(idx === -1) return;
@@ -805,7 +776,8 @@
       const profile = JSON.parse(jsonText);
       if(profile) writeProfile(profile);
     }catch(e){
-      // ignore fetch errors
+      // ignore fetch errors (profile.html might not exist or be same-origin blocked)
+      // console.debug('profile fetch failed', e);
     }
   }
 
@@ -814,8 +786,10 @@
     if(!localStorage.getItem(BAL_KEY)) localStorage.setItem(BAL_KEY, JSON.stringify({ xp:0, tokens:0, completed:{} }));
     if(!localStorage.getItem(PENDING_KEY)) localStorage.setItem(PENDING_KEY, JSON.stringify([]));
     if(!localStorage.getItem(PROFILE_KEY)) {
+      // seed a demo profile that profile.html could overwrite later
       localStorage.setItem(PROFILE_KEY, JSON.stringify({ badges: [], name: 'Demo Student', university: 'Demo University', avatar: '' }));
     }
+    // try to fetch a richer profile from profile.html (non-blocking)
     tryFetchProfileFromProfileHtml().finally(()=>{
       renderProfileHeader(); renderSkills(); renderQuests(); renderMarket(); renderPending(); renderPendingPreview(); renderBalance(); renderCerts(); renderStoreGate();
     });
