@@ -154,7 +154,12 @@ footer{
     <div class="chat-area" id="chatArea"></div>
 
     <div class="input-bar">
-      <input type="text" id="userInput" placeholder="Ask Zep AI about your assignment..." onkeypress="if(event.key==='Enter'){sendMessage()}" />
+      <input
+        type="text"
+        id="userInput"
+        placeholder="Ask Zep AI about your digital skills, Learn & Earn tasks, or assignments..."
+        onkeypress="if(event.key==='Enter'){sendMessage()}"
+      />
       <button class="send-btn" onclick="sendMessage()">Ask</button>
     </div>
   </div>
@@ -203,7 +208,7 @@ window.onload = () => {
     const welcome = document.createElement("div");
     welcome.className = "msg ai";
     welcome.innerHTML =
-      "👋 Hey student! I'm <strong>Zep AI</strong>. I can help you with assignments, summaries, explanations, maths, research writing and more. What are you working on today?";
+      "👋 Hey student! I'm <strong>Zep AI</strong>. I can help you understand any of your 8 Zep Swipe skills, practise Learn & Earn tasks, and support you with assignments, summaries, explanations, maths and research. What do you want to work on today?";
     chat.appendChild(welcome);
   }
   chat.scrollTop = chat.scrollHeight;
@@ -258,6 +263,10 @@ function typeOut(element, text) {
 function generateAIResponse(q) {
   const txt = q.toLowerCase();
 
+  // simple routing based on type of question
+  if (txt.includes("prompt") || txt.includes("ai") || txt.includes("skill") || txt.includes("learn & earn"))
+    return "💡 Let’s work on your Zep Swipe skills.\n\nTell me which skill track you’re focusing on (e.g. 'AI Prompt Engineering', 'Social Design', 'Chatbot Builder'), and I’ll give you practice ideas, examples, and ways to turn it into a service for clients.";
+
   if (txt.includes("explain") || txt.includes("definition"))
     return "📘 Here's a simple explanation:\n\n" + explainConcept(q);
 
@@ -268,29 +277,29 @@ function generateAIResponse(q) {
     return "✏️ Let's solve it step-by-step:\n\n" + solveMath(q);
 
   if (txt.includes("essay"))
-    return "📝 Here’s an essay draft you can use:\n\n" + essayTemplate(q);
+    return "📝 Here’s an essay draft outline you can use:\n\n" + essayTemplate(q);
 
   if (txt.includes("research") || txt.includes("write"))
     return "📚 Here's a structured research response:\n\n" + researchTemplate(q);
 
-  return "🤖 I can help with assignments, essays, maths, explanations or summaries.\nTry: “Explain photosynthesis in simple terms”.";
+  return "🤖 I can help you go deeper on your Zep Swipe skills, Learn & Earn tasks, essays or maths.\nTry: “Help me practise AI Prompt Engineering with an example task.”";
 }
 
 /* AI Helper Functions */
 function explainConcept(q){
-  return "This concept refers to the main idea you're studying. Give me the exact topic and I’ll break it down simply.";
+  return "This concept refers to the main idea you're studying. Tell me the exact topic (for example: 'explain tokenization in AI' or 'explain landing pages') and I’ll break it down in simple steps.";
 }
 function summarizeText(){
-  return "Send me the paragraph or PDF text and I’ll summarise it into key points.";
+  return "Paste the paragraph or text here and I’ll summarise it into short bullet points you can study from.";
 }
 function solveMath(){
-  return "Type the equation clearly, e.g. 'Solve 3x + 5 = 20'.";
+  return "Type the equation clearly, for example: 'Solve 3x + 5 = 20' or 'Simplify (2x² - 4x + 2)'. I’ll walk you through each step.";
 }
 function essayTemplate(topic){
-  return `**Essay Outline on ${topic}:**\n\n1. Introduction\n2. Key Arguments\n3. Evidence & Examples\n4. Conclusion\n\nSend me the exact topic and I will write the full essay.`;
+  return `**Essay Outline on ${topic}:**\n\n1. Introduction — define the topic and context.\n2. Main Argument — what you want to prove.\n3. Supporting Points — 2–3 paragraphs with examples.\n4. Counterpoint (optional) — handle the opposite view.\n5. Conclusion — summarise and give your final view.\n\nSend me the exact essay question and I can turn this outline into a full draft.`;
 }
 function researchTemplate(topic){
-  return `**Research Breakdown for: ${topic}**\n\n• Introduction\n• Problem Statement\n• Findings\n• Data Insights\n• Conclusion\n\nSend more details for a full research write-up.`;
+  return `**Research Breakdown for: ${topic}**\n\n• Introduction — what are you studying and why?\n• Problem Statement — what issue or question are you trying to answer?\n• Method / Approach — how would you collect data or information?\n• Key Findings — what does the data or reading suggest?\n• Conclusion — what does it all mean for students, businesses, or your community?\n\nShare your assignment instructions and I’ll help you fill each section in a way that matches your rubric.`;
 }
 </script>
 
