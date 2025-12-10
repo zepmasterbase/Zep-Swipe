@@ -1,335 +1,619 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ZepShop — Student Profile</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --zep-blue: #00f0ff;
-      --zep-violet: #9c4dff;
-      --bg-dark: #050018;
-      --card: rgba(255,255,255,0.04);
-      --glass-border: rgba(255,255,255,0.06);
-      --neon-shadow: 0 6px 30px rgba(0,240,255,0.07), inset 0 -6px 22px rgba(156,77,255,0.02);
-    }
-    html,body{height:100%; margin:0; font-family:Poppins,system-ui; background: radial-gradient(circle at 10% 10%, #07021b, #010007 60%); color:#e6faff}
-    .container{max-width:960px; margin:28px auto; padding:18px}
-    header{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px; border-radius:14px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid var(--glass-border); box-shadow: var(--neon-shadow)}
-    .brand{display:flex; gap:12px; align-items:center}
-    .logo{ width:56px; height:56px; border-radius:12px; display:grid; place-items:center; font-family:Orbitron; font-weight:700; font-size:20px; background: linear-gradient(90deg,#00d7ff,#7f49ff); color:#030014; box-shadow:0 10px 30px rgba(0,240,255,0.12);}    
-    .nav-actions{display:flex; gap:8px; align-items:center}
-    .btn { border: none; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer; font-family:Orbitron; }
-    .btn-ghost{ background: transparent; color:#aeefff; border:1px solid rgba(174,239,255,0.06) }
-    .btn-primary{ background: linear-gradient(90deg,#00f0ff,#9c4dff); color:#050014; box-shadow:0 8px 30px rgba(156,77,255,0.06) }
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Zep Swipe — Student Profile</title>
 
-    .grid{display:grid; grid-template-columns:320px 1fr; gap:18px; margin-top:18px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:16px; border:1px solid var(--glass-border); box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
 
-    .avatar-wrap{display:grid; place-items:center; gap:12px}
-    .avatar{width:160px; height:160px; border-radius:14px; background:linear-gradient(90deg,#0b0b14,#060616); display:grid; place-items:center; font-weight:800; color:#e8faff}
-    .small{font-size:13px; color:#bfefff}
+<style>
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --glass:rgba(255,255,255,0.06);
+  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
+}
 
-    label{display:block; font-size:13px; margin-bottom:6px; color:#dff9ff}
-    input[type="text"], input[type="file"], textarea{width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:#e6faff}
-    textarea{min-height:100px}
+/* Base */
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);
+  color:#fff;
+  overflow-x:hidden;
+}
 
-    .field{margin-top:12px}
-    .muted{font-size:13px; color:#9fefff}
+/* Container */
+.container{
+  max-width:900px;
+  margin:30px auto 90px auto;
+  padding:16px;
+}
 
-    .row{display:flex; gap:8px}
-    .badge{display:inline-block; padding:6px 10px; border-radius:999px; background:linear-gradient(90deg,#00f0ff,#9c4dff); color:#050014; font-weight:800}
+/* HEADER */
+.header{
+  padding:18px;
+  border-radius:16px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.1);
+  backdrop-filter:blur(15px);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  animation:glowHeader 3.5s infinite alternate ease-in-out;
+}
+@keyframes glowHeader{
+  0%{box-shadow:0 0 18px rgba(0,240,255,0.20);}
+  100%{box-shadow:0 0 42px rgba(156,77,255,0.45);}
+}
 
-    .id-preview{margin-top:10px; display:flex; gap:8px; align-items:center}
-    .id-thumb{width:120px; height:80px; border-radius:8px; background:#07071a; display:grid; place-items:center; color:#cfefff}
+.brand{
+  font-family:'Orbitron';
+  font-size:1.6rem;
+  font-weight:700;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 18px rgba(0,240,255,0.6);
+}
+.subhead{
+  font-size:11px;
+  opacity:0.78;
+}
 
-    .help{font-size:13px; color:#9fefff; margin-top:8px}
+/* Wallet info in header */
+.addr{
+  font-family:'Orbitron';
+  font-size:0.9rem;
+  color:#d7faff;
+  text-align:right;
+}
+.logout{
+  margin-left:8px;
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  filter:drop-shadow(0 0 9px rgba(255,80,80,0.8));
+}
 
-    footer{margin-top:30px; text-align:center; color:#95e9ff; opacity:0.7; font-size:13px}
+/* Cards */
+.card{
+  margin-top:18px;
+  padding:18px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(16px);
+  box-shadow:0 10px 32px rgba(0,240,255,0.08);
+}
+.section-title{
+  font-family:'Orbitron';
+  font-size:1.15rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.section-sub{
+  font-size:12px;
+  opacity:0.8;
+}
 
-    @media(max-width:880px){.grid{grid-template-columns:1fr}}
-  </style>
+/* Profile row */
+.profile-row{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-top:12px;
+}
+.avatar-wrap{
+  width:90px;
+  height:90px;
+  border-radius:999px;
+  border:2px solid rgba(0,240,255,0.5);
+  overflow:hidden;
+  background:radial-gradient(circle at 30% 20%, #0ea5e9, #020617);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 24px rgba(56,189,248,0.5);
+}
+.avatar-wrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.avatar-placeholder{
+  font-size:28px;
+  opacity:0.9;
+}
+.profile-form{
+  flex:1;
+  min-width:220px;
+}
+
+/* Inputs */
+.label{
+  font-size:12px;
+  opacity:0.85;
+  margin-top:8px;
+}
+input[type="text"], textarea, select{
+  width:100%;
+  margin-top:4px;
+  padding:9px 11px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.16);
+  background:#020617;
+  color:#e5e5e5;
+  font-size:13px;
+}
+textarea{
+  resize:vertical;
+  min-height:60px;
+}
+input[type="file"]{
+  margin-top:8px;
+  font-size:11px;
+  color:#d4d4d8;
+}
+
+/* Save button */
+.save-btn{
+  margin-top:12px;
+  padding:9px 14px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:600;
+  font-family:'Orbitron';
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  box-shadow:0 10px 30px rgba(0,240,255,0.18);
+}
+
+/* Learning progress grid */
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:12px;
+}
+@media(max-width:640px){
+  .stats-grid{
+    grid-template-columns:1fr;
+  }
+}
+.stat-card{
+  padding:10px 12px;
+  border-radius:14px;
+  background:rgba(0,0,0,0.7);
+  border:1px solid rgba(255,255,255,0.14);
+}
+.stat-label{
+  font-size:11px;
+  opacity:0.8;
+}
+.stat-value{
+  margin-top:4px;
+  font-family:'Orbitron';
+  font-size:1.05rem;
+}
+.progress-wrap{
+  margin-top:12px;
+}
+.progress-label{
+  display:flex;
+  justify-content:space-between;
+  font-size:11px;
+  opacity:0.8;
+}
+.progress-bar{
+  margin-top:4px;
+  height:8px;
+  border-radius:999px;
+  background:rgba(0,0,0,0.7);
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  transition:width .25s ease-out;
+}
+
+/* Badges */
+.badge-list{
+  margin-top:10px;
+}
+.badge-item{
+  padding:8px 10px;
+  border-radius:12px;
+  background:rgba(0,0,0,0.75);
+  border:1px solid rgba(255,255,255,0.14);
+  font-size:11px;
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:6px;
+}
+.badge-title{
+  font-weight:600;
+}
+.badge-tag{
+  padding:3px 8px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-family:'Orbitron';
+  font-size:10px;
+}
+
+/* Account section */
+.account-row{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:10px;
+  font-size:12px;
+}
+.account-box{
+  flex:1;
+  min-width:220px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:rgba(0,0,0,0.7);
+  border:1px solid rgba(255,255,255,0.14);
+}
+.copy-btn{
+  margin-top:6px;
+  padding:7px 10px;
+  border-radius:999px;
+  border:none;
+  background:rgba(15,23,42,1);
+  color:#e5e5e5;
+  font-size:11px;
+  cursor:pointer;
+}
+
+/* Footer Nav */
+.footer{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  padding:14px 22px;
+  background:rgba(0,0,0,0.55);
+  display:flex;
+  justify-content:space-around;
+  backdrop-filter:blur(10px);
+}
+.fbtn{
+  width:58px;height:58px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  transition:0.25s;
+  cursor:pointer;
+  filter:drop-shadow(0 0 14px rgba(0,240,255,0.15));
+}
+.fbtn:hover{
+  transform:translateY(-7px);
+  filter:drop-shadow(0 0 35px rgba(156,77,255,0.45));
+}
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <header>
-      <div class="brand">
-        <div class="logo">Z</div>
-        <div>
-          <div style="font-size:14px; opacity:0.95; font-family:Orbitron">ZepShop</div>
-          <div style="font-size:12px; color:#9fefff; margin-top:4px">Student Profile — Verification</div>
-        </div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="brand">Zep Swipe</div>
+      <div class="subhead">Student Profile · Your identity, skills, and learning journey.</div>
+    </div>
+
+    <div style="text-align:right;">
+      <div id="walletShort" class="addr">—</div>
+      <button class="logout" id="logoutBtn" title="Logout">
+        <svg width="22" height="22" fill="none" stroke="#ff6b6b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- PROFILE CARD -->
+  <div class="card">
+    <div class="section-title">Profile</div>
+    <div class="section-sub">Set your name, university and avatar. This will show across your dashboard and Learn & Earn experience.</div>
+
+    <div class="profile-row">
+      <div class="avatar-wrap" id="avatarWrap">
+        <span class="avatar-placeholder" id="avatarPlaceholder">👩🏾‍💻</span>
+        <img id="avatarImg" src="" alt="Avatar" style="display:none;">
       </div>
 
-      <div class="nav-actions">
-        <button id="saveBtn" class="btn btn-primary">Save Profile</button>
-        <button id="dashboardBtn" class="btn btn-ghost">Go to Dashboard</button>
+      <div class="profile-form">
+        <div class="label">Full Name</div>
+        <input type="text" id="studentName" placeholder="Your name" />
+
+        <div class="label">University</div>
+        <input type="text" id="studentUni" placeholder="e.g. University of Lagos" />
+
+        <div class="label">Focus Skill (optional)</div>
+        <input type="text" id="studentSkill" placeholder="AI Prompt Engineering, Social Design, etc." />
+
+        <div class="label">Short Bio (optional)</div>
+        <textarea id="studentBio" placeholder="Tell us what you want to build with your skills."></textarea>
+
+        <div class="label">Avatar Image</div>
+        <input type="file" id="avatarInput" accept="image/*" />
+
+        <button class="save-btn" id="saveProfileBtn">Save Profile</button>
+        <div id="saveStatus" class="section-sub" style="margin-top:6px;font-size:11px;"></div>
       </div>
-    </header>
+    </div>
+  </div>
 
-    <div class="grid">
-      <div class="card">
-        <div style="display:flex; flex-direction:column; align-items:center;">
-          <div class="avatar-wrap">
-            <div id="avatarEl" class="avatar">S</div>
-            <div class="small">Profile picture will appear on your dashboard and listings</div>
-            <div style="width:100%; margin-top:12px">
-              <label class="small">Upload profile picture</label>
-              <input id="profilePicInput" type="file" accept="image/*">
-            </div>
-            <div style="width:100%; margin-top:8px">
-              <label class="small">Upload University ID (for verification)</label>
-              <input id="idDocInput" type="file" accept="image/*,application/pdf">
-            </div>
+  <!-- LEARNING JOURNEY -->
+  <div class="card">
+    <div class="section-title">Learning Journey</div>
+    <div class="section-sub">Your Learn & Earn progress is shared across this profile, the student dashboard, and the Learn & Earn page.</div>
 
-            <div class="id-preview" id="idPreview" style="display:none">
-              <div class="id-thumb" id="idThumb">ID</div>
-              <div style="flex:1">
-                <div id="idName" style="font-weight:800">Uploaded ID</div>
-                <div class="muted" id="idInfo">Click save to persist</div>
-              </div>
-            </div>
-
-            <div style="margin-top:12px; width:100%">
-              <button id="requestVerifyBtn" class="btn btn-primary" disabled>Request Verification</button>
-              <button id="clearBtn" class="btn btn-ghost" style="margin-left:8px">Clear</button>
-            </div>
-          </div>
-        </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total XP</div>
+        <div id="xpDisplay" class="stat-value">0</div>
       </div>
-
-      <div>
-        <div class="card">
-          <h3 style="margin:0 0 8px">Your details</h3>
-          <div class="field">
-            <label>Full name</label>
-            <input id="fullName" type="text" placeholder="e.g. Jane Doe">
-          </div>
-
-          <div class="field">
-            <label>University</label>
-            <input id="university" type="text" placeholder="e.g. University of Cape Town">
-          </div>
-
-          <div class="field">
-            <label>University ID number</label>
-            <input id="universityId" type="text" placeholder="e.g. 12345678">
-          </div>
-
-          <div class="field">
-            <label>Short bio (optional)</label>
-            <textarea id="bio" placeholder="Tell other students about your skills and availability"></textarea>
-          </div>
-
-          <div class="field" style="margin-top:14px; display:flex; align-items:center; gap:12px">
-            <div>Verification status:</div>
-            <div id="statusEl" class="badge">Not verified</div>
-            <div class="muted" id="statusNote">Verification helps buyers trust you.</div>
-          </div>
-
-          <div class="help">All files and profile data are stored locally in your browser (localStorage) for this demo. For production, upload to a secure backend and encrypted storage.</div>
-        </div>
-
-        <div class="card" style="margin-top:12px">
-          <h4 style="margin:0 0 8px">Preview (how others see you)</h4>
-          <div style="display:flex; gap:12px; align-items:center">
-            <div style="width:72px; height:72px; border-radius:10px; overflow:hidden; background:#07071a; display:grid; place-items:center" id="previewAvatar">S</div>
-            <div>
-              <div style="font-weight:800" id="previewName">Your name</div>
-              <div class="muted" id="previewUni">Your university</div>
-            </div>
-            <div style="margin-left:auto">
-              <div id="previewBadge" class="badge" style="display:none">Verified</div>
-            </div>
-          </div>
-        </div>
-
+      <div class="stat-card">
+        <div class="stat-label">Locked ZAC Rewards</div>
+        <div id="zacDisplay" class="stat-value">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Skills Completed</div>
+        <div id="skillsDoneDisplay" class="stat-value">0 / 8</div>
       </div>
     </div>
 
-    <footer>
-      © <span id="year"></span> ZepShop — Zep Swipe. Built on Base.
-    </footer>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Path to Freelance Marketplace</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="section-sub" style="margin-top:10px;">Badges from Learn & Earn:</div>
+    <div id="badgeList" class="badge-list"></div>
   </div>
 
-  <script>
-    // localStorage key
-    const STORAGE_KEY = 'zepProfile_v1';
+  <!-- ACCOUNT / WALLET -->
+  <div class="card">
+    <div class="section-title">Account & Wallet</div>
+    <div class="section-sub">This is your on-chain identity on Base — the same wallet used for Learn & Earn and Swipe Merchants later.</div>
 
-    // UI refs
-    const profilePicInput = document.getElementById('profilePicInput');
-    const idDocInput = document.getElementById('idDocInput');
-    const avatarEl = document.getElementById('avatarEl');
-    const idPreview = document.getElementById('idPreview');
-    const idThumb = document.getElementById('idThumb');
-    const idName = document.getElementById('idName');
-    const requestVerifyBtn = document.getElementById('requestVerifyBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const saveBtn = document.getElementById('saveBtn');
-    const dashboardBtn = document.getElementById('dashboardBtn');
+    <div class="account-row">
+      <div class="account-box">
+        <div class="label">Wallet Address</div>
+        <div id="walletFull" style="font-size:11px;word-break:break-all;margin-top:4px;">—</div>
+        <button class="copy-btn" id="copyWalletBtn">Copy Wallet</button>
+      </div>
 
-    const fullName = document.getElementById('fullName');
-    const university = document.getElementById('university');
-    const universityId = document.getElementById('universityId');
-    const bio = document.getElementById('bio');
+      <div class="account-box">
+        <div class="label">Profile Sync</div>
+        <div class="section-sub" style="margin-top:4px;">
+          • This profile is used by Learn & Earn and your future Swipe Merchants store.<br/>
+          • Your avatar and university can be shown alongside your gigs.
+        </div>
+      </div>
+    </div>
+  </div>
 
-    const statusEl = document.getElementById('statusEl');
-    const statusNote = document.getElementById('statusNote');
+</div>
 
-    const previewAvatar = document.getElementById('previewAvatar');
-    const previewName = document.getElementById('previewName');
-    const previewUni = document.getElementById('previewUni');
-    const previewBadge = document.getElementById('previewBadge');
+<!-- FOOTER NAV -->
+<div class="footer">
+  <a class="fbtn" href="wallet.html" title="Wallet">
+    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g1)" stroke-width="1.4">
+      <rect x="3" y="7" width="18" height="13" rx="2"/>
+      <path d="M3 11h18"/>
+      <defs><linearGradient id="g1"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
+    </svg>
+  </a>
 
-    document.getElementById('year').textContent = new Date().getFullYear();
+  <a class="fbtn" href="learn-earn.html" title="Learn & Earn">
+    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g2)" stroke-width="1.4">
+      <circle cx="12" cy="12" r="8"/>
+      <path d="M12 8v8M8 12h8"/>
+      <defs><linearGradient id="g2"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
+    </svg>
+  </a>
 
-    let state = {
-      fullName: '',
-      university: '',
-      universityId: '',
-      bio: '',
-      profilePic: null, // dataURL
-      idDoc: null, // dataURL or filename
-      verificationRequested: false,
-      verified: false,
-    };
+  <a class="fbtn" href="zep-ai.html" title="Ask Zep AI">
+    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g3)" stroke-width="1.4">
+      <circle cx="12" cy="12" r="9"/>
+      <circle cx="9" cy="10" r="1"/>
+      <circle cx="15" cy="10" r="1"/>
+      <path d="M8 15c2 2 6 2 8 0"/>
+      <defs><linearGradient id="g3"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
+    </svg>
+  </a>
 
-    // helpers
-    const readFileAsDataURL = (file) => new Promise((res, rej) => {
-      const reader = new FileReader();
-      reader.onload = () => res(reader.result);
-      reader.onerror = rej;
-      reader.readAsDataURL(file);
+  <a class="fbtn" href="student-dashboard.html" title="Dashboard">
+    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g4)" stroke-width="1.4">
+      <rect x="3" y="7" width="18" height="13" rx="2"/>
+      <path d="M3 11h18"/>
+      <defs><linearGradient id="g4"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
+    </svg>
+  </a>
+</div>
+
+<script>
+/* ---------- Keys (shared with Learn & Earn) ---------- */
+const BAL_KEY     = 'zepswipe_balance_v1';         // XP, completed skills
+const PENDING_KEY = 'zepswipe_pending_rewards_v1'; // pending ZAC
+const PROFILE_KEY = 'zepswipe_profile_v1';         // badges + profile info
+
+/* ---------- Helpers ---------- */
+function shortAddr(a){return a?`${a.slice(0,6)}...${a.slice(-4)}`:'—';}
+
+function readBalance(){
+  try{return JSON.parse(localStorage.getItem(BAL_KEY)) || { xp:0, tokens:0, completed:{} }; }
+  catch{return { xp:0, tokens:0, completed:{} };}
+}
+function readPending(){
+  try{return JSON.parse(localStorage.getItem(PENDING_KEY)) || []; }
+  catch{return []; }
+}
+function readProfile(){
+  try{return JSON.parse(localStorage.getItem(PROFILE_KEY)) || { badges:[] }; }
+  catch{return { badges:[] };}
+}
+function writeProfile(p){ localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); }
+
+/* ---------- Auth & Wallet ---------- */
+const walletShortEl = document.getElementById('walletShort');
+const walletFullEl  = document.getElementById('walletFull');
+
+document.getElementById("logoutBtn").onclick = ()=>{
+  localStorage.removeItem("zepStudent");
+  location.href="index.html";
+};
+
+function loadWallet(){
+  const s = JSON.parse(localStorage.getItem("zepStudent"));
+  if(!s){ location.href="student-login.html"; return null; }
+  walletShortEl.textContent = shortAddr(s.wallet);
+  walletFullEl.textContent  = s.wallet;
+  return s.wallet;
+}
+
+/* ---------- Avatar + Profile form ---------- */
+const avatarImg        = document.getElementById('avatarImg');
+const avatarPlaceholder= document.getElementById('avatarPlaceholder');
+const avatarInput      = document.getElementById('avatarInput');
+const studentNameInput = document.getElementById('studentName');
+const studentUniInput  = document.getElementById('studentUni');
+const studentSkillInput= document.getElementById('studentSkill');
+const studentBioInput  = document.getElementById('studentBio');
+const saveStatusEl     = document.getElementById('saveStatus');
+
+let avatarDataUrl = null;
+
+function loadProfileUI(){
+  const profile = readProfile();
+  if(profile.name) studentNameInput.value = profile.name;
+  if(profile.university) studentUniInput.value = profile.university;
+  if(profile.focusSkill) studentSkillInput.value = profile.focusSkill;
+  if(profile.bio) studentBioInput.value = profile.bio;
+  if(profile.avatar){
+    avatarDataUrl = profile.avatar;
+    avatarImg.src = avatarDataUrl;
+    avatarImg.style.display = 'block';
+    avatarPlaceholder.style.display = 'none';
+  }
+}
+
+avatarInput.addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    avatarDataUrl = ev.target.result;
+    avatarImg.src = avatarDataUrl;
+    avatarImg.style.display = 'block';
+    avatarPlaceholder.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+});
+
+document.getElementById('saveProfileBtn').onclick = ()=>{
+  const profile = readProfile();
+  profile.name       = studentNameInput.value.trim();
+  profile.university = studentUniInput.value.trim();
+  profile.focusSkill = studentSkillInput.value.trim();
+  profile.bio        = studentBioInput.value.trim();
+  if(avatarDataUrl)  profile.avatar = avatarDataUrl;
+
+  writeProfile(profile);
+  saveStatusEl.textContent = "Profile saved. This will be used across your dashboard and Learn & Earn.";
+  setTimeout(()=>{ saveStatusEl.textContent = ""; }, 3000);
+};
+
+/* ---------- Learning Journey Render ---------- */
+const xpDisplay        = document.getElementById('xpDisplay');
+const zacDisplay       = document.getElementById('zacDisplay');
+const skillsDoneDisplay= document.getElementById('skillsDoneDisplay');
+const progressFill     = document.getElementById('progressFill');
+const progressPercent  = document.getElementById('progressPercent');
+const badgeList        = document.getElementById('badgeList');
+
+const TOTAL_SKILLS = 8;
+
+function renderLearning(){
+  const bal     = readBalance();
+  const pending = readPending();
+  const profile = readProfile();
+
+  const xp  = bal.xp || 0;
+  const lockedZac = pending.filter(p=>p.status==='pending')
+                           .reduce((sum,p)=>sum+(p.tokens||0),0);
+  const completedSkills = Object.keys(bal.completed || {}).length;
+
+  xpDisplay.textContent        = xp;
+  zacDisplay.textContent       = lockedZac;
+  skillsDoneDisplay.textContent= `${completedSkills} / ${TOTAL_SKILLS}`;
+
+  const pct = Math.min(100, Math.round((completedSkills / TOTAL_SKILLS)*100));
+  progressFill.style.width = pct + '%';
+  progressPercent.textContent = pct + '%';
+
+  badgeList.innerHTML = '';
+  const badges = profile.badges || [];
+  if(badges.length === 0){
+    badgeList.innerHTML = `<div class="section-sub" style="font-size:11px;">No badges yet. Complete Learn & Earn skill tests to unlock your first badge.</div>`;
+  }else{
+    badges.forEach(b=>{
+      const div = document.createElement('div');
+      div.className = 'badge-item';
+      div.innerHTML = `
+        <div>
+          <div class="badge-title">${b.skillTitle}</div>
+          <div class="section-sub" style="font-size:11px;margin-top:2px;">Issued: ${new Date(b.issuedAt).toLocaleDateString()}</div>
+        </div>
+        <div class="badge-tag">Certified</div>
+      `;
+      badgeList.appendChild(div);
     });
+  }
+}
 
-    function setStatus(){
-      if(state.verified){ statusEl.innerText = 'Verified'; statusEl.style.background = 'linear-gradient(90deg,#00f0ff,#9c4dff)'; previewBadge.style.display='inline-block'; }
-      else if(state.verificationRequested){ statusEl.innerText = 'Pending'; statusEl.style.background = 'linear-gradient(90deg,#ffd36b,#ff7a7a)'; previewBadge.style.display='none'; }
-      else { statusEl.innerText = 'Not verified'; statusEl.style.background = '#4b5563'; previewBadge.style.display='none'; }
-    }
+/* ---------- Copy wallet ---------- */
+document.getElementById('copyWalletBtn').onclick = ()=>{
+  const text = walletFullEl.textContent || '';
+  if(!text || text === '—') return;
+  navigator.clipboard.writeText(text).then(()=>{
+    alert("Wallet address copied.");
+  });
+};
 
-    function updatePreviews(){
-      previewName.innerText = state.fullName || 'Your name';
-      previewUni.innerText = state.university || 'Your university';
-      if(state.profilePic){
-        avatarEl.style.backgroundImage = `url(${state.profilePic})`;
-        avatarEl.style.backgroundSize = 'cover';
-        avatarEl.textContent = '';
-        previewAvatar.style.backgroundImage = `url(${state.profilePic})`;
-        previewAvatar.style.backgroundSize = 'cover';
-        previewAvatar.textContent = '';
-      } else {
-        avatarEl.style.backgroundImage = '';
-        avatarEl.textContent = (state.fullName ? state.fullName.slice(0,1).toUpperCase() : 'S');
-        previewAvatar.style.backgroundImage = '';
-        previewAvatar.textContent = (state.fullName ? state.fullName.slice(0,1).toUpperCase() : 'S');
-      }
+/* ---------- Init ---------- */
+window.onload = ()=>{
+  loadWallet();
+  loadProfileUI();
+  renderLearning();
+};
+</script>
 
-      if(state.idDoc){
-        idPreview.style.display='flex';
-        if(state.idDocType && state.idDocType.startsWith('image/')){
-          idThumb.style.backgroundImage = `url(${state.idDoc})`;
-          idThumb.style.backgroundSize = 'cover';
-          idThumb.textContent='';
-        } else {
-          idThumb.style.backgroundImage = '';
-          idThumb.textContent = 'DOC';
-        }
-        idName.innerText = `ID ${state.universityId || ''}`;
-        requestVerifyBtn.disabled = false;
-      } else {
-        idPreview.style.display='none';
-        requestVerifyBtn.disabled = true;
-      }
-
-      setStatus();
-    }
-
-    // load from localStorage
-    function loadProfile(){
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if(!raw) return;
-      try{
-        const obj = JSON.parse(raw);
-        state = { ...state, ...obj };
-        // ensure fields updated
-        fullName.value = state.fullName || '';
-        university.value = state.university || '';
-        universityId.value = state.universityId || '';
-        bio.value = state.bio || '';
-        updatePreviews();
-      }catch(e){ console.warn('loadProfile parse err', e); }
-    }
-
-    // save to localStorage
-    function saveProfile(){
-      state.fullName = fullName.value.trim();
-      state.university = university.value.trim();
-      state.universityId = universityId.value.trim();
-      state.bio = bio.value.trim();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      alert('Profile saved locally.');
-      updatePreviews();
-    }
-
-    // clear
-    function clearProfile(){
-      if(!confirm('Clear profile data from this browser? This cannot be undone.')) return;
-      localStorage.removeItem(STORAGE_KEY);
-      state = { fullName:'', university:'', universityId:'', bio:'', profilePic:null, idDoc:null, verificationRequested:false, verified:false };
-      fullName.value=''; university.value=''; universityId.value=''; bio.value='';
-      updatePreviews();
-      alert('Profile cleared.');
-    }
-
-    // handle uploads
-    profilePicInput.addEventListener('change', async (e)=>{
-      const f = e.target.files[0];
-      if(!f) return;
-      if(!f.type.startsWith('image/')) return alert('Profile picture must be an image file.');
-      const data = await readFileAsDataURL(f);
-      state.profilePic = data;
-      saveProfile();
-      updatePreviews();
-    });
-
-    idDocInput.addEventListener('change', async (e)=>{
-      const f = e.target.files[0];
-      if(!f) return;
-      const data = await readFileAsDataURL(f);
-      state.idDoc = data;
-      state.idDocType = f.type;
-      // mark that verification needs to be requested again when ID changes
-      state.verificationRequested = false;
-      state.verified = false;
-      saveProfile();
-      updatePreviews();
-    });
-
-    requestVerifyBtn.addEventListener('click', ()=>{
-      if(!state.idDoc || !university.value || !universityId.value) return alert('Please provide university name, ID number, and upload your ID document first.');
-      state.verificationRequested = true;
-      state.verified = false; // reset verified
-      saveProfile();
-      alert('Verification requested. In a production app this would notify an admin to manually verify your ID. For demo you can click "Mark verified" in the console or call the simulate function.');
-      updatePreviews();
-    });
-
-    // small helper to simulate admin verification (for demo)
-    window.simulateMarkVerified = function(){
-      state.verified = true; state.verificationRequested = false; saveProfile(); updatePreviews(); alert('Profile marked as verified (demo).'); }
-
-    saveBtn.addEventListener('click', saveProfile);
-    clearBtn.addEventListener('click', clearProfile);
-    dashboardBtn.addEventListener('click', ()=>{ saveProfile(); location.href='student-dashboard.html'; });
-
-    // update previews when typing
-    [fullName, university, universityId, bio].forEach(el=> el.addEventListener('input', ()=>{ state.fullName = fullName.value; state.university = university.value; state.universityId = universityId.value; state.bio = bio.value; updatePreviews(); }));
-
-    // initial load
-    loadProfile();
-    updatePreviews();
-  </script>
 </body>
 </html>
