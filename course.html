@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zep Swipe — Skill Course</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Firebase (ready for future sync) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #0c0624 0%, #000010 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 1rem;
+      box-shadow: 0 0 25px rgba(0,240,255,0.2);
+    }
+    .glow-text {
+      background: linear-gradient(90deg, #00f0ff, #ff00f0, #00ffb3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .pill {
+      border-radius: 999px;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.75rem;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="no-scrollbar">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 bg-opacity-30 backdrop-blur-lg glass-card z-50 max-w-5xl mx-auto mt-3">
+    <div>
+      <h1 class="text-xl font-orbitron glow-text font-bold">Zep Swipe — Skill Course</h1>
+      <p class="text-xs text-cyan-100 mt-1 opacity-80" id="headerSubtitle">
+        Deep dive into one skill, then take the live test in Learn & Earn.
+      </p>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="hidden sm:flex flex-col items-end text-xs">
+        <span id="walletShort" class="text-cyan-200">Wallet: not linked</span>
+        <span class="text-[0.7rem] text-gray-300" id="xpSummary">XP: 0 · Skills Done: 0 / 8</span>
+      </div>
+      <button onclick="logout()" class="px-3 py-1 text-xs bg-pink-500 hover:bg-pink-600 rounded-full font-semibold">
+        Logout
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="flex-1 pt-28 pb-24 px-4 sm:px-6 max-w-5xl mx-auto space-y-6">
+
+    <!-- If no skillId: show skill picker -->
+    <section id="pickerSection" class="glass-card p-4 sm:p-5 hidden">
+      <h2 class="glow-text text-lg font-bold mb-2">🎓 Choose a Skill to Explore</h2>
+      <p class="text-xs text-gray-300 mb-3">
+        Select any track to see the full course outline. You can always come back here from Learn & Earn or your dashboard.
+      </p>
+      <div id="pickerGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-2"></div>
+    </section>
+
+    <!-- Course Detail -->
+    <section id="courseSection" class="space-y-5 hidden">
+      <!-- Hero -->
+      <div class="glass-card p-4 sm:p-5">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <p class="text-[0.7rem] text-gray-300 uppercase tracking-wide">Skill Track</p>
+            <h2 id="courseTitle" class="glow-text text-xl font-bold mt-1">Skill Title</h2>
+            <p id="courseShort" class="text-xs text-gray-200 mt-2">
+              Short description here.
+            </p>
+            <div id="courseWhy" class="mt-3 text-[0.8rem] text-gray-200"></div>
+          </div>
+          <div class="flex flex-col items-end gap-2 text-xs sm:text-sm">
+            <div class="px-3 py-2 rounded-lg bg-black/40 border border-cyan-500/40 text-right">
+              <p class="text-gray-300 text-[0.7rem]">Estimated time</p>
+              <p id="courseTime" class="text-cyan-300 text-lg font-semibold">30–45 min</p>
+            </div>
+            <span class="pill bg-black/50">
+              Complete course → then pass test in
+              <span class="font-semibold text-cyan-300 ml-1">Learn & Earn</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Progress within this skill -->
+        <div class="mt-4">
+          <div class="flex justify-between text-[0.7rem] text-gray-300 mb-1">
+            <span>Course Progress</span>
+            <span id="courseProgressLabel">0% completed</span>
+          </div>
+          <div class="w-full bg-gray-800 rounded-full h-2">
+            <div id="courseProgressBar" class="bg-gradient-to-r from-cyan-400 via-pink-500 to-green-400 h-2 rounded-full transition-all" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modules -->
+      <div class="glass-card p-4 sm:p-5">
+        <div class="flex justify-between items-center mb-3">
+          <h3 class="glow-text text-lg font-bold">📚 Learning Modules</h3>
+          <span class="pill bg-black/50 text-[0.7rem]" id="modulesCountLabel">3 modules</span>
+        </div>
+        <div id="modulesList" class="space-y-3 text-xs"></div>
+      </div>
+
+      <!-- Practice briefs / tools -->
+      <div class="glass-card p-4 sm:p-5">
+        <h3 class="glow-text text-lg font-bold mb-2">🛠 Practice Ideas & Tools</h3>
+        <div id="practiceList" class="space-y-2 text-[0.8rem] text-gray-200"></div>
+      </div>
+
+      <!-- Final CTA: go back to Learn & Earn test -->
+      <div class="glass-card p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+          <h3 class="glow-text text-lg font-bold mb-1">✅ Ready for the Live Test?</h3>
+          <p class="text-[0.8rem] text-gray-200" id="ctaText">
+            Mark all modules as complete to unlock the test and earn ZAC rewards.
+          </p>
+        </div>
+        <button id="testBtn" disabled
+                class="w-full sm:w-auto px-4 py-2 text-xs rounded-full bg-gray-700 text-gray-400 cursor-not-allowed font-semibold">
+          Locked · Finish modules first
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER NAV -->
+  <footer class="fixed bottom-0 left-0 w-full bg-opacity-30 backdrop-blur-lg glass-card py-3 flex justify-around text-cyan-400 text-lg max-w-5xl mx-auto mb-3">
+    <a href="student-dashboard.html" class="flex flex-col items-center text-xs">
+      <i class="fas fa-home"></i><span class="mt-1 text-[0.65rem]">Home</span>
+    </a>
+    <a href="learn-earn.html" class="flex flex-col items-center text-xs">
+      <i class="fas fa-graduation-cap"></i><span class="mt-1 text-[0.65rem]">Learn</span>
+    </a>
+    <a href="wallet.html" class="flex flex-col items-center text-xs">
+      <i class="fas fa-wallet"></i><span class="mt-1 text-[0.65rem]">Wallet</span>
+    </a>
+    <a href="profile.html" class="flex flex-col items-center text-xs text-pink-400">
+      <i class="fas fa-user"></i><span class="mt-1 text-[0.65rem]">Profile</span>
+    </a>
+  </footer>
+
+  <script src="https://kit.fontawesome.com/a2e0e6ad42.js" crossorigin="anonymous"></script>
+
+  <!-- LOGIC -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+    /* ------------------ Firebase Init (future-proof) ------------------ */
+    const firebaseConfig = {
+      apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
+      authDomain: "zep-swipe-6cb53.firebaseapp.com",
+      projectId: "zep-swipe-6cb53",
+      storageBucket: "zep-swipe-6cb53.firebasestorage.app",
+      messagingSenderId: "895701529881",
+      appId: "1:895701529881:web:81c6e3e420bfe6cb7dc188",
+      measurementId: "G-L48WTHMKKZ"
+    };
+    initializeApp(firebaseConfig);
+    // Later: sync course progress to Firestore if you want
+
+    /* ------------------ Shared Keys ------------------ */
+    const BAL_KEY       = 'zepswipe_balance_v1';         // XP, tokens, completed tests
+    const COURSE_KEY    = 'zepswipe_course_progress_v1'; // per-skill module completion
+    const SKILLS_COUNT  = 8;
+
+    /* ------------------ Skill Data (must match learn-earn IDs) ------------------ */
+    const COURSES = [
+      {
+        id: 's1',
+        title: 'AI Prompt Engineering',
+        short: 'Design prompts that get reliable, useful outputs.',
+        why: [
+          'Good prompts turn basic AI tools into powerful assistants.',
+          'Clients pay for people who can translate messy ideas into clear instructions.',
+          'This skill transfers across content, research, customer support and more.'
+        ],
+        time: '30–45 min',
+        modules: [
+          {
+            id: 'm1',
+            title: 'Prompt building blocks',
+            desc: 'Understand roles, goals, context and constraints. Learn how each part changes the output.',
+          },
+          {
+            id: 'm2',
+            title: 'From vague to specific',
+            desc: 'Take a vague request and rewrite it into a sharp, structured prompt with clear steps.',
+          },
+          {
+            id: 'm3',
+            title: 'Iterating with AI',
+            desc: 'Practice asking AI for variations, improvements and checks on its own answers.',
+          }
+        ],
+        practice: [
+          'Write one prompt to summarise a long article for busy students.',
+          'Create a prompt template you can reuse for any local business social media post.',
+          'Build a “debug prompt” that helps you fix weak AI answers.'
+        ]
+      },
+      {
+        id: 's2',
+        title: 'AI Content Generation',
+        short: 'Turn ideas into posts, emails and scripts using AI.',
+        why: [
+          'Brands need consistent content across channels but have limited time.',
+          'AI can handle drafts; you bring context and quality control.',
+          'You can sell content packs, caption bundles and email sequences.'
+        ],
+        time: '30–45 min',
+        modules: [
+          { id:'m1', title:'Content pillars', desc:'Define 3–5 content themes for a brand or creator.' },
+          { id:'m2', title:'Draft with AI', desc:'Use AI to draft posts for each pillar, then edit them.' },
+          { id:'m3', title:'Repurpose across formats', desc:'Turn one idea into a tweet, a caption and a short script.' }
+        ],
+        practice: [
+          'Choose a campus club and design one week of posts.',
+          'Use AI to write 3 caption options, then manually improve them.',
+          'Turn a text post into a 15-second video script.'
+        ]
+      },
+      {
+        id: 's3',
+        title: 'Social Design (No-code)',
+        short: 'Plan carousels, flyers and social assets clients can plug into Canva or Figma.',
+        why: [
+          'Visuals are the first thing people see — they decide if someone stops scrolling.',
+          'You can design structures and copy even if you’re not a pro designer yet.',
+          'Students & SMEs want fast, affordable templates tailored to their context.'
+        ],
+        time: '30–45 min',
+        modules: [
+          { id:'m1', title:'Carousel structures', desc:'Learn 3 simple frames: Problem → Promise → Proof, Tip lists, Before/After.' },
+          { id:'m2', title:'Copy first, design second', desc:'Draft the words before thinking about colors and fonts.' },
+          { id:'m3', title:'Hand-off ready', desc:'Prepare notes so a designer or Canva user can build it quickly.' }
+        ],
+        practice: [
+          'Plan a 3-slide carousel explaining one concept to first-year students.',
+          'Write the text for each slide before touching any design tool.',
+          'Add simple instructions like “use campus photos” or “use brand colors”.'
+        ]
+      },
+      {
+        id: 's4',
+        title: 'Chatbot Builder',
+        short: 'Map simple FAQ bots for campus services and small businesses.',
+        why: [
+          'Most FAQs can be automated with simple flows — saving time for staff.',
+          'You don’t need coding; just clear logic and user-friendly language.',
+          'You can charge for building and maintaining chat flows.'
+        ],
+        time: '30–45 min',
+        modules: [
+          { id:'m1', title:'Identify FAQs', desc:'Write down common questions students or customers ask.' },
+          { id:'m2', title:'Design the flow', desc:'Map a start message, 3 branches and a human handover.' },
+          { id:'m3', title:'Tone & clarity', desc:'Make sure answers are short, polite and localised.' }
+        ],
+        practice: [
+          'Choose one campus office and list 5 FAQs.',
+          'Draw a simple decision tree: question → answer → next options.',
+          'Write a friendly welcome message for your chatbot.'
+        ]
+      },
+      {
+        id: 's5',
+        title: 'No-code Websites',
+        short: 'Plan simple landing pages and lead capture forms.',
+        why: [
+          'Many small businesses just need one page that clearly explains what they offer.',
+          'No-code tools make this fast; the main value is in clarity and structure.',
+          'You can sell landing page setups, audits and copy upgrades.'
+        ],
+        time: '30–45 min',
+        modules: [
+          { id:'m1', title:'Hero section', desc:'Craft a clear headline, sub-headline and main call to action.' },
+          { id:'m2', title:'Proof & benefits', desc:'List benefits, social proof and key features the visitor cares about.' },
+          { id:'m3', title:'Lead capture', desc:'Decide what info you really need in a form and nothing extra.' }
+        ],
+        practice: [
+          'Write a hero section for a simple service page.',
+          'List 3 bullet-point benefits phrased in plain language.',
+          'Design a short form with max 3 fields.'
+        ]
+      },
+      {
+        id: 's6',
+        title: 'Micro Video Editor',
+        short: 'Plan short-form clips and captions that hold attention.',
+        why: [
+          'Short-form video is one of the strongest channels for discovery.',
+          'Even basic editing with strong hooks is valuable to creators and brands.',
+          'You can sell clip packs, hook writing and captioning as services.'
+        ],
+        time: '30–45 min',
+        modules: [
+          { id:'m1', title:'Hooks that stop scroll', desc:'Learn patterns like “X mistakes”, “I wish I knew” and bold statements.' },
+          { id:'m2', title:'Shot list & pacing', desc:'Plan 3–5 shots and where text overlays should appear.' },
+          { id:'m3', title:'Captions & CTA', desc:'Write captions that invite comments or shares.' }
+        ],
+        practice: [
+          'Write 3 different hooks for the same idea.',
+          'Describe how you would cut a 30s video down to 15s.',
+          'Draft a caption with one clear call to action.'
+        ]
+      },
+      {
+        id: 's7',
+        title: 'Research & Lead Gen',
+        short: 'Collect structured, useful data for clients.',
+        why: [
+          'Most teams know they need data but don’t have time to gather it.',
+          'You can provide clean, usable spreadsheets or lists.',
+          'This is a great entry service for students building reputation.'
+        ],
+        time: '30–45 min',
+        modules: [
+          { id:'m1', title:'Define the target', desc:'Describe who you’re researching and why.' },
+          { id:'m2', title:'Design the spreadsheet', desc:'Choose only the columns that matter for decisions.' },
+          { id:'m3', title:'Quality checks', desc:'Verify emails, links or profiles before sending to clients.' }
+        ],
+        practice: [
+          'Define an “ideal customer profile” for one project.',
+          'List 5 columns you would use to track leads.',
+          'Write your own checklist for validating data.'
+        ]
+      },
+      {
+        id: 's8',
+        title: 'Micro-Automation',
+        short: 'Automate tiny repetitive tasks using no-code tools.',
+        why: [
+          'Small automations save hours over a semester for students and teams.',
+          'You can connect tools like forms, sheets and email.',
+          'Clients will pay for workflows that “just work” in the background.'
+        ],
+        time: '30–45 min',
+        modules: [
+          { id:'m1', title:'Spot repetitive tasks', desc:'Notice tasks you repeat daily or weekly.' },
+          { id:'m2', title:'Map trigger → action', desc:'Describe what starts the automation and what should happen.' },
+          { id:'m3', title:'Design for failure', desc:'Plan what happens if an automation fails silently.' }
+        ],
+        practice: [
+          'Write one automation idea for your own student life.',
+          'Design a simple “if this, then that” statement.',
+          'List things you would monitor to make sure the automation works.'
+        ]
+      }
+    ];
+
+    /* ------------------ Small Helpers ------------------ */
+    function getSkillIdFromUrl(){
+      const params = new URLSearchParams(window.location.search);
+      return params.get('skillId') || '';
+    }
+
+    function readBalance(){
+      try{ return JSON.parse(localStorage.getItem(BAL_KEY)) || { xp:0, tokens:0, completed:{} }; }
+      catch{ return { xp:0, tokens:0, completed:{} }; }
+    }
+
+    function readCourseProgress(){
+      try{ return JSON.parse(localStorage.getItem(COURSE_KEY)) || {}; }
+      catch{ return {}; }
+    }
+
+    function writeCourseProgress(p){
+      localStorage.setItem(COURSE_KEY, JSON.stringify(p));
+    }
+
+    function showWalletShort(){
+      const userStr = localStorage.getItem('zepUser');
+      const el = document.getElementById('walletShort');
+      if(!userStr){
+        el.textContent = 'Wallet: not linked';
+        return;
+      }
+      try{
+        const user = JSON.parse(userStr);
+        if(user && user.wallet){
+          const w = user.wallet;
+          el.textContent = `Wallet: ${w.slice(0,6)}...${w.slice(-4)}`;
+        }else{
+          el.textContent = 'Wallet: not linked';
+        }
+      }catch{
+        el.textContent = 'Wallet: not linked';
+      }
+    }
+
+    function renderXpSummary(){
+      const bal = readBalance();
+      const completedSkills = Object.keys(bal.completed || {}).length;
+      document.getElementById('xpSummary').textContent =
+        `XP: ${bal.xp || 0} · Skills Done: ${completedSkills} / ${SKILLS_COUNT}`;
+    }
+
+    window.logout = () => {
+      alert("Logged out successfully!");
+      window.location.href = "index.html";
+    };
+
+    /* ------------------ Skill Picker View ------------------ */
+    function renderPicker(){
+      const pickerSection = document.getElementById('pickerSection');
+      const pickerGrid = document.getElementById('pickerGrid');
+
+      pickerSection.classList.remove('hidden');
+      pickerGrid.innerHTML = '';
+
+      COURSES.forEach(course => {
+        const card = document.createElement('div');
+        card.className = 'p-3 bg-black/50 border border-white/10 rounded-xl flex flex-col justify-between text-xs';
+        card.innerHTML = `
+          <div>
+            <h3 class="text-sm font-semibold">${course.title}</h3>
+            <p class="text-[0.7rem] text-gray-300 mt-1">${course.short}</p>
+          </div>
+          <div class="mt-3 flex items-center justify-between">
+            <span class="pill bg-black/50 text-[0.7rem]">${course.time}</span>
+            <button class="px-2 py-1 text-[0.7rem] rounded-full bg-gradient-to-r from-cyan-400 to-pink-500 text-black font-semibold">
+              Open
+            </button>
+          </div>
+        `;
+        card.querySelector('button').addEventListener('click', () => {
+          window.location.href = `course.html?skillId=${course.id}`;
+        });
+        pickerGrid.appendChild(card);
+      });
+    }
+
+    /* ------------------ Course Detail View ------------------ */
+    function renderCourse(skillId){
+      const skill = COURSES.find(c => c.id === skillId);
+      const courseSection = document.getElementById('courseSection');
+      const headerSubtitle = document.getElementById('headerSubtitle');
+
+      if(!skill){
+        // fallback: show picker if skill not found
+        renderPicker();
+        headerSubtitle.textContent = 'Skill not found. Choose a track from the list below.';
+        return;
+      }
+
+      courseSection.classList.remove('hidden');
+      headerSubtitle.textContent = `You’re viewing: ${skill.title}`;
+
+      document.getElementById('courseTitle').textContent = skill.title;
+      document.getElementById('courseShort').textContent = skill.short;
+      document.getElementById('courseTime').textContent = skill.time;
+      document.getElementById('modulesCountLabel').textContent = `${skill.modules.length} modules`;
+
+      const whyEl = document.getElementById('courseWhy');
+      whyEl.innerHTML = '';
+      skill.why.forEach(point=>{
+        const p = document.createElement('p');
+        p.className = 'mb-1';
+        p.textContent = '• ' + point;
+        whyEl.appendChild(p);
+      });
+
+      // Modules + progress
+      const progress = readCourseProgress();
+      const skillProgress = progress[skillId] || { completed: [] };
+      const completedModules = new Set(skillProgress.completed || []);
+      const modulesList = document.getElementById('modulesList');
+      modulesList.innerHTML = '';
+
+      skill.modules.forEach(mod=>{
+        const wrapper = document.createElement('div');
+        wrapper.className = 'flex gap-3 bg-black/40 border border-white/10 rounded-lg px-3 py-2';
+
+        const checked = completedModules.has(mod.id);
+        wrapper.innerHTML = `
+          <div class="flex items-start pt-1">
+            <input type="checkbox" class="mt-1 cursor-pointer" ${checked ? 'checked' : ''} />
+          </div>
+          <div class="flex-1">
+            <p class="text-[0.8rem] font-semibold">${mod.title}</p>
+            <p class="text-[0.75rem] text-gray-300 mt-1">${mod.desc}</p>
+          </div>
+        `;
+
+        const checkbox = wrapper.querySelector('input');
+        checkbox.addEventListener('change', () => {
+          const prog = readCourseProgress();
+          const sp = prog[skillId] || { completed: [] };
+          const set = new Set(sp.completed || []);
+          if(checkbox.checked){
+            set.add(mod.id);
+          } else {
+            set.delete(mod.id);
+          }
+          sp.completed = Array.from(set);
+          prog[skillId] = sp;
+          writeCourseProgress(prog);
+          updateCourseProgressUI(skillId);
+        });
+
+        modulesList.appendChild(wrapper);
+      });
+
+      // Practice ideas
+      const practiceList = document.getElementById('practiceList');
+      practiceList.innerHTML = '';
+      skill.practice.forEach(item=>{
+        const p = document.createElement('p');
+        p.textContent = '• ' + item;
+        practiceList.appendChild(p);
+      });
+
+      updateCourseProgressUI(skillId);
+    }
+
+    function updateCourseProgressUI(skillId){
+      const skill = COURSES.find(c => c.id === skillId);
+      if(!skill) return;
+
+      const progress = readCourseProgress();
+      const sp = progress[skillId] || { completed: [] };
+      const total = skill.modules.length;
+      const done = (sp.completed || []).length;
+      const pct = total === 0 ? 0 : Math.round((done / total) * 100);
+
+      const bar = document.getElementById('courseProgressBar');
+      const label = document.getElementById('courseProgressLabel');
+      const testBtn = document.getElementById('testBtn');
+      const ctaText = document.getElementById('ctaText');
+
+      bar.style.width = pct + '%';
+      label.textContent = `${pct}% completed`;
+
+      if(done === total && total > 0){
+        testBtn.disabled = false;
+        testBtn.classList.remove('bg-gray-700', 'text-gray-400', 'cursor-not-allowed');
+        testBtn.classList.add('bg-gradient-to-r', 'from-cyan-400', 'to-pink-500', 'text-black');
+        testBtn.textContent = 'Go to Learn & Earn Test';
+        testBtn.onclick = () => {
+          // Simple redirect – the user will then open the skill test modal from learn-earn.html
+          window.location.href = 'learn-earn.html';
+        };
+        ctaText.textContent = 'Nice! All modules are complete. Go back to Learn & Earn to take the live test and earn ZAC rewards.';
+      } else {
+        testBtn.disabled = true;
+        testBtn.onclick = null;
+        testBtn.classList.add('bg-gray-700', 'text-gray-400', 'cursor-not-allowed');
+        testBtn.classList.remove('bg-gradient-to-r', 'from-cyan-400', 'to-pink-500', 'text-black');
+        testBtn.textContent = 'Locked · Finish modules first';
+        ctaText.textContent = 'Mark each module as complete once you understand it. When all are checked, you can take the test in Learn & Earn.';
+      }
+    }
+
+    /* ------------------ Init ------------------ */
+    function initDefaults(){
+      if(!localStorage.getItem(BAL_KEY)){
+        localStorage.setItem(BAL_KEY, JSON.stringify({ xp:0, tokens:0, completed:{} }));
+      }
+      if(!localStorage.getItem(COURSE_KEY)){
+        localStorage.setItem(COURSE_KEY, JSON.stringify({}));
+      }
+    }
+
+    function init(){
+      initDefaults();
+      showWalletShort();
+      renderXpSummary();
+
+      const skillId = getSkillIdFromUrl();
+      if(!skillId){
+        renderPicker();
+      } else {
+        renderCourse(skillId);
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
