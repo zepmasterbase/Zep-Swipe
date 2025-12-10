@@ -1,584 +1,884 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Zep Swipe — Learn & Earn (Neon Single-file Demo)</title>
-  <!-- Neon theme, responsive header (3D Z icon + Zep swipe text + 3D home button) -->
-  <style>
-    :root{
-      --bg-1:#030417;
-      --bg-2:#061226;
-      --card:#07172a;
-      --muted:#9fb6d4;
-      --accent-1:#7c3aed; /* violet */
-      --accent-2:#06b6d4; /* cyan */
-      --neon:#19f0ff;
-      --glass:rgba(255,255,255,0.03);
-      --glass-2:rgba(255,255,255,0.02);
-      --success:#10b981;
-      --danger:#ef4444;
-      --max-w:1200px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;}
-    body{
-      margin:0;
-      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.06), transparent),
-                  linear-gradient(180deg,var(--bg-1) 0%, var(--bg-2) 80%);
-      color:#e6eef8;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      padding:18px;
-      display:flex;justify-content:center;
-    }
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Zep Swipe — Learn & Earn</title>
 
-    /* Center container so content doesn't hug the sides on wide screens */
-    .container{width:100%;max-width:var(--max-w);}
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
 
-    /* Neon Header */
-    .neon-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 18px;padding:12px;border-radius:14px;position:relative;z-index:10;
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005));
-      border:1px solid rgba(255,255,255,0.03);
-      box-shadow: 0 6px 30px rgba(12,18,34,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
-      overflow:hidden;
-    }
+<style>
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --glass:rgba(255,255,255,0.06);
+  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
+}
 
-    /* Pulsing glowing placeholder behind header (subtle) */
-    .neon-header::before{
-      content:'';position:absolute;left:-10%;top:-40%;width:140%;height:220%;background:radial-gradient(circle at 20% 30%, rgba(124,58,237,0.12), transparent 12%), radial-gradient(circle at 80% 70%, rgba(6,182,212,0.08), transparent 10%);
-      filter:blur(28px);opacity:0.9;animation:pulse 3.5s ease-in-out infinite;
-    }
-    @keyframes pulse{0%{transform:scale(1);opacity:0.85}50%{transform:scale(1.02);opacity:1}100%{transform:scale(1);opacity:0.85}}
+/* Base */
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);
+  color:#fff;
+  overflow-x:hidden;
+}
 
-    .brand-left{display:flex;align-items:center;gap:12px}
+/* Container */
+.container{
+  max-width:900px;
+  margin:30px auto 90px auto;
+  padding:16px;
+}
 
-    /* 3D-ish logo */
-    .z-icon{
-      width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;position:relative;
-      transform-style:preserve-3d;perspective:800px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
-      box-shadow: 0 6px 22px rgba(124,58,237,0.18), 0 0 18px rgba(6,182,212,0.06);
-      color:white;
-    }
-    /* Subtle 3D bevel using pseudo element */
-    .z-icon::after{
-      content:'';position:absolute;inset:2px;border-radius:10px;box-shadow:inset 0 -6px 18px rgba(0,0,0,0.45), inset 0 2px 6px rgba(255,255,255,0.04);
-      transform:translateZ(-10px);
-    }
+/* HEADER */
+.header{
+  padding:18px;
+  border-radius:16px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.1);
+  backdrop-filter:blur(15px);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  animation:glowHeader 3.5s infinite alternate ease-in-out;
+}
+@keyframes glowHeader{
+  0%{box-shadow:0 0 18px rgba(0,240,255,0.20);}
+  100%{box-shadow:0 0 42px rgba(156,77,255,0.45);}
+}
 
-    .brand-title{display:flex;flex-direction:column;line-height:1}
-    .brand-title h1{margin:0;font-size:16px;letter-spacing:0.6px}
-    .brand-title p{margin:0;font-size:12px;color:var(--muted)}
+.brand{
+  font-family:'Orbitron';
+  font-size:1.5rem;
+  font-weight:700;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 18px rgba(0,240,255,0.6);
+}
+.subtitle{
+  font-size:11px;
+  opacity:0.78;
+}
 
-    /* Neon text accent */
-    .neon-text{font-weight:800;color:transparent;background:linear-gradient(90deg,var(--neon),var(--accent-2));-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 8px 28px rgba(25,240,255,0.06));}
+/* Wallet Address */
+.addr{
+  font-family:'Orbitron';
+  font-size:0.85rem;
+  color:#d7faff;
+  text-align:right;
+}
 
-    /* Right side: home 3D button */
-    .home-btn{
-      display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:12px;text-decoration:none;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.03);box-shadow: 0 6px 20px rgba(6,182,212,0.04);backdrop-filter: blur(4px);
-    }
-    .home-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:white;transform:translateZ(0);box-shadow: 0 8px 30px rgba(6,182,212,0.08)}
+/* Logout */
+.logout{
+  margin-left:8px;
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  filter:drop-shadow(0 0 9px rgba(255,80,80,0.8));
+}
 
-    /* App layout */
-    .app{display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:start}
-    @media (max-width:1100px){ .app{grid-template-columns:1fr;padding:0} }
+/* Stats / Overview */
+.stats-box{
+  margin-top:18px;
+  padding:16px 18px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(16px);
+}
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+@media(max-width:640px){
+  .stats-grid{
+    grid-template-columns:1fr;
+  }
+}
+.stat-card{
+  padding:10px 12px;
+  border-radius:14px;
+  background:rgba(0,0,0,0.7);
+  border:1px solid rgba(255,255,255,0.10);
+}
+.stat-label{
+  font-size:11px;
+  opacity:0.8;
+}
+.stat-value{
+  margin-top:4px;
+  font-family:'Orbitron';
+  font-size:1.1rem;
+}
+.progress-wrap{
+  margin-top:16px;
+}
+.progress-label{
+  display:flex;
+  justify-content:space-between;
+  font-size:11px;
+  opacity:0.8;
+  margin-bottom:4px;
+}
+.progress-bar{
+  width:100%;
+  height:8px;
+  border-radius:999px;
+  background:rgba(0,0,0,0.7);
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  transition:width .25s ease-out;
+}
 
-    .sidebar{background:linear-gradient(180deg,var(--glass),transparent);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);min-height:unset}
-    .profile{display:flex;gap:12px;align-items:center}
-    .avatar{width:56px;height:56px;border-radius:10px;background:linear-gradient(90deg,var(--accent-2),#3b82f6);display:flex;align-items:center;justify-content:center;font-size:22px}
+/* Skills */
+.section-title{
+  font-family:'Orbitron';
+  font-size:1.20rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.section-sub{
+  font-size:12px;
+  opacity:0.8;
+}
+.skills-box{
+  margin-top:20px;
+  padding:18px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(16px);
+}
+.skills-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:8px;
+}
+.skills-grid{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+@media(max-width:640px){
+  .skills-grid{
+    grid-template-columns:1fr;
+  }
+}
+.skill-card{
+  padding:10px 12px;
+  border-radius:14px;
+  background:rgba(0,0,0,0.7);
+  border:1px solid rgba(255,255,255,0.12);
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.skill-title{
+  font-size:0.9rem;
+  font-family:'Orbitron';
+}
+.skill-desc{
+  font-size:11px;
+  opacity:0.85;
+}
+.skill-meta{
+  font-size:10px;
+  opacity:0.8;
+  display:flex;
+  justify-content:space-between;
+  margin-top:4px;
+}
+.skill-btn{
+  margin-top:6px;
+  padding:7px 10px;
+  border-radius:999px;
+  border:none;
+  font-size:11px;
+  font-weight:600;
+  cursor:pointer;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+.skill-btn.done{
+  background:rgba(16,185,129,0.18);
+  color:#a7f3d0;
+  border:1px solid rgba(16,185,129,0.85);
+}
 
-    .stat{margin-top:12px}
-    .stat-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.02);font-size:13px}
-    .progress-bar{height:10px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;margin-top:8px}
-    .progress-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));width:0%}
+/* Pending Rewards & CTA */
+.bottom-grid{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:2fr 1.3fr;
+  gap:14px;
+}
+@media(max-width:800px){
+  .bottom-grid{
+    grid-template-columns:1fr;
+  }
+}
+.card-glass{
+  padding:16px 18px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(16px);
+}
+.pending-item{
+  padding:8px 10px;
+  border-radius:10px;
+  background:rgba(0,0,0,0.8);
+  border:1px solid rgba(255,255,255,0.12);
+  font-size:11px;
+  margin-bottom:6px;
+}
+.pending-header{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:2px;
+}
+.pending-title{
+  font-weight:600;
+}
+.pending-zac{
+  color:#f9a8d4;
+  font-family:'Orbitron';
+}
+.pending-meta{
+  opacity:0.78;
+}
 
-    nav ul{list-style:none;padding:0;margin:14px 0 0 0}
-    nav li{padding:10px;border-radius:8px;cursor:pointer;color:var(--muted);font-size:14px}
-    nav li:hover{background:rgba(255,255,255,0.02);color:#e6eef8}
+.freelancer-btn{
+  margin-top:10px;
+  width:100%;
+  padding:10px 12px;
+  border-radius:999px;
+  border:none;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  background:#3f3f46;
+  color:#d4d4d8;
+}
+.freelancer-btn.active{
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
 
-    .connectBtn{padding:8px 10px;border-radius:8px;border:none;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;cursor:pointer}
-    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
+/* Modal */
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:50;
+}
+.modal{
+  width:95%;
+  max-width:520px;
+  max-height:90vh;
+  overflow-y:auto;
+  padding:18px 18px 16px;
+  border-radius:18px;
+  background:rgba(10,10,24,0.96);
+  border:1px solid rgba(255,255,255,0.15);
+  box-shadow:0 0 35px rgba(0,240,255,0.3);
+}
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+}
+.modal-title{
+  font-family:'Orbitron';
+  font-size:1rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.modal-close{
+  border:none;
+  background:transparent;
+  color:#e5e5e5;
+  font-size:12px;
+  cursor:pointer;
+}
+.modal-body{
+  margin-top:10px;
+  font-size:12px;
+}
+.modal-label{
+  margin-top:10px;
+  font-weight:600;
+}
+.modal textarea{
+  width:100%;
+  margin-top:6px;
+  padding:8px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.15);
+  background:#020617;
+  color:#e5e5e5;
+  font-size:12px;
+  resize:vertical;
+}
+.modal-footer{
+  margin-top:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+}
+.modal-footer button{
+  padding:8px 12px;
+  border-radius:999px;
+  border:none;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+}
+.modal-submit{
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+.modal-info{
+  font-size:11px;
+  opacity:0.8;
+}
 
-    .main{min-height:360px;max-height:80vh;overflow:auto;padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02)}
-
-    .row{display:flex;gap:12px}
-    .col{display:flex;flex-direction:column;gap:12px}
-
-    .card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
-    .cards-2{display:grid;grid-template-columns:1fr 360px;gap:14px}
-    @media (max-width:1000px){ .cards-2{grid-template-columns:1fr} }
-
-    .skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    @media (max-width:1000px){ .skills-grid{grid-template-columns:repeat(2,1fr)} }
-
-    .skill{padding:10px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02)}
-    .skill .title{font-weight:700;font-size:13px}
-    .skill .pct{font-size:12px;color:var(--muted)}
-
-    .quests{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-    @media (max-width:1000px){ .quests{grid-template-columns:repeat(2,1fr)} }
-
-    .quest{padding:12px;border-radius:8px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02)}
-    .quest h3{margin:0;font-size:15px}
-    .meta{font-size:13px;color:var(--muted);margin-top:8px}
-    .actions{display:flex;gap:8px;margin-top:10px}
-    button.small{padding:6px 8px;border-radius:8px;border:none;cursor:pointer;color:#e6eef8}
-    button.primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));border:none;padding:8px 12px;border-radius:8px;color:white;cursor:pointer}
-    button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
-
-    .market .gig{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:8px;background:rgba(255,255,255,0.01);margin-bottom:8px}
-
-    .pending-list{margin-top:10px;display:flex;flex-direction:column;gap:8px}
-    .pending-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02)}
-
-    .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;font-weight:700;font-size:13px}
-
-    .muted{color:var(--muted)}
-
-    .footer{display:flex;justify-content:space-between;align-items:center;padding-top:12px;color:var(--muted);font-size:13px;margin-top:12px}
-
-    /* Footer on small screens: stack */
-    @media (max-width:520px){ .footer{flex-direction:column;gap:8px;align-items:flex-start} }
-
-    /* Small tweaks for mobile touch targets */
-    @media (max-width:420px){
-      .z-icon{width:48px;height:48px}
-      .home-icon{width:40px;height:40px}
-      .brand-title h1{font-size:14px}
-      body{padding:12px}
-    }
-
-    /* Make sure clickable list items behave on mobile */
-    nav li{touch-action:manipulation}
-
-    /* Accessibility focus outlines */
-    a:focus, button:focus, nav li:focus{outline:3px solid rgba(6,182,212,0.14);outline-offset:2px}
-  </style>
+/* Footer Nav */
+.footer{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  padding:14px 22px;
+  background:rgba(0,0,0,0.55);
+  display:flex;
+  justify-content:space-around;
+  backdrop-filter:blur(10px);
+}
+.fbtn{
+  width:58px;height:58px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  transition:0.25s;
+  cursor:pointer;
+  filter:drop-shadow(0 0 14px rgba(0,240,255,0.15));
+}
+.fbtn:hover{
+  transform:translateY(-7px);
+  filter:drop-shadow(0 0 35px rgba(156,77,255,0.45));
+}
+</style>
 </head>
+
 <body>
-  <div class="container">
 
-    <!-- Header with neon Z + text + home button linking to dashboard-student.html -->
-    <header class="neon-header" role="banner">
-      <div class="brand-left">
-        <div class="z-icon" aria-hidden="true">Z
-          <!-- Decorative: the Z has a subtle 3D feel via CSS pseudo-elements -->
-        </div>
-        <div class="brand-title">
-          <h1><span class="neon-text">Zep</span> <span style="opacity:0.9">swipe</span></h1>
-          <p class="muted">Practice. Prove. Sell — Learn & Earn</p>
-        </div>
-      </div>
+<div class="container">
 
-      <div style="display:flex;align-items:center;gap:12px">
-        <!-- optional quick links on header -->
-        <nav aria-label="Top navigation" style="display:flex;gap:8px;align-items:center">
-          <button class="ghost" id="nav-home-btn" onclick="scrollToTop()" title="Home">Home</button>
-          <button class="ghost" id="nav-quests-btn" onclick="document.getElementById('questsContainer').scrollIntoView({behavior:'smooth',block:'center'})">Quests</button>
-        </nav>
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="brand">Zep Swipe</div>
+      <div class="subtitle">Learn & Earn · Build skills, lock rewards, unlock your marketplace.</div>
+    </div>
 
-        <a class="home-btn" href="dashboard-student.html" title="Dashboard (student)">
-          <div class="home-icon" aria-hidden="true">🏠</div>
-          <div style="font-weight:700;color:white">Dashboard</div>
-        </a>
-      </div>
-    </header>
-
-    <div class="app">
-      <!-- SIDEBAR -->
-      <aside class="sidebar" aria-label="Sidebar">
-        <div class="profile">
-          <div class="avatar">👩🏾‍💻</div>
-          <div>
-            <div style="font-weight:700" id="displayName">Demo Student</div>
-            <div style="font-size:12px;color:var(--muted)">Wallet: <span id="addr">Not connected</span></div>
-          </div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-row"><div>XP</div><div id="xp">0</div></div>
-          <div class="stat-row"><div>ZAC</div><div id="tokens">0</div></div>
-          <div class="stat-row"><div>Skills Certified</div><div id="badgeCount">0</div></div>
-          <div class="progress-bar" title="progress"><i id="progressFill"></i></div>
-        </div>
-
-        <nav>
-          <ul>
-            <li id="nav-home">Home</li>
-            <li id="nav-skills">My Skills</li>
-            <li id="nav-quests">Quests</li>
-            <li id="nav-market">Marketplace</li>
-            <li id="nav-rewards">Rewards</li>
-            <li id="nav-profile">Profile</li>
-          </ul>
-        </nav>
-
-        <div style="margin-top:12px">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div style="font-size:13px;color:var(--muted)">Connect Wallet</div>
-            <button id="connectBtn" class="connectBtn">Connect</button>
-          </div>
-          <div style="margin-top:10px;font-size:13px">
-            <div style="color:var(--muted)">Store Access:</div>
-            <div id="storeGate" style="margin-top:8px"></div>
-          </div>
-        </div>
-
-        <div style="margin-top:12px">
-          <div style="font-size:13px;color:var(--muted);margin-bottom:8px">Quick Pending Rewards</div>
-          <div id="pendingPreview" style="display:flex;gap:8px;flex-wrap:wrap"></div>
-        </div>
-      </aside>
-
-      <!-- MAIN -->
-      <main class="main" role="main">
-        <div class="cards-2">
-          <!-- LEFT: Skills & Quests -->
-          <div class="col">
-            <div class="card">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <div>
-                  <div style="font-weight:700">Your Skill Tools</div>
-                  <div class="muted" style="font-size:13px">Practice, complete, and get certified.</div>
-                </div>
-                <div>
-                  <button id="resetProgress" class="secondary">Reset</button>
-                </div>
-              </div>
-
-              <div class="skills-grid" id="skillsGrid" style="margin-top:12px"></div>
-            </div>
-
-            <div class="card" style="margin-top:12px">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <div>
-                  <div style="font-weight:700">Quests</div>
-                  <div class="muted" style="font-size:13px">Micro-quests — each leads into a capstone for certification.</div>
-                </div>
-                <div><button id="unlockAll" class="secondary">Unlock All</button></div>
-              </div>
-
-              <div class="quests" id="questsContainer" style="margin-top:12px"></div>
-            </div>
-
-            <div class="card" style="margin-top:12px">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <div>
-                  <div style="font-weight:700">Capstones & Certification</div>
-                  <div class="muted" style="font-size:13px">Complete skill capstones to earn badges and unlock the store.</div>
-                </div>
-                <div><button id="viewCerts" class="secondary">View Badges</button></div>
-              </div>
-
-              <div id="certsArea" style="margin-top:12px"></div>
-            </div>
-          </div>
-
-          <!-- RIGHT: Market & Pending -->
-          <div class="col">
-            <div class="card">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <div>
-                  <div style="font-weight:700">Marketplace Preview</div>
-                  <div class="muted" style="font-size:13px">Once certified, create gigs tied to your proven skills.</div>
-                </div>
-                <div><button id="browseMarket" class="secondary">Open</button></div>
-              </div>
-
-              <div id="marketList" style="margin-top:12px"></div>
-            </div>
-
-            <div class="card" style="margin-top:12px">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <div>
-                  <div style="font-weight:700">Pending Rewards</div>
-                  <div class="muted" style="font-size:13px">Rewards stored locally — claim later on-chain.</div>
-                </div>
-                <div><button id="processAllRelayer" class="secondary">Simulate Relayer</button></div>
-              </div>
-
-              <div class="pending-list" id="pendingList" style="margin-top:12px"></div>
-              <div style="margin-top:8px;color:var(--muted);font-size:13px">Tip: Click "Claim (Wallet)" to simulate a wallet claim (requires MetaMask).</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="footer">
-          <div>Demo — persisted in your browser (localStorage). Share feedback to improve the flow.</div>
-          <div><button id="helpBtn" class="ghost">Help</button></div>
-        </div>
-      </main>
+    <div style="text-align:right;">
+      <div id="walletShort" class="addr">—</div>
+      <button class="logout" id="logoutBtn">
+        <svg width="22" height="22" fill="none" stroke="#ff6b6b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+      </button>
     </div>
   </div>
 
-  <!-- Ethers (for wallet interactions; optional) -->
-  <script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
+  <!-- STATS -->
+  <div class="stats-box">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total XP</div>
+        <div id="xpDisplay" class="stat-value">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Locked ZAC Rewards</div>
+        <div id="zacDisplay" class="stat-value">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Skills Completed</div>
+        <div id="skillsDoneDisplay" class="stat-value">0 / 8</div>
+      </div>
+    </div>
 
-  <script>
-  /* ------------------ Keep original demo logic intact ------------------ */
-  /* Minimal glue added: header nav handlers + small responsive helpers */
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Path to Freelance Marketplace</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+    </div>
+  </div>
 
-  // Expose a scroll-to-top used by header home button
-  function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+  <!-- SKILLS -->
+  <div class="skills-box">
+    <div class="skills-header">
+      <div>
+        <div class="section-title">Skill Tests</div>
+        <div class="section-sub">8 short, practical tests. Each pass → XP + 25 locked ZAC.</div>
+      </div>
+      <div style="font-size:11px;opacity:0.8;">All rewards stay locked until ZAC is live for withdrawals.</div>
+    </div>
 
-  // small helper to map left nav to sections (basic)
-  document.getElementById('nav-home').addEventListener('click', ()=>{ scrollToTop(); });
-  document.getElementById('nav-skills').addEventListener('click', ()=>{ document.getElementById('skillsGrid').scrollIntoView({behavior:'smooth',block:'center'}); });
-  document.getElementById('nav-quests').addEventListener('click', ()=>{ document.getElementById('questsContainer').scrollIntoView({behavior:'smooth',block:'center'}); });
-  document.getElementById('nav-market').addEventListener('click', ()=>{ document.getElementById('marketList').scrollIntoView({behavior:'smooth',block:'center'}); });
-  document.getElementById('nav-rewards').addEventListener('click', ()=>{ document.getElementById('pendingList').scrollIntoView({behavior:'smooth',block:'center'}); });
-  document.getElementById('nav-profile').addEventListener('click', ()=>{ document.getElementById('certsArea').scrollIntoView({behavior:'smooth',block:'center'}); });
+    <div id="skillsGrid" class="skills-grid"></div>
+  </div>
 
-  // Original demo keys (unchanged)
-  const PENDING_KEY = 'zepswipe_pending_rewards_v1';
-  const BAL_KEY = 'zepswipe_balance_v1';
-  const PROFILE_KEY = 'zepswipe_profile_v1';
-  const XP_THRESHOLD_STORE = 200;
-  const CONTRACT_ADDRESS = "";
-  const CONTRACT_ABI = [];
-  const DEMO_SIMULATE_ONCHAIN_IF_NO_CONTRACT = true;
+  <!-- PENDING & CTA -->
+  <div class="bottom-grid">
+    <div class="card-glass">
+      <div class="section-title" style="font-size:1.05rem;">Pending Rewards</div>
+      <div class="section-sub" style="margin-bottom:8px;">These ZAC rewards are earned but locked. They will be claimable on-chain later.</div>
+      <div id="pendingList"></div>
+    </div>
 
-  const SKILLS = [
-    { id:'s1', title: 'AI Prompt Engineering', short:'Prompt design, chain-of-thought prompts' },
-    { id:'s2', title: 'AI Content Generation', short:'Long-form + social content' },
-    { id:'s3', title: 'Social Design (No-code)', short:'Carousels, flyers, templates' },
-    { id:'s4', title: 'Chatbot Builder', short:'Conversational flows & automations' },
-    { id:'s5', title: 'No-code Websites', short:'Landing pages & forms' },
-    { id:'s6', title: 'Micro Video Editor', short:'Short edits & captions' },
-    { id:'s7', title: 'Research & Lead Gen', short:'Data lists & clean CSVs' },
-    { id:'s8', title: 'Micro-Automation', short:'Zapier-like workflows' },
-  ];
+    <div class="card-glass">
+      <div class="section-title" style="font-size:1.05rem;">Global Freelancer</div>
+      <div class="section-sub">
+        Complete at least <strong>one skill test</strong> to unlock your Swipe Merchants store and start listing services.
+      </div>
+      <button id="freelancerBtn" class="freelancer-btn" disabled>
+        Locked · Finish a skill test to unlock
+      </button>
+      <p class="section-sub" style="margin-top:8px;font-size:11px;">
+        When unlocked, this will take you to <b>dashboard-store.html</b> or your Swipe Merchants account.
+      </p>
+    </div>
+  </div>
 
-  const QUESTS = [
-    { id:'q1', title:'Intro to AI Tools', desc:'Write a 1-line prompt summarizing a task.', xp:50, tokens:5 },
-    { id:'q2', title:'Prompt Crafting', desc:'Refine that prompt into 3 actionable steps.', xp:80, tokens:8 },
-    { id:'q3', title:'Design Carousel', desc:'Describe a 3-card social carousel concept.', xp:70, tokens:7 },
-    { id:'q4', title:'Chat Flow', desc:'Map 3 conversation flows for a small business.', xp:90, tokens:10 }
-  ];
+</div>
 
-  const GIGS = [
-    { id:'g1', title:'Write 5 Captions Pack', tokens:8, eta:'1 day' },
-    { id:'g2', title:'Promo Flyer Design', tokens:12, eta:'2 days' },
-    { id:'g3', title:'Small Business Chatbot', tokens:20, eta:'3 days' }
-  ];
-
-  function readPending(){ try{ return JSON.parse(localStorage.getItem(PENDING_KEY)) || []; }catch(e){ return []; } }
-  function writePending(arr){ localStorage.setItem(PENDING_KEY, JSON.stringify(arr)); renderPending(); renderPendingPreview(); renderStoreGate(); }
-  function readBalance(){ try{ return JSON.parse(localStorage.getItem(BAL_KEY)) || { xp:0, tokens:0, completed:{} }; }catch(e){ return { xp:0, tokens:0, completed:{} }; } }
-  function writeBalance(b){ localStorage.setItem(BAL_KEY, JSON.stringify(b)); renderBalance(); renderQuests(); renderCerts(); renderStoreGate(); }
-  function readProfile(){ try{ return JSON.parse(localStorage.getItem(PROFILE_KEY)) || { badges: [] }; }catch(e){ return { badges: [] }; } }
-  function writeProfile(p){ localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); renderCerts(); renderStoreGate(); }
-
-  function genId(){ return 'r_' + Math.random().toString(36).slice(2,9); }
-  function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
-
-  let provider = null; let signer = null; let userAddr = null;
-  async function connectWallet(){ if(!window.ethereum){ alert('MetaMask not detected. You can still use the demo without wallet.'); return; } try{ provider = new ethers.BrowserProvider(window.ethereum); await provider.send('eth_requestAccounts', []); signer = await provider.getSigner(); userAddr = await signer.getAddress(); document.getElementById('addr').textContent = userAddr; document.getElementById('connectBtn').textContent = 'Connected'; renderPending(); renderStoreGate(); }catch(e){ console.error(e); alert('Wallet connect failed'); } }
-  document.getElementById('connectBtn').addEventListener('click', connectWallet);
-
-  function renderSkills(){
-    const root = document.getElementById('skillsGrid');
-    root.innerHTML = '';
-    const profile = readProfile();
-    SKILLS.forEach((s, i) => {
-      const badge = profile.badges.find(b=>b.skillId===s.id);
-      const progress = badge ? 100 : Math.min(90, (i+1)*10 + (badge?20:0));
-      const el = document.createElement('div'); el.className='skill';
-      el.innerHTML = `<div class="title">${s.title}</div>
-        <div class="muted" style="font-size:12px;margin-top:6px">${s.short}</div>
-        <div style="margin-top:8px"><div style="height:8px;background:rgba(255,255,255,0.03);border-radius:6px;overflow:hidden"><div style="width:${progress}%;height:8px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2))"></div></div></div>
-        <div style="margin-top:8px;display:flex;gap:8px">
-          <button class="small primary" onclick="openSkill('${s.id}')">${badge? 'Practice' : 'Start'}</button>
-          <button class="small secondary" onclick="previewSkill('${s.id}')">${badge? 'View Badge' : 'Syllabus'}</button>
-          <button class="small ghost" style="margin-left:auto" onclick="promptTakeCapstone('${s.id}')">Take Capstone</button>
-        </div>`;
-      root.appendChild(el);
-    });
-  }
-
-  function renderQuests(){
-    const root = document.getElementById('questsContainer');
-    root.innerHTML = '';
-    const b = readBalance();
-    const completed = b.completed || {};
-    QUESTS.forEach((q, idx) => {
-      const unlocked = idx === 0 || !!completed[QUESTS[idx-1].id];
-      const isComplete = !!completed[q.id];
-      const card = document.createElement('div'); card.className='quest';
-      card.innerHTML = `<h3>${q.title} ${isComplete?'<span style="margin-left:8px;color:var(--success)">✅</span>':''}</h3>
-        <div class="meta">${q.desc}</div>
-        <div class="actions">
-          <button class="small ${unlocked? 'primary' : ''}" ${unlocked? '' : 'disabled'} onclick="openQuest('${q.id}')">${unlocked? 'Open':'Locked'}</button>
-          <button class="small secondary" ${isComplete? 'disabled':''} onclick="submitQuest('${q.id}')">Submit</button>
-          <div style="margin-left:auto" class="muted">Reward: ${q.xp} XP • ${q.tokens} ZAC</div>
-        </div>`;
-      root.appendChild(card);
-    });
-  }
-
-  function renderMarket(){
-    const root = document.getElementById('marketList');
-    root.innerHTML = '';
-    const profile = readProfile();
-    const badges = profile.badges || [];
-    GIGS.forEach(g=>{
-      const el = document.createElement('div'); el.className='gig';
-      el.innerHTML = `<div>
-          <div style="font-weight:700">${g.title}</div>
-          <div class="muted" style="font-size:13px">ETA: ${g.eta}</div>
+<!-- MODAL -->
+<div id="modalBackdrop" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div id="modalTitle" class="modal-title">Skill Title</div>
+        <div id="modalSubtitle" class="section-sub" style="font-size:11px;margin-top:2px;">
+          Practical test · Answer once with your best attempt.
         </div>
-        <div style="text-align:right">
-          <div style="font-weight:700">${g.tokens} ZAC</div>
-          <div style="margin-top:8px">${badges.length>0 ? '<button class="small primary" onclick="createGigFromBadge()">Create Gig</button>' : '<div class="muted" style="font-size:12px">Requires certified skill</div>'}</div>
-        </div>`;
-      root.appendChild(el);
-    });
+      </div>
+      <button id="modalCloseBtn" class="modal-close">Close ✕</button>
+    </div>
+
+    <div class="modal-body">
+      <div id="modalLesson" style="opacity:0.9;"></div>
+
+      <div class="modal-label">Practical Test</div>
+      <div id="modalQuestion" style="margin-top:4px;"></div>
+      <textarea id="answerInput" rows="4" placeholder="Type your answer here..."></textarea>
+      <div id="modalMessage" style="margin-top:6px;font-size:11px;"></div>
+    </div>
+
+    <div class="modal-footer">
+      <button id="modalSubmitBtn" class="modal-submit">Submit & Earn</button>
+      <div id="modalRewardInfo" class="modal-info">
+        Passing gives XP and locked ZAC for this skill.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER NAV -->
+<div class="footer">
+  <a class="fbtn" href="wallet.html" title="Wallet">
+    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g1)" stroke-width="1.4">
+      <rect x="3" y="7" width="18" height="13" rx="2"/>
+      <path d="M3 11h18"/>
+      <defs><linearGradient id="g1"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
+    </svg>
+  </a>
+
+  <a class="fbtn" href="learn-earn.html" title="Learn & Earn">
+    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g2)" stroke-width="1.4">
+      <circle cx="12" cy="12" r="8"/>
+      <path d="M12 8v8M8 12h8"/>
+      <defs><linearGradient id="g2"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
+    </svg>
+  </a>
+
+  <a class="fbtn" href="zep-ai.html" title="Ask Zep AI">
+    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g3)" stroke-width="1.4">
+      <circle cx="12" cy="12" r="9"/>
+      <circle cx="9" cy="10" r="1"/>
+      <circle cx="15" cy="10" r="1"/>
+      <path d="M8 15c2 2 6 2 8 0"/>
+      <defs><linearGradient id="g3"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
+    </svg>
+  </a>
+
+  <a class="fbtn" href="profile.html" title="Profile">
+    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g4)" stroke-width="1.4">
+      <circle cx="12" cy="8" r="3"/>
+      <path d="M4 20c1.5-4 7-6 8-6s6.5 2 8 6"/>
+      <defs><linearGradient id="g4"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
+    </svg>
+  </a>
+</div>
+
+<script>
+/* ---------- Local Storage Keys ---------- */
+const BAL_KEY     = 'zepswipe_balance_v1';        // { xp, tokens, completed }
+const PENDING_KEY = 'zepswipe_pending_rewards_v1';// [ {tokens,status,...} ]
+const PROFILE_KEY = 'zepswipe_profile_v1';        // { badges: [] }
+
+/* ---------- Skill Config ---------- */
+const SKILLS = [
+  {
+    id: 's1',
+    title: 'AI Prompt Engineering',
+    short: 'Design prompts that actually get results.',
+    lesson: 'You will practice writing a clear, structured prompt for a real task. Think about role, goal and constraints.',
+    question: 'Write one role line for a prompt that helps a small clothing brand write Instagram captions. Example: "You are a social media strategist for an African streetwear brand."',
+    xp: 50,
+    tokens: 25
+  },
+  {
+    id: 's2',
+    title: 'AI Content Generation',
+    short: 'Use AI to create posts, emails and scripts.',
+    lesson: 'You will outline a week of content for a local business using AI to help you brainstorm topics and angles.',
+    question: 'Describe in one sentence a content idea for a university club using AI. Make it specific.',
+    xp: 50,
+    tokens: 25
+  },
+  {
+    id: 's3',
+    title: 'Social Design (No-code)',
+    short: 'Carousels, flyers and templates.',
+    lesson: 'You will plan a simple 3-slide carousel for Instagram that explains a concept to fellow students.',
+    question: 'In one sentence, describe what slide 1 of your carousel would say.',
+    xp: 50,
+    tokens: 25
+  },
+  {
+    id: 's4',
+    title: 'Chatbot Builder',
+    short: 'Simple FAQ chatbots for services.',
+    lesson: 'You will map a small chatbot flow to answer 3 FAQs for a campus office or small business.',
+    question: 'Name one FAQ your chatbot should answer for students.',
+    xp: 50,
+    tokens: 25
+  },
+  {
+    id: 's5',
+    title: 'No-code Websites',
+    short: 'Landing pages and forms.',
+    lesson: 'You will plan a one-page site with a clear headline, offer and simple contact form.',
+    question: 'Write a short headline for a landing page helping students find part-time gigs.',
+    xp: 50,
+    tokens: 25
+  },
+  {
+    id: 's6',
+    title: 'Micro Video Editor',
+    short: 'Short-form clips and captions.',
+    lesson: 'You will script a 15-second hook for a vertical video aimed at students.',
+    question: 'Write one hook sentence that would make a student stop scrolling.',
+    xp: 50,
+    tokens: 25
+  },
+  {
+    id: 's7',
+    title: 'Research & Lead Gen',
+    short: 'Build clean, useful data lists.',
+    lesson: 'You will define what columns matter in a basic lead list for a local business.',
+    question: 'Name one useful column you would put in a lead spreadsheet for a business.',
+    xp: 50,
+    tokens: 25
+  },
+  {
+    id: 's8',
+    title: 'Micro-Automation',
+    short: 'Automate tiny repetitive tasks.',
+    lesson: 'You will think of a simple 2-step automation that saves time for a student or business.',
+    question: 'Describe in one sentence a tiny task you would like to automate.',
+    xp: 50,
+    tokens: 25
+  },
+];
+
+/* ---------- Helpers ---------- */
+function shortAddr(a){return a?`${a.slice(0,6)}...${a.slice(-4)}`:'—';}
+
+function readBalance(){
+  try{return JSON.parse(localStorage.getItem(BAL_KEY)) || { xp:0, tokens:0, completed:{} }; }
+  catch{return { xp:0, tokens:0, completed:{} };}
+}
+function writeBalance(b){ localStorage.setItem(BAL_KEY, JSON.stringify(b)); }
+
+function readPending(){
+  try{return JSON.parse(localStorage.getItem(PENDING_KEY)) || []; }
+  catch{return []; }
+}
+function writePending(p){ localStorage.setItem(PENDING_KEY, JSON.stringify(p)); }
+
+function readProfile(){
+  try{return JSON.parse(localStorage.getItem(PROFILE_KEY)) || { badges:[] }; }
+  catch{return { badges:[] }; }
+}
+function writeProfile(p){ localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); }
+
+function genId(){ return 'r_' + Math.random().toString(36).slice(2,10); }
+
+/* ---------- Wallet & Auth ---------- */
+document.getElementById("logoutBtn").onclick = ()=>{
+  localStorage.removeItem("zepStudent");
+  location.href="index.html";
+};
+
+function loadWallet(){
+  const s = JSON.parse(localStorage.getItem("zepStudent"));
+  if(!s){ location.href="student-login.html"; return; }
+  document.getElementById("walletShort").textContent = shortAddr(s.wallet);
+}
+
+/* ---------- Render Overview ---------- */
+const xpDisplay        = document.getElementById('xpDisplay');
+const zacDisplay       = document.getElementById('zacDisplay');
+const skillsDoneDisplay= document.getElementById('skillsDoneDisplay');
+const progressFill     = document.getElementById('progressFill');
+const progressPercent  = document.getElementById('progressPercent');
+const freelancerBtn    = document.getElementById('freelancerBtn');
+
+function renderOverview(){
+  const bal = readBalance();
+  const pending = readPending();
+
+  const xp = bal.xp || 0;
+  const lockedZac = pending
+    .filter(p => p.status === 'pending')
+    .reduce((sum,p)=>sum+(p.tokens||0),0);
+  const completedSkills = Object.keys(bal.completed || {}).length;
+
+  xpDisplay.textContent = xp;
+  zacDisplay.textContent = lockedZac;
+  skillsDoneDisplay.textContent = `${completedSkills} / ${SKILLS.length}`;
+
+  const pct = Math.min(100, Math.round((completedSkills / SKILLS.length)*100));
+  progressFill.style.width = pct + '%';
+  progressPercent.textContent = pct + '%';
+
+  if(completedSkills > 0){
+    freelancerBtn.disabled = false;
+    freelancerBtn.classList.add('active');
+    freelancerBtn.textContent = 'Unlocked · Open Freelance Dashboard';
+    freelancerBtn.onclick = ()=> window.location.href = 'dashboard-store.html';
+  }else{
+    freelancerBtn.disabled = true;
+    freelancerBtn.classList.remove('active');
+    freelancerBtn.textContent = 'Locked · Finish a skill test to unlock';
+    freelancerBtn.onclick = null;
+  }
+}
+
+/* ---------- Render Skills ---------- */
+const skillsGrid = document.getElementById('skillsGrid');
+
+function renderSkills(){
+  const bal = readBalance();
+  const completed = bal.completed || {};
+  skillsGrid.innerHTML = '';
+
+  SKILLS.forEach(skill=>{
+    const card = document.createElement('div');
+    card.className = 'skill-card';
+
+    const isDone = !!completed[skill.id];
+
+    card.innerHTML = `
+      <div class="skill-title">${skill.title}</div>
+      <div class="skill-desc">${skill.short}</div>
+      <div class="skill-meta">
+        <span>Reward: <strong>${skill.tokens} ZAC</strong> · ${skill.xp} XP</span>
+        <span>${isDone ? 'Completed ✅' : 'Ready'}</span>
+      </div>
+    `;
+
+    const btn = document.createElement('button');
+    btn.textContent = isDone ? 'View Test (Passed)' : 'Start Test';
+    btn.className = 'skill-btn' + (isDone ? ' done' : '');
+    btn.onclick = ()=> openModal(skill.id);
+
+    card.appendChild(btn);
+    skillsGrid.appendChild(card);
+  });
+}
+
+/* ---------- Render Pending Rewards ---------- */
+const pendingList = document.getElementById('pendingList');
+
+function renderPending(){
+  const pending = readPending().filter(p => p.status === 'pending');
+  pendingList.innerHTML = '';
+  if(pending.length === 0){
+    pendingList.innerHTML = `<div class="section-sub" style="font-size:11px;">No pending rewards yet. Pass a skill test to earn locked ZAC.</div>`;
+    return;
+  }
+  pending.forEach(p=>{
+    const div = document.createElement('div');
+    div.className = 'pending-item';
+    div.innerHTML = `
+      <div class="pending-header">
+        <span class="pending-title">${p.questTitle || 'Skill Reward'}</span>
+        <span class="pending-zac">${p.tokens} ZAC</span>
+      </div>
+      <div class="pending-meta">
+        Locked · ${new Date(p.createdAt).toLocaleString()}
+      </div>
+    `;
+    pendingList.appendChild(div);
+  });
+}
+
+/* ---------- Modal Logic ---------- */
+const modalBackdrop  = document.getElementById('modalBackdrop');
+const modalCloseBtn  = document.getElementById('modalCloseBtn');
+const modalTitle     = document.getElementById('modalTitle');
+const modalLesson    = document.getElementById('modalLesson');
+const modalQuestion  = document.getElementById('modalQuestion');
+const modalRewardInfo= document.getElementById('modalRewardInfo');
+const modalMessage   = document.getElementById('modalMessage');
+const answerInput    = document.getElementById('answerInput');
+const modalSubmitBtn = document.getElementById('modalSubmitBtn');
+
+let currentSkillId = null;
+
+function openModal(skillId){
+  const skill = SKILLS.find(s=>s.id===skillId);
+  if(!skill) return;
+
+  currentSkillId = skillId;
+  modalTitle.textContent = skill.title;
+  modalLesson.textContent = skill.lesson;
+  modalQuestion.textContent = skill.question;
+  modalRewardInfo.textContent = `Passing gives ${skill.xp} XP and ${skill.tokens} locked ZAC for this skill.`;
+  answerInput.value = '';
+  modalMessage.textContent = '';
+
+  modalBackdrop.style.display = 'flex';
+}
+
+function closeModal(){
+  modalBackdrop.style.display = 'none';
+  currentSkillId = null;
+}
+modalCloseBtn.onclick = closeModal;
+modalBackdrop.addEventListener('click', (e)=>{
+  if(e.target === modalBackdrop) closeModal();
+});
+
+/* ---------- Submit Test ---------- */
+modalSubmitBtn.onclick = ()=>{
+  if(!currentSkillId) return;
+  const skill = SKILLS.find(s=>s.id===currentSkillId);
+  if(!skill) return;
+
+  const ans = (answerInput.value || '').trim();
+  if(ans.length < 10){
+    modalMessage.style.color = '#fde68a';
+    modalMessage.textContent = 'Answer is too short. Use at least one clear sentence that shows your understanding.';
+    return;
   }
 
-  function renderPending(){
-    const root = document.getElementById('pendingList');
-    root.innerHTML = '';
-    const pending = readPending();
-    if(pending.length===0){ root.innerHTML = '<div class="muted">No pending rewards.</div>'; return; }
-    pending.forEach(p=>{
-      const el = document.createElement('div'); el.className='pending-item';
-      el.innerHTML = `<div>
-          <div style="font-weight:700">${p.questTitle} <span style="margin-left:8px" class="badge">${p.tokens} Z</span></div>
-          <div class="muted" style="font-size:12px">Created: ${new Date(p.createdAt).toLocaleString()} • Status: ${p.status}</div>
-        </div>
-        <div style="display:flex;gap:8px">
-          <button class="small primary" onclick="claimWithWallet('${p.id}')" ${p.status!=='pending'?'disabled':''}>Claim (Wallet)</button>
-          <button class="small secondary" onclick="simulateRelayer('${p.id}')" ${p.status!=='pending'?'disabled':''}>Claim (Relayer)</button>
-          <button class="small ghost" onclick="forfeitPending('${p.id}')">Forfeit</button>
-        </div>`;
-      root.appendChild(el);
-    });
+  const bal = readBalance();
+  bal.completed = bal.completed || {};
+
+  if(bal.completed[skill.id]){
+    modalMessage.style.color = '#a5f3fc';
+    modalMessage.textContent = 'You already passed this test. Your answer has been updated but rewards are not doubled.';
+    bal.completed[skill.id].answer = ans;
+    writeBalance(bal);
+    return;
   }
 
-  function renderPendingPreview(){
-    const container = document.getElementById('pendingPreview');
-    container.innerHTML = '';
-    readPending().slice(0,4).forEach(p=>{
-      const d = document.createElement('div');
-      d.style.padding='6px 10px'; d.style.borderRadius='10px'; d.style.background='rgba(255,255,255,0.02)'; d.style.fontSize='12px';
-      d.textContent = `${p.questTitle.split(' ')[0]} • ${p.tokens}Z`;
-      container.appendChild(d);
-    });
+  // mark test complete
+  bal.xp = (bal.xp || 0) + skill.xp;
+  bal.completed[skill.id] = { when:Date.now(), answer:ans };
+  writeBalance(bal);
+
+  // pending reward
+  const pending = readPending();
+  pending.push({
+    id: genId(),
+    questId: skill.id,
+    questTitle: `${skill.title} — Skill Test`,
+    xp: skill.xp,
+    tokens: skill.tokens,
+    createdAt: Date.now(),
+    status: 'pending',
+    claimedAt: null
+  });
+  writePending(pending);
+
+  // badge
+  const profile = readProfile();
+  profile.badges = profile.badges || [];
+  profile.badges.push({
+    id: genId(),
+    skillId: skill.id,
+    skillTitle: skill.title,
+    issuedAt: Date.now(),
+    evidence: []
+  });
+  writeProfile(profile);
+
+  modalMessage.style.color = '#6ee7b7';
+  modalMessage.textContent = '✅ Test passed! XP added and ZAC reward locked. You are closer to unlocking the marketplace.';
+  renderOverview();
+  renderSkills();
+  renderPending();
+};
+
+/* ---------- Init ---------- */
+function initDefaults(){
+  if(!localStorage.getItem(BAL_KEY)){
+    writeBalance({ xp:0, tokens:0, completed:{} });
   }
-
-  function renderCerts(){
-    const area = document.getElementById('certsArea');
-    const profile = readProfile();
-    area.innerHTML = '';
-    if((profile.badges || []).length === 0){
-      area.innerHTML = `<div class="muted">No badges yet. Complete a capstone to get certified and unlock store.</div>`;
-      document.getElementById('badgeCount').textContent = '0';
-      return;
-    }
-    profile.badges.forEach(b=>{
-      const el = document.createElement('div'); el.style.marginBottom='8px';
-      el.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-        <div><div style="font-weight:700">${b.skillTitle}</div><div class="muted" style="font-size:12px">Issued: ${new Date(b.issuedAt).toLocaleDateString()}</div></div>
-        <div><span class="badge">Certified</span></div>
-      </div>`;
-      area.appendChild(el);
-    });
-    document.getElementById('badgeCount').textContent = String((profile.badges||[]).length);
+  if(!localStorage.getItem(PENDING_KEY)){
+    writePending([]);
   }
-
-  function renderBalance(){
-    const b = readBalance();
-    document.getElementById('xp').textContent = b.xp;
-    document.getElementById('tokens').textContent = b.tokens;
-    const done = Object.keys(b.completed || {}).length;
-    const pct = Math.round((done / QUESTS.length) * 100);
-    document.getElementById('progressFill').style.width = pct + '%';
+  if(!localStorage.getItem(PROFILE_KEY)){
+    writeProfile({ badges:[] });
   }
+}
 
-  function renderStoreGate(){
-    const el = document.getElementById('storeGate');
-    el.innerHTML = '';
-    const profile = readProfile();
-    const balance = readBalance();
-    const hasBadge = (profile.badges || []).length > 0;
-    const hasXP = (balance.xp || 0) >= XP_THRESHOLD_STORE;
-    if(hasBadge || hasXP){
-      const a = document.createElement('a');
-      a.href = 'dashboard-store.html';
-      a.textContent = 'Open Store →';
-      a.style.cssText = 'display:inline-block;padding:8px 12px;border-radius:8px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;text-decoration:none;font-weight:700';
-      el.appendChild(a);
-    } else {
-      const div = document.createElement('div');
-      div.innerHTML = `<div style="font-size:13px;color:var(--muted)">Locked</div><div class="muted" style="font-size:12px">Earn a skill badge or reach ${XP_THRESHOLD_STORE} XP to unlock the store.</div>`;
-      el.appendChild(div);
-    }
-  }
+window.onload = ()=>{
+  loadWallet();
+  initDefaults();
+  renderOverview();
+  renderSkills();
+  renderPending();
+};
+</script>
 
-  window.openSkill = function(skillId){ alert('Open learning tool for ' + skillId + ' (demo). You can run micro-quests here.'); };
-  window.previewSkill = function(skillId){ const skill = SKILLS.find(s=>s.id===skillId); alert(`${skill.title}\n\nSyllabus (demo):\n• 4 micro-quests\n• 1 capstone\n• Sample gigs you can sell`); };
-  window.createGigFromBadge = function(){ alert('Open Create Gig form — prefilled with a certified skill (demo).'); };
-
-  window.openQuest = function(qid){ const q = QUESTS.find(x=>x.id===qid); if(!q) return; const ans = prompt(`Quest: ${q.title}\n\n${q.desc}\n\nWrite/paste a short submission (demo):`); if(ans === null) return; submitQuest(qid, ans); };
-
-  function submitQuest(qid, submissionText = ''){
-    const b = readBalance(); b.completed = b.completed || {}; if(b.completed[qid]) return alert('Quest already completed.'); b.completed[qid] = { when: Date.now(), submission: submissionText }; writeBalance(b);
-    const q = QUESTS.find(x=>x.id===qid);
-    const pending = readPending();
-    const item = { id: genId(), questId: qid, questTitle: q.title, xp: q.xp, tokens: q.tokens, createdAt: Date.now(), status: 'pending', claimedAt: null };
-    pending.push(item); writePending(pending);
-    alert(`Submission received. Reward stored as pending: ${q.xp} XP, ${q.tokens} ZAC. You can claim later.`);
-    renderQuests(); renderPending(); renderPendingPreview(); renderBalance();
-  }
-
-  window.submitQuest = submitQuest;
-
-  async function claimWithWallet(rewardId){
-    const pending = readPending();
-    const item = pending.find(p=>p.id===rewardId);
-    if(!item) return alert('Pending reward not found.');
-    if(!CONTRACT_ADDRESS || CONTRACT_ABI.length === 0){
-      if(DEMO_SIMULATE_ONCHAIN_IF_NO_CONTRACT){ await sleep(700); markPendingClaimedLocally(item); alert('(Simulated) Claimed via wallet flow.'); return; } else { alert('No contract configured. Edit CONTRACT_ADDRESS & CONTRACT_ABI to enable real claim.'); return; }
-    }
-    try{
-      if(!signer){ await connectWallet(); if(!signer) return; }
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-      let tx; try { tx = await contract.claimReward(item.id); } catch(e1){ try { tx = await contract.claimReward(ethers.utils.formatBytes32String(item.id)); } catch(e2){ throw new Error('claimReward call failed. Check ABI and method signature.'); } }
-      alert('Transaction sent. Waiting for confirmation...'); await tx.wait(); markPendingClaimedLocally(item); alert('On-chain claim confirmed. Local balance updated.');
-    }catch(err){ console.error(err); alert('Claim failed: ' + (err.message || err)); }
-  }
-  window.claimWithWallet = claimWithWallet;
-
-  async function simulateRelayer(rewardId){ const pending = readPending(); const item = pending.find(p=>p.id===rewardId); if(!item) return alert('Pending not found.'); if(!confirm('Simulate relayer submitting on-chain tx (demo)?')) return; await sleep(700); markPendingClaimedLocally(item); alert('Relayer simulated: reward processed and credited locally.'); }
-  window.simulateRelayer = simulateRelayer;
-
-  function forfeitPending(id){ if(!confirm('Forfeit pending reward?')) return; const pending = readPending().map(p => p.id === id ? { ...p, status: 'forfeit' } : p); writePending(pending); renderPending(); renderPendingPreview(); }
-  window.forfeitPending = forfeitPending;
-
-  function markPendingClaimedLocally(item){ const b = readBalance(); b.xp = (b.xp || 0) + item.xp; b.tokens = (b.tokens || 0) + item.tokens; writeBalance(b); const pending = readPending().map(p => p.id === item.id ? { ...p, status: 'claimed', claimedAt: Date.now() } : p); writePending(pending); checkAutoCertifications(); }
-
-  document.getElementById('processAllRelayer').addEventListener('click', async ()=>{ const pending = readPending().filter(p=>p.status==='pending'); if(pending.length === 0) return alert('No pending rewards.'); if(!confirm(`Simulate relayer for ${pending.length} pending rewards?`)) return; for(const p of pending){ await sleep(250); markPendingClaimedLocally(p); } alert('All pending processed (simulated).'); });
-
-  function takeCapstoneForSkill(skillId){ const b = readBalance(); const completedCount = Object.keys(b.completed || {}).length; if(completedCount < 1){ return alert('Complete at least one quest to attempt a capstone (demo rule).'); } if(!confirm('Submit capstone for review? (Demo: auto-pass)')) return; const profile = readProfile(); if(profile.badges && profile.badges.find(x=>x.skillId===skillId)){ return alert('You already have this badge.'); } const skill = SKILLS.find(s=>s.id===skillId); const badge = { id: genId(), skillId: skillId, skillTitle: skill.title, issuedAt: Date.now(), evidence: [] }; profile.badges = profile.badges || []; profile.badges.push(badge); writeProfile(profile); alert(`Congrats — you earned the "${skill.title}" badge! The store is now unlocked.`); const bal = readBalance(); bal.xp += 40; bal.tokens += 4; writeBalance(bal); }
-  window.takeCapstoneForSkill = takeCapstoneForSkill;
-
-  function checkAutoCertifications(){ const bal = readBalance(); const profile = readProfile(); if(bal.xp >= XP_THRESHOLD_STORE && (!profile.badges || profile.badges.length === 0)){ const badge = { id: genId(), skillId: 'platform', skillTitle: 'Platform Certified', issuedAt: Date.now(), evidence: [] }; profile.badges = profile.badges || []; profile.badges.push(badge); writeProfile(profile); alert('Auto-certification: Platform Certified badge issued for reaching XP threshold.'); } }
-
-  document.getElementById('unlockAll').addEventListener('click', ()=>{ const b = readBalance(); QUESTS.forEach(q => b.completed[q.id] = { when: Date.now() }); writeBalance(b); alert('Unlocked and marked quests completed (dev). You can now take capstones.'); });
-  document.getElementById('browseMarket').addEventListener('click', ()=> alert('Open Marketplace (demo). If certified, you can create gigs here.'));
-  document.getElementById('resetProgress').addEventListener('click', ()=>{ if(!confirm('Reset demo data? This clears all local progress and badges.')) return; localStorage.removeItem(PENDING_KEY); localStorage.removeItem(BAL_KEY); localStorage.removeItem(PROFILE_KEY); init(); alert('Demo reset.'); });
-  document.getElementById('helpBtn').addEventListener('click', ()=> alert('Demo help: Complete quests -> submit -> pending reward -> claim later (wallet or relayer). Take capstone to certify and unlock store.'));
-  document.getElementById('viewCerts').addEventListener('click', ()=> { const profile = readProfile(); if(!profile.badges || profile.badges.length === 0) return alert('No badges yet.'); let txt = 'Your badges:\n'; profile.badges.forEach(b => txt += `• ${b.skillTitle} — issued ${new Date(b.issuedAt).toLocaleDateString()}\n`); alert(txt); });
-
-  window.promptTakeCapstone = function(skillId){ if(!confirm('Attempt capstone (demo)?')) return; takeCapstoneForSkill(skillId); };
-
-  function init(){ if(!localStorage.getItem(BAL_KEY)) localStorage.setItem(BAL_KEY, JSON.stringify({ xp:0, tokens:0, completed:{} })); if(!localStorage.getItem(PENDING_KEY)) localStorage.setItem(PENDING_KEY, JSON.stringify([])); if(!localStorage.getItem(PROFILE_KEY)) localStorage.setItem(PROFILE_KEY, JSON.stringify({ badges: [] })); renderSkills(); renderQuests(); renderMarket(); renderPending(); renderPendingPreview(); renderBalance(); renderCerts(); renderStoreGate(); }
-
-  window.openSkill = window.openSkill; window.previewSkill = window.previewSkill; window.openQuest = window.openQuest; window.submitQuest = window.submitQuest; window.claimWithWallet = window.claimWithWallet; window.simulateRelayer = window.simulateRelayer; window.forfeitPending = window.forfeitPending; window.createGigFromBadge = window.createGigFromBadge; window.promptTakeCapstone = window.promptTakeCapstone;
-
-  init();
-  </script>
 </body>
 </html>
