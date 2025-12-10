@@ -144,9 +144,14 @@ body{
 }
 
 .mini-card h3{
-  margin:6px 0 0 0;
+  margin:6px 0 4px 0;
   font-family:'Orbitron';
   font-size:1rem;
+}
+.mini-card p{
+  margin:0;
+  font-size:12px;
+  opacity:0.78;
 }
 
 /* Disabled placeholders */
@@ -159,6 +164,100 @@ body{
   opacity:0.35;
   text-align:center;
   font-family:'Orbitron';
+}
+
+/* Join Marketplace (active) */
+.market-card{
+  margin-top:18px;
+  padding:16px 18px;
+  border-radius:16px;
+  background:rgba(0,0,0,0.65);
+  border:1px solid rgba(0,240,255,0.35);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  text-decoration:none;
+  color:#fff;
+  box-shadow:0 0 24px rgba(0,240,255,0.22);
+  transition:transform .2s, box-shadow .2s, border-color .2s;
+}
+.market-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 34px rgba(156,77,255,0.5);
+  border-color:rgba(156,77,255,0.7);
+}
+.market-card-title{
+  font-family:'Orbitron';
+  font-size:1rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.market-card-sub{
+  font-size:12px;
+  opacity:0.8;
+}
+
+/* Courses section */
+.courses-box{
+  margin-top:20px;
+  padding:18px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(16px);
+}
+.courses-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+.courses-subtitle{
+  font-size:12px;
+  opacity:0.8;
+}
+.courses-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:8px;
+}
+@media(max-width:640px){
+  .courses-grid{
+    grid-template-columns:1fr;
+  }
+}
+.course-card{
+  padding:10px 12px;
+  border-radius:14px;
+  background:rgba(0,0,0,0.7);
+  border:1px solid rgba(255,255,255,0.12);
+  text-decoration:none;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  transition:transform .18s, box-shadow .18s, border-color .18s;
+}
+.course-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 22px rgba(0,240,255,0.25);
+  border-color:rgba(0,240,255,0.6);
+}
+.course-title{
+  font-size:0.85rem;
+  font-family:'Orbitron';
+}
+.course-desc{
+  font-size:11px;
+  opacity:0.82;
+}
+.course-tag{
+  font-size:10px;
+  opacity:0.85;
+  margin-top:2px;
+  color:#a5f3fc;
 }
 
 /* Floating AI */
@@ -254,15 +353,80 @@ body{
   <div class="mini-grid">
     <a href="wallet.html" class="mini-card" style="text-decoration:none;color:#fff;">
       <h3>Wallet</h3>
+      <p>View balances & transactions</p>
     </a>
 
     <a href="learn-earn.html" class="mini-card" style="text-decoration:none;color:#fff;">
       <h3>Earn</h3>
+      <p>Complete skills & unlock ZAC</p>
     </a>
   </div>
 
+  <!-- JOIN MARKETPLACE CTA -->
+  <a href="learn-earn.html" class="market-card">
+    <div>
+      <div class="market-card-title">🛍 Join Freelance Marketplace</div>
+      <div class="market-card-sub">
+        Get certified on any Zep Swipe skill, then unlock your Swipe Merchants store to list real digital services.
+      </div>
+    </div>
+    <div style="font-family:'Orbitron';font-size:0.8rem;opacity:0.9;">
+      Start in Learn & Earn →
+    </div>
+  </a>
+
+  <!-- COURSES GRID -->
+  <div class="courses-box">
+    <div class="courses-header">
+      <div class="section-title" style="margin-bottom:0;font-size:1.05rem;">Skill Tracks</div>
+      <div class="courses-subtitle">8 practical courses · All roads lead to Learn & Earn</div>
+    </div>
+
+    <div class="courses-grid">
+      <a href="learn-earn.html" class="course-card">
+        <div class="course-title">AI Prompt Engineering</div>
+        <div class="course-desc">Design prompts that turn vague ideas into precise AI outputs.</div>
+        <div class="course-tag">Earn: XP + ZAC test rewards</div>
+      </a>
+      <a href="learn-earn.html" class="course-card">
+        <div class="course-title">AI Content Generation</div>
+        <div class="course-desc">Create posts, captions and scripts for brands and creators.</div>
+        <div class="course-tag">Sell: content packs & captions</div>
+      </a>
+      <a href="learn-earn.html" class="course-card">
+        <div class="course-title">Social Design (No-code)</div>
+        <div class="course-desc">Plan carousels, flyers and templates clients can edit in Canva.</div>
+        <div class="course-tag">Sell: social kits & templates</div>
+      </a>
+      <a href="learn-earn.html" class="course-card">
+        <div class="course-title">Chatbot Builder</div>
+        <div class="course-desc">Map simple FAQ bots for campus services and small businesses.</div>
+        <div class="course-tag">Sell: bot setup & flows</div>
+      </a>
+      <a href="learn-earn.html" class="course-card">
+        <div class="course-title">No-code Websites</div>
+        <div class="course-desc">Structure landing pages that actually convert visitors.</div>
+        <div class="course-tag">Sell: landing page builds</div>
+      </a>
+      <a href="learn-earn.html" class="course-card">
+        <div class="course-title">Micro Video Editor</div>
+        <div class="course-desc">Craft hooks, cuts and captions for short-form video.</div>
+        <div class="course-tag">Sell: clip packs & edits</div>
+      </a>
+      <a href="learn-earn.html" class="course-card">
+        <div class="course-title">Research & Lead Gen</div>
+        <div class="course-desc">Collect clean, useful data lists for small teams.</div>
+        <div class="course-tag">Sell: lead lists & research</div>
+      </a>
+      <a href="learn-earn.html" class="course-card">
+        <div class="course-title">Micro-Automation</div>
+        <div class="course-desc">Automate tiny repetitive tasks using no-code workflows.</div>
+        <div class="course-tag">Sell: workflow automations</div>
+      </a>
+    </div>
+  </div>
+
   <!-- DISABLED FUTURE FEATURES -->
-  <div class="disabled-card">🛍 Marketplace — Coming Soon</div>
   <div class="disabled-card">📦 Parcel On — Coming Soon</div>
   <div class="disabled-card">🚗 Swipe Rides — Coming Soon</div>
 
