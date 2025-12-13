@@ -1,625 +1,321 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Zep Swipe — Student Wallet</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Zep Swipe — Wallet</title>
 
-  <!-- Fonts + Ethers -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
-  <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
+<!-- Fonts + Ethers -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
 
-  <style>
-    :root{
-      --zep-blue:#00f0ff;
-      --zep-violet:#9c4dff;
-      --bg: radial-gradient(circle at 20% 10%, #020014 0%, #000007 100%);
-      --glass: rgba(255,255,255,0.05);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:'Poppins',sans-serif;
-      background:var(--bg);
-      color:#fff;
-      opacity:1;
-      transition:opacity .6s ease; /* ← fadeout animation */
-      overflow-x:hidden; /* no side scroll */
-    }
-    body.fade-out{
-      opacity:0; /* trigger fade animation */
-    }
+<style>
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --glass:rgba(255,255,255,0.06);
+  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
+}
 
-    .container{
-      max-width:900px;
-      margin:30px auto 90px auto;
-      padding:16px;
-    }
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:var(--bg);
+  color:#fff;
+  overflow-x:hidden;
+}
 
-    /* Header */
-    .header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:18px;
-      border-radius:16px;
-      background:var(--glass);
-      border:1px solid rgba(255,255,255,0.1);
-      backdrop-filter:blur(15px);
-      box-shadow:0 10px 40px rgba(0,240,255,0.08);
-      animation:headerPulse 3.5s infinite alternate;
-    }
-    @keyframes headerPulse{
-      from{box-shadow:0 6px 20px rgba(0,240,255,0.12)}
-      to{box-shadow:0 12px 40px rgba(156,77,255,0.25)}
-    }
+.container{
+  max-width:820px;
+  margin:20px auto 90px;
+  padding:16px;
+}
 
-    .brand{
-      font-family:'Orbitron';
-      font-size:1.6rem;
-      font-weight:700;
-      background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      text-shadow:0 0 18px rgba(0,240,255,0.6);
-    }
-    .walletAddr{
-      text-align:right;
-      font-family:'Orbitron';
-      color:#bffcff;
-      font-size:0.95rem;
-    }
-    .logoutBtn{
-      margin-left:10px;
-      background:transparent;border:0;cursor:pointer;padding:6px;border-radius:8px;
-      filter:drop-shadow(0 0 8px rgba(255,80,80,0.85));
-    }
+/* HEADER */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px;
+  border-radius:16px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(16px);
+  box-shadow:0 0 30px rgba(0,240,255,.25);
+}
 
-    /* Portfolio + right column */
-    .grid{
-      display:grid;
-      grid-template-columns:1.5fr 1fr;
-      gap:18px;
-      margin-top:18px;
-    }
-    @media (max-width:900px){ .grid{grid-template-columns:1fr} }
+.brand{
+  font-family:Orbitron;
+  font-size:1.4rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:16px;
-      padding:16px 18px;
-      border:1px solid rgba(255,255,255,0.08);
-      box-shadow:0 12px 40px rgba(0,240,255,0.05);
-      backdrop-filter:blur(16px);
-    }
+.addr{
+  font-family:Orbitron;
+  font-size:.85rem;
+  color:#bffcff;
+}
 
-    .portfolio{
-      border-radius:18px;
-      padding:18px 18px 16px;
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.12);
-      box-shadow:0 14px 50px rgba(0,240,255,0.08);
-      animation:pulseGlass 4s infinite alternate;
-    }
-    @keyframes pulseGlass{
-      from{box-shadow:0 10px 30px rgba(0,240,255,0.08)}
-      to{box-shadow:0 18px 60px rgba(156,77,255,0.18)}
-    }
+/* CARD */
+.card{
+  margin-top:16px;
+  padding:16px;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  backdrop-filter:blur(14px);
+}
 
-    .section-title{
-      font-family:'Orbitron';
-      font-size:1.1rem;
-      background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-    .smallMuted{
-      font-size:13px;
-      opacity:0.8;
-      color:#bfefff;
-    }
+/* COIN ROW */
+.coinRow{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-top:12px;
+}
 
-    .coinRow{display:flex;align-items:center;gap:14px;margin-top:12px;}
-    .coinBadge{
-      width:72px;height:72px;border-radius:18px;
-      display:flex;align-items:center;justify-content:center;
-      background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-      color:#050015;font-family:Orbitron;font-weight:700;font-size:18px;
-      box-shadow:0 12px 40px rgba(0,240,255,0.18);
-    }
-    .meta {flex:1}
-    .meta .big{font-family:Orbitron;font-size:22px;margin:0}
-    .meta .small{opacity:0.85;font-size:13px;margin-top:6px;color:#d8f8ff}
+.coin{
+  width:60px;
+  height:60px;
+  border-radius:16px;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:Orbitron;
+  font-weight:700;
+  color:#050015;
+}
 
-    .miniGrid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:12px;
-      margin-top:14px;
-    }
-    .mini{
-      padding:12px;
-      border-radius:14px;
-      background:linear-gradient(90deg, rgba(0,240,255,0.03), rgba(156,77,255,0.03));
-      text-align:left;
-      border:1px solid rgba(255,255,255,0.05);
-      box-shadow:0 8px 24px rgba(0,240,255,0.06);
-      cursor:pointer;
-      transition:transform .15s, box-shadow .15s;
-      font-size:13px;
-    }
-    .mini.disabled{
-      cursor:default;
-      box-shadow:none;
-    }
-    .mini:hover:not(.disabled){
-      transform:translateY(-3px);
-      box-shadow:0 14px 32px rgba(156,77,255,0.22);
-    }
+.meta .big{
+  font-family:Orbitron;
+  font-size:1.05rem;
+}
+.meta .small{
+  font-size:.8rem;
+  opacity:.8;
+}
 
-    .mini-label{
-      font-size:11px;
-      opacity:0.8;
-    }
-    .mini-value{
-      margin-top:4px;
-      font-family:'Orbitron';
-      font-size:13px;
-    }
+/* BUTTONS */
+.btn{
+  width:100%;
+  margin-top:14px;
+  padding:12px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  border:none;
+  font-family:Orbitron;
+  font-weight:700;
+  color:#050015;
+  cursor:pointer;
+}
 
-    .btn-primary{
-      display:inline-block;
-      margin-top:12px;
-      padding:10px 14px;
-      border-radius:999px;
-      background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-      color:#050015;font-weight:700;font-family:Orbitron;
-      border:none;cursor:pointer;
-      box-shadow:0 12px 30px rgba(0,240,255,0.18);
-      font-size:12px;
-    }
+/* MODAL */
+.modalBack{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+}
 
-    /* Right column quick actions */
-    .rightBox{display:flex;flex-direction:column;gap:12px}
-    .actionCard{
-      padding:14px 16px;
-      border-radius:16px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.06);
-      box-shadow:0 10px 32px rgba(0,240,255,0.05);
-    }
+.modal{
+  width:90%;
+  max-width:420px;
+  background:#020617;
+  padding:16px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.14);
+}
 
-    /* Footer */
-    .footer{
-      position:fixed;left:0;right:0;bottom:0;padding:12px 20px;
-      background:rgba(0,0,0,0.55);backdrop-filter:blur(10px);
-      display:flex;justify-content:space-around;gap:12px;
-      border-top:1px solid rgba(255,255,255,0.05);
-    }
-    .fbtn{
-      width:58px;height:58px;border-radius:18px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid rgba(255,255,255,0.04);
-      filter:drop-shadow(0 8px 20px rgba(0,240,255,0.08));transition:transform .18s, box-shadow .18s;
-    }
-    .fbtn:hover{
-      transform:translateY(-6px);
-      filter:drop-shadow(0 14px 40px rgba(156,77,255,0.25));
-    }
+.field{margin-top:10px}
+input,select{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.14);
+  background:#020617;
+  color:#fff;
+}
 
-    /* AI bubble */
-    .aiBubble{
-      position:fixed;right:18px;bottom:110px;
-      background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-      color:#050015;padding:12px 16px;border-radius:999px;
-      font-family:Orbitron;font-weight:700;cursor:pointer;
-      box-shadow:0 12px 35px rgba(156,77,255,0.22);
-      font-size:13px;
-    }
+.muted{
+  font-size:.8rem;
+  opacity:.8;
+  margin-top:6px;
+}
 
-    /* Modal simple */
-    .modalBack{
-      position:fixed;inset:0;background:rgba(0,0,0,0.6);
-      display:none;align-items:center;justify-content:center;
-      z-index:999;
-    }
-    .modal{
-      width:420px;max-width:92%;
-      background:rgba(15,23,42,0.96);
-      padding:16px;border-radius:16px;
-      border:1px solid rgba(255,255,255,0.12);
-      backdrop-filter:blur(14px);
-      box-shadow:0 0 30px rgba(0,240,255,0.3);
-    }
-    .field{margin-top:10px}
-    input[type="text"], input[type="number"]{
-      width:100%;padding:10px;border-radius:10px;
-      border:1px solid rgba(255,255,255,0.14);
-      background:#020617;color:#fff;font-size:13px;
-    }
-
-    .muted{opacity:0.8;color:#cfeffd;font-size:13px}
-  </style>
+/* FOOTER */
+.footer{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  display:flex;
+  justify-content:space-around;
+  padding:12px;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(10px);
+}
+.footer a{
+  color:#00f0ff;
+  text-decoration:none;
+  font-family:Orbitron;
+  font-size:.75rem;
+}
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <!-- HEADER -->
-    <div class="header">
-      <div>
-        <div class="brand">Zep Swipe</div>
-        <div class="smallMuted">Student Wallet · Base network only</div>
-      </div>
-      <div>
-        <div id="loggedAddr" class="walletAddr">—</div>
-        <div style="text-align:right;margin-top:8px">
-          <button class="logoutBtn" id="logoutBtn" title="Logout">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-              <polyline points="16 17 21 12 16 7"/>
-              <line x1="21" y1="12" x2="9" y2="12"/>
-            </svg>
-          </button>
-        </div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand">Zep Swipe</div>
+    <div id="walletAddr" class="addr">—</div>
+  </div>
+
+  <!-- PORTFOLIO -->
+  <div class="card">
+    <div class="coinRow">
+      <div class="coin">ZAC</div>
+      <div class="meta">
+        <div class="big" id="zacBal">0 ZAC</div>
+        <div class="small" id="zacUsd">≈ $0.00</div>
       </div>
     </div>
 
-    <div class="grid">
-      <!-- left: portfolio & actions -->
-      <div>
-        <div class="card portfolio">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div class="smallMuted">Portfolio</div>
-              <div class="section-title" style="font-size:1rem;margin-top:4px;">Your holdings</div>
-            </div>
-            <div class="smallMuted">Base Mainnet</div>
-          </div>
-
-          <div class="coinRow">
-            <div class="coinBadge">ZAC</div>
-            <div class="meta">
-              <div class="big" id="zacAmount">25 ZAC</div>
-              <div class="small" id="zacUsd">≈ $3.75 USD</div>
-            </div>
-          </div>
-
-          <hr style="opacity:0.08;margin:14px 0">
-
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div class="smallMuted">USDC balance</div>
-            <div id="usdtBal" style="font-family:Orbitron">—</div>
-          </div>
-
-          <div class="miniGrid">
-            <div class="mini" id="sendBtn">
-              <div class="mini-label">Send</div>
-              <div class="mini-value">USDC on Base</div>
-            </div>
-            <div class="mini" id="receiveBtn">
-              <div class="mini-label">Receive</div>
-              <div class="mini-value">Share wallet address</div>
-            </div>
-            <div class="mini disabled">
-              <div class="mini-label">USDC (Base)</div>
-              <div class="mini-value" id="usdcMini">—</div>
-            </div>
-            <div class="mini disabled">
-              <div class="mini-label">ETH (Base)</div>
-              <div class="mini-value" id="ethMini">—</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:16px">
-          <h4 style="margin:0;font-family:Orbitron;font-size:1rem;">Activity</h4>
-          <div class="muted" style="margin-top:8px">Recent transactions & rewards (demo)</div>
-
-          <div style="margin-top:12px">
-            <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-              <div><strong>Earned</strong><div class="muted">Zep quiz — +25 ZAC</div></div>
-              <div style="font-family:Orbitron">+25 ZAC</div>
-            </div>
-
-            <div style="display:flex;justify-content:space-between">
-              <div><strong>Sale</strong><div class="muted">Guide sold — +8 ZAC</div></div>
-              <div style="font-family:Orbitron">+8 ZAC</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- right column -->
-      <div class="rightBox">
-        <div class="actionCard">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div class="smallMuted">Quick</div>
-              <div class="section-title" style="font-size:1rem;margin-top:4px;">Add funds / Swap</div>
-            </div>
-            <button class="btn-primary" id="addFunds">Add Funds</button>
-          </div>
-          <div class="muted" style="margin-top:10px">Swaps and on-ramps will be added when ZAC is live.</div>
-        </div>
-
-        <div class="actionCard">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div class="smallMuted">Zep Study</div>
-              <div class="section-title" style="font-size:1rem;margin-top:4px;">Learn & Earn</div>
-            </div>
-            <button class="btn-primary" id="learnBtn">Open</button>
-          </div>
-        </div>
-
-        <div class="actionCard">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div class="smallMuted">Withdraw</div>
-              <div class="section-title" style="font-size:1rem;margin-top:4px;">To bank (coming)</div>
-            </div>
-            <button class="btn-primary" disabled style="opacity:0.5;cursor:not-allowed;">Withdraw</button>
-          </div>
-          <div class="muted" style="margin-top:8px;">Cash-out will be enabled after regulatory and bank integrations.</div>
-        </div>
+    <div class="coinRow">
+      <div class="coin">USDC</div>
+      <div class="meta">
+        <div class="big" id="usdcBal">—</div>
+        <div class="small">Base</div>
       </div>
     </div>
-  </div>
 
-  <!-- footer -->
-  <div class="footer">
-    <a class="fbtn" href="student-dashboard.html" title="Home">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="7" width="18" height="13" rx="2" stroke="url(#s1)" stroke-width="1.3"/>
-        <path d="M3 11h18" stroke="url(#s1)" stroke-width="1.3"/>
-        <defs>
-          <linearGradient id="s1" x1="0" x2="1">
-            <stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </a>
-
-    <a class="fbtn" href="activities.html" title="Activities">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-        <path d="M3 12h18" stroke="url(#a1)" stroke-width="1.6"/>
-        <path d="M3 6h18" stroke="url(#a1)" stroke-width="1.2"/>
-        <defs>
-          <linearGradient id="a1" x1="0" x2="1">
-            <stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </a>
-
-    <a class="fbtn" href="student-wallet.html" title="Wallet">
-      <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-        <rect x="2" y="6" width="20" height="12" rx="2" stroke="url(#w1)" stroke-width="1.4"/>
-        <defs>
-          <linearGradient id="w1" x1="0" x2="1">
-            <stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </a>
-
-    <a class="fbtn" href="profile.html" title="Profile">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="8" r="3" stroke="url(#p1)" stroke-width="1.4"/>
-        <path d="M4 20c1.5-4 7-6 8-6s6.5 2 8 6" stroke="url(#p1)" stroke-width="1.4"/>
-        <defs>
-          <linearGradient id="p1" x1="0" x2="1">
-            <stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </a>
-  </div>
-
-  <!-- AI bubble -->
-  <button class="aiBubble" id="openAI">💬 Ask Zep AI</button>
-
-  <!-- Send / Receive modal -->
-  <div class="modalBack" id="modalBack">
-    <div class="modal" id="modal">
-      <div id="modalTitle" style="font-family:Orbitron;font-weight:700;font-size:1rem;">Send</div>
-      <div class="muted" id="modalSub">Send USDC to another address</div>
-
-      <div class="field">
-        <label class="muted">Recipient address</label>
-        <input type="text" id="toAddr" placeholder="0x..." />
+    <div class="coinRow">
+      <div class="coin">ETH</div>
+      <div class="meta">
+        <div class="big" id="ethBal">—</div>
+        <div class="small">Base (gas)</div>
       </div>
-
-      <div class="field">
-        <label class="muted">Amount (USDC)</label>
-        <input type="number" id="amount" placeholder="0.00" min="0" step="0.000001" />
-      </div>
-
-      <div style="display:flex;gap:8px;margin-top:12px">
-        <button id="confirmSend" class="btn-primary">Confirm & Send</button>
-        <button id="closeModal" class="btn-primary" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.14)">Cancel</button>
-      </div>
-
-      <div id="txStatus" style="margin-top:10px;font-size:13px;color:#cfeffd"></div>
     </div>
+
+    <button class="btn" onclick="openSend()">Send</button>
   </div>
+</div>
+
+<!-- SEND MODAL -->
+<div class="modalBack" id="modalBack">
+  <div class="modal">
+    <div style="font-family:Orbitron">Send Asset</div>
+
+    <div class="field">
+      <label class="muted">Asset</label>
+      <select id="asset">
+        <option value="USDC">USDC</option>
+        <option value="ZAC">ZAC</option>
+        <option value="ETH">ETH</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label class="muted">Recipient</label>
+      <input id="to" placeholder="0x..." />
+    </div>
+
+    <div class="field">
+      <label class="muted">Amount</label>
+      <input id="amount" type="number" placeholder="0.00"/>
+    </div>
+
+    <button class="btn" onclick="sendAsset()">Confirm</button>
+    <button class="btn" style="background:none;color:#fff" onclick="closeSend()">Cancel</button>
+
+    <div id="status" class="muted"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <a href="student-dashboard.html">Home</a>
+  <a href="learn-earn.html">Learn</a>
+  <a href="profile.html">Profile</a>
+</div>
 
 <script>
-/* -------------------------
-   CONFIG
-------------------------- */
-/* USDC on Base mainnet */
-const USDT_TOKEN_ADDRESS = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"; // USDC on Base
-const ZAC_TOKEN_ADDRESS   = "0xfe4119a9cac1425d808526905e92386b4234bf2a"; // your ZAC
-const ERC20_ABI = [
-  "function balanceOf(address) view returns (uint256)",
-  "function decimals() view returns (uint8)",
-  "function transfer(address to, uint256 amount) returns (bool)"
-];
+/* CONFIG */
 const BASE_RPC = "https://mainnet.base.org";
+const USDC = "0x833589fCD6EDb6E08f4c7C32D4f71b54bdA02913"; // USDC Base
+const ZAC  = "0xfe4119a9cac1425d808526905e92386b4234bf2a"; // ZAC Base
 
-/* -------------------------
-   UI Elements
-------------------------- */
-const loggedAddrEl = document.getElementById('loggedAddr');
-const zacAmountEl  = document.getElementById('zacAmount');
-const zacUsdEl     = document.getElementById('zacUsd');
-const usdtBalEl    = document.getElementById('usdtBal');
-const usdcMiniEl   = document.getElementById('usdcMini');
-const ethMiniEl    = document.getElementById('ethMini');
+const ERC20_ABI=[
+ "function balanceOf(address)view returns(uint256)",
+ "function decimals()view returns(uint8)",
+ "function transfer(address,uint256)returns(bool)"
+];
 
-const modalBack    = document.getElementById('modalBack');
-const modalTitle   = document.getElementById('modalTitle');
-const modalSub     = document.getElementById('modalSub');
-const toAddrInput  = document.getElementById('toAddr');
-const amountInput  = document.getElementById('amount');
-const confirmSendBtn = document.getElementById('confirmSend');
-const closeModalBtn  = document.getElementById('closeModal');
-const txStatus     = document.getElementById('txStatus');
+const $=id=>document.getElementById(id);
+const short=a=>a?`${a.slice(0,6)}...${a.slice(-4)}`:"—";
 
-const sendBtn   = document.getElementById('sendBtn');
-const receiveBtn= document.getElementById('receiveBtn');
-const aiBtn     = document.getElementById('openAI');
+/* LOAD */
+window.onload=async()=>{
+ const s=JSON.parse(localStorage.getItem("zepStudent"));
+ if(!s){location.href="student-login.html";return;}
 
-/* -------------------------
-   Helpers
-------------------------- */
-function shortAddr(a){ return a ? `${a.slice(0,6)}...${a.slice(-4)}` : '—'; }
-function money(n){ return Number(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:4}); }
+ $("walletAddr").textContent=short(s.wallet);
+ const provider=new ethers.JsonRpcProvider(BASE_RPC);
 
-/* -------------------------
-   Auth check
-------------------------- */
-window.addEventListener('load', async ()=>{
-  const session = JSON.parse(localStorage.getItem('zepStudent'));
-  if(!session || !session.wallet){
-    location.href="student-login.html";
-    return;
-  }
+ // ETH
+ const eth=Number(ethers.formatEther(await provider.getBalance(s.wallet)));
+ $("ethBal").textContent=eth.toFixed(4)+" ETH";
 
-  loggedAddrEl.textContent = shortAddr(session.wallet);
+ // USDC
+ const usdc=new ethers.Contract(USDC,ERC20_ABI,provider);
+ const ud=await usdc.decimals();
+ const ub=Number(ethers.formatUnits(await usdc.balanceOf(s.wallet),ud));
+ $("usdcBal").textContent=ub.toFixed(2)+" USDC";
 
-  // simulate ZAC (locked until live)
-  const zacAmt = session.zacAmount ?? 25;
-  zacAmountEl.textContent = `${zacAmt} ZAC`;
-  zacUsdEl.textContent = `≈ $${money(zacAmt * 0.15)} USD`;
-
-  await refreshUSDCandETH(session.wallet);
-});
-
-/* -------------------------
-   USDC + ETH Fetch (Base)
-------------------------- */
-async function refreshUSDCandETH(wallet){
-  try{
-    const provider = new ethers.JsonRpcProvider(BASE_RPC);
-
-    // USDC token
-    const token = new ethers.Contract(USDT_TOKEN_ADDRESS, ERC20_ABI, provider);
-    const dec   = await token.decimals();
-    const bal   = await token.balanceOf(wallet);
-    const formatted = Number(ethers.formatUnits(bal, dec));
-
-    usdtBalEl.textContent  = `${money(formatted)} USDC`;
-    usdcMiniEl.textContent = `${money(formatted)} USDC`;
-
-    // ETH (native)
-    const ethBal = await provider.getBalance(wallet);
-    const ethFmt = Number(ethers.formatEther(ethBal));
-    ethMiniEl.textContent = `${money(ethFmt)} ETH`;
-  }catch{
-    usdtBalEl.textContent  = "—";
-    usdcMiniEl.textContent = "—";
-    ethMiniEl.textContent  = "—";
-  }
-}
-
-/* -------------------------
-   Modal Logic
-------------------------- */
-function openSendModal(){
-  modalTitle.textContent = "Send";
-  modalSub.textContent   = "Send USDC to another address";
-  toAddrInput.disabled   = false;
-  confirmSendBtn.style.display="inline-block";
-  txStatus.textContent   = "";
-  toAddrInput.value      = "";
-  amountInput.value      = "";
-  modalBack.style.display="flex";
-}
-
-function openReceiveModal(){
-  const session = JSON.parse(localStorage.getItem('zepStudent'));
-  modalTitle.textContent = "Receive";
-  modalSub.textContent   = "Share this address to receive USDC or ETH on Base";
-  toAddrInput.value      = session.wallet;
-  toAddrInput.disabled   = true;
-  amountInput.value      = "";
-  confirmSendBtn.style.display="none";
-  txStatus.textContent   = "";
-  modalBack.style.display="flex";
-}
-
-function closeModal(){
-  modalBack.style.display="none";
-  toAddrInput.disabled=false;
-  confirmSendBtn.style.display="inline-block";
-}
-
-/* -------------------------
-   Sending USDC (Base)
-------------------------- */
-async function confirmSend(){
-  txStatus.textContent="Processing…";
-  const to  = toAddrInput.value.trim();
-  const amt = Number(amountInput.value);
-  if(!ethers.isAddress(to)){ txStatus.textContent="Invalid recipient"; return; }
-  if(!(amt>0)){ txStatus.textContent="Invalid amount"; return; }
-
-  try{
-    if(!window.ethereum){
-      txStatus.textContent="No wallet found";
-      return;
-    }
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer   = await provider.getSigner();
-    const token    = new ethers.Contract(USDT_TOKEN_ADDRESS, ERC20_ABI, signer);
-    const dec      = await token.decimals();
-    const units    = ethers.parseUnits(String(amt), dec);
-
-    const tx = await token.transfer(to, units);
-    txStatus.textContent="Waiting for confirmation…";
-    await tx.wait();
-    txStatus.textContent="Success!";
-  }catch(err){
-    console.error(err);
-    txStatus.textContent="Failed";
-  }
-}
-
-/* -------------------------
-   Buttons
-------------------------- */
-sendBtn.onclick     = openSendModal;
-receiveBtn.onclick  = openReceiveModal;
-closeModalBtn.onclick = closeModal;
-confirmSendBtn.onclick = confirmSend;
-
-document.getElementById('addFunds').onclick = ()=>alert("Coming soon: add funds via on-ramp or bridge.");
-document.getElementById('learnBtn').onclick = ()=>location.href="learn-earn.html";
-
-/* -------------------------
-   LOGOUT with fade-out animation
-------------------------- */
-document.getElementById('logoutBtn').onclick = ()=>{
-  document.body.classList.add('fade-out');  // fade effect
-  setTimeout(()=>{
-    localStorage.removeItem('zepStudent');
-    location.href="index.html"; // back to main landing
-  },600); // match fade-out duration
+ // ZAC (reward-based, simulated)
+ const zac=s.zacAmount ?? 25;
+ $("zacBal").textContent=zac+" ZAC";
+ $("zacUsd").textContent="≈ $"+(zac*0.15).toFixed(2);
 };
 
-/* AI bubble */
-aiBtn.onclick=()=>window.open('zep-ai.html','zepai','width=420,height=640');
+/* MODAL */
+function openSend(){ $("modalBack").style.display="flex"; }
+function closeSend(){ $("modalBack").style.display="none"; }
+
+/* SEND */
+async function sendAsset(){
+ $("status").textContent="Processing…";
+ try{
+   const asset=$("asset").value;
+   const to=$("to").value;
+   const amt=$("amount").value;
+   const provider=new ethers.BrowserProvider(window.ethereum);
+   const signer=await provider.getSigner();
+
+   if(asset==="ETH"){
+     const tx=await signer.sendTransaction({
+       to, value:ethers.parseEther(amt)
+     });
+     await tx.wait();
+   }else{
+     const token=new ethers.Contract(asset==="USDC"?USDC:ZAC,ERC20_ABI,signer);
+     const dec=await token.decimals();
+     const tx=await token.transfer(to,ethers.parseUnits(amt,dec));
+     await tx.wait();
+   }
+   $("status").textContent="Success!";
+ }catch(e){
+   $("status").textContent="Failed";
+ }
+}
 </script>
+
 </body>
 </html>
