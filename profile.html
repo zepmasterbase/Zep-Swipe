@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Zep Swipe — Student Profile</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
@@ -11,9 +11,10 @@
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at 20% 10%, #020014 0%, #000007 100%);
   --glass:rgba(255,255,255,0.06);
-  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
 }
+
 *{box-sizing:border-box}
 body{
   margin:0;
@@ -22,281 +23,218 @@ body{
   color:#fff;
   overflow-x:hidden;
 }
-.container{
-  max-width:920px;
-  margin:24px auto 100px;
-  padding:16px;
-}
 
-/* HEADER */
-.header{
+header{
+  padding:16px;
+  background:var(--glass);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.1);
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:16px;
-  border-radius:16px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(16px);
-  box-shadow:0 0 40px rgba(0,240,255,.25);
 }
+
 .brand{
-  font-family:Orbitron;
-  font-size:1.4rem;
+  font-family:'Orbitron';
+  font-size:1.3rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.back{cursor:pointer;font-size:13px;color:#bffcff}
 
-/* PROFILE CARD */
-.profile-card{
-  margin-top:18px;
-  padding:18px;
+.container{
+  max-width:900px;
+  margin:20px auto 100px;
+  padding:16px;
+}
+
+.card{
+  background:var(--glass);
   border-radius:18px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.12);
+  padding:18px;
+  border:1px solid rgba(255,255,255,.12);
+  margin-bottom:16px;
+}
+
+.profile-top{
   display:flex;
   gap:16px;
   align-items:center;
-  flex-wrap:wrap;
 }
 
-/* AVATAR */
 .avatar{
-  width:96px;height:96px;
+  width:88px;height:88px;
   border-radius:50%;
-  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  display:flex;align-items:center;justify-content:center;
+  background:#020617;
+  border:2px solid var(--zep-blue);
   overflow:hidden;
-  cursor:pointer;
-}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.avatar span{font-family:Orbitron;color:#050015}
-
-/* PROFILE INFO */
-.info{
-  flex:1;
-}
-.info h2{
-  margin:0;
-  font-family:Orbitron;
-  font-size:1.1rem;
-}
-.info p{
-  margin:6px 0 0;
-  font-size:13px;
-  opacity:.85;
-}
-.badge{
-  display:inline-block;
-  margin-top:6px;
-  padding:4px 10px;
-  border-radius:999px;
-  font-size:12px;
-  font-family:Orbitron;
-}
-.badge.pending{
-  background:rgba(255,165,0,.2);
-  border:1px solid orange;
-}
-.badge.verified{
-  background:rgba(0,240,255,.25);
-  border:1px solid var(--zep-blue);
+  flex-shrink:0;
 }
 
-/* SECTIONS */
-.section{
-  margin-top:22px;
-  padding:18px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.12);
-}
-.section-title{
-  font-family:Orbitron;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  margin-bottom:12px;
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
-/* PROGRESS */
-.course{
-  margin-bottom:12px;
+input[type="file"]{
+  margin-top:8px;
 }
-.course-name{
-  font-size:14px;
+
+.name{
+  font-family:'Orbitron';
+  font-size:1.2rem;
 }
+
+.small{
+  opacity:.8;
+  font-size:.85rem;
+}
+
 .progress{
-  height:8px;
-  background:rgba(255,255,255,.12);
-  border-radius:10px;
-  overflow:hidden;
-  margin-top:6px;
+  margin-top:10px;
 }
-.progress span{
-  display:block;
+
+.progress-bar{
+  height:8px;
+  border-radius:999px;
+  background:rgba(255,255,255,.1);
+  overflow:hidden;
+}
+
+.progress-fill{
   height:100%;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
 }
 
-/* SKILLS */
 .skill{
-  display:inline-block;
-  padding:6px 10px;
-  margin:6px 6px 0 0;
-  border-radius:999px;
-  background:rgba(255,255,255,.08);
-  font-size:12px;
-  font-family:Orbitron;
+  margin-bottom:12px;
 }
 
-/* CTA */
-.cta{
-  margin-top:14px;
-  padding:12px 16px;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  font-family:Orbitron;
-  font-weight:700;
-  border:none;
-  cursor:pointer;
-}
-
-/* FOOTER */
 .footer{
   position:fixed;
   bottom:0;left:0;right:0;
-  background:rgba(0,0,0,.6);
+  background:rgba(0,0,0,.55);
   backdrop-filter:blur(10px);
   padding:12px;
   display:flex;
   justify-content:space-around;
-}
-.footer a{
-  color:#00f0ff;
-  font-family:Orbitron;
-  font-size:13px;
-  text-decoration:none;
 }
 </style>
 </head>
 
 <body>
 
+<header>
+  <div class="brand">Zep Swipe — Profile</div>
+  <div id="zacBal">ZAC: 0</div>
+</header>
+
 <div class="container">
-  <div class="header">
-    <div class="brand">Zep Swipe · Profile</div>
-    <div class="back" onclick="location.href='student-dashboard.html'">← Dashboard</div>
-  </div>
 
-  <!-- PROFILE -->
-  <div class="profile-card">
-    <label class="avatar">
-      <input type="file" accept="image/*" hidden id="avatarInput"/>
-      <img id="avatarImg" style="display:none"/>
-      <span id="avatarText">Upload</span>
-    </label>
-
-    <div class="info">
-      <h2 id="walletShort">—</h2>
-      <p>
-        <input id="university" placeholder="Your University"
-          style="background:transparent;border:none;color:#fff;font-size:13px;outline:none"/>
-      </p>
-      <span id="statusBadge" class="badge pending">Not Verified</span>
+  <!-- PROFILE CARD -->
+  <div class="card">
+    <div class="profile-top">
+      <div class="avatar">
+        <img id="avatarImg" src="" alt="">
+      </div>
+      <div>
+        <div class="name" id="walletShort">—</div>
+        <div class="small" id="university">University not set</div>
+        <input type="file" accept="image/*" onchange="uploadAvatar(event)">
+      </div>
     </div>
   </div>
 
-  <!-- LEARNING -->
-  <div class="section">
-    <div class="section-title">Learning Progress</div>
-    <div id="progressList"></div>
+  <!-- BIO -->
+  <div class="card">
+    <h3>Bio</h3>
+    <textarea id="bio" style="width:100%;min-height:80px;border-radius:12px;background:#020617;color:#fff;border:1px solid rgba(255,255,255,.15);padding:10px;"></textarea>
+    <button onclick="saveBio()" style="margin-top:10px;">Save Bio</button>
   </div>
 
-  <!-- SKILLS -->
-  <div class="section">
-    <div class="section-title">Skills</div>
+  <!-- LEARNING PROGRESS -->
+  <div class="card">
+    <h3>Learning Progress</h3>
     <div id="skills"></div>
   </div>
 
-  <!-- MARKETPLACE -->
-  <div class="section">
-    <div class="section-title">Marketplace</div>
-    <p style="font-size:13px;opacity:.85">
-      Complete Learn & Earn to unlock Swipe Merchants.
-    </p>
-    <button class="cta" id="marketBtn">Go to Learn & Earn</button>
+  <!-- ACHIEVEMENTS -->
+  <div class="card">
+    <h3>Achievements</h3>
+    <div id="achievements"></div>
   </div>
+
 </div>
 
 <div class="footer">
-  <a href="student-dashboard.html">Home</a>
-  <a href="learn-earn.html">Learn</a>
-  <a href="wallet.html">Wallet</a>
+  <a href="student-dashboard.html">🏠</a>
+  <a href="learn-earn.html">📘</a>
+  <a href="wallet.html">💳</a>
 </div>
 
 <script>
-/* AUTH */
+/* -------- LOAD SESSION -------- */
 const student = JSON.parse(localStorage.getItem("zepStudent"));
-if(!student){ location.href="student-login.html"; }
+const learn = JSON.parse(localStorage.getItem("zepLearn")) || {zac:0,skills:{}};
 
-/* WALLET */
-const short = a => a.slice(0,6)+"..."+a.slice(-4);
-document.getElementById("walletShort").textContent = short(student.wallet);
+if(!student){ location.href="index.html"; }
 
-/* AVATAR */
-const img = document.getElementById("avatarImg");
-const text = document.getElementById("avatarText");
-const savedAvatar = localStorage.getItem("zepAvatar");
-if(savedAvatar){ img.src=savedAvatar; img.style.display="block"; text.style.display="none"; }
+document.getElementById("walletShort").textContent =
+  student.wallet.slice(0,6)+"..."+student.wallet.slice(-4);
 
-document.getElementById("avatarInput").onchange = e=>{
-  const r=new FileReader();
-  r.onload=()=>{ localStorage.setItem("zepAvatar",r.result); img.src=r.result; img.style.display="block"; text.style.display="none"; }
-  r.readAsDataURL(e.target.files[0]);
-};
+document.getElementById("zacBal").textContent = "ZAC: " + learn.zac;
 
-/* UNIVERSITY */
-const uni = document.getElementById("university");
-uni.value = localStorage.getItem("zepUniversity")||"";
-uni.onchange = ()=>localStorage.setItem("zepUniversity",uni.value);
+/* -------- AVATAR -------- */
+const avatarImg = document.getElementById("avatarImg");
+if(student.avatar){ avatarImg.src = student.avatar; }
 
-/* COURSES */
-const courses = [
- "AI Prompt Engineering","No-Code Automation","Content Creation",
- "Chatbot Building","Web Design","Data & Research","Digital Marketing","Freelancing"
-];
+function uploadAvatar(e){
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    student.avatar = reader.result;
+    localStorage.setItem("zepStudent",JSON.stringify(student));
+    avatarImg.src = reader.result;
+  };
+  reader.readAsDataURL(e.target.files[0]);
+}
 
-let completed=0;
-const progressList=document.getElementById("progressList");
-const skills=document.getElementById("skills");
+/* -------- BIO -------- */
+const bioEl = document.getElementById("bio");
+bioEl.value = student.bio || "";
 
-courses.forEach((c,i)=>{
-  const data=JSON.parse(localStorage.getItem("zep_"+c.split(" ")[0].toLowerCase()))||{day:0};
-  const pct=Math.min((data.day/21)*100,100);
-  if(data.day>=21){ completed++; skills.innerHTML+=`<span class="skill">${c}</span>`; }
+function saveBio(){
+  student.bio = bioEl.value;
+  localStorage.setItem("zepStudent",JSON.stringify(student));
+  alert("Bio saved");
+}
 
-  progressList.innerHTML+=`
-    <div class="course">
-      <div class="course-name">${c}</div>
-      <div class="progress"><span style="width:${pct}%"></span></div>
-    </div>`;
+/* -------- SKILLS PROGRESS -------- */
+const skillsEl = document.getElementById("skills");
+Object.keys(learn.skills).forEach(skill=>{
+  const s = learn.skills[skill];
+  const percent = Math.round(((s.day-1)/21)*100);
+  skillsEl.innerHTML += `
+    <div class="skill">
+      <strong>${skill}</strong>
+      <div class="small">Day ${s.day-1}/21</div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:${percent}%"></div>
+      </div>
+    </div>
+  `;
 });
 
-/* VERIFICATION */
-const badge=document.getElementById("statusBadge");
-const btn=document.getElementById("marketBtn");
+/* -------- ACHIEVEMENTS -------- */
+const achEl = document.getElementById("achievements");
+const completed = Object.entries(learn.skills).filter(([_,s])=>s.day>21);
 
-if(completed>=1){
-  badge.textContent="Verified Student";
-  badge.className="badge verified";
-  btn.textContent="Open Swipe Merchants";
-  btn.onclick=()=>location.href="swipe-merchants.html";
+if(completed.length===0){
+  achEl.innerHTML="<div class='small'>No achievements yet</div>";
 }else{
-  btn.onclick=()=>location.href="learn-earn.html";
+  completed.forEach(([skill])=>{
+    achEl.innerHTML += `<div>🏅 ${skill} completed</div>`;
+  });
 }
 </script>
 
