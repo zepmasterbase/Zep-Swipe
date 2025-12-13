@@ -1,109 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Learn & Earn</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
+  --bg:radial-gradient(circle at top, #020014 0%, #00000a 100%);
   --glass:rgba(255,255,255,0.06);
 }
+
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:'Poppins',sans-serif;
+  font-family:Poppins,sans-serif;
   background:var(--bg);
   color:#fff;
+  overflow-x:hidden;
 }
+
 .container{
   max-width:900px;
-  margin:24px auto 120px;
+  margin:24px auto 100px;
   padding:16px;
 }
+
+/* Header */
 .header{
-  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px;
   border-radius:16px;
   background:var(--glass);
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.1);
+  backdrop-filter:blur(16px);
 }
+
 .brand{
-  font-family:'Orbitron';
+  font-family:Orbitron;
   font-size:1.4rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.sub{
+
+.home-btn{
+  font-family:Orbitron;
   font-size:12px;
-  opacity:0.85;
-  margin-top:4px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
 }
-.skill-box{
-  margin-top:20px;
-  padding:16px;
-  border-radius:16px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.12);
+
+/* Section */
+.section-title{
+  margin:24px 0 12px;
+  font-family:Orbitron;
+  font-size:1.1rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-.skill-title{
-  font-family:'Orbitron';
-  font-size:1.05rem;
+
+/* Courses grid */
+.courses{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;
 }
-.day-card{
-  margin-top:12px;
+
+.course-card{
   padding:14px;
-  border-radius:14px;
+  border-radius:16px;
   background:rgba(0,0,0,0.6);
   border:1px solid rgba(255,255,255,0.12);
+  cursor:pointer;
+  transition:.2s;
 }
-.day-card.locked{
-  opacity:0.4;
+.course-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 24px rgba(0,240,255,0.3);
 }
-.task{
-  font-size:13px;
+
+.course-title{
+  font-family:Orbitron;
+  font-size:0.95rem;
+}
+.course-desc{
+  font-size:12px;
+  opacity:.8;
   margin-top:6px;
-  opacity:0.9;
 }
+
+/* Modal */
+.modal-back{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+.modal{
+  width:95%;
+  max-width:420px;
+  background:rgba(10,15,40,.95);
+  padding:16px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.15);
+  backdrop-filter:blur(18px);
+}
+.modal h3{
+  font-family:Orbitron;
+  font-size:1rem;
+}
+.modal p{
+  font-size:12px;
+  opacity:.85;
+}
+
 input{
   width:100%;
   margin-top:10px;
   padding:10px;
   border-radius:10px;
-  border:1px solid rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,.2);
   background:#020617;
   color:#fff;
 }
-button{
-  margin-top:10px;
-  padding:10px 14px;
+
+.submit-btn{
+  margin-top:12px;
+  width:100%;
+  padding:10px;
   border-radius:999px;
   border:none;
-  font-family:'Orbitron';
-  font-weight:700;
   cursor:pointer;
+  font-family:Orbitron;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
-.badge{
-  font-size:11px;
-  margin-top:6px;
-  color:#a5f3fc;
-}
-.footer{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  padding:14px;
-  background:rgba(0,0,0,0.55);
-  backdrop-filter:blur(10px);
-  text-align:center;
-  font-size:12px;
+
+.close-btn{
+  margin-top:10px;
+  width:100%;
+  padding:8px;
+  background:none;
+  border:1px solid rgba(255,255,255,.2);
+  color:#fff;
+  border-radius:999px;
 }
 </style>
 </head>
@@ -112,109 +167,86 @@ button{
 
 <div class="container">
 
+  <!-- HEADER -->
   <div class="header">
-    <div class="brand">Learn & Earn</div>
-    <div class="sub">
-      Complete daily tasks · Publish on Zora · Earn 25 ZAC per day
-    </div>
+    <div class="brand">Zep Swipe · Learn & Earn</div>
+    <button class="home-btn" onclick="location.href='dashboard-student.html'">Home</button>
   </div>
 
-  <div id="skills"></div>
+  <div class="section-title">Choose a Skill Track</div>
 
+  <div class="courses" id="courseGrid"></div>
 </div>
 
-<div class="footer">
-  Progress is public · Rewards are simulated until ZAC launch
+<!-- MODAL -->
+<div class="modal-back" id="modalBack">
+  <div class="modal">
+    <h3 id="modalTitle"></h3>
+    <p id="modalDesc"></p>
+    <p><strong id="modalDay"></strong></p>
+
+    <input id="taskInput" placeholder="Paste task proof link (Zora / X / Doc)" />
+    <button class="submit-btn" onclick="submitTask()">Submit & Earn 25 ZAC</button>
+    <button class="close-btn" onclick="closeModal()">Close</button>
+  </div>
 </div>
 
 <script>
-/* -------------------------
-   DATA
-------------------------- */
-const SKILLS = [
-  {
-    id:"ai-content",
-    title:"AI Content Generation (Zora)",
-    tasks:[
-      "Write a short educational post using AI",
-      "Turn a lesson into a public explainer",
-      "Create a headline + hook",
-      "Explain an AI output in simple terms",
-      "Create a mini-thread or carousel",
-      "Repurpose content for another format",
-      "Publish a final polished post"
-    ]
-  },
-  {
-    id:"video",
-    title:"Micro Video Editing (Zora)",
-    tasks:[
-      "Edit a 30s educational clip",
-      "Add captions & hook",
-      "Trim for clarity",
-      "Add CTA",
-      "Explain topic via video",
-      "Optimize pacing",
-      "Publish final edit"
-    ]
-  }
+const courses = [
+  {id:"prompt", title:"AI Prompt Engineering", desc:"Write prompts that produce consistent AI results"},
+  {id:"content", title:"AI Content Creation", desc:"Create posts & scripts with AI"},
+  {id:"design", title:"Social Design (No-Code)", desc:"Design carousels & flyers"},
+  {id:"video", title:"Micro-Video Editing", desc:"Edit short-form video"},
+  {id:"web", title:"No-Code Websites", desc:"Build landing pages"},
+  {id:"bot", title:"Chatbot Builder", desc:"Create simple bots"},
+  {id:"research", title:"Research & Lead Gen", desc:"Collect clean data"},
+  {id:"auto", title:"Micro-Automation", desc:"Automate workflows"}
 ];
 
-/* -------------------------
-   STORAGE
-------------------------- */
-const progress = JSON.parse(localStorage.getItem("zepLearnEarn")) || {};
-const student  = JSON.parse(localStorage.getItem("zepStudent")) || { zacAmount:25 };
+let activeCourse=null;
 
-/* -------------------------
-   RENDER
-------------------------- */
-const skillsBox = document.getElementById("skills");
+const grid=document.getElementById("courseGrid");
+const modalBack=document.getElementById("modalBack");
 
-SKILLS.forEach(skill=>{
-  const box = document.createElement("div");
-  box.className="skill-box";
-  box.innerHTML = `<div class="skill-title">${skill.title}</div>`;
-
-  skill.tasks.forEach((task, i)=>{
-    const day = i+1;
-    const key = `${skill.id}-day-${day}`;
-    const completed = progress[key];
-    const unlocked = day === 1 || progress[`${skill.id}-day-${day-1}`];
-
-    const card = document.createElement("div");
-    card.className = "day-card" + (unlocked ? "" : " locked");
-
-    card.innerHTML = `
-      <strong>Day ${day}</strong>
-      <div class="task">${task}</div>
-      ${completed ? `<div class="badge">✅ Completed · +25 ZAC</div>` : unlocked ? `
-        <input placeholder="Paste Zora post link" />
-        <button>Submit & Verify</button>
-      ` : `<div class="badge">🔒 Complete previous day</div>`}
-    `;
-
-    if(unlocked && !completed){
-      const btn = card.querySelector("button");
-      const input = card.querySelector("input");
-      btn.onclick = ()=>{
-        if(!input.value.startsWith("http")){
-          alert("Please submit a valid public link");
-          return;
-        }
-        progress[key] = input.value;
-        student.zacAmount = (student.zacAmount||0) + 25;
-        localStorage.setItem("zepLearnEarn", JSON.stringify(progress));
-        localStorage.setItem("zepStudent", JSON.stringify(student));
-        location.reload();
-      };
-    }
-
-    box.appendChild(card);
-  });
-
-  skillsBox.appendChild(box);
+courses.forEach(c=>{
+  const card=document.createElement("div");
+  card.className="course-card";
+  card.innerHTML=`<div class="course-title">${c.title}</div><div class="course-desc">${c.desc}</div>`;
+  card.onclick=()=>openCourse(c);
+  grid.appendChild(card);
 });
+
+function openCourse(c){
+  activeCourse=c;
+  const progress=JSON.parse(localStorage.getItem("zepProgress")||"{}");
+  const day=(progress[c.id]?.day||1);
+
+  document.getElementById("modalTitle").textContent=c.title;
+  document.getElementById("modalDesc").textContent=c.desc;
+  document.getElementById("modalDay").textContent=`Day ${day} Task`;
+  modalBack.style.display="flex";
+}
+
+function closeModal(){
+  modalBack.style.display="none";
+}
+
+function submitTask(){
+  if(!activeCourse) return;
+  const link=document.getElementById("taskInput").value.trim();
+  if(!link) return alert("Please submit proof link");
+
+  const progress=JSON.parse(localStorage.getItem("zepProgress")||"{}");
+  progress[activeCourse.id]={day:(progress[activeCourse.id]?.day||1)+1, last:link};
+  localStorage.setItem("zepProgress",JSON.stringify(progress));
+
+  const student=JSON.parse(localStorage.getItem("zepStudent")||"{}");
+  student.zacAmount=(student.zacAmount||0)+25;
+  localStorage.setItem("zepStudent",JSON.stringify(student));
+
+  alert("Task submitted 🎉 +25 ZAC earned");
+  closeModal();
+}
 </script>
 
 </body>
