@@ -14,9 +14,7 @@
   --glass:rgba(255,255,255,0.06);
   --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
 }
-
-/* Base */
-*{box-sizing:border-box;}
+*{box-sizing:border-box}
 body{
   margin:0;
   font-family:'Poppins',sans-serif;
@@ -24,285 +22,164 @@ body{
   color:#fff;
   overflow-x:hidden;
 }
-
-/* Container */
 .container{
-  max-width:900px;
-  margin:30px auto 90px auto;
+  max-width:920px;
+  margin:24px auto 100px;
   padding:16px;
 }
 
 /* HEADER */
 .header{
-  padding:18px;
-  border-radius:16px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,0.1);
-  backdrop-filter:blur(15px);
   display:flex;
   justify-content:space-between;
   align-items:center;
-  animation:glowHeader 3.5s infinite alternate ease-in-out;
+  padding:16px;
+  border-radius:16px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(16px);
+  box-shadow:0 0 40px rgba(0,240,255,.25);
 }
-@keyframes glowHeader{
-  0%{box-shadow:0 0 18px rgba(0,240,255,0.20);}
-  100%{box-shadow:0 0 42px rgba(156,77,255,0.45);}
-}
-
 .brand{
-  font-family:'Orbitron';
-  font-size:1.6rem;
-  font-weight:700;
+  font-family:Orbitron;
+  font-size:1.4rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  text-shadow:0 0 18px rgba(0,240,255,0.6);
 }
-.subhead{
-  font-size:11px;
-  opacity:0.78;
-}
+.back{cursor:pointer;font-size:13px;color:#bffcff}
 
-/* Wallet info in header */
-.addr{
-  font-family:'Orbitron';
-  font-size:0.9rem;
-  color:#d7faff;
-  text-align:right;
-}
-.logout{
-  margin-left:8px;
-  background:transparent;
-  border:0;
-  cursor:pointer;
-  filter:drop-shadow(0 0 9px rgba(255,80,80,0.8));
-}
-
-/* Cards */
-.card{
+/* PROFILE CARD */
+.profile-card{
   margin-top:18px;
   padding:18px;
   border-radius:18px;
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(16px);
-  box-shadow:0 10px 32px rgba(0,240,255,0.08);
+  display:flex;
+  gap:16px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+/* AVATAR */
+.avatar{
+  width:96px;height:96px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  cursor:pointer;
+}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar span{font-family:Orbitron;color:#050015}
+
+/* PROFILE INFO */
+.info{
+  flex:1;
+}
+.info h2{
+  margin:0;
+  font-family:Orbitron;
+  font-size:1.1rem;
+}
+.info p{
+  margin:6px 0 0;
+  font-size:13px;
+  opacity:.85;
+}
+.badge{
+  display:inline-block;
+  margin-top:6px;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-family:Orbitron;
+}
+.badge.pending{
+  background:rgba(255,165,0,.2);
+  border:1px solid orange;
+}
+.badge.verified{
+  background:rgba(0,240,255,.25);
+  border:1px solid var(--zep-blue);
+}
+
+/* SECTIONS */
+.section{
+  margin-top:22px;
+  padding:18px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.12);
 }
 .section-title{
-  font-family:'Orbitron';
-  font-size:1.15rem;
+  font-family:Orbitron;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-}
-.section-sub{
-  font-size:12px;
-  opacity:0.8;
+  margin-bottom:12px;
 }
 
-/* Profile row */
-.profile-row{
-  display:flex;
-  gap:18px;
-  flex-wrap:wrap;
-  align-items:center;
-  margin-top:12px;
+/* PROGRESS */
+.course{
+  margin-bottom:12px;
 }
-.avatar-wrap{
-  width:90px;
-  height:90px;
-  border-radius:999px;
-  border:2px solid rgba(0,240,255,0.5);
-  overflow:hidden;
-  background:radial-gradient(circle at 30% 20%, #0ea5e9, #020617);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 0 24px rgba(56,189,248,0.5);
+.course-name{
+  font-size:14px;
 }
-.avatar-wrap img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.avatar-placeholder{
-  font-size:28px;
-  opacity:0.9;
-}
-.profile-form{
-  flex:1;
-  min-width:220px;
-}
-
-/* Inputs */
-.label{
-  font-size:12px;
-  opacity:0.85;
-  margin-top:8px;
-}
-input[type="text"], textarea, select{
-  width:100%;
-  margin-top:4px;
-  padding:9px 11px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,0.16);
-  background:#020617;
-  color:#e5e5e5;
-  font-size:13px;
-}
-textarea{
-  resize:vertical;
-  min-height:60px;
-}
-input[type="file"]{
-  margin-top:8px;
-  font-size:11px;
-  color:#d4d4d8;
-}
-
-/* Save button */
-.save-btn{
-  margin-top:12px;
-  padding:9px 14px;
-  border-radius:999px;
-  border:none;
-  cursor:pointer;
-  font-size:12px;
-  font-weight:600;
-  font-family:'Orbitron';
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  box-shadow:0 10px 30px rgba(0,240,255,0.18);
-}
-
-/* Learning progress grid */
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-top:12px;
-}
-@media(max-width:640px){
-  .stats-grid{
-    grid-template-columns:1fr;
-  }
-}
-.stat-card{
-  padding:10px 12px;
-  border-radius:14px;
-  background:rgba(0,0,0,0.7);
-  border:1px solid rgba(255,255,255,0.14);
-}
-.stat-label{
-  font-size:11px;
-  opacity:0.8;
-}
-.stat-value{
-  margin-top:4px;
-  font-family:'Orbitron';
-  font-size:1.05rem;
-}
-.progress-wrap{
-  margin-top:12px;
-}
-.progress-label{
-  display:flex;
-  justify-content:space-between;
-  font-size:11px;
-  opacity:0.8;
-}
-.progress-bar{
-  margin-top:4px;
+.progress{
   height:8px;
-  border-radius:999px;
-  background:rgba(0,0,0,0.7);
+  background:rgba(255,255,255,.12);
+  border-radius:10px;
   overflow:hidden;
+  margin-top:6px;
 }
-.progress-fill{
+.progress span{
+  display:block;
   height:100%;
-  width:0%;
-  border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  transition:width .25s ease-out;
 }
 
-/* Badges */
-.badge-list{
-  margin-top:10px;
+/* SKILLS */
+.skill{
+  display:inline-block;
+  padding:6px 10px;
+  margin:6px 6px 0 0;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  font-size:12px;
+  font-family:Orbitron;
 }
-.badge-item{
-  padding:8px 10px;
-  border-radius:12px;
-  background:rgba(0,0,0,0.75);
-  border:1px solid rgba(255,255,255,0.14);
-  font-size:11px;
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  margin-bottom:6px;
-}
-.badge-title{
-  font-weight:600;
-}
-.badge-tag{
-  padding:3px 8px;
+
+/* CTA */
+.cta{
+  margin-top:14px;
+  padding:12px 16px;
   border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
-  font-family:'Orbitron';
-  font-size:10px;
-}
-
-/* Account section */
-.account-row{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-  margin-top:10px;
-  font-size:12px;
-}
-.account-box{
-  flex:1;
-  min-width:220px;
-  padding:10px 12px;
-  border-radius:12px;
-  background:rgba(0,0,0,0.7);
-  border:1px solid rgba(255,255,255,0.14);
-}
-.copy-btn{
-  margin-top:6px;
-  padding:7px 10px;
-  border-radius:999px;
+  font-family:Orbitron;
+  font-weight:700;
   border:none;
-  background:rgba(15,23,42,1);
-  color:#e5e5e5;
-  font-size:11px;
   cursor:pointer;
 }
 
-/* Footer Nav */
+/* FOOTER */
 .footer{
   position:fixed;
   bottom:0;left:0;right:0;
-  padding:14px 22px;
-  background:rgba(0,0,0,0.55);
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(10px);
+  padding:12px;
   display:flex;
   justify-content:space-around;
-  backdrop-filter:blur(10px);
 }
-.fbtn{
-  width:58px;height:58px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
-  display:flex;align-items:center;justify-content:center;
-  transition:0.25s;
-  cursor:pointer;
-  filter:drop-shadow(0 0 14px rgba(0,240,255,0.15));
-}
-.fbtn:hover{
-  transform:translateY(-7px);
-  filter:drop-shadow(0 0 35px rgba(156,77,255,0.45));
+.footer a{
+  color:#00f0ff;
+  font-family:Orbitron;
+  font-size:13px;
+  text-decoration:none;
 }
 </style>
 </head>
@@ -310,309 +187,117 @@ input[type="file"]{
 <body>
 
 <div class="container">
-
-  <!-- HEADER -->
   <div class="header">
-    <div>
-      <div class="brand">Zep Swipe</div>
-      <div class="subhead">Student Profile · Your identity, skills, and learning journey.</div>
-    </div>
+    <div class="brand">Zep Swipe · Profile</div>
+    <div class="back" onclick="location.href='student-dashboard.html'">← Dashboard</div>
+  </div>
 
-    <div style="text-align:right;">
-      <div id="walletShort" class="addr">—</div>
-      <button class="logout" id="logoutBtn" title="Logout">
-        <svg width="22" height="22" fill="none" stroke="#ff6b6b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-          <polyline points="16 17 21 12 16 7"/>
-          <line x1="21" y1="12" x2="9" y2="12"/>
-        </svg>
-      </button>
+  <!-- PROFILE -->
+  <div class="profile-card">
+    <label class="avatar">
+      <input type="file" accept="image/*" hidden id="avatarInput"/>
+      <img id="avatarImg" style="display:none"/>
+      <span id="avatarText">Upload</span>
+    </label>
+
+    <div class="info">
+      <h2 id="walletShort">—</h2>
+      <p>
+        <input id="university" placeholder="Your University"
+          style="background:transparent;border:none;color:#fff;font-size:13px;outline:none"/>
+      </p>
+      <span id="statusBadge" class="badge pending">Not Verified</span>
     </div>
   </div>
 
-  <!-- PROFILE CARD -->
-  <div class="card">
-    <div class="section-title">Profile</div>
-    <div class="section-sub">Set your name, university and avatar. This will show across your dashboard and Learn & Earn experience.</div>
-
-    <div class="profile-row">
-      <div class="avatar-wrap" id="avatarWrap">
-        <span class="avatar-placeholder" id="avatarPlaceholder">👩🏾‍💻</span>
-        <img id="avatarImg" src="" alt="Avatar" style="display:none;">
-      </div>
-
-      <div class="profile-form">
-        <div class="label">Full Name</div>
-        <input type="text" id="studentName" placeholder="Your name" />
-
-        <div class="label">University</div>
-        <input type="text" id="studentUni" placeholder="e.g. University of Lagos" />
-
-        <div class="label">Focus Skill (optional)</div>
-        <input type="text" id="studentSkill" placeholder="AI Prompt Engineering, Social Design, etc." />
-
-        <div class="label">Short Bio (optional)</div>
-        <textarea id="studentBio" placeholder="Tell us what you want to build with your skills."></textarea>
-
-        <div class="label">Avatar Image</div>
-        <input type="file" id="avatarInput" accept="image/*" />
-
-        <button class="save-btn" id="saveProfileBtn">Save Profile</button>
-        <div id="saveStatus" class="section-sub" style="margin-top:6px;font-size:11px;"></div>
-      </div>
-    </div>
+  <!-- LEARNING -->
+  <div class="section">
+    <div class="section-title">Learning Progress</div>
+    <div id="progressList"></div>
   </div>
 
-  <!-- LEARNING JOURNEY -->
-  <div class="card">
-    <div class="section-title">Learning Journey</div>
-    <div class="section-sub">Your Learn & Earn progress is shared across this profile, the student dashboard, and the Learn & Earn page.</div>
-
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-label">Total XP</div>
-        <div id="xpDisplay" class="stat-value">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Locked ZAC Rewards</div>
-        <div id="zacDisplay" class="stat-value">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Skills Completed</div>
-        <div id="skillsDoneDisplay" class="stat-value">0 / 8</div>
-      </div>
-    </div>
-
-    <div class="progress-wrap">
-      <div class="progress-label">
-        <span>Path to Freelance Marketplace</span>
-        <span id="progressPercent">0%</span>
-      </div>
-      <div class="progress-bar">
-        <div id="progressFill" class="progress-fill"></div>
-      </div>
-    </div>
-
-    <div class="section-sub" style="margin-top:10px;">Badges from Learn & Earn:</div>
-    <div id="badgeList" class="badge-list"></div>
+  <!-- SKILLS -->
+  <div class="section">
+    <div class="section-title">Skills</div>
+    <div id="skills"></div>
   </div>
 
-  <!-- ACCOUNT / WALLET -->
-  <div class="card">
-    <div class="section-title">Account & Wallet</div>
-    <div class="section-sub">This is your on-chain identity on Base — the same wallet used for Learn & Earn and Swipe Merchants later.</div>
-
-    <div class="account-row">
-      <div class="account-box">
-        <div class="label">Wallet Address</div>
-        <div id="walletFull" style="font-size:11px;word-break:break-all;margin-top:4px;">—</div>
-        <button class="copy-btn" id="copyWalletBtn">Copy Wallet</button>
-      </div>
-
-      <div class="account-box">
-        <div class="label">Profile Sync</div>
-        <div class="section-sub" style="margin-top:4px;">
-          • This profile is used by Learn & Earn and your future Swipe Merchants store.<br/>
-          • Your avatar and university can be shown alongside your gigs.
-        </div>
-      </div>
-    </div>
+  <!-- MARKETPLACE -->
+  <div class="section">
+    <div class="section-title">Marketplace</div>
+    <p style="font-size:13px;opacity:.85">
+      Complete Learn & Earn to unlock Swipe Merchants.
+    </p>
+    <button class="cta" id="marketBtn">Go to Learn & Earn</button>
   </div>
-
 </div>
 
-<!-- FOOTER NAV -->
 <div class="footer">
-  <a class="fbtn" href="wallet.html" title="Wallet">
-    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g1)" stroke-width="1.4">
-      <rect x="3" y="7" width="18" height="13" rx="2"/>
-      <path d="M3 11h18"/>
-      <defs><linearGradient id="g1"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
-    </svg>
-  </a>
-
-  <a class="fbtn" href="learn-earn.html" title="Learn & Earn">
-    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g2)" stroke-width="1.4">
-      <circle cx="12" cy="12" r="8"/>
-      <path d="M12 8v8M8 12h8"/>
-      <defs><linearGradient id="g2"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
-    </svg>
-  </a>
-
-  <a class="fbtn" href="zep-ai.html" title="Ask Zep AI">
-    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g3)" stroke-width="1.4">
-      <circle cx="12" cy="12" r="9"/>
-      <circle cx="9" cy="10" r="1"/>
-      <circle cx="15" cy="10" r="1"/>
-      <path d="M8 15c2 2 6 2 8 0"/>
-      <defs><linearGradient id="g3"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
-    </svg>
-  </a>
-
-  <a class="fbtn" href="student-dashboard.html" title="Dashboard">
-    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g4)" stroke-width="1.4">
-      <rect x="3" y="7" width="18" height="13" rx="2"/>
-      <path d="M3 11h18"/>
-      <defs><linearGradient id="g4"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
-    </svg>
-  </a>
+  <a href="student-dashboard.html">Home</a>
+  <a href="learn-earn.html">Learn</a>
+  <a href="wallet.html">Wallet</a>
 </div>
 
 <script>
-/* ---------- Keys (shared with Learn & Earn) ---------- */
-const BAL_KEY     = 'zepswipe_balance_v1';         // XP, completed skills
-const PENDING_KEY = 'zepswipe_pending_rewards_v1'; // pending ZAC
-const PROFILE_KEY = 'zepswipe_profile_v1';         // badges + profile info
+/* AUTH */
+const student = JSON.parse(localStorage.getItem("zepStudent"));
+if(!student){ location.href="student-login.html"; }
 
-/* ---------- Helpers ---------- */
-function shortAddr(a){return a?`${a.slice(0,6)}...${a.slice(-4)}`:'—';}
+/* WALLET */
+const short = a => a.slice(0,6)+"..."+a.slice(-4);
+document.getElementById("walletShort").textContent = short(student.wallet);
 
-function readBalance(){
-  try{return JSON.parse(localStorage.getItem(BAL_KEY)) || { xp:0, tokens:0, completed:{} }; }
-  catch{return { xp:0, tokens:0, completed:{} };}
-}
-function readPending(){
-  try{return JSON.parse(localStorage.getItem(PENDING_KEY)) || []; }
-  catch{return []; }
-}
-function readProfile(){
-  try{return JSON.parse(localStorage.getItem(PROFILE_KEY)) || { badges:[] }; }
-  catch{return { badges:[] };}
-}
-function writeProfile(p){ localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); }
+/* AVATAR */
+const img = document.getElementById("avatarImg");
+const text = document.getElementById("avatarText");
+const savedAvatar = localStorage.getItem("zepAvatar");
+if(savedAvatar){ img.src=savedAvatar; img.style.display="block"; text.style.display="none"; }
 
-/* ---------- Auth & Wallet ---------- */
-const walletShortEl = document.getElementById('walletShort');
-const walletFullEl  = document.getElementById('walletFull');
-
-document.getElementById("logoutBtn").onclick = ()=>{
-  localStorage.removeItem("zepStudent");
-  location.href="index.html";
+document.getElementById("avatarInput").onchange = e=>{
+  const r=new FileReader();
+  r.onload=()=>{ localStorage.setItem("zepAvatar",r.result); img.src=r.result; img.style.display="block"; text.style.display="none"; }
+  r.readAsDataURL(e.target.files[0]);
 };
 
-function loadWallet(){
-  const s = JSON.parse(localStorage.getItem("zepStudent"));
-  if(!s){ location.href="student-login.html"; return null; }
-  walletShortEl.textContent = shortAddr(s.wallet);
-  walletFullEl.textContent  = s.wallet;
-  return s.wallet;
-}
+/* UNIVERSITY */
+const uni = document.getElementById("university");
+uni.value = localStorage.getItem("zepUniversity")||"";
+uni.onchange = ()=>localStorage.setItem("zepUniversity",uni.value);
 
-/* ---------- Avatar + Profile form ---------- */
-const avatarImg        = document.getElementById('avatarImg');
-const avatarPlaceholder= document.getElementById('avatarPlaceholder');
-const avatarInput      = document.getElementById('avatarInput');
-const studentNameInput = document.getElementById('studentName');
-const studentUniInput  = document.getElementById('studentUni');
-const studentSkillInput= document.getElementById('studentSkill');
-const studentBioInput  = document.getElementById('studentBio');
-const saveStatusEl     = document.getElementById('saveStatus');
+/* COURSES */
+const courses = [
+ "AI Prompt Engineering","No-Code Automation","Content Creation",
+ "Chatbot Building","Web Design","Data & Research","Digital Marketing","Freelancing"
+];
 
-let avatarDataUrl = null;
+let completed=0;
+const progressList=document.getElementById("progressList");
+const skills=document.getElementById("skills");
 
-function loadProfileUI(){
-  const profile = readProfile();
-  if(profile.name) studentNameInput.value = profile.name;
-  if(profile.university) studentUniInput.value = profile.university;
-  if(profile.focusSkill) studentSkillInput.value = profile.focusSkill;
-  if(profile.bio) studentBioInput.value = profile.bio;
-  if(profile.avatar){
-    avatarDataUrl = profile.avatar;
-    avatarImg.src = avatarDataUrl;
-    avatarImg.style.display = 'block';
-    avatarPlaceholder.style.display = 'none';
-  }
-}
+courses.forEach((c,i)=>{
+  const data=JSON.parse(localStorage.getItem("zep_"+c.split(" ")[0].toLowerCase()))||{day:0};
+  const pct=Math.min((data.day/21)*100,100);
+  if(data.day>=21){ completed++; skills.innerHTML+=`<span class="skill">${c}</span>`; }
 
-avatarInput.addEventListener('change', (e)=>{
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = function(ev){
-    avatarDataUrl = ev.target.result;
-    avatarImg.src = avatarDataUrl;
-    avatarImg.style.display = 'block';
-    avatarPlaceholder.style.display = 'none';
-  };
-  reader.readAsDataURL(file);
+  progressList.innerHTML+=`
+    <div class="course">
+      <div class="course-name">${c}</div>
+      <div class="progress"><span style="width:${pct}%"></span></div>
+    </div>`;
 });
 
-document.getElementById('saveProfileBtn').onclick = ()=>{
-  const profile = readProfile();
-  profile.name       = studentNameInput.value.trim();
-  profile.university = studentUniInput.value.trim();
-  profile.focusSkill = studentSkillInput.value.trim();
-  profile.bio        = studentBioInput.value.trim();
-  if(avatarDataUrl)  profile.avatar = avatarDataUrl;
+/* VERIFICATION */
+const badge=document.getElementById("statusBadge");
+const btn=document.getElementById("marketBtn");
 
-  writeProfile(profile);
-  saveStatusEl.textContent = "Profile saved. This will be used across your dashboard and Learn & Earn.";
-  setTimeout(()=>{ saveStatusEl.textContent = ""; }, 3000);
-};
-
-/* ---------- Learning Journey Render ---------- */
-const xpDisplay        = document.getElementById('xpDisplay');
-const zacDisplay       = document.getElementById('zacDisplay');
-const skillsDoneDisplay= document.getElementById('skillsDoneDisplay');
-const progressFill     = document.getElementById('progressFill');
-const progressPercent  = document.getElementById('progressPercent');
-const badgeList        = document.getElementById('badgeList');
-
-const TOTAL_SKILLS = 8;
-
-function renderLearning(){
-  const bal     = readBalance();
-  const pending = readPending();
-  const profile = readProfile();
-
-  const xp  = bal.xp || 0;
-  const lockedZac = pending.filter(p=>p.status==='pending')
-                           .reduce((sum,p)=>sum+(p.tokens||0),0);
-  const completedSkills = Object.keys(bal.completed || {}).length;
-
-  xpDisplay.textContent        = xp;
-  zacDisplay.textContent       = lockedZac;
-  skillsDoneDisplay.textContent= `${completedSkills} / ${TOTAL_SKILLS}`;
-
-  const pct = Math.min(100, Math.round((completedSkills / TOTAL_SKILLS)*100));
-  progressFill.style.width = pct + '%';
-  progressPercent.textContent = pct + '%';
-
-  badgeList.innerHTML = '';
-  const badges = profile.badges || [];
-  if(badges.length === 0){
-    badgeList.innerHTML = `<div class="section-sub" style="font-size:11px;">No badges yet. Complete Learn & Earn skill tests to unlock your first badge.</div>`;
-  }else{
-    badges.forEach(b=>{
-      const div = document.createElement('div');
-      div.className = 'badge-item';
-      div.innerHTML = `
-        <div>
-          <div class="badge-title">${b.skillTitle}</div>
-          <div class="section-sub" style="font-size:11px;margin-top:2px;">Issued: ${new Date(b.issuedAt).toLocaleDateString()}</div>
-        </div>
-        <div class="badge-tag">Certified</div>
-      `;
-      badgeList.appendChild(div);
-    });
-  }
+if(completed>=1){
+  badge.textContent="Verified Student";
+  badge.className="badge verified";
+  btn.textContent="Open Swipe Merchants";
+  btn.onclick=()=>location.href="swipe-merchants.html";
+}else{
+  btn.onclick=()=>location.href="learn-earn.html";
 }
-
-/* ---------- Copy wallet ---------- */
-document.getElementById('copyWalletBtn').onclick = ()=>{
-  const text = walletFullEl.textContent || '';
-  if(!text || text === '—') return;
-  navigator.clipboard.writeText(text).then(()=>{
-    alert("Wallet address copied.");
-  });
-};
-
-/* ---------- Init ---------- */
-window.onload = ()=>{
-  loadWallet();
-  loadProfileUI();
-  renderLearning();
-};
 </script>
 
 </body>
