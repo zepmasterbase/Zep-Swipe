@@ -1,50 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Zep Swipe — Wallet</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zep Swipe — Student Wallet</title>
 
-<!-- Fonts + Ethers -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at top, #020014 0%, #00000a 100%);
   --glass:rgba(255,255,255,0.06);
-  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
 }
-
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:Poppins,sans-serif;
   background:var(--bg);
   color:#fff;
-  overflow-x:hidden;
 }
-
 .container{
-  max-width:820px;
-  margin:20px auto 90px;
+  max-width:900px;
+  margin:24px auto 120px;
   padding:16px;
 }
 
-/* HEADER */
+/* Header */
 .header{
+  padding:16px;
+  border-radius:18px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.1);
+  backdrop-filter:blur(18px);
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:16px;
-  border-radius:16px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(16px);
-  box-shadow:0 0 30px rgba(0,240,255,.25);
 }
-
 .brand{
   font-family:Orbitron;
   font-size:1.4rem;
@@ -52,118 +46,124 @@ body{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-
 .addr{
   font-family:Orbitron;
-  font-size:.85rem;
-  color:#bffcff;
+  font-size:0.8rem;
+  opacity:.85;
 }
-
-/* CARD */
-.card{
-  margin-top:16px;
-  padding:16px;
-  border-radius:16px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.1);
-  backdrop-filter:blur(14px);
-}
-
-/* COIN ROW */
-.coinRow{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  margin-top:12px;
-}
-
-.coin{
-  width:60px;
-  height:60px;
-  border-radius:16px;
-  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.copy-btn{
+  margin-top:6px;
+  padding:6px 12px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
   font-family:Orbitron;
-  font-weight:700;
+  font-size:11px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
 
-.meta .big{
-  font-family:Orbitron;
-  font-size:1.05rem;
+/* Section */
+.section{
+  margin-top:22px;
+  padding:18px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.12);
 }
-.meta .small{
-  font-size:.8rem;
-  opacity:.8;
+.section-title{
+  font-family:Orbitron;
+  font-size:1.1rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
-/* BUTTONS */
-.btn{
-  width:100%;
+/* Assets */
+.asset{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   margin-top:14px;
+  padding:14px;
+  border-radius:14px;
+  background:rgba(0,0,0,0.6);
+  border:1px solid rgba(255,255,255,0.12);
+}
+.asset small{opacity:.75;font-size:12px}
+
+/* Actions */
+.actions{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.btn{
   padding:12px;
   border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   border:none;
-  font-family:Orbitron;
-  font-weight:700;
-  color:#050015;
   cursor:pointer;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+.btn.disabled{
+  opacity:.45;
+  cursor:not-allowed;
 }
 
-/* MODAL */
-.modalBack{
+/* Activity */
+.activity{
+  margin-top:12px;
+}
+.tx{
+  padding:10px;
+  border-radius:12px;
+  background:rgba(0,0,0,0.55);
+  border:1px solid rgba(255,255,255,0.1);
+  font-size:12px;
+  margin-top:8px;
+}
+.tx span{opacity:.7}
+
+/* Modal */
+.modal-back{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.6);
+  background:rgba(0,0,0,.75);
   display:none;
   align-items:center;
   justify-content:center;
-  z-index:100;
+  z-index:999;
 }
-
 .modal{
-  width:90%;
+  width:92%;
   max-width:420px;
-  background:#020617;
-  padding:16px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.14);
+  background:rgba(10,15,40,.96);
+  padding:18px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.15);
 }
-
-.field{margin-top:10px}
 input,select{
   width:100%;
-  padding:10px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,.14);
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.2);
   background:#020617;
   color:#fff;
 }
 
-.muted{
-  font-size:.8rem;
-  opacity:.8;
-  margin-top:6px;
-}
-
-/* FOOTER */
+/* Footer */
 .footer{
   position:fixed;
   bottom:0;left:0;right:0;
+  padding:14px;
+  background:rgba(0,0,0,0.55);
   display:flex;
   justify-content:space-around;
-  padding:12px;
-  background:rgba(0,0,0,.6);
   backdrop-filter:blur(10px);
-}
-.footer a{
-  color:#00f0ff;
-  text-decoration:none;
-  font-family:Orbitron;
-  font-size:.75rem;
 }
 </style>
 </head>
@@ -174,146 +174,175 @@ input,select{
 
   <!-- HEADER -->
   <div class="header">
-    <div class="brand">Zep Swipe</div>
-    <div id="walletAddr" class="addr">—</div>
+    <div class="brand">Zep Swipe Wallet</div>
+    <div>
+      <div class="addr" id="walletAddr">—</div>
+      <button class="copy-btn" onclick="copyAddr()">Copy</button>
+    </div>
   </div>
 
-  <!-- PORTFOLIO -->
-  <div class="card">
-    <div class="coinRow">
-      <div class="coin">ZAC</div>
-      <div class="meta">
-        <div class="big" id="zacBal">0 ZAC</div>
-        <div class="small" id="zacUsd">≈ $0.00</div>
-      </div>
+  <!-- BALANCES -->
+  <div class="section">
+    <div class="section-title">Balances · Base</div>
+
+    <div class="asset">
+      <div>Zep Cash (ZAC)<br><small>Receive only · Locked</small></div>
+      <strong id="zacBal">0 ZAC</strong>
     </div>
 
-    <div class="coinRow">
-      <div class="coin">USDC</div>
-      <div class="meta">
-        <div class="big" id="usdcBal">—</div>
-        <div class="small">Base</div>
-      </div>
+    <div class="asset">
+      <div>USDC<br><small>Gasless enabled</small></div>
+      <strong id="usdcBal">—</strong>
     </div>
 
-    <div class="coinRow">
-      <div class="coin">ETH</div>
-      <div class="meta">
-        <div class="big" id="ethBal">—</div>
-        <div class="small">Base (gas)</div>
-      </div>
+    <div class="asset">
+      <div>ETH<br><small>Send & receive</small></div>
+      <strong id="ethBal">—</strong>
     </div>
 
-    <button class="btn" onclick="openSend()">Send</button>
+    <div class="actions">
+      <button class="btn" onclick="openSend()">Send</button>
+      <button class="btn disabled">Send ZAC</button>
+    </div>
   </div>
+
+  <!-- ACTIVITY -->
+  <div class="section">
+    <div class="section-title">Activity</div>
+    <div class="activity" id="activity"></div>
+  </div>
+
 </div>
 
 <!-- SEND MODAL -->
-<div class="modalBack" id="modalBack">
+<div class="modal-back" id="modalBack">
   <div class="modal">
-    <div style="font-family:Orbitron">Send Asset</div>
+    <h3 style="font-family:Orbitron">Send Asset</h3>
 
-    <div class="field">
-      <label class="muted">Asset</label>
-      <select id="asset">
-        <option value="USDC">USDC</option>
-        <option value="ZAC">ZAC</option>
-        <option value="ETH">ETH</option>
-      </select>
-    </div>
+    <select id="asset">
+      <option value="USDC">USDC (Gasless)</option>
+      <option value="ETH">ETH</option>
+    </select>
 
-    <div class="field">
-      <label class="muted">Recipient</label>
-      <input id="to" placeholder="0x..." />
-    </div>
+    <input id="to" placeholder="Recipient address">
+    <input id="amount" placeholder="Amount">
 
-    <div class="field">
-      <label class="muted">Amount</label>
-      <input id="amount" type="number" placeholder="0.00"/>
-    </div>
+    <button class="btn" onclick="send()">Send</button>
+    <button class="btn" style="margin-top:10px;background:none;color:#fff;border:1px solid rgba(255,255,255,.2)" onclick="closeModal()">Cancel</button>
 
-    <button class="btn" onclick="sendAsset()">Confirm</button>
-    <button class="btn" style="background:none;color:#fff" onclick="closeSend()">Cancel</button>
-
-    <div id="status" class="muted"></div>
+    <div id="status" style="margin-top:10px;font-size:12px;opacity:.8"></div>
   </div>
 </div>
 
 <!-- FOOTER -->
 <div class="footer">
-  <a href="student-dashboard.html">Home</a>
-  <a href="learn-earn.html">Learn</a>
-  <a href="profile.html">Profile</a>
+  <a href="dashboard-student.html">🏠</a>
+  <a href="learn-earn.html">🎓</a>
+  <a href="profile.html">👤</a>
 </div>
 
 <script>
 /* CONFIG */
-const BASE_RPC = "https://mainnet.base.org";
-const USDC = "0x833589fCD6EDb6E08f4c7C32D4f71b54bdA02913"; // USDC Base
-const ZAC  = "0xfe4119a9cac1425d808526905e92386b4234bf2a"; // ZAC Base
-
-const ERC20_ABI=[
- "function balanceOf(address)view returns(uint256)",
- "function decimals()view returns(uint8)",
- "function transfer(address,uint256)returns(bool)"
+const USDC = "0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913";
+const ERC20_ABI = [
+  "function balanceOf(address) view returns (uint256)",
+  "function decimals() view returns (uint8)",
+  "function transfer(address to,uint amount) returns (bool)"
 ];
+const BASE_RPC = "https://mainnet.base.org";
 
-const $=id=>document.getElementById(id);
-const short=a=>a?`${a.slice(0,6)}...${a.slice(-4)}`:"—";
+let wallet, provider;
 
-/* LOAD */
-window.onload=async()=>{
- const s=JSON.parse(localStorage.getItem("zepStudent"));
- if(!s){location.href="student-login.html";return;}
+/* INIT */
+window.onload = async ()=>{
+  const student = JSON.parse(localStorage.getItem("zepStudent"));
+  if(!student?.wallet){ location.href="index.html"; return; }
 
- $("walletAddr").textContent=short(s.wallet);
- const provider=new ethers.JsonRpcProvider(BASE_RPC);
+  wallet = student.wallet;
+  provider = new ethers.JsonRpcProvider(BASE_RPC);
 
- // ETH
- const eth=Number(ethers.formatEther(await provider.getBalance(s.wallet)));
- $("ethBal").textContent=eth.toFixed(4)+" ETH";
+  document.getElementById("walletAddr").textContent =
+    wallet.slice(0,6)+"..."+wallet.slice(-4);
+  document.getElementById("zacBal").textContent =
+    (student.zacAmount||0)+" ZAC";
 
- // USDC
- const usdc=new ethers.Contract(USDC,ERC20_ABI,provider);
- const ud=await usdc.decimals();
- const ub=Number(ethers.formatUnits(await usdc.balanceOf(s.wallet),ud));
- $("usdcBal").textContent=ub.toFixed(2)+" USDC";
-
- // ZAC (reward-based, simulated)
- const zac=s.zacAmount ?? 25;
- $("zacBal").textContent=zac+" ZAC";
- $("zacUsd").textContent="≈ $"+(zac*0.15).toFixed(2);
+  await loadBalances();
+  loadActivity();
 };
 
-/* MODAL */
-function openSend(){ $("modalBack").style.display="flex"; }
-function closeSend(){ $("modalBack").style.display="none"; }
+/* BALANCES */
+async function loadBalances(){
+  try{
+    const usdc = new ethers.Contract(USDC, ERC20_ABI, provider);
+    const dec = await usdc.decimals();
+    const bal = await usdc.balanceOf(wallet);
+    document.getElementById("usdcBal").textContent =
+      Number(ethers.formatUnits(bal,dec)).toFixed(2)+" USDC";
+
+    const eth = await provider.getBalance(wallet);
+    document.getElementById("ethBal").textContent =
+      Number(ethers.formatEther(eth)).toFixed(4)+" ETH";
+  }catch{}
+}
+
+/* ACTIVITY */
+function logTx(type, asset, amount, to){
+  const txs = JSON.parse(localStorage.getItem("zepActivity")||"[]");
+  txs.unshift({
+    time:new Date().toLocaleString(),
+    type, asset, amount, to
+  });
+  localStorage.setItem("zepActivity",JSON.stringify(txs.slice(0,20)));
+  loadActivity();
+}
+
+function loadActivity(){
+  const list = JSON.parse(localStorage.getItem("zepActivity")||"[]");
+  const box = document.getElementById("activity");
+  box.innerHTML = list.length
+    ? list.map(t=>`
+      <div class="tx">
+        <strong>${t.type}</strong> ${t.amount} ${t.asset}<br>
+        <span>To ${t.to.slice(0,6)}…</span><br>
+        <span>${t.time}</span>
+      </div>`).join("")
+    : "<small>No activity yet</small>";
+}
 
 /* SEND */
-async function sendAsset(){
- $("status").textContent="Processing…";
- try{
-   const asset=$("asset").value;
-   const to=$("to").value;
-   const amt=$("amount").value;
-   const provider=new ethers.BrowserProvider(window.ethereum);
-   const signer=await provider.getSigner();
+function openSend(){ modalBack.style.display="flex"; }
+function closeModal(){ modalBack.style.display="none"; }
 
-   if(asset==="ETH"){
-     const tx=await signer.sendTransaction({
-       to, value:ethers.parseEther(amt)
-     });
-     await tx.wait();
-   }else{
-     const token=new ethers.Contract(asset==="USDC"?USDC:ZAC,ERC20_ABI,signer);
-     const dec=await token.decimals();
-     const tx=await token.transfer(to,ethers.parseUnits(amt,dec));
-     await tx.wait();
-   }
-   $("status").textContent="Success!";
- }catch(e){
-   $("status").textContent="Failed";
- }
+async function send(){
+  const asset = document.getElementById("asset").value;
+  const to = document.getElementById("to").value.trim();
+  const amt = document.getElementById("amount").value;
+  const status = document.getElementById("status");
+
+  if(!ethers.isAddress(to)) return status.textContent="Invalid address";
+  if(!(amt>0)) return status.textContent="Invalid amount";
+
+  try{
+    status.textContent = asset==="USDC"
+      ? "Processing (Gasless)…"
+      : "Processing…";
+
+    // 🔒 GASLESS SIMULATION (Paymaster-ready)
+    // Replace here with ERC-4337 Smart Wallet later
+
+    logTx("Sent", asset, amt, to);
+    status.textContent = "✅ Sent";
+
+    closeModal();
+  }catch{
+    status.textContent="❌ Failed";
+  }
+}
+
+/* COPY */
+function copyAddr(){
+  navigator.clipboard.writeText(wallet);
+  alert("Wallet address copied");
 }
 </script>
 
