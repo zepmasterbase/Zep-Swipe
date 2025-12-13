@@ -6,6 +6,7 @@
 <title>Zep Swipe — Learn & Earn</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
 
 <style>
 :root{
@@ -14,23 +15,18 @@
   --bg:radial-gradient(circle at top, #020014 0%, #00000a 100%);
   --glass:rgba(255,255,255,0.06);
 }
-
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:Poppins,sans-serif;
   background:var(--bg);
   color:#fff;
-  overflow-x:hidden;
 }
-
 .container{
-  max-width:920px;
-  margin:24px auto 110px;
+  max-width:960px;
+  margin:24px auto 120px;
   padding:16px;
 }
-
-/* Header */
 .header{
   display:flex;
   justify-content:space-between;
@@ -38,11 +34,9 @@ body{
   padding:16px;
   border-radius:18px;
   background:var(--glass);
-  border:1px solid rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(18px);
-  box-shadow:0 0 28px rgba(0,240,255,0.25);
 }
-
 .brand{
   font-family:Orbitron;
   font-size:1.4rem;
@@ -50,8 +44,7 @@ body{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-
-.home-btn{
+.btn{
   font-family:Orbitron;
   font-size:12px;
   padding:8px 16px;
@@ -61,8 +54,6 @@ body{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
-
-/* Section */
 .section-title{
   margin:26px 0 14px;
   font-family:Orbitron;
@@ -71,43 +62,30 @@ body{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-
-/* Courses grid */
 .courses{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:14px;
 }
-
-.course-card{
+.course{
   padding:16px;
   border-radius:18px;
-  background:rgba(0,0,0,0.7);
-  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(0,0,0,.7);
+  border:1px solid rgba(255,255,255,.12);
   cursor:pointer;
-  transition:.2s;
 }
-.course-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 0 28px rgba(0,240,255,0.35);
-}
-
-.course-title{
-  font-family:Orbitron;
-  font-size:0.95rem;
-}
-.course-desc{
-  font-size:12px;
-  opacity:.85;
-  margin-top:6px;
-}
-.course-meta{
-  font-size:11px;
-  opacity:.7;
+.progress{
+  height:6px;
+  background:rgba(255,255,255,.1);
+  border-radius:999px;
+  overflow:hidden;
   margin-top:8px;
 }
-
-/* Modal */
+.progress span{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+}
 .modal-back{
   position:fixed;
   inset:0;
@@ -124,28 +102,7 @@ body{
   padding:18px;
   border-radius:20px;
   border:1px solid rgba(255,255,255,.15);
-  backdrop-filter:blur(20px);
-  box-shadow:0 0 40px rgba(0,240,255,0.35);
 }
-
-.modal h3{
-  font-family:Orbitron;
-  font-size:1rem;
-}
-.modal p{
-  font-size:12px;
-  opacity:.85;
-}
-
-.task-box{
-  margin-top:12px;
-  padding:12px;
-  border-radius:14px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.12);
-  font-size:12px;
-}
-
 input{
   width:100%;
   margin-top:10px;
@@ -155,27 +112,22 @@ input{
   background:#020617;
   color:#fff;
 }
-
-.submit-btn{
-  margin-top:14px;
-  width:100%;
-  padding:12px;
+.small{font-size:12px;opacity:.8}
+.verify-box{
+  margin-top:20px;
+  padding:18px;
+  border-radius:20px;
+  background:rgba(0,0,0,.6);
+  border:1px solid rgba(0,240,255,.35);
+}
+.badge{
+  display:inline-block;
+  padding:6px 12px;
   border-radius:999px;
-  border:none;
-  cursor:pointer;
-  font-family:Orbitron;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
-}
-
-.close-btn{
-  margin-top:10px;
-  width:100%;
-  padding:10px;
-  background:none;
-  border:1px solid rgba(255,255,255,.2);
-  color:#fff;
-  border-radius:999px;
+  font-family:Orbitron;
+  font-size:11px;
 }
 </style>
 </head>
@@ -184,14 +136,32 @@ input{
 
 <div class="container">
 
-  <!-- HEADER -->
   <div class="header">
     <div class="brand">Zep Swipe · Learn & Earn</div>
-    <button class="home-btn" onclick="location.href='dashboard-student.html'">Home</button>
+    <button class="btn" onclick="location.href='dashboard-student.html'">Home</button>
   </div>
 
-  <div class="section-title">Choose a Skill Track</div>
+  <div class="section-title">Skill Tracks (21 Days Each)</div>
   <div class="courses" id="courseGrid"></div>
+
+  <div class="verify-box" id="verifyBox" style="display:none">
+    <h3 class="section-title">Creator Verification</h3>
+    <p class="small">
+      University: <span id="uni"></span><br>
+      Country: <span id="country"></span>
+    </p>
+    <p class="small">
+      You’ve completed 21 days of real tasks.  
+      Pay <strong>$5 USDC</strong> to unlock:
+    </p>
+    <ul class="small">
+      <li>✔ Verified Creator Badge</li>
+      <li>✔ Swipe Merchants access</li>
+      <li>✔ Public skill identity</li>
+    </ul>
+    <button class="btn" onclick="payVerification()">Pay $5 USDC & Verify</button>
+    <div class="small" id="payStatus"></div>
+  </div>
 
 </div>
 
@@ -199,100 +169,109 @@ input{
 <div class="modal-back" id="modalBack">
   <div class="modal">
     <h3 id="modalTitle"></h3>
-    <p id="modalDesc"></p>
-
-    <div class="task-box" id="taskText"></div>
-
-    <input id="taskInput" placeholder="Paste proof link (Zora / GitHub / Google Doc / X)" />
-    <button class="submit-btn" onclick="submitTask()">Submit & Earn 25 ZAC</button>
-    <button class="close-btn" onclick="closeModal()">Close</button>
+    <p id="modalTask" class="small"></p>
+    <input id="proof" placeholder="Zora / GitHub / Doc link" />
+    <button class="btn" onclick="submitTask()">Submit Task</button>
+    <button class="btn" style="margin-top:8px;background:none;color:#fff;border:1px solid rgba(255,255,255,.2)" onclick="closeModal()">Close</button>
   </div>
 </div>
 
 <script>
-/* -------------------------
-   COURSE DATA
-------------------------- */
-const courses = [
-  {id:"prompt", title:"AI Prompt Engineering", desc:"Write prompts that produce consistent AI results"},
-  {id:"content", title:"AI Content Creation", desc:"Create posts & scripts with AI"},
-  {id:"design", title:"Social Design (No-Code)", desc:"Design carousels & flyers"},
-  {id:"video", title:"Micro-Video Editing", desc:"Edit short-form video"},
-  {id:"web", title:"No-Code Websites", desc:"Build landing pages"},
-  {id:"bot", title:"Chatbot Builder", desc:"Create simple bots"},
-  {id:"research", title:"Research & Lead Gen", desc:"Collect clean data"},
-  {id:"auto", title:"Micro-Automation", desc:"Automate workflows"}
+/* CONFIG */
+const VERIFY_USDC_TO = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
+const USDC = "0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913";
+const ERC20_ABI=[
+ "function transfer(address,uint256) returns(bool)",
+ "function decimals() view returns(uint8)"
 ];
 
-const dailyTasks = day => `Day ${day} task:
-Create and submit a real example related to this skill.
-Upload proof (Zora mint, doc, repo, or post link).`;
+/* COURSES */
+const courses=[
+ {id:"prompt",title:"AI Prompt Engineering"},
+ {id:"content",title:"AI Content Creation"},
+ {id:"design",title:"Social Design"},
+ {id:"video",title:"Video Editing"},
+ {id:"web",title:"No-Code Websites"},
+ {id:"bot",title:"Chatbot Builder"},
+ {id:"research",title:"Research & Lead Gen"},
+ {id:"auto",title:"Micro-Automation"}
+];
 
-let activeCourse=null;
+let active=null;
+const progress=JSON.parse(localStorage.getItem("zepProgress")||"{}");
+const student=JSON.parse(localStorage.getItem("zepStudent")||"{}");
 
-/* -------------------------
-   INIT
-------------------------- */
+/* RENDER */
 const grid=document.getElementById("courseGrid");
-const modalBack=document.getElementById("modalBack");
-
 courses.forEach(c=>{
-  const card=document.createElement("div");
-  card.className="course-card";
-  card.innerHTML=`
-    <div class="course-title">${c.title}</div>
-    <div class="course-desc">${c.desc}</div>
-    <div class="course-meta">21 days · +25 ZAC daily</div>
-  `;
-  card.onclick=()=>openCourse(c);
-  grid.appendChild(card);
+ const day=progress[c.id]?.day||1;
+ const pct=(day-1)/21*100;
+ const d=document.createElement("div");
+ d.className="course";
+ d.innerHTML=`
+  <strong>${c.title}</strong>
+  <div class="small">Day ${day} / 21</div>
+  <div class="progress"><span style="width:${pct}%"></span></div>
+ `;
+ d.onclick=()=>openCourse(c);
+ grid.appendChild(d);
 });
 
-/* -------------------------
-   MODAL LOGIC
-------------------------- */
+/* MODAL */
 function openCourse(c){
-  activeCourse=c;
-  const progress=JSON.parse(localStorage.getItem("zepProgress")||"{}");
-  const day=progress[c.id]?.day || 1;
-
-  document.getElementById("modalTitle").textContent=c.title;
-  document.getElementById("modalDesc").textContent=c.desc;
-  document.getElementById("taskText").textContent=dailyTasks(day);
-  document.getElementById("taskInput").value="";
-  modalBack.style.display="flex";
+ active=c;
+ const day=progress[c.id]?.day||1;
+ document.getElementById("modalTitle").textContent=c.title;
+ document.getElementById("modalTask").textContent=`Day ${day} task: Submit real proof (Zora/GitHub/Doc).`;
+ document.getElementById("proof").value="";
+ document.getElementById("modalBack").style.display="flex";
 }
+function closeModal(){modalBack.style.display="none";}
 
-function closeModal(){
-  modalBack.style.display="none";
-}
-
-/* -------------------------
-   SUBMIT TASK
-------------------------- */
+/* ANTI-SPAM + SUBMIT */
 function submitTask(){
-  if(!activeCourse) return;
+ const link=document.getElementById("proof").value.trim();
+ if(!link) return alert("Proof required");
 
-  const link=document.getElementById("taskInput").value.trim();
-  if(!link) return alert("Please submit a proof link.");
+ const today=new Date().toDateString();
+ const last=progress[active.id]?.lastDate;
+ if(last===today) return alert("Only 1 task per day allowed.");
 
-  const progress=JSON.parse(localStorage.getItem("zepProgress")||"{}");
-  const currentDay=progress[activeCourse.id]?.day || 1;
+ const day=progress[active.id]?.day||1;
+ progress[active.id]={day:Math.min(day+1,21),lastDate:today,proof:link};
+ localStorage.setItem("zepProgress",JSON.stringify(progress));
 
-  progress[activeCourse.id]={
-    day: Math.min(currentDay+1,21),
-    lastProof: link,
-    updated: Date.now()
-  };
-  localStorage.setItem("zepProgress",JSON.stringify(progress));
+ student.zacAmount=(student.zacAmount||0)+25;
+ localStorage.setItem("zepStudent",JSON.stringify(student));
 
-  const student=JSON.parse(localStorage.getItem("zepStudent")||"{}");
-  student.zacAmount=(student.zacAmount||0)+25;
-  student.achievements=(student.achievements||0)+1;
-  localStorage.setItem("zepStudent",JSON.stringify(student));
+ alert("+25 ZAC earned");
+ closeModal();
+ location.reload();
+}
 
-  alert("✅ Task verified\n🎉 +25 ZAC earned");
-  closeModal();
+/* VERIFY CHECK */
+let totalDays=0;
+Object.values(progress).forEach(p=>totalDays+=Math.max(0,(p.day||1)-1));
+if(totalDays>=21 && !student.verified){
+ document.getElementById("verifyBox").style.display="block";
+ document.getElementById("uni").textContent=student.university||"—";
+ document.getElementById("country").textContent=student.country||"—";
+}
+
+/* PAY VERIFICATION */
+async function payVerification(){
+ if(!window.ethereum) return alert("Wallet required");
+ const provider=new ethers.BrowserProvider(window.ethereum);
+ const signer=await provider.getSigner();
+ const usdc=new ethers.Contract(USDC,ERC20_ABI,signer);
+ const dec=await usdc.decimals();
+ const tx=await usdc.transfer(VERIFY_USDC_TO,ethers.parseUnits("5",dec));
+ document.getElementById("payStatus").textContent="Confirming transaction…";
+ await tx.wait();
+ student.verified=true;
+ localStorage.setItem("zepStudent",JSON.stringify(student));
+ alert("🎉 Verified! Marketplace unlocked.");
+ location.reload();
 }
 </script>
 
