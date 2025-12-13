@@ -1,266 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Zep Swipe — Learn & Earn</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at 20% 10%, #020014 0%, #000007 100%);
   --glass:rgba(255,255,255,0.06);
-  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
 }
+
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Poppins,sans-serif;
+  font-family:'Poppins',sans-serif;
   background:var(--bg);
   color:#fff;
   overflow-x:hidden;
 }
 
-.container{
-  max-width:900px;
-  margin:24px auto 90px;
+header{
   padding:16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:var(--glass);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
-/* Header */
-.header{
-  padding:18px;
-  border-radius:16px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,0.1);
-  backdrop-filter:blur(15px);
-  box-shadow:0 0 30px rgba(0,240,255,0.2);
-}
 .brand{
-  font-family:Orbitron;
-  font-size:1.6rem;
+  font-family:'Orbitron';
+  font-size:1.3rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 
-/* Skill Grid */
+.container{
+  max-width:900px;
+  margin:20px auto 100px;
+  padding:16px;
+}
+
 .skill-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:14px;
-  margin-top:18px;
 }
 
 .skill-card{
+  padding:16px;
+  border-radius:16px;
   background:var(--glass);
   border:1px solid rgba(255,255,255,0.12);
-  border-radius:16px;
-  padding:16px;
   cursor:pointer;
-  transition:.25s;
+  transition:.2s;
 }
 .skill-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 0 35px rgba(156,77,255,0.35);
-}
-.skill-card h3{
-  font-family:Orbitron;
-  margin:0;
-}
-.skill-card p{
-  font-size:13px;
-  opacity:.85;
+  transform:translateY(-4px);
+  box-shadow:0 0 30px rgba(156,77,255,.3);
 }
 
-/* Task Engine */
+.skill-card h3{
+  font-family:'Orbitron';
+  margin:0;
+}
+
 .task-box{
-  margin-top:22px;
+  margin-top:20px;
   padding:18px;
   border-radius:18px;
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(255,255,255,0.12);
 }
-.task-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.task-header h2{
-  font-family:Orbitron;
-  font-size:1.2rem;
-}
-.badge{
-  font-size:12px;
-  padding:6px 12px;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  font-family:Orbitron;
-}
-
-/* Task Card */
-.task{
-  margin-top:14px;
-  padding:14px;
-  border-radius:14px;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.1);
-}
-.task.locked{
-  opacity:.35;
-}
-.task.completed{
-  border-color:#00f0ff;
-  box-shadow:0 0 20px rgba(0,240,255,0.4);
-}
-.task h4{
-  margin:0;
-  font-family:Orbitron;
-  font-size:1rem;
-}
-.task p{
-  font-size:13px;
-  opacity:.85;
-}
 
 textarea{
   width:100%;
-  margin-top:10px;
-  padding:10px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,0.12);
-  background:#020014;
+  min-height:120px;
+  background:#020617;
   color:#fff;
+  border-radius:12px;
+  padding:12px;
+  border:1px solid rgba(255,255,255,0.14);
+  margin-top:12px;
 }
 
-button{
-  margin-top:10px;
-  padding:10px 18px;
-  border:none;
+.btn{
+  margin-top:14px;
+  padding:12px 18px;
   border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
-  font-family:Orbitron;
+  border:none;
+  font-family:'Orbitron';
   font-weight:700;
   cursor:pointer;
 }
-button:disabled{
+
+.locked{
   opacity:.4;
-  cursor:not-allowed;
+  pointer-events:none;
+}
+
+.zac{
+  font-family:'Orbitron';
+  color:var(--zep-blue);
+}
+
+.footer{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  padding:12px;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(10px);
+  display:flex;
+  justify-content:space-around;
 }
 </style>
 </head>
 
 <body>
 
+<header>
+  <div class="brand">Zep Swipe — Learn & Earn</div>
+  <div class="zac">ZAC: <span id="zacBal">0</span></div>
+</header>
+
 <div class="container">
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="brand">Zep Swipe — Learn & Earn</div>
-    <p style="opacity:.8;font-size:13px;">Complete daily tasks. Earn ZAC. Unlock verification.</p>
-  </div>
+<h2>Select a Skill</h2>
 
-  <!-- SKILLS -->
-  <div class="skill-grid" id="skillGrid"></div>
+<div class="skill-grid" id="skillGrid"></div>
 
-  <!-- TASK ENGINE -->
-  <div class="task-box" id="taskBox" style="display:none;"></div>
+<div id="taskArea"></div>
 
 </div>
 
+<div class="footer">
+  <a href="student-dashboard.html">🏠</a>
+  <a href="wallet.html">💳</a>
+  <a href="profile.html">👤</a>
+</div>
+
 <script>
-/* -----------------------------
-   SKILLS + 21-DAY TASKS
------------------------------ */
+/* ---------------- CONFIG ---------------- */
+const DAILY_REWARD = 25;
 const SKILLS = {
-  "AI Content": [...Array(21)].map((_,i)=>`Complete AI task for Day ${i+1}`),
-  "No-Code Automation": [...Array(21)].map((_,i)=>`Build automation task Day ${i+1}`),
-  "Graphic Design": [...Array(21)].map((_,i)=>`Design challenge Day ${i+1}`),
-  "Web Design": [...Array(21)].map((_,i)=>`Website task Day ${i+1}`),
-  "Social Media": [...Array(21)].map((_,i)=>`Growth task Day ${i+1}`),
-  "Data Research": [...Array(21)].map((_,i)=>`Research task Day ${i+1}`),
-  "Video Editing": [...Array(21)].map((_,i)=>`Edit video task Day ${i+1}`),
-  "Freelancing": [...Array(21)].map((_,i)=>`Business task Day ${i+1}`)
+  "AI Prompt Engineering":[
+    "Write 5 AI prompts for summarization",
+    "Improve a weak essay prompt",
+    "Rewrite a bad AI prompt",
+    "Generate a resume using AI",
+    "Create an AI tutor prompt",
+    "Design a research prompt",
+    "Blog generation task",
+    "Client prompt simulation",
+    "SEO content prompt",
+    "Email writing prompt",
+    "Landing page copy prompt",
+    "Chatbot prompt",
+    "Ebook outline prompt",
+    "Product description prompt",
+    "Sales page prompt",
+    "Proposal prompt",
+    "Cold email prompt",
+    "Ad copy prompt",
+    "Case study prompt",
+    "Prompt bundle",
+    "Final AI service package"
+  ],
+  "No-Code Automation":[...Array(21)].map((_,i)=>`Build automation task Day ${i+1}`),
+  "Content Creation":[...Array(21)].map((_,i)=>`Create content task Day ${i+1}`),
+  "Web Building":[...Array(21)].map((_,i)=>`Build web task Day ${i+1}`),
+  "Graphic Design":[...Array(21)].map((_,i)=>`Design task Day ${i+1}`),
+  "Data Skills":[...Array(21)].map((_,i)=>`Data task Day ${i+1}`),
+  "Web3 Basics":[...Array(21)].map((_,i)=>`Web3 task Day ${i+1}`),
+  "Freelancing":[...Array(21)].map((_,i)=>`Client task Day ${i+1}`)
 };
 
-const storeKey = "zepLearnEarn";
+/* ---------------- STATE ---------------- */
+let state = JSON.parse(localStorage.getItem("zepLearn")) || {
+  zac:0,
+  skills:{}
+};
 
-/* -----------------------------
-   INIT
------------------------------ */
+function save(){ localStorage.setItem("zepLearn",JSON.stringify(state)); }
+
+/* ---------------- UI ---------------- */
 const grid = document.getElementById("skillGrid");
-const box = document.getElementById("taskBox");
+const taskArea = document.getElementById("taskArea");
+const zacBal = document.getElementById("zacBal");
+zacBal.textContent = state.zac;
 
-const state = JSON.parse(localStorage.getItem(storeKey)) || {};
-
-/* -----------------------------
-   RENDER SKILLS
------------------------------ */
 Object.keys(SKILLS).forEach(skill=>{
-  const card = document.createElement("div");
+  const card=document.createElement("div");
   card.className="skill-card";
-  card.innerHTML=`
-    <h3>${skill}</h3>
-    <p>21-day real skill challenge</p>
-  `;
+  card.innerHTML=`<h3>${skill}</h3><p>21-day practical program</p>`;
   card.onclick=()=>openSkill(skill);
   grid.appendChild(card);
 });
 
-/* -----------------------------
-   OPEN SKILL
------------------------------ */
 function openSkill(skill){
-  box.style.display="block";
-  box.innerHTML="";
+  if(!state.skills[skill]){
+    state.skills[skill]={day:1,completed:[]};
+    save();
+  }
+  renderTask(skill);
+}
 
-  if(!state[skill]) state[skill]={ day:1, completed:[] };
-
-  const {day,completed} = state[skill];
-
-  const header=document.createElement("div");
-  header.className="task-header";
-  header.innerHTML=`
-    <h2>${skill}</h2>
-    <div class="badge">Day ${day} / 21</div>
-  `;
-  box.appendChild(header);
-
-  SKILLS[skill].forEach((task,i)=>{
-    const d=i+1;
-    const t=document.createElement("div");
-    t.className="task";
-
-    if(d>day) t.classList.add("locked");
-    if(completed.includes(d)) t.classList.add("completed");
-
-    t.innerHTML=`
-      <h4>Day ${d}</h4>
+function renderTask(skill){
+  const s=state.skills[skill];
+  const day=s.day;
+  const task=SKILLS[skill][day-1];
+  taskArea.innerHTML=`
+    <div class="task-box">
+      <h3>${skill} — Day ${day}/21</h3>
       <p>${task}</p>
-    `;
+      <textarea id="submission" placeholder="Paste link / explain your work..."></textarea>
+      <button class="btn" onclick="submitTask('${skill}')">Submit Task</button>
+    </div>
+  `;
+}
 
-    if(d===day && !completed.includes(d)){
-      const ta=document.createElement("textarea");
-      ta.placeholder="Submit proof (link / explanation)";
-      const btn=document.createElement("button");
-      btn.textContent="Submit & Earn 25 ZAC";
-      btn.onclick=()=>{
-        completed.push(d);
-        state[skill].day++;
-        localStorage.setItem(storeKey,JSON.stringify(state));
-        alert("+25 ZAC earned!");
-        openSkill(skill);
-      };
-      t.appendChild(ta);
-      t.appendChild(btn);
-    }
+function submitTask(skill){
+  const input=document.getElementById("submission").value.trim();
+  if(!input){ alert("Submission required"); return; }
 
-    box.appendChild(t);
-  });
+  const s=state.skills[skill];
+  s.completed.push(s.day);
+  s.day++;
+  state.zac+=DAILY_REWARD;
+  save();
+  zacBal.textContent=state.zac;
+
+  if(s.day>21){
+    taskArea.innerHTML=`<div class="task-box"><h3>${skill} Completed 🎉</h3></div>`;
+  }else{
+    renderTask(skill);
+  }
 }
 </script>
 
