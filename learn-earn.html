@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zep Swipe — Learn & Earn</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -17,258 +17,250 @@
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:'Poppins',sans-serif;
+  font-family:Poppins,sans-serif;
   background:var(--bg);
   color:#fff;
   overflow-x:hidden;
 }
+
 .container{
-  max-width:960px;
-  margin:24px auto 100px;
+  max-width:900px;
+  margin:24px auto 90px;
   padding:16px;
 }
 
-/* HEADER */
+/* Header */
 .header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:16px;
+  padding:18px;
   border-radius:16px;
   background:var(--glass);
   border:1px solid rgba(255,255,255,0.1);
-  backdrop-filter:blur(16px);
-  box-shadow:0 0 35px rgba(0,240,255,0.25);
+  backdrop-filter:blur(15px);
+  box-shadow:0 0 30px rgba(0,240,255,0.2);
 }
 .brand{
-  font-family:'Orbitron';
-  font-size:1.4rem;
+  font-family:Orbitron;
+  font-size:1.6rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.back{
-  font-size:13px;
-  color:#bffcff;
-  cursor:pointer;
-}
 
-/* COURSE GRID */
-.course-grid{
+/* Skill Grid */
+.skill-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:14px;
-  margin-top:20px;
-}
-.course-card{
-  background:rgba(255,255,255,0.05);
-  border-radius:18px;
-  padding:16px;
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(14px);
-  box-shadow:0 0 30px rgba(0,240,255,0.12);
-  cursor:pointer;
-  transition:.2s;
-}
-.course-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 0 45px rgba(156,77,255,0.3);
-}
-.course-title{
-  font-family:'Orbitron';
-  font-size:1rem;
-}
-.course-desc{
-  font-size:13px;
-  opacity:.85;
-  margin-top:6px;
+  margin-top:18px;
 }
 
-/* TASK PANEL */
-.task-panel{
-  margin-top:24px;
+.skill-card{
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:16px;
+  padding:16px;
+  cursor:pointer;
+  transition:.25s;
+}
+.skill-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 0 35px rgba(156,77,255,0.35);
+}
+.skill-card h3{
+  font-family:Orbitron;
+  margin:0;
+}
+.skill-card p{
+  font-size:13px;
+  opacity:.85;
+}
+
+/* Task Engine */
+.task-box{
+  margin-top:22px;
   padding:18px;
   border-radius:18px;
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(255,255,255,0.12);
-  display:none;
 }
-.task-title{
-  font-family:'Orbitron';
-  font-size:1.1rem;
+.task-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
-.task-meta{
-  font-size:13px;
-  opacity:.8;
-  margin:8px 0;
+.task-header h2{
+  font-family:Orbitron;
+  font-size:1.2rem;
 }
-.task-box{
-  margin-top:12px;
-  padding:14px;
-  border-radius:14px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.1);
-}
-.complete-btn{
-  margin-top:14px;
-  padding:12px 16px;
+.badge{
+  font-size:12px;
+  padding:6px 12px;
   border-radius:999px;
-  border:none;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
-  font-family:'Orbitron';
+  font-family:Orbitron;
+}
+
+/* Task Card */
+.task{
+  margin-top:14px;
+  padding:14px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+}
+.task.locked{
+  opacity:.35;
+}
+.task.completed{
+  border-color:#00f0ff;
+  box-shadow:0 0 20px rgba(0,240,255,0.4);
+}
+.task h4{
+  margin:0;
+  font-family:Orbitron;
+  font-size:1rem;
+}
+.task p{
+  font-size:13px;
+  opacity:.85;
+}
+
+textarea{
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:#020014;
+  color:#fff;
+}
+
+button{
+  margin-top:10px;
+  padding:10px 18px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-family:Orbitron;
   font-weight:700;
   cursor:pointer;
 }
-
-/* PROGRESS */
-.progress{
-  margin-top:12px;
-  height:8px;
-  background:rgba(255,255,255,0.1);
-  border-radius:10px;
-  overflow:hidden;
+button:disabled{
+  opacity:.4;
+  cursor:not-allowed;
 }
-.progress span{
-  display:block;
-  height:100%;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  width:0%;
-}
-
-/* VERIFY */
-.verify{
-  margin-top:16px;
-  padding:14px;
-  border-radius:14px;
-  background:linear-gradient(90deg,rgba(0,240,255,.15),rgba(156,77,255,.15));
-  border:1px solid rgba(255,255,255,.2);
-  display:none;
-}
-.verify a{
-  color:#00f0ff;
-  font-family:'Orbitron';
-  text-decoration:none;
-}
-
-/* FOOTER */
-.footer{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  background:rgba(0,0,0,.6);
-  backdrop-filter:blur(10px);
-  padding:12px;
-  display:flex;
-  justify-content:space-around;
-}
-.footer a{color:#00f0ff;text-decoration:none;font-family:Orbitron;font-size:13px}
 </style>
 </head>
 
 <body>
 
 <div class="container">
+
+  <!-- HEADER -->
   <div class="header">
-    <div class="brand">Zep Swipe · Learn & Earn</div>
-    <div class="back" onclick="location.href='student-dashboard.html'">← Dashboard</div>
+    <div class="brand">Zep Swipe — Learn & Earn</div>
+    <p style="opacity:.8;font-size:13px;">Complete daily tasks. Earn ZAC. Unlock verification.</p>
   </div>
 
-  <!-- COURSES -->
-  <div class="course-grid" id="courses"></div>
+  <!-- SKILLS -->
+  <div class="skill-grid" id="skillGrid"></div>
 
-  <!-- TASK -->
-  <div class="task-panel" id="taskPanel">
-    <div class="task-title" id="taskCourse"></div>
-    <div class="task-meta" id="taskMeta"></div>
-    <div class="task-box" id="taskText"></div>
+  <!-- TASK ENGINE -->
+  <div class="task-box" id="taskBox" style="display:none;"></div>
 
-    <div class="progress">
-      <span id="progressBar"></span>
-    </div>
-
-    <button class="complete-btn" id="completeBtn">Complete Task (+25 ZAC)</button>
-
-    <div class="verify" id="verifyBox">
-      🎓 Skill completed — <a href="swipe-merchants.html">Verify & List on Marketplace</a>
-    </div>
-  </div>
-</div>
-
-<div class="footer">
-  <a href="student-dashboard.html">Home</a>
-  <a href="wallet.html">Wallet</a>
-  <a href="profile.html">Profile</a>
 </div>
 
 <script>
-/* AUTH */
-const student = JSON.parse(localStorage.getItem("zepStudent"));
-if(!student){ location.href="student-login.html"; }
+/* -----------------------------
+   SKILLS + 21-DAY TASKS
+----------------------------- */
+const SKILLS = {
+  "AI Content": [...Array(21)].map((_,i)=>`Complete AI task for Day ${i+1}`),
+  "No-Code Automation": [...Array(21)].map((_,i)=>`Build automation task Day ${i+1}`),
+  "Graphic Design": [...Array(21)].map((_,i)=>`Design challenge Day ${i+1}`),
+  "Web Design": [...Array(21)].map((_,i)=>`Website task Day ${i+1}`),
+  "Social Media": [...Array(21)].map((_,i)=>`Growth task Day ${i+1}`),
+  "Data Research": [...Array(21)].map((_,i)=>`Research task Day ${i+1}`),
+  "Video Editing": [...Array(21)].map((_,i)=>`Edit video task Day ${i+1}`),
+  "Freelancing": [...Array(21)].map((_,i)=>`Business task Day ${i+1}`)
+};
 
-/* COURSES */
-const COURSES = [
- {id:"ai", title:"AI Prompt Engineering", desc:"Design prompts businesses pay for"},
- {id:"nocode", title:"No-Code Automation", desc:"Build workflows without coding"},
- {id:"content", title:"Content Creation", desc:"Create monetizable digital content"},
- {id:"chatbot", title:"Chatbot Building", desc:"Deploy AI assistants"},
- {id:"web", title:"Web Design (No-Code)", desc:"Launch websites fast"},
- {id:"data", title:"Data & Research", desc:"Insights, analysis & reports"},
- {id:"marketing", title:"Digital Marketing", desc:"Growth & conversions"},
- {id:"freelance", title:"Freelancing Setup", desc:"Client systems & pricing"}
-];
+const storeKey = "zepLearnEarn";
 
-const TASKS = Array.from({length:21},(_,i)=>`Day ${i+1} practical task — build & submit real work.`);
+/* -----------------------------
+   INIT
+----------------------------- */
+const grid = document.getElementById("skillGrid");
+const box = document.getElementById("taskBox");
 
-/* UI */
-const courseGrid = document.getElementById("courses");
-const panel = document.getElementById("taskPanel");
-const taskText = document.getElementById("taskText");
-const taskMeta = document.getElementById("taskMeta");
-const taskCourse = document.getElementById("taskCourse");
-const progressBar = document.getElementById("progressBar");
-const verifyBox = document.getElementById("verifyBox");
-const completeBtn = document.getElementById("completeBtn");
+const state = JSON.parse(localStorage.getItem(storeKey)) || {};
 
-COURSES.forEach(c=>{
-  const div=document.createElement("div");
-  div.className="course-card";
-  div.innerHTML=`<div class="course-title">${c.title}</div><div class="course-desc">${c.desc}</div>`;
-  div.onclick=()=>openCourse(c);
-  courseGrid.appendChild(div);
+/* -----------------------------
+   RENDER SKILLS
+----------------------------- */
+Object.keys(SKILLS).forEach(skill=>{
+  const card = document.createElement("div");
+  card.className="skill-card";
+  card.innerHTML=`
+    <h3>${skill}</h3>
+    <p>21-day real skill challenge</p>
+  `;
+  card.onclick=()=>openSkill(skill);
+  grid.appendChild(card);
 });
 
-let activeCourse=null;
+/* -----------------------------
+   OPEN SKILL
+----------------------------- */
+function openSkill(skill){
+  box.style.display="block";
+  box.innerHTML="";
 
-function openCourse(course){
-  activeCourse=course.id;
-  panel.style.display="block";
+  if(!state[skill]) state[skill]={ day:1, completed:[] };
 
-  const key=`zep_${course.id}`;
-  let data=JSON.parse(localStorage.getItem(key))||{day:0,last:0};
+  const {day,completed} = state[skill];
 
-  const now=Date.now();
-  const canDo = now - data.last > 86400000 || data.day===0;
+  const header=document.createElement("div");
+  header.className="task-header";
+  header.innerHTML=`
+    <h2>${skill}</h2>
+    <div class="badge">Day ${day} / 21</div>
+  `;
+  box.appendChild(header);
 
-  taskCourse.textContent=course.title;
-  taskMeta.textContent=`Day ${data.day+1} of 21`;
-  taskText.textContent=TASKS[data.day];
-  progressBar.style.width=`${(data.day/21)*100}%`;
+  SKILLS[skill].forEach((task,i)=>{
+    const d=i+1;
+    const t=document.createElement("div");
+    t.className="task";
 
-  completeBtn.disabled=!canDo;
-  completeBtn.textContent=canDo?"Complete Task (+25 ZAC)":"Come back tomorrow";
+    if(d>day) t.classList.add("locked");
+    if(completed.includes(d)) t.classList.add("completed");
 
-  verifyBox.style.display=data.day>=21?"block":"none";
+    t.innerHTML=`
+      <h4>Day ${d}</h4>
+      <p>${task}</p>
+    `;
 
-  completeBtn.onclick=()=>{
-    data.day++;
-    data.last=Date.now();
-    localStorage.setItem(key,JSON.stringify(data));
+    if(d===day && !completed.includes(d)){
+      const ta=document.createElement("textarea");
+      ta.placeholder="Submit proof (link / explanation)";
+      const btn=document.createElement("button");
+      btn.textContent="Submit & Earn 25 ZAC";
+      btn.onclick=()=>{
+        completed.push(d);
+        state[skill].day++;
+        localStorage.setItem(storeKey,JSON.stringify(state));
+        alert("+25 ZAC earned!");
+        openSkill(skill);
+      };
+      t.appendChild(ta);
+      t.appendChild(btn);
+    }
 
-    let bal = Number(localStorage.getItem("zacBalance")||0);
-    localStorage.setItem("zacBalance", bal+25);
-
-    openCourse(course);
-  };
+    box.appendChild(t);
+  });
 }
 </script>
 
