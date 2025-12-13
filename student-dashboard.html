@@ -5,217 +5,235 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Zep Swipe — Student Dashboard</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
   --glass:rgba(255,255,255,0.06);
+  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
 }
-
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Poppins,sans-serif;
+  font-family:'Poppins',sans-serif;
   background:var(--bg);
   color:#fff;
   overflow-x:hidden;
 }
-
 .container{
   max-width:900px;
-  margin:26px auto 110px;
+  margin:26px auto 120px;
   padding:16px;
 }
 
-/* Header */
+/* HEADER */
 .header{
-  padding:18px;
-  border-radius:18px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(16px);
   display:flex;
   justify-content:space-between;
   align-items:center;
-  box-shadow:0 0 30px rgba(0,240,255,.25);
+  padding:16px;
+  border-radius:18px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(16px);
+  box-shadow:0 0 36px rgba(0,240,255,0.25);
 }
-
 .brand{
-  font-family:Orbitron;
-  font-size:1.6rem;
+  font-family:'Orbitron';
+  font-size:1.5rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-
-.addr{
-  font-family:Orbitron;
-  font-size:.85rem;
-  color:#d7faff;
-  text-align:right;
-}
-
-.logout{
-  background:none;border:0;cursor:pointer;
-  filter:drop-shadow(0 0 8px rgba(255,80,80,.8));
-}
-
-/* Profile strip */
-.profile-strip{
-  margin-top:18px;
-  padding:16px;
-  border-radius:18px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.12);
+.header-right{
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:10px;
 }
 
+/* Avatar */
 .avatar{
-  width:56px;height:56px;
+  width:44px;height:44px;
   border-radius:50%;
   border:2px solid var(--zep-blue);
   object-fit:cover;
   background:#020617;
 }
-
-.name{
-  font-family:Orbitron;
-  font-size:.95rem;
+.addr{
+  font-family:'Orbitron';
+  font-size:0.8rem;
+  color:#d7faff;
+  text-align:right;
 }
-.meta{
+
+/* PROFILE CARD */
+.profile-card{
+  margin-top:20px;
+  padding:16px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.12);
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.profile-meta h3{
+  margin:0;
+  font-family:'Orbitron';
+  font-size:1rem;
+}
+.profile-meta p{
+  margin:2px 0;
   font-size:12px;
-  opacity:.8;
+  opacity:.85;
 }
-
 .badge{
-  margin-top:4px;
   display:inline-block;
+  margin-top:6px;
   padding:4px 10px;
   border-radius:999px;
   font-size:10px;
-  font-family:Orbitron;
-}
-.badge.locked{
-  background:rgba(255,255,255,.1);
-  opacity:.6;
-}
-.badge.verified{
+  font-family:'Orbitron';
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
 
-/* Portfolio */
+/* PORTFOLIO */
 .portfolio{
   margin-top:22px;
-  padding:20px;
+  padding:18px;
   border-radius:20px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.12);
 }
-
 .section-title{
-  font-family:Orbitron;
-  font-size:1.2rem;
+  font-family:'Orbitron';
+  font-size:1.1rem;
+  margin-bottom:12px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  margin-bottom:14px;
 }
-
 .coin-row{
   display:flex;
   align-items:center;
   gap:14px;
 }
-
 .coin{
   width:64px;height:64px;
   border-radius:16px;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   display:flex;align-items:center;justify-content:center;
-  font-family:Orbitron;
-  color:#050015;
+  font-family:'Orbitron';
   font-size:18px;
+  color:#050015;
 }
-
 .balance .big{
-  font-family:Orbitron;
+  font-family:'Orbitron';
   font-size:24px;
 }
 .balance .small{
-  font-size:12px;opacity:.85;
+  font-size:12px;
+  opacity:.8;
 }
 
-/* Quick actions */
+/* QUICK ACTIONS */
 .quick-grid{
   margin-top:20px;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:14px;
+  gap:12px;
 }
-
 .quick{
-  padding:16px;
+  padding:14px;
   border-radius:16px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.12);
   text-align:center;
   text-decoration:none;
   color:#fff;
   transition:.2s;
 }
 .quick:hover{
-  transform:translateY(-4px);
-  box-shadow:0 0 28px rgba(156,77,255,.35);
+  transform:translateY(-3px);
+  box-shadow:0 0 26px rgba(156,77,255,0.4);
 }
 
-/* Marketplace */
+/* MARKETPLACE CTA */
 .market{
   margin-top:18px;
   padding:16px;
   border-radius:18px;
-  background:rgba(0,0,0,.65);
-  border:1px solid rgba(0,240,255,.4);
+  background:rgba(0,0,0,0.65);
+  border:1px solid rgba(0,240,255,0.4);
   display:flex;
   justify-content:space-between;
   align-items:center;
   text-decoration:none;
   color:#fff;
 }
-.market.locked{
-  opacity:.45;
-  pointer-events:none;
-}
+.market.locked{opacity:.45;pointer-events:none;}
 .market-title{
-  font-family:Orbitron;
+  font-family:'Orbitron';
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 
-/* Footer */
+/* SKILLS */
+.skills{
+  margin-top:22px;
+  padding:18px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.12);
+}
+.skills-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+@media(max-width:640px){.skills-grid{grid-template-columns:1fr}}
+.skill{
+  padding:12px;
+  border-radius:14px;
+  background:rgba(0,0,0,0.65);
+  border:1px solid rgba(255,255,255,0.12);
+  text-decoration:none;
+  color:#fff;
+}
+.skill h4{
+  margin:0;
+  font-family:'Orbitron';
+  font-size:.9rem;
+}
+.skill p{
+  margin-top:4px;
+  font-size:11px;
+  opacity:.8;
+}
+
+/* FOOTER */
 .footer{
   position:fixed;
   bottom:0;left:0;right:0;
   padding:14px 22px;
-  background:rgba(0,0,0,.55);
+  background:rgba(0,0,0,0.55);
+  backdrop-filter:blur(10px);
   display:flex;
   justify-content:space-around;
-  backdrop-filter:blur(10px);
 }
 .fbtn{
-  width:56px;height:56px;
-  border-radius:18px;
-  background:rgba(255,255,255,.05);
+  width:54px;height:54px;
+  border-radius:16px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
   display:flex;align-items:center;justify-content:center;
-  text-decoration:none;color:#fff;
 }
 
+/* AI */
 .ai-bubble{
   position:fixed;
   right:18px;
@@ -224,7 +242,7 @@ body{
   border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
-  font-family:Orbitron;
+  font-family:'Orbitron';
   font-weight:700;
   cursor:pointer;
 }
@@ -238,19 +256,20 @@ body{
   <!-- HEADER -->
   <div class="header">
     <div class="brand">Zep Swipe</div>
-    <div>
+    <div class="header-right">
       <div id="walletShort" class="addr">—</div>
-      <button class="logout" onclick="logout()">⎋</button>
+      <img id="avatarImg" class="avatar" />
     </div>
   </div>
 
   <!-- PROFILE -->
-  <div class="profile-strip">
-    <img id="avatar" class="avatar">
-    <div>
-      <div class="name" id="name">Student</div>
-      <div class="meta" id="school">University · Country</div>
-      <div id="badge" class="badge locked">Not Verified</div>
+  <div class="profile-card">
+    <img id="avatarBig" class="avatar" style="width:64px;height:64px"/>
+    <div class="profile-meta">
+      <h3 id="studentName">Student</h3>
+      <p id="studentUni">—</p>
+      <p id="studentCountry">—</p>
+      <span id="verifyBadge"></span>
     </div>
   </div>
 
@@ -272,16 +291,29 @@ body{
     <a href="learn-earn.html" class="quick">Learn & Earn</a>
   </div>
 
-  <!-- MARKETPLACE -->
+  <!-- MARKET -->
   <a id="marketCard" class="market locked">
     <div>
       <div class="market-title">Swipe Merchants</div>
-      <div id="marketText" style="font-size:12px;opacity:.8">
-        Complete 21 daily tasks to unlock
-      </div>
+      <div id="marketText" style="font-size:12px;opacity:.8">Complete 21 tasks to unlock</div>
     </div>
     <div>→</div>
   </a>
+
+  <!-- SKILLS -->
+  <div class="skills">
+    <div class="section-title">Skill Tracks</div>
+    <div class="skills-grid">
+      <a href="learn-earn.html" class="skill"><h4>AI Prompting</h4><p>Precision prompts</p></a>
+      <a href="learn-earn.html" class="skill"><h4>AI Content</h4><p>Posts & scripts</p></a>
+      <a href="learn-earn.html" class="skill"><h4>No-Code Design</h4><p>Social templates</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Chatbots</h4><p>FAQ & flows</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Websites</h4><p>Landing pages</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Video Editing</h4><p>Short clips</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Research</h4><p>Lead gen</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Automation</h4><p>Micro workflows</p></a>
+    </div>
+  </div>
 
 </div>
 
@@ -297,42 +329,34 @@ body{
 function shortAddr(a){return a?`${a.slice(0,6)}...${a.slice(-4)}`:'—';}
 function money(n){return Number(n).toFixed(2);}
 
-function logout(){
-  localStorage.removeItem("zepStudent");
-  location.href="index.html";
-}
-
 window.onload=()=>{
   const student = JSON.parse(localStorage.getItem("zepStudent"));
-  const profile = JSON.parse(localStorage.getItem("zepStudentProfile")||"{}");
-  const progress = JSON.parse(localStorage.getItem("zepProgress")||"{}");
+  const profile = JSON.parse(localStorage.getItem("zepProfile"));
+  const learn = JSON.parse(localStorage.getItem("zepProgress"))||{};
 
   if(!student){location.href="student-login.html";return;}
 
   document.getElementById("walletShort").textContent = shortAddr(student.wallet);
+  document.getElementById("zacAmount").textContent = `${student.zacAmount||0} ZAC`;
+  document.getElementById("zacUsd").textContent = `≈ $${money((student.zacAmount||0)*0.15)}`;
 
-  document.getElementById("avatar").src = profile.avatar || "";
-  document.getElementById("name").textContent = profile.name || "Student";
-  document.getElementById("school").textContent =
-    `${profile.university||"University"} · ${profile.country||"Country"}`;
+  if(profile){
+    document.getElementById("studentName").textContent = profile.name||"Student";
+    document.getElementById("studentUni").textContent = profile.university||"—";
+    document.getElementById("studentCountry").textContent = profile.country||"—";
+    const avatar = profile.avatar||"https://avatars.githubusercontent.com/u/9919?v=4";
+    document.getElementById("avatarImg").src = avatar;
+    document.getElementById("avatarBig").src = avatar;
+  }
 
   let days=0;
-  Object.values(progress).forEach(s=>{
-    days += Math.max(0,(s.day||1)-1);
-  });
+  Object.values(learn).forEach(s=>{days+=Math.max(0,(s.day||1)-1);});
 
-  const zac = (student.zacAmount||0);
-  document.getElementById("zacAmount").textContent = `${zac} ZAC`;
-  document.getElementById("zacUsd").textContent = `≈ $${money(zac*0.15)}`;
-
-  if(days>=21){
-    document.getElementById("badge").textContent="Verified Student";
-    document.getElementById("badge").className="badge verified";
-
-    const m=document.getElementById("marketCard");
-    m.classList.remove("locked");
-    m.href="https://merchants.zepswipe.com";
-    document.getElementById("marketText").textContent="You are verified. Start selling.";
+  if(days>=21 || student.verified){
+    document.getElementById("marketCard").classList.remove("locked");
+    document.getElementById("marketCard").href="https://merchants.zepswipe.com";
+    document.getElementById("marketText").textContent="Verified — Start selling";
+    document.getElementById("verifyBadge").innerHTML=`<span class="badge">Verified</span>`;
   }
 };
 </script>
