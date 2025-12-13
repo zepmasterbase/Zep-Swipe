@@ -5,143 +5,165 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Zep Swipe — Student Dashboard</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --glass:rgba(255,255,255,0.06);
   --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
+  --glass:rgba(255,255,255,0.06);
 }
+
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:'Poppins',sans-serif;
+  font-family:Poppins,sans-serif;
   background:var(--bg);
   color:#fff;
   overflow-x:hidden;
 }
+
 .container{
   max-width:900px;
-  margin:26px auto 120px;
+  margin:26px auto 110px;
   padding:16px;
 }
 
-/* HEADER */
+/* Header */
 .header{
   padding:18px;
   border-radius:18px;
   background:var(--glass);
-  border:1px solid rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(16px);
   display:flex;
   justify-content:space-between;
   align-items:center;
-  box-shadow:0 0 40px rgba(0,240,255,0.35);
+  box-shadow:0 0 30px rgba(0,240,255,.25);
 }
+
 .brand{
-  font-family:'Orbitron';
+  font-family:Orbitron;
   font-size:1.6rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
+
 .addr{
-  font-family:'Orbitron';
-  font-size:0.85rem;
+  font-family:Orbitron;
+  font-size:.85rem;
   color:#d7faff;
   text-align:right;
 }
+
 .logout{
   background:none;border:0;cursor:pointer;
-  color:#ff6b6b;
-  font-size:14px;
+  filter:drop-shadow(0 0 8px rgba(255,80,80,.8));
 }
 
-/* PROFILE STRIP */
+/* Profile strip */
 .profile-strip{
   margin-top:18px;
+  padding:16px;
+  border-radius:18px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
   display:flex;
   align-items:center;
   gap:14px;
-  padding:14px;
-  border-radius:16px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.1);
 }
+
 .avatar{
   width:56px;height:56px;
   border-radius:50%;
   border:2px solid var(--zep-blue);
   object-fit:cover;
+  background:#020617;
 }
-.p-name{
+
+.name{
   font-family:Orbitron;
   font-size:.95rem;
 }
-.p-meta{
+.meta{
   font-size:12px;
   opacity:.8;
 }
+
 .badge{
-  margin-left:auto;
+  margin-top:4px;
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:10px;
   font-family:Orbitron;
-  font-size:11px;
-  color:#00f0ff;
-  display:none;
+}
+.badge.locked{
+  background:rgba(255,255,255,.1);
+  opacity:.6;
+}
+.badge.verified{
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
 }
 
-/* PORTFOLIO */
+/* Portfolio */
 .portfolio{
-  margin-top:20px;
+  margin-top:22px;
   padding:20px;
   border-radius:20px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
 }
+
 .section-title{
-  font-family:'Orbitron';
-  font-size:1.15rem;
+  font-family:Orbitron;
+  font-size:1.2rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  margin-bottom:12px;
+  margin-bottom:14px;
 }
+
 .coin-row{
   display:flex;
   align-items:center;
   gap:14px;
 }
+
 .coin{
   width:64px;height:64px;
   border-radius:16px;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   display:flex;align-items:center;justify-content:center;
-  font-family:'Orbitron';
+  font-family:Orbitron;
   color:#050015;
   font-size:18px;
 }
+
 .balance .big{
-  font-family:'Orbitron';
+  font-family:Orbitron;
   font-size:24px;
 }
 .balance .small{
-  opacity:.85;font-size:13px;
+  font-size:12px;opacity:.85;
 }
 
-/* QUICK ACTIONS */
+/* Quick actions */
 .quick-grid{
   margin-top:20px;
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:14px;
 }
+
 .quick{
   padding:16px;
   border-radius:16px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
   text-align:center;
   text-decoration:none;
   color:#fff;
@@ -149,16 +171,16 @@ body{
 }
 .quick:hover{
   transform:translateY(-4px);
-  box-shadow:0 0 28px rgba(156,77,255,0.35);
+  box-shadow:0 0 28px rgba(156,77,255,.35);
 }
 
-/* MARKETPLACE CTA */
+/* Marketplace */
 .market{
   margin-top:18px;
   padding:16px;
   border-radius:18px;
-  background:rgba(0,0,0,0.65);
-  border:1px solid rgba(0,240,255,0.4);
+  background:rgba(0,0,0,.65);
+  border:1px solid rgba(0,240,255,.4);
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -170,49 +192,18 @@ body{
   pointer-events:none;
 }
 .market-title{
-  font-family:'Orbitron';
+  font-family:Orbitron;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 
-/* SKILLS */
-.skills{
-  margin-top:20px;
-  padding:18px;
-  border-radius:20px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.12);
-}
-.skills-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-@media(max-width:640px){
-  .skills-grid{grid-template-columns:1fr}
-}
-.skill{
-  padding:12px;
-  border-radius:14px;
-  background:rgba(0,0,0,0.65);
-  border:1px solid rgba(255,255,255,0.12);
-  text-decoration:none;
-  color:#fff;
-}
-.skill h4{
-  margin:0;font-family:'Orbitron';font-size:.9rem;
-}
-.skill p{
-  margin:4px 0 0;font-size:11px;opacity:.8;
-}
-
-/* FOOTER */
+/* Footer */
 .footer{
   position:fixed;
   bottom:0;left:0;right:0;
   padding:14px 22px;
-  background:rgba(0,0,0,0.55);
+  background:rgba(0,0,0,.55);
   display:flex;
   justify-content:space-around;
   backdrop-filter:blur(10px);
@@ -220,12 +211,11 @@ body{
 .fbtn{
   width:56px;height:56px;
   border-radius:18px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,.05);
   display:flex;align-items:center;justify-content:center;
+  text-decoration:none;color:#fff;
 }
 
-/* AI */
 .ai-bubble{
   position:fixed;
   right:18px;
@@ -234,7 +224,7 @@ body{
   border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
-  font-family:'Orbitron';
+  font-family:Orbitron;
   font-weight:700;
   cursor:pointer;
 }
@@ -250,18 +240,18 @@ body{
     <div class="brand">Zep Swipe</div>
     <div>
       <div id="walletShort" class="addr">—</div>
-      <button class="logout" id="logoutBtn">Logout</button>
+      <button class="logout" onclick="logout()">⎋</button>
     </div>
   </div>
 
-  <!-- PROFILE STRIP -->
+  <!-- PROFILE -->
   <div class="profile-strip">
-    <img id="avatar" class="avatar" src="https://via.placeholder.com/60">
+    <img id="avatar" class="avatar">
     <div>
-      <div class="p-name" id="studentName">Student</div>
-      <div class="p-meta" id="studentMeta">University · Country</div>
+      <div class="name" id="name">Student</div>
+      <div class="meta" id="school">University · Country</div>
+      <div id="badge" class="badge locked">Not Verified</div>
     </div>
-    <div id="verifiedBadge" class="badge">✔ VERIFIED</div>
   </div>
 
   <!-- PORTFOLIO -->
@@ -293,27 +283,10 @@ body{
     <div>→</div>
   </a>
 
-  <!-- SKILLS -->
-  <div class="skills">
-    <div class="section-title">Skill Tracks</div>
-    <div class="skills-grid">
-      <a href="learn-earn.html" class="skill"><h4>AI Prompting</h4><p>Turn ideas into outputs</p></a>
-      <a href="learn-earn.html" class="skill"><h4>AI Content</h4><p>Posts & captions</p></a>
-      <a href="learn-earn.html" class="skill"><h4>No-Code Design</h4><p>Social templates</p></a>
-      <a href="learn-earn.html" class="skill"><h4>Chatbots</h4><p>FAQ & flows</p></a>
-      <a href="learn-earn.html" class="skill"><h4>Websites</h4><p>Landing pages</p></a>
-      <a href="learn-earn.html" class="skill"><h4>Video Editing</h4><p>Short-form clips</p></a>
-      <a href="learn-earn.html" class="skill"><h4>Research</h4><p>Lead generation</p></a>
-      <a href="learn-earn.html" class="skill"><h4>Automation</h4><p>Micro workflows</p></a>
-    </div>
-  </div>
-
 </div>
 
-<!-- AI -->
 <button class="ai-bubble" onclick="location.href='zep-ai.html'">🤖 Zep AI</button>
 
-<!-- FOOTER -->
 <div class="footer">
   <a class="fbtn" href="wallet.html">💼</a>
   <a class="fbtn" href="learn-earn.html">🎓</a>
@@ -324,10 +297,10 @@ body{
 function shortAddr(a){return a?`${a.slice(0,6)}...${a.slice(-4)}`:'—';}
 function money(n){return Number(n).toFixed(2);}
 
-document.getElementById("logoutBtn").onclick=()=>{
+function logout(){
   localStorage.removeItem("zepStudent");
   location.href="index.html";
-};
+}
 
 window.onload=()=>{
   const student = JSON.parse(localStorage.getItem("zepStudent"));
@@ -338,26 +311,24 @@ window.onload=()=>{
 
   document.getElementById("walletShort").textContent = shortAddr(student.wallet);
 
-  document.getElementById("studentName").textContent = profile.name || "Student";
-  document.getElementById("studentMeta").textContent =
+  document.getElementById("avatar").src = profile.avatar || "";
+  document.getElementById("name").textContent = profile.name || "Student";
+  document.getElementById("school").textContent =
     `${profile.university||"University"} · ${profile.country||"Country"}`;
 
-  if(profile.avatar){
-    document.getElementById("avatar").src = profile.avatar;
-  }
+  let days=0;
+  Object.values(progress).forEach(s=>{
+    days += Math.max(0,(s.day||1)-1);
+  });
 
-  const zac = student.zacAmount || 0;
+  const zac = (student.zacAmount||0);
   document.getElementById("zacAmount").textContent = `${zac} ZAC`;
   document.getElementById("zacUsd").textContent = `≈ $${money(zac*0.15)}`;
 
-  // verification logic
-  let verified=false;
-  for(const c in progress){
-    if(progress[c].day>=21){ verified=true; break; }
-  }
+  if(days>=21){
+    document.getElementById("badge").textContent="Verified Student";
+    document.getElementById("badge").className="badge verified";
 
-  if(verified){
-    document.getElementById("verifiedBadge").style.display="block";
     const m=document.getElementById("marketCard");
     m.classList.remove("locked");
     m.href="https://merchants.zepswipe.com";
