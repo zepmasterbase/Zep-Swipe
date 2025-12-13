@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Zep Swipe — Learn & Earn</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
@@ -11,240 +11,210 @@
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 20% 10%, #020014 0%, #000007 100%);
+  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
   --glass:rgba(255,255,255,0.06);
 }
-
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:'Poppins',sans-serif;
   background:var(--bg);
   color:#fff;
-  overflow-x:hidden;
 }
-
-header{
+.container{
+  max-width:900px;
+  margin:24px auto 120px;
   padding:16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:var(--glass);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid rgba(255,255,255,0.1);
 }
-
+.header{
+  padding:18px;
+  border-radius:16px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(14px);
+}
 .brand{
   font-family:'Orbitron';
-  font-size:1.3rem;
+  font-size:1.4rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-
-.container{
-  max-width:900px;
-  margin:20px auto 100px;
-  padding:16px;
+.sub{
+  font-size:12px;
+  opacity:0.85;
+  margin-top:4px;
 }
-
-.skill-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:14px;
-}
-
-.skill-card{
+.skill-box{
+  margin-top:20px;
   padding:16px;
   border-radius:16px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,0.12);
-  cursor:pointer;
-  transition:.2s;
-}
-.skill-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 0 30px rgba(156,77,255,.3);
-}
-
-.skill-card h3{
-  font-family:'Orbitron';
-  margin:0;
-}
-
-.task-box{
-  margin-top:20px;
-  padding:18px;
-  border-radius:18px;
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(255,255,255,0.12);
 }
-
-textarea{
+.skill-title{
+  font-family:'Orbitron';
+  font-size:1.05rem;
+}
+.day-card{
+  margin-top:12px;
+  padding:14px;
+  border-radius:14px;
+  background:rgba(0,0,0,0.6);
+  border:1px solid rgba(255,255,255,0.12);
+}
+.day-card.locked{
+  opacity:0.4;
+}
+.task{
+  font-size:13px;
+  margin-top:6px;
+  opacity:0.9;
+}
+input{
   width:100%;
-  min-height:120px;
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.14);
   background:#020617;
   color:#fff;
-  border-radius:12px;
-  padding:12px;
-  border:1px solid rgba(255,255,255,0.14);
-  margin-top:12px;
 }
-
-.btn{
-  margin-top:14px;
-  padding:12px 18px;
+button{
+  margin-top:10px;
+  padding:10px 14px;
   border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
   border:none;
   font-family:'Orbitron';
   font-weight:700;
   cursor:pointer;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
 }
-
-.locked{
-  opacity:.4;
-  pointer-events:none;
+.badge{
+  font-size:11px;
+  margin-top:6px;
+  color:#a5f3fc;
 }
-
-.zac{
-  font-family:'Orbitron';
-  color:var(--zep-blue);
-}
-
 .footer{
   position:fixed;
   bottom:0;left:0;right:0;
-  padding:12px;
-  background:rgba(0,0,0,.55);
+  padding:14px;
+  background:rgba(0,0,0,0.55);
   backdrop-filter:blur(10px);
-  display:flex;
-  justify-content:space-around;
+  text-align:center;
+  font-size:12px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="brand">Zep Swipe — Learn & Earn</div>
-  <div class="zac">ZAC: <span id="zacBal">0</span></div>
-</header>
-
 <div class="container">
 
-<h2>Select a Skill</h2>
+  <div class="header">
+    <div class="brand">Learn & Earn</div>
+    <div class="sub">
+      Complete daily tasks · Publish on Zora · Earn 25 ZAC per day
+    </div>
+  </div>
 
-<div class="skill-grid" id="skillGrid"></div>
-
-<div id="taskArea"></div>
+  <div id="skills"></div>
 
 </div>
 
 <div class="footer">
-  <a href="student-dashboard.html">🏠</a>
-  <a href="wallet.html">💳</a>
-  <a href="profile.html">👤</a>
+  Progress is public · Rewards are simulated until ZAC launch
 </div>
 
 <script>
-/* ---------------- CONFIG ---------------- */
-const DAILY_REWARD = 25;
-const SKILLS = {
-  "AI Prompt Engineering":[
-    "Write 5 AI prompts for summarization",
-    "Improve a weak essay prompt",
-    "Rewrite a bad AI prompt",
-    "Generate a resume using AI",
-    "Create an AI tutor prompt",
-    "Design a research prompt",
-    "Blog generation task",
-    "Client prompt simulation",
-    "SEO content prompt",
-    "Email writing prompt",
-    "Landing page copy prompt",
-    "Chatbot prompt",
-    "Ebook outline prompt",
-    "Product description prompt",
-    "Sales page prompt",
-    "Proposal prompt",
-    "Cold email prompt",
-    "Ad copy prompt",
-    "Case study prompt",
-    "Prompt bundle",
-    "Final AI service package"
-  ],
-  "No-Code Automation":[...Array(21)].map((_,i)=>`Build automation task Day ${i+1}`),
-  "Content Creation":[...Array(21)].map((_,i)=>`Create content task Day ${i+1}`),
-  "Web Building":[...Array(21)].map((_,i)=>`Build web task Day ${i+1}`),
-  "Graphic Design":[...Array(21)].map((_,i)=>`Design task Day ${i+1}`),
-  "Data Skills":[...Array(21)].map((_,i)=>`Data task Day ${i+1}`),
-  "Web3 Basics":[...Array(21)].map((_,i)=>`Web3 task Day ${i+1}`),
-  "Freelancing":[...Array(21)].map((_,i)=>`Client task Day ${i+1}`)
-};
+/* -------------------------
+   DATA
+------------------------- */
+const SKILLS = [
+  {
+    id:"ai-content",
+    title:"AI Content Generation (Zora)",
+    tasks:[
+      "Write a short educational post using AI",
+      "Turn a lesson into a public explainer",
+      "Create a headline + hook",
+      "Explain an AI output in simple terms",
+      "Create a mini-thread or carousel",
+      "Repurpose content for another format",
+      "Publish a final polished post"
+    ]
+  },
+  {
+    id:"video",
+    title:"Micro Video Editing (Zora)",
+    tasks:[
+      "Edit a 30s educational clip",
+      "Add captions & hook",
+      "Trim for clarity",
+      "Add CTA",
+      "Explain topic via video",
+      "Optimize pacing",
+      "Publish final edit"
+    ]
+  }
+];
 
-/* ---------------- STATE ---------------- */
-let state = JSON.parse(localStorage.getItem("zepLearn")) || {
-  zac:0,
-  skills:{}
-};
+/* -------------------------
+   STORAGE
+------------------------- */
+const progress = JSON.parse(localStorage.getItem("zepLearnEarn")) || {};
+const student  = JSON.parse(localStorage.getItem("zepStudent")) || { zacAmount:25 };
 
-function save(){ localStorage.setItem("zepLearn",JSON.stringify(state)); }
+/* -------------------------
+   RENDER
+------------------------- */
+const skillsBox = document.getElementById("skills");
 
-/* ---------------- UI ---------------- */
-const grid = document.getElementById("skillGrid");
-const taskArea = document.getElementById("taskArea");
-const zacBal = document.getElementById("zacBal");
-zacBal.textContent = state.zac;
+SKILLS.forEach(skill=>{
+  const box = document.createElement("div");
+  box.className="skill-box";
+  box.innerHTML = `<div class="skill-title">${skill.title}</div>`;
 
-Object.keys(SKILLS).forEach(skill=>{
-  const card=document.createElement("div");
-  card.className="skill-card";
-  card.innerHTML=`<h3>${skill}</h3><p>21-day practical program</p>`;
-  card.onclick=()=>openSkill(skill);
-  grid.appendChild(card);
+  skill.tasks.forEach((task, i)=>{
+    const day = i+1;
+    const key = `${skill.id}-day-${day}`;
+    const completed = progress[key];
+    const unlocked = day === 1 || progress[`${skill.id}-day-${day-1}`];
+
+    const card = document.createElement("div");
+    card.className = "day-card" + (unlocked ? "" : " locked");
+
+    card.innerHTML = `
+      <strong>Day ${day}</strong>
+      <div class="task">${task}</div>
+      ${completed ? `<div class="badge">✅ Completed · +25 ZAC</div>` : unlocked ? `
+        <input placeholder="Paste Zora post link" />
+        <button>Submit & Verify</button>
+      ` : `<div class="badge">🔒 Complete previous day</div>`}
+    `;
+
+    if(unlocked && !completed){
+      const btn = card.querySelector("button");
+      const input = card.querySelector("input");
+      btn.onclick = ()=>{
+        if(!input.value.startsWith("http")){
+          alert("Please submit a valid public link");
+          return;
+        }
+        progress[key] = input.value;
+        student.zacAmount = (student.zacAmount||0) + 25;
+        localStorage.setItem("zepLearnEarn", JSON.stringify(progress));
+        localStorage.setItem("zepStudent", JSON.stringify(student));
+        location.reload();
+      };
+    }
+
+    box.appendChild(card);
+  });
+
+  skillsBox.appendChild(box);
 });
-
-function openSkill(skill){
-  if(!state.skills[skill]){
-    state.skills[skill]={day:1,completed:[]};
-    save();
-  }
-  renderTask(skill);
-}
-
-function renderTask(skill){
-  const s=state.skills[skill];
-  const day=s.day;
-  const task=SKILLS[skill][day-1];
-  taskArea.innerHTML=`
-    <div class="task-box">
-      <h3>${skill} — Day ${day}/21</h3>
-      <p>${task}</p>
-      <textarea id="submission" placeholder="Paste link / explain your work..."></textarea>
-      <button class="btn" onclick="submitTask('${skill}')">Submit Task</button>
-    </div>
-  `;
-}
-
-function submitTask(skill){
-  const input=document.getElementById("submission").value.trim();
-  if(!input){ alert("Submission required"); return; }
-
-  const s=state.skills[skill];
-  s.completed.push(s.day);
-  s.day++;
-  state.zac+=DAILY_REWARD;
-  save();
-  zacBal.textContent=state.zac;
-
-  if(s.day>21){
-    taskArea.innerHTML=`<div class="task-box"><h3>${skill} Completed 🎉</h3></div>`;
-  }else{
-    renderTask(skill);
-  }
-}
 </script>
 
 </body>
