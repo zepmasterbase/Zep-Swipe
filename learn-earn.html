@@ -14,9 +14,7 @@
   --glass:rgba(255,255,255,0.06);
   --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
 }
-
-/* Base */
-*{box-sizing:border-box;}
+*{box-sizing:border-box}
 body{
   margin:0;
   font-family:'Poppins',sans-serif;
@@ -24,860 +22,254 @@ body{
   color:#fff;
   overflow-x:hidden;
 }
-
-/* Container */
 .container{
-  max-width:900px;
-  margin:30px auto 90px auto;
+  max-width:960px;
+  margin:24px auto 100px;
   padding:16px;
 }
 
 /* HEADER */
 .header{
-  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px;
   border-radius:16px;
   background:var(--glass);
   border:1px solid rgba(255,255,255,0.1);
-  backdrop-filter:blur(15px);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  animation:glowHeader 3.5s infinite alternate ease-in-out;
+  backdrop-filter:blur(16px);
+  box-shadow:0 0 35px rgba(0,240,255,0.25);
 }
-@keyframes glowHeader{
-  0%{box-shadow:0 0 18px rgba(0,240,255,0.20);}
-  100%{box-shadow:0 0 42px rgba(156,77,255,0.45);}
-}
-
 .brand{
   font-family:'Orbitron';
-  font-size:1.5rem;
-  font-weight:700;
+  font-size:1.4rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  text-shadow:0 0 18px rgba(0,240,255,0.6);
 }
-.subtitle{
-  font-size:11px;
-  opacity:0.78;
-}
-
-/* Wallet Address */
-.addr{
-  font-family:'Orbitron';
-  font-size:0.85rem;
-  color:#d7faff;
-  text-align:right;
-}
-
-/* Logout */
-.logout{
-  margin-left:8px;
-  background:transparent;
-  border:0;
+.back{
+  font-size:13px;
+  color:#bffcff;
   cursor:pointer;
-  filter:drop-shadow(0 0 9px rgba(255,80,80,0.8));
 }
 
-/* Stats / Overview */
-.stats-box{
-  margin-top:18px;
-  padding:16px 18px;
+/* COURSE GRID */
+.course-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;
+  margin-top:20px;
+}
+.course-card{
+  background:rgba(255,255,255,0.05);
+  border-radius:18px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(14px);
+  box-shadow:0 0 30px rgba(0,240,255,0.12);
+  cursor:pointer;
+  transition:.2s;
+}
+.course-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 45px rgba(156,77,255,0.3);
+}
+.course-title{
+  font-family:'Orbitron';
+  font-size:1rem;
+}
+.course-desc{
+  font-size:13px;
+  opacity:.85;
+  margin-top:6px;
+}
+
+/* TASK PANEL */
+.task-panel{
+  margin-top:24px;
+  padding:18px;
   border-radius:18px;
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(16px);
+  display:none;
 }
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-@media(max-width:640px){
-  .stats-grid{
-    grid-template-columns:1fr;
-  }
-}
-.stat-card{
-  padding:10px 12px;
-  border-radius:14px;
-  background:rgba(0,0,0,0.7);
-  border:1px solid rgba(255,255,255,0.10);
-}
-.stat-label{
-  font-size:11px;
-  opacity:0.8;
-}
-.stat-value{
-  margin-top:4px;
+.task-title{
   font-family:'Orbitron';
   font-size:1.1rem;
 }
-.progress-wrap{
-  margin-top:16px;
+.task-meta{
+  font-size:13px;
+  opacity:.8;
+  margin:8px 0;
 }
-.progress-label{
-  display:flex;
-  justify-content:space-between;
-  font-size:11px;
-  opacity:0.8;
-  margin-bottom:4px;
+.task-box{
+  margin-top:12px;
+  padding:14px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
 }
-.progress-bar{
-  width:100%;
-  height:8px;
+.complete-btn{
+  margin-top:14px;
+  padding:12px 16px;
   border-radius:999px;
-  background:rgba(0,0,0,0.7);
+  border:none;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-family:'Orbitron';
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* PROGRESS */
+.progress{
+  margin-top:12px;
+  height:8px;
+  background:rgba(255,255,255,0.1);
+  border-radius:10px;
   overflow:hidden;
 }
-.progress-fill{
+.progress span{
+  display:block;
   height:100%;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   width:0%;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  transition:width .25s ease-out;
 }
 
-/* Skills */
-.section-title{
-  font-family:'Orbitron';
-  font-size:1.20rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.section-sub{
-  font-size:12px;
-  opacity:0.8;
-}
-.skills-box{
-  margin-top:20px;
-  padding:18px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(16px);
-}
-.skills-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  gap:8px;
-}
-.skills-grid{
-  margin-top:14px;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-@media(max-width:640px){
-  .skills-grid{
-    grid-template-columns:1fr;
-  }
-}
-.skill-card{
-  padding:10px 12px;
+/* VERIFY */
+.verify{
+  margin-top:16px;
+  padding:14px;
   border-radius:14px;
-  background:rgba(0,0,0,0.7);
-  border:1px solid rgba(255,255,255,0.12);
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-}
-.skill-title{
-  font-size:0.9rem;
-  font-family:'Orbitron';
-}
-.skill-desc{
-  font-size:11px;
-  opacity:0.85;
-}
-.skill-meta{
-  font-size:10px;
-  opacity:0.8;
-  display:flex;
-  justify-content:space-between;
-  margin-top:4px;
-}
-.skill-btn{
-  margin-top:6px;
-  padding:7px 10px;
-  border-radius:999px;
-  border:none;
-  font-size:11px;
-  font-weight:600;
-  cursor:pointer;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-}
-.skill-btn.done{
-  background:rgba(16,185,129,0.18);
-  color:#a7f3d0;
-  border:1px solid rgba(16,185,129,0.85);
-}
-
-/* Pending Rewards & CTA */
-.bottom-grid{
-  margin-top:18px;
-  display:grid;
-  grid-template-columns:2fr 1.3fr;
-  gap:14px;
-}
-@media(max-width:800px){
-  .bottom-grid{
-    grid-template-columns:1fr;
-  }
-}
-.card-glass{
-  padding:16px 18px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(16px);
-}
-.pending-item{
-  padding:8px 10px;
-  border-radius:10px;
-  background:rgba(0,0,0,0.8);
-  border:1px solid rgba(255,255,255,0.12);
-  font-size:11px;
-  margin-bottom:6px;
-}
-.pending-header{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:2px;
-}
-.pending-title{
-  font-weight:600;
-}
-.pending-zac{
-  color:#f9a8d4;
-  font-family:'Orbitron';
-}
-.pending-meta{
-  opacity:0.78;
-}
-
-.freelancer-btn{
-  margin-top:10px;
-  width:100%;
-  padding:10px 12px;
-  border-radius:999px;
-  border:none;
-  font-size:12px;
-  font-weight:600;
-  cursor:pointer;
-  background:#3f3f46;
-  color:#d4d4d8;
-}
-.freelancer-btn.active{
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-}
-
-/* Modal */
-.modal-backdrop{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.75);
+  background:linear-gradient(90deg,rgba(0,240,255,.15),rgba(156,77,255,.15));
+  border:1px solid rgba(255,255,255,.2);
   display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:50;
 }
-.modal{
-  width:95%;
-  max-width:520px;
-  max-height:90vh;
-  overflow-y:auto;
-  padding:18px 18px 16px;
-  border-radius:18px;
-  background:rgba(10,10,24,0.96);
-  border:1px solid rgba(255,255,255,0.15);
-  box-shadow:0 0 35px rgba(0,240,255,0.3);
-}
-.modal-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:10px;
-}
-.modal-title{
+.verify a{
+  color:#00f0ff;
   font-family:'Orbitron';
-  font-size:1rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.modal-close{
-  border:none;
-  background:transparent;
-  color:#e5e5e5;
-  font-size:12px;
-  cursor:pointer;
-}
-.modal-body{
-  margin-top:10px;
-  font-size:12px;
-}
-.modal-label{
-  margin-top:10px;
-  font-weight:600;
-}
-.modal textarea{
-  width:100%;
-  margin-top:6px;
-  padding:8px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,0.15);
-  background:#020617;
-  color:#e5e5e5;
-  font-size:12px;
-  resize:vertical;
-}
-.modal-footer{
-  margin-top:12px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:8px;
-}
-.modal-footer button{
-  padding:8px 12px;
-  border-radius:999px;
-  border:none;
-  font-size:12px;
-  font-weight:600;
-  cursor:pointer;
-}
-.modal-submit{
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-}
-.modal-info{
-  font-size:11px;
-  opacity:0.8;
+  text-decoration:none;
 }
 
-/* Footer Nav */
+/* FOOTER */
 .footer{
   position:fixed;
   bottom:0;left:0;right:0;
-  padding:14px 22px;
-  background:rgba(0,0,0,0.55);
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(10px);
+  padding:12px;
   display:flex;
   justify-content:space-around;
-  backdrop-filter:blur(10px);
 }
-.fbtn{
-  width:58px;height:58px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
-  display:flex;align-items:center;justify-content:center;
-  transition:0.25s;
-  cursor:pointer;
-  filter:drop-shadow(0 0 14px rgba(0,240,255,0.15));
-}
-.fbtn:hover{
-  transform:translateY(-7px);
-  filter:drop-shadow(0 0 35px rgba(156,77,255,0.45));
-}
+.footer a{color:#00f0ff;text-decoration:none;font-family:Orbitron;font-size:13px}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-
-  <!-- HEADER -->
   <div class="header">
-    <div>
-      <div class="brand">Zep Swipe</div>
-      <div class="subtitle">Learn & Earn · Build skills, lock rewards, unlock your marketplace.</div>
-    </div>
-
-    <div style="text-align:right;">
-      <div id="walletShort" class="addr">—</div>
-      <button class="logout" id="logoutBtn">
-        <svg width="22" height="22" fill="none" stroke="#ff6b6b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-          <polyline points="16 17 21 12 16 7"/>
-          <line x1="21" y1="12" x2="9" y2="12"/>
-        </svg>
-      </button>
-    </div>
+    <div class="brand">Zep Swipe · Learn & Earn</div>
+    <div class="back" onclick="location.href='student-dashboard.html'">← Dashboard</div>
   </div>
 
-  <!-- STATS -->
-  <div class="stats-box">
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-label">Total XP</div>
-        <div id="xpDisplay" class="stat-value">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Locked ZAC Rewards</div>
-        <div id="zacDisplay" class="stat-value">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Skills Completed</div>
-        <div id="skillsDoneDisplay" class="stat-value">0 / 8</div>
-      </div>
+  <!-- COURSES -->
+  <div class="course-grid" id="courses"></div>
+
+  <!-- TASK -->
+  <div class="task-panel" id="taskPanel">
+    <div class="task-title" id="taskCourse"></div>
+    <div class="task-meta" id="taskMeta"></div>
+    <div class="task-box" id="taskText"></div>
+
+    <div class="progress">
+      <span id="progressBar"></span>
     </div>
 
-    <div class="progress-wrap">
-      <div class="progress-label">
-        <span>Path to Freelance Marketplace</span>
-        <span id="progressPercent">0%</span>
-      </div>
-      <div class="progress-bar">
-        <div id="progressFill" class="progress-fill"></div>
-      </div>
-    </div>
-  </div>
+    <button class="complete-btn" id="completeBtn">Complete Task (+25 ZAC)</button>
 
-  <!-- SKILLS -->
-  <div class="skills-box">
-    <div class="skills-header">
-      <div>
-        <div class="section-title">Skill Tests</div>
-        <div class="section-sub">8 short, practical tests. Each pass → XP + 25 locked ZAC.</div>
-      </div>
-      <div style="font-size:11px;opacity:0.8;">All rewards stay locked until ZAC is live for withdrawals.</div>
-    </div>
-
-    <div id="skillsGrid" class="skills-grid"></div>
-  </div>
-
-  <!-- PENDING & CTA -->
-  <div class="bottom-grid">
-    <div class="card-glass">
-      <div class="section-title" style="font-size:1.05rem;">Pending Rewards</div>
-      <div class="section-sub" style="margin-bottom:8px;">These ZAC rewards are earned but locked. They will be claimable on-chain later.</div>
-      <div id="pendingList"></div>
-    </div>
-
-    <div class="card-glass">
-      <div class="section-title" style="font-size:1.05rem;">Global Freelancer</div>
-      <div class="section-sub">
-        Complete at least <strong>one skill test</strong> to unlock your Swipe Merchants store and start listing services.
-      </div>
-      <button id="freelancerBtn" class="freelancer-btn" disabled>
-        Locked · Finish a skill test to unlock
-      </button>
-      <p class="section-sub" style="margin-top:8px;font-size:11px;">
-        When unlocked, this will take you to <b>dashboard-store.html</b> or your Swipe Merchants account.
-      </p>
-    </div>
-  </div>
-
-</div>
-
-<!-- MODAL -->
-<div id="modalBackdrop" class="modal-backdrop">
-  <div class="modal">
-    <div class="modal-header">
-      <div>
-        <div id="modalTitle" class="modal-title">Skill Title</div>
-        <div id="modalSubtitle" class="section-sub" style="font-size:11px;margin-top:2px;">
-          Practical test · Answer once with your best attempt.
-        </div>
-      </div>
-      <button id="modalCloseBtn" class="modal-close">Close ✕</button>
-    </div>
-
-    <div class="modal-body">
-      <div id="modalLesson" style="opacity:0.9;"></div>
-
-      <div class="modal-label">Practical Test</div>
-      <div id="modalQuestion" style="margin-top:4px;"></div>
-      <textarea id="answerInput" rows="4" placeholder="Type your answer here..."></textarea>
-      <div id="modalMessage" style="margin-top:6px;font-size:11px;"></div>
-    </div>
-
-    <div class="modal-footer">
-      <button id="modalSubmitBtn" class="modal-submit">Submit & Earn</button>
-      <div id="modalRewardInfo" class="modal-info">
-        Passing gives XP and locked ZAC for this skill.
-      </div>
+    <div class="verify" id="verifyBox">
+      🎓 Skill completed — <a href="swipe-merchants.html">Verify & List on Marketplace</a>
     </div>
   </div>
 </div>
 
-<!-- FOOTER NAV -->
 <div class="footer">
-  <a class="fbtn" href="wallet.html" title="Wallet">
-    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g1)" stroke-width="1.4">
-      <rect x="3" y="7" width="18" height="13" rx="2"/>
-      <path d="M3 11h18"/>
-      <defs><linearGradient id="g1"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
-    </svg>
-  </a>
-
-  <a class="fbtn" href="learn-earn.html" title="Learn & Earn">
-    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g2)" stroke-width="1.4">
-      <circle cx="12" cy="12" r="8"/>
-      <path d="M12 8v8M8 12h8"/>
-      <defs><linearGradient id="g2"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
-    </svg>
-  </a>
-
-  <a class="fbtn" href="zep-ai.html" title="Ask Zep AI">
-    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g3)" stroke-width="1.4">
-      <circle cx="12" cy="12" r="9"/>
-      <circle cx="9" cy="10" r="1"/>
-      <circle cx="15" cy="10" r="1"/>
-      <path d="M8 15c2 2 6 2 8 0"/>
-      <defs><linearGradient id="g3"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
-    </svg>
-  </a>
-
-  <a class="fbtn" href="profile.html" title="Profile">
-    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g4)" stroke-width="1.4">
-      <circle cx="12" cy="8" r="3"/>
-      <path d="M4 20c1.5-4 7-6 8-6s6.5 2 8 6"/>
-      <defs><linearGradient id="g4"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
-    </svg>
-  </a>
+  <a href="student-dashboard.html">Home</a>
+  <a href="wallet.html">Wallet</a>
+  <a href="profile.html">Profile</a>
 </div>
 
 <script>
-/* ---------- Local Storage Keys ---------- */
-const BAL_KEY     = 'zepswipe_balance_v1';        // { xp, tokens, completed }
-const PENDING_KEY = 'zepswipe_pending_rewards_v1';// [ {tokens,status,...} ]
-const PROFILE_KEY = 'zepswipe_profile_v1';        // { badges: [] }
+/* AUTH */
+const student = JSON.parse(localStorage.getItem("zepStudent"));
+if(!student){ location.href="student-login.html"; }
 
-/* ---------- Skill Config ---------- */
-const SKILLS = [
-  {
-    id: 's1',
-    title: 'AI Prompt Engineering',
-    short: 'Design prompts that actually get results.',
-    lesson: 'You will practice writing a clear, structured prompt for a real task. Think about role, goal and constraints.',
-    question: 'Write one role line for a prompt that helps a small clothing brand write Instagram captions. Example: "You are a social media strategist for an African streetwear brand."',
-    xp: 50,
-    tokens: 25
-  },
-  {
-    id: 's2',
-    title: 'AI Content Generation',
-    short: 'Use AI to create posts, emails and scripts.',
-    lesson: 'You will outline a week of content for a local business using AI to help you brainstorm topics and angles.',
-    question: 'Describe in one sentence a content idea for a university club using AI. Make it specific.',
-    xp: 50,
-    tokens: 25
-  },
-  {
-    id: 's3',
-    title: 'Social Design (No-code)',
-    short: 'Carousels, flyers and templates.',
-    lesson: 'You will plan a simple 3-slide carousel for Instagram that explains a concept to fellow students.',
-    question: 'In one sentence, describe what slide 1 of your carousel would say.',
-    xp: 50,
-    tokens: 25
-  },
-  {
-    id: 's4',
-    title: 'Chatbot Builder',
-    short: 'Simple FAQ chatbots for services.',
-    lesson: 'You will map a small chatbot flow to answer 3 FAQs for a campus office or small business.',
-    question: 'Name one FAQ your chatbot should answer for students.',
-    xp: 50,
-    tokens: 25
-  },
-  {
-    id: 's5',
-    title: 'No-code Websites',
-    short: 'Landing pages and forms.',
-    lesson: 'You will plan a one-page site with a clear headline, offer and simple contact form.',
-    question: 'Write a short headline for a landing page helping students find part-time gigs.',
-    xp: 50,
-    tokens: 25
-  },
-  {
-    id: 's6',
-    title: 'Micro Video Editor',
-    short: 'Short-form clips and captions.',
-    lesson: 'You will script a 15-second hook for a vertical video aimed at students.',
-    question: 'Write one hook sentence that would make a student stop scrolling.',
-    xp: 50,
-    tokens: 25
-  },
-  {
-    id: 's7',
-    title: 'Research & Lead Gen',
-    short: 'Build clean, useful data lists.',
-    lesson: 'You will define what columns matter in a basic lead list for a local business.',
-    question: 'Name one useful column you would put in a lead spreadsheet for a business.',
-    xp: 50,
-    tokens: 25
-  },
-  {
-    id: 's8',
-    title: 'Micro-Automation',
-    short: 'Automate tiny repetitive tasks.',
-    lesson: 'You will think of a simple 2-step automation that saves time for a student or business.',
-    question: 'Describe in one sentence a tiny task you would like to automate.',
-    xp: 50,
-    tokens: 25
-  },
+/* COURSES */
+const COURSES = [
+ {id:"ai", title:"AI Prompt Engineering", desc:"Design prompts businesses pay for"},
+ {id:"nocode", title:"No-Code Automation", desc:"Build workflows without coding"},
+ {id:"content", title:"Content Creation", desc:"Create monetizable digital content"},
+ {id:"chatbot", title:"Chatbot Building", desc:"Deploy AI assistants"},
+ {id:"web", title:"Web Design (No-Code)", desc:"Launch websites fast"},
+ {id:"data", title:"Data & Research", desc:"Insights, analysis & reports"},
+ {id:"marketing", title:"Digital Marketing", desc:"Growth & conversions"},
+ {id:"freelance", title:"Freelancing Setup", desc:"Client systems & pricing"}
 ];
 
-/* ---------- Helpers ---------- */
-function shortAddr(a){return a?`${a.slice(0,6)}...${a.slice(-4)}`:'—';}
+const TASKS = Array.from({length:21},(_,i)=>`Day ${i+1} practical task — build & submit real work.`);
 
-function readBalance(){
-  try{return JSON.parse(localStorage.getItem(BAL_KEY)) || { xp:0, tokens:0, completed:{} }; }
-  catch{return { xp:0, tokens:0, completed:{} };}
-}
-function writeBalance(b){ localStorage.setItem(BAL_KEY, JSON.stringify(b)); }
+/* UI */
+const courseGrid = document.getElementById("courses");
+const panel = document.getElementById("taskPanel");
+const taskText = document.getElementById("taskText");
+const taskMeta = document.getElementById("taskMeta");
+const taskCourse = document.getElementById("taskCourse");
+const progressBar = document.getElementById("progressBar");
+const verifyBox = document.getElementById("verifyBox");
+const completeBtn = document.getElementById("completeBtn");
 
-function readPending(){
-  try{return JSON.parse(localStorage.getItem(PENDING_KEY)) || []; }
-  catch{return []; }
-}
-function writePending(p){ localStorage.setItem(PENDING_KEY, JSON.stringify(p)); }
-
-function readProfile(){
-  try{return JSON.parse(localStorage.getItem(PROFILE_KEY)) || { badges:[] }; }
-  catch{return { badges:[] }; }
-}
-function writeProfile(p){ localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); }
-
-function genId(){ return 'r_' + Math.random().toString(36).slice(2,10); }
-
-/* ---------- Wallet & Auth ---------- */
-document.getElementById("logoutBtn").onclick = ()=>{
-  localStorage.removeItem("zepStudent");
-  location.href="index.html";
-};
-
-function loadWallet(){
-  const s = JSON.parse(localStorage.getItem("zepStudent"));
-  if(!s){ location.href="student-login.html"; return; }
-  document.getElementById("walletShort").textContent = shortAddr(s.wallet);
-}
-
-/* ---------- Render Overview ---------- */
-const xpDisplay        = document.getElementById('xpDisplay');
-const zacDisplay       = document.getElementById('zacDisplay');
-const skillsDoneDisplay= document.getElementById('skillsDoneDisplay');
-const progressFill     = document.getElementById('progressFill');
-const progressPercent  = document.getElementById('progressPercent');
-const freelancerBtn    = document.getElementById('freelancerBtn');
-
-function renderOverview(){
-  const bal = readBalance();
-  const pending = readPending();
-
-  const xp = bal.xp || 0;
-  const lockedZac = pending
-    .filter(p => p.status === 'pending')
-    .reduce((sum,p)=>sum+(p.tokens||0),0);
-  const completedSkills = Object.keys(bal.completed || {}).length;
-
-  xpDisplay.textContent = xp;
-  zacDisplay.textContent = lockedZac;
-  skillsDoneDisplay.textContent = `${completedSkills} / ${SKILLS.length}`;
-
-  const pct = Math.min(100, Math.round((completedSkills / SKILLS.length)*100));
-  progressFill.style.width = pct + '%';
-  progressPercent.textContent = pct + '%';
-
-  if(completedSkills > 0){
-    freelancerBtn.disabled = false;
-    freelancerBtn.classList.add('active');
-    freelancerBtn.textContent = 'Unlocked · Open Freelance Dashboard';
-    freelancerBtn.onclick = ()=> window.location.href = 'dashboard-store.html';
-  }else{
-    freelancerBtn.disabled = true;
-    freelancerBtn.classList.remove('active');
-    freelancerBtn.textContent = 'Locked · Finish a skill test to unlock';
-    freelancerBtn.onclick = null;
-  }
-}
-
-/* ---------- Render Skills ---------- */
-const skillsGrid = document.getElementById('skillsGrid');
-
-function renderSkills(){
-  const bal = readBalance();
-  const completed = bal.completed || {};
-  skillsGrid.innerHTML = '';
-
-  SKILLS.forEach(skill=>{
-    const card = document.createElement('div');
-    card.className = 'skill-card';
-
-    const isDone = !!completed[skill.id];
-
-    card.innerHTML = `
-      <div class="skill-title">${skill.title}</div>
-      <div class="skill-desc">${skill.short}</div>
-      <div class="skill-meta">
-        <span>Reward: <strong>${skill.tokens} ZAC</strong> · ${skill.xp} XP</span>
-        <span>${isDone ? 'Completed ✅' : 'Ready'}</span>
-      </div>
-    `;
-
-    const btn = document.createElement('button');
-    btn.textContent = isDone ? 'View Test (Passed)' : 'Start Test';
-    btn.className = 'skill-btn' + (isDone ? ' done' : '');
-    btn.onclick = ()=> openModal(skill.id);
-
-    card.appendChild(btn);
-    skillsGrid.appendChild(card);
-  });
-}
-
-/* ---------- Render Pending Rewards ---------- */
-const pendingList = document.getElementById('pendingList');
-
-function renderPending(){
-  const pending = readPending().filter(p => p.status === 'pending');
-  pendingList.innerHTML = '';
-  if(pending.length === 0){
-    pendingList.innerHTML = `<div class="section-sub" style="font-size:11px;">No pending rewards yet. Pass a skill test to earn locked ZAC.</div>`;
-    return;
-  }
-  pending.forEach(p=>{
-    const div = document.createElement('div');
-    div.className = 'pending-item';
-    div.innerHTML = `
-      <div class="pending-header">
-        <span class="pending-title">${p.questTitle || 'Skill Reward'}</span>
-        <span class="pending-zac">${p.tokens} ZAC</span>
-      </div>
-      <div class="pending-meta">
-        Locked · ${new Date(p.createdAt).toLocaleString()}
-      </div>
-    `;
-    pendingList.appendChild(div);
-  });
-}
-
-/* ---------- Modal Logic ---------- */
-const modalBackdrop  = document.getElementById('modalBackdrop');
-const modalCloseBtn  = document.getElementById('modalCloseBtn');
-const modalTitle     = document.getElementById('modalTitle');
-const modalLesson    = document.getElementById('modalLesson');
-const modalQuestion  = document.getElementById('modalQuestion');
-const modalRewardInfo= document.getElementById('modalRewardInfo');
-const modalMessage   = document.getElementById('modalMessage');
-const answerInput    = document.getElementById('answerInput');
-const modalSubmitBtn = document.getElementById('modalSubmitBtn');
-
-let currentSkillId = null;
-
-function openModal(skillId){
-  const skill = SKILLS.find(s=>s.id===skillId);
-  if(!skill) return;
-
-  currentSkillId = skillId;
-  modalTitle.textContent = skill.title;
-  modalLesson.textContent = skill.lesson;
-  modalQuestion.textContent = skill.question;
-  modalRewardInfo.textContent = `Passing gives ${skill.xp} XP and ${skill.tokens} locked ZAC for this skill.`;
-  answerInput.value = '';
-  modalMessage.textContent = '';
-
-  modalBackdrop.style.display = 'flex';
-}
-
-function closeModal(){
-  modalBackdrop.style.display = 'none';
-  currentSkillId = null;
-}
-modalCloseBtn.onclick = closeModal;
-modalBackdrop.addEventListener('click', (e)=>{
-  if(e.target === modalBackdrop) closeModal();
+COURSES.forEach(c=>{
+  const div=document.createElement("div");
+  div.className="course-card";
+  div.innerHTML=`<div class="course-title">${c.title}</div><div class="course-desc">${c.desc}</div>`;
+  div.onclick=()=>openCourse(c);
+  courseGrid.appendChild(div);
 });
 
-/* ---------- Submit Test ---------- */
-modalSubmitBtn.onclick = ()=>{
-  if(!currentSkillId) return;
-  const skill = SKILLS.find(s=>s.id===currentSkillId);
-  if(!skill) return;
+let activeCourse=null;
 
-  const ans = (answerInput.value || '').trim();
-  if(ans.length < 10){
-    modalMessage.style.color = '#fde68a';
-    modalMessage.textContent = 'Answer is too short. Use at least one clear sentence that shows your understanding.';
-    return;
-  }
+function openCourse(course){
+  activeCourse=course.id;
+  panel.style.display="block";
 
-  const bal = readBalance();
-  bal.completed = bal.completed || {};
+  const key=`zep_${course.id}`;
+  let data=JSON.parse(localStorage.getItem(key))||{day:0,last:0};
 
-  if(bal.completed[skill.id]){
-    modalMessage.style.color = '#a5f3fc';
-    modalMessage.textContent = 'You already passed this test. Your answer has been updated but rewards are not doubled.';
-    bal.completed[skill.id].answer = ans;
-    writeBalance(bal);
-    return;
-  }
+  const now=Date.now();
+  const canDo = now - data.last > 86400000 || data.day===0;
 
-  // mark test complete
-  bal.xp = (bal.xp || 0) + skill.xp;
-  bal.completed[skill.id] = { when:Date.now(), answer:ans };
-  writeBalance(bal);
+  taskCourse.textContent=course.title;
+  taskMeta.textContent=`Day ${data.day+1} of 21`;
+  taskText.textContent=TASKS[data.day];
+  progressBar.style.width=`${(data.day/21)*100}%`;
 
-  // pending reward
-  const pending = readPending();
-  pending.push({
-    id: genId(),
-    questId: skill.id,
-    questTitle: `${skill.title} — Skill Test`,
-    xp: skill.xp,
-    tokens: skill.tokens,
-    createdAt: Date.now(),
-    status: 'pending',
-    claimedAt: null
-  });
-  writePending(pending);
+  completeBtn.disabled=!canDo;
+  completeBtn.textContent=canDo?"Complete Task (+25 ZAC)":"Come back tomorrow";
 
-  // badge
-  const profile = readProfile();
-  profile.badges = profile.badges || [];
-  profile.badges.push({
-    id: genId(),
-    skillId: skill.id,
-    skillTitle: skill.title,
-    issuedAt: Date.now(),
-    evidence: []
-  });
-  writeProfile(profile);
+  verifyBox.style.display=data.day>=21?"block":"none";
 
-  modalMessage.style.color = '#6ee7b7';
-  modalMessage.textContent = '✅ Test passed! XP added and ZAC reward locked. You are closer to unlocking the marketplace.';
-  renderOverview();
-  renderSkills();
-  renderPending();
-};
+  completeBtn.onclick=()=>{
+    data.day++;
+    data.last=Date.now();
+    localStorage.setItem(key,JSON.stringify(data));
 
-/* ---------- Init ---------- */
-function initDefaults(){
-  if(!localStorage.getItem(BAL_KEY)){
-    writeBalance({ xp:0, tokens:0, completed:{} });
-  }
-  if(!localStorage.getItem(PENDING_KEY)){
-    writePending([]);
-  }
-  if(!localStorage.getItem(PROFILE_KEY)){
-    writeProfile({ badges:[] });
-  }
+    let bal = Number(localStorage.getItem("zacBalance")||0);
+    localStorage.setItem("zacBalance", bal+25);
+
+    openCourse(course);
+  };
 }
-
-window.onload = ()=>{
-  loadWallet();
-  initDefaults();
-  renderOverview();
-  renderSkills();
-  renderPending();
-};
 </script>
 
 </body>
