@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Zep Swipe — Learn & Earn</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -24,9 +24,11 @@ body{
 }
 .container{
   max-width:960px;
-  margin:24px auto 120px;
+  margin:24px auto 140px;
   padding:16px;
 }
+
+/* Header */
 .header{
   display:flex;
   justify-content:space-between;
@@ -54,6 +56,8 @@ body{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
+
+/* Courses */
 .section-title{
   margin:26px 0 14px;
   font-family:Orbitron;
@@ -86,10 +90,12 @@ body{
   height:100%;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
 }
+
+/* Modal */
 .modal-back{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.75);
+  background:rgba(0,0,0,.8);
   display:none;
   align-items:center;
   justify-content:center;
@@ -97,12 +103,13 @@ body{
 }
 .modal{
   width:95%;
-  max-width:440px;
+  max-width:460px;
   background:rgba(10,15,40,.96);
   padding:18px;
   border-radius:20px;
   border:1px solid rgba(255,255,255,.15);
 }
+.small{font-size:12px;opacity:.85}
 input{
   width:100%;
   margin-top:10px;
@@ -112,22 +119,45 @@ input{
   background:#020617;
   color:#fff;
 }
-.small{font-size:12px;opacity:.8}
+
+/* Verify */
 .verify-box{
-  margin-top:20px;
+  margin-top:26px;
   padding:18px;
   border-radius:20px;
-  background:rgba(0,0,0,.6);
+  background:rgba(0,0,0,.65);
   border:1px solid rgba(0,240,255,.35);
 }
 .badge{
   display:inline-block;
-  padding:6px 12px;
+  padding:6px 14px;
   border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
   font-family:Orbitron;
   font-size:11px;
+}
+
+/* Footer */
+.footer{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  padding:14px 22px;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(12px);
+  display:flex;
+  justify-content:space-around;
+}
+.fbtn{
+  width:58px;height:58px;
+  border-radius:18px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+  text-decoration:none;
+  color:#fff;
+  box-shadow:0 0 22px rgba(0,240,255,.25);
 }
 </style>
 </head>
@@ -135,55 +165,47 @@ input{
 <body>
 
 <div class="container">
-
   <div class="header">
     <div class="brand">Zep Swipe · Learn & Earn</div>
     <button class="btn" onclick="location.href='dashboard-student.html'">Home</button>
   </div>
 
-  <div class="section-title">Skill Tracks (21 Days Each)</div>
+  <div class="section-title">Skill Tracks · 21-Day Proof Challenge</div>
   <div class="courses" id="courseGrid"></div>
 
   <div class="verify-box" id="verifyBox" style="display:none">
-    <h3 class="section-title">Creator Verification</h3>
-    <p class="small">
-      University: <span id="uni"></span><br>
-      Country: <span id="country"></span>
-    </p>
-    <p class="small">
-      You’ve completed 21 days of real tasks.  
-      Pay <strong>$5 USDC</strong> to unlock:
-    </p>
-    <ul class="small">
-      <li>✔ Verified Creator Badge</li>
-      <li>✔ Swipe Merchants access</li>
-      <li>✔ Public skill identity</li>
-    </ul>
-    <button class="btn" onclick="payVerification()">Pay $5 USDC & Verify</button>
-    <div class="small" id="payStatus"></div>
+    <h3 class="section-title">Verification Unlocked</h3>
+    <p class="small">You completed 21 real tasks and published public proof.</p>
+    <span class="badge">Verified Zep Creator</span>
+    <br><br>
+    <button class="btn" onclick="payVerification()">Pay $5 USDC & Unlock Marketplace</button>
+    <p class="small" id="payStatus"></p>
   </div>
-
 </div>
 
-<!-- MODAL -->
+<!-- Modal -->
 <div class="modal-back" id="modalBack">
   <div class="modal">
     <h3 id="modalTitle"></h3>
     <p id="modalTask" class="small"></p>
-    <input id="proof" placeholder="Zora / GitHub / Doc link" />
+    <input id="proof" placeholder="Paste Zora post link (required)" />
     <button class="btn" onclick="submitTask()">Submit Task</button>
     <button class="btn" style="margin-top:8px;background:none;color:#fff;border:1px solid rgba(255,255,255,.2)" onclick="closeModal()">Close</button>
   </div>
 </div>
 
+<!-- Footer -->
+<div class="footer">
+  <a class="fbtn" href="dashboard-student.html">🏠</a>
+  <a class="fbtn" href="profile.html">👤</a>
+  <a class="fbtn" href="https://zora.co" target="_blank">🌈</a>
+</div>
+
 <script>
 /* CONFIG */
-const VERIFY_USDC_TO = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
-const USDC = "0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913";
-const ERC20_ABI=[
- "function transfer(address,uint256) returns(bool)",
- "function decimals() view returns(uint8)"
-];
+const VERIFY_TO="0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
+const USDC="0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913";
+const ERC20_ABI=["function transfer(address,uint256) returns(bool)","function decimals() view returns(uint8)"];
 
 /* COURSES */
 const courses=[
@@ -197,80 +219,94 @@ const courses=[
  {id:"auto",title:"Micro-Automation"}
 ];
 
+/* 21 REAL TASKS (Zora-ready) */
+const tasks=[
+"Create a simple AI prompt and share output screenshot on Zora",
+"Rewrite the prompt to improve output quality",
+"Create a prompt template others can reuse",
+"Design a content brief using AI",
+"Generate a carousel outline with AI",
+"Publish a micro-guide as Zora post",
+"Design a simple social graphic",
+"Create a branded template",
+"Explain your design decisions publicly",
+"Edit a 15s short video",
+"Add captions + hook",
+"Publish before/after edit",
+"Create a landing page wireframe",
+"Build the page (no-code)",
+"Explain conversion logic",
+"Map a chatbot flow",
+"Build FAQ logic",
+"Publish bot demo",
+"Collect a dataset",
+"Clean and structure data",
+"Publish final dataset + reflection"
+];
+
 let active=null;
 const progress=JSON.parse(localStorage.getItem("zepProgress")||"{}");
 const student=JSON.parse(localStorage.getItem("zepStudent")||"{}");
 
-/* RENDER */
+/* Render */
 const grid=document.getElementById("courseGrid");
 courses.forEach(c=>{
- const day=progress[c.id]?.day||1;
- const pct=(day-1)/21*100;
- const d=document.createElement("div");
- d.className="course";
- d.innerHTML=`
-  <strong>${c.title}</strong>
-  <div class="small">Day ${day} / 21</div>
-  <div class="progress"><span style="width:${pct}%"></span></div>
- `;
- d.onclick=()=>openCourse(c);
- grid.appendChild(d);
+ const d=progress[c.id]?.day||1;
+ const pct=(d-1)/21*100;
+ const el=document.createElement("div");
+ el.className="course";
+ el.innerHTML=`<strong>${c.title}</strong>
+ <div class="small">Day ${d}/21</div>
+ <div class="progress"><span style="width:${pct}%"></span></div>`;
+ el.onclick=()=>openCourse(c);
+ grid.appendChild(el);
 });
 
-/* MODAL */
 function openCourse(c){
  active=c;
  const day=progress[c.id]?.day||1;
  document.getElementById("modalTitle").textContent=c.title;
- document.getElementById("modalTask").textContent=`Day ${day} task: Submit real proof (Zora/GitHub/Doc).`;
+ document.getElementById("modalTask").textContent=`Day ${day}: ${tasks[day-1]}`;
  document.getElementById("proof").value="";
- document.getElementById("modalBack").style.display="flex";
+ modalBack.style.display="flex";
 }
 function closeModal(){modalBack.style.display="none";}
 
-/* ANTI-SPAM + SUBMIT */
+/* Submit */
 function submitTask(){
  const link=document.getElementById("proof").value.trim();
- if(!link) return alert("Proof required");
-
+ if(!link || !link.includes("zora")) return alert("Zora proof required");
  const today=new Date().toDateString();
- const last=progress[active.id]?.lastDate;
- if(last===today) return alert("Only 1 task per day allowed.");
+ if(progress[active.id]?.last===today) return alert("One task per day only");
 
  const day=progress[active.id]?.day||1;
- progress[active.id]={day:Math.min(day+1,21),lastDate:today,proof:link};
+ progress[active.id]={day:Math.min(day+1,21),last:today,proof:link};
  localStorage.setItem("zepProgress",JSON.stringify(progress));
 
  student.zacAmount=(student.zacAmount||0)+25;
  localStorage.setItem("zepStudent",JSON.stringify(student));
-
  alert("+25 ZAC earned");
- closeModal();
  location.reload();
 }
 
-/* VERIFY CHECK */
-let totalDays=0;
-Object.values(progress).forEach(p=>totalDays+=Math.max(0,(p.day||1)-1));
-if(totalDays>=21 && !student.verified){
+/* Verify */
+let completed=0;
+Object.values(progress).forEach(p=>completed+=Math.max(0,(p.day||1)-1));
+if(completed>=21 && !student.verified){
  document.getElementById("verifyBox").style.display="block";
- document.getElementById("uni").textContent=student.university||"—";
- document.getElementById("country").textContent=student.country||"—";
 }
 
-/* PAY VERIFICATION */
 async function payVerification(){
- if(!window.ethereum) return alert("Wallet required");
  const provider=new ethers.BrowserProvider(window.ethereum);
  const signer=await provider.getSigner();
  const usdc=new ethers.Contract(USDC,ERC20_ABI,signer);
  const dec=await usdc.decimals();
- const tx=await usdc.transfer(VERIFY_USDC_TO,ethers.parseUnits("5",dec));
- document.getElementById("payStatus").textContent="Confirming transaction…";
+ const tx=await usdc.transfer(VERIFY_TO,ethers.parseUnits("5",dec));
+ document.getElementById("payStatus").textContent="Confirming…";
  await tx.wait();
  student.verified=true;
  localStorage.setItem("zepStudent",JSON.stringify(student));
- alert("🎉 Verified! Marketplace unlocked.");
+ alert("Verified 🎉");
  location.reload();
 }
 </script>
