@@ -1,240 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Zep Swipe — Student Profile</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 20% 10%, #020014 0%, #000007 100%);
+  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
   --glass:rgba(255,255,255,0.06);
 }
 
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:'Poppins',sans-serif;
+  font-family:Poppins,sans-serif;
   background:var(--bg);
   color:#fff;
-  overflow-x:hidden;
 }
 
-header{
+.container{
+  max-width:720px;
+  margin:24px auto 110px;
   padding:16px;
+}
+
+/* Header */
+.header{
+  padding:16px;
+  border-radius:18px;
   background:var(--glass);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.12);
   display:flex;
   justify-content:space-between;
   align-items:center;
+  backdrop-filter:blur(16px);
 }
 
 .brand{
-  font-family:'Orbitron';
+  font-family:Orbitron;
   font-size:1.3rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 
-.container{
-  max-width:900px;
-  margin:20px auto 100px;
-  padding:16px;
+.home-btn{
+  padding:8px 14px;
+  border-radius:999px;
+  border:none;
+  font-family:Orbitron;
+  font-size:12px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  cursor:pointer;
 }
 
+/* Card */
 .card{
-  background:var(--glass);
-  border-radius:18px;
+  margin-top:18px;
   padding:18px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.05);
   border:1px solid rgba(255,255,255,.12);
-  margin-bottom:16px;
+  backdrop-filter:blur(16px);
 }
 
-.profile-top{
+/* Avatar */
+.avatar-wrap{
   display:flex;
-  gap:16px;
+  flex-direction:column;
   align-items:center;
+  gap:10px;
 }
 
 .avatar{
-  width:88px;height:88px;
+  width:96px;
+  height:96px;
   border-radius:50%;
   background:#020617;
   border:2px solid var(--zep-blue);
-  overflow:hidden;
-  flex-shrink:0;
-}
-
-.avatar img{
-  width:100%;
-  height:100%;
   object-fit:cover;
 }
 
-input[type="file"]{
-  margin-top:8px;
+.upload-btn{
+  font-size:12px;
+  opacity:.85;
+  cursor:pointer;
+  text-decoration:underline;
 }
 
-.name{
-  font-family:'Orbitron';
-  font-size:1.2rem;
-}
-
-.small{
-  opacity:.8;
-  font-size:.85rem;
-}
-
-.progress{
-  margin-top:10px;
-}
-
-.progress-bar{
-  height:8px;
+/* Verification badge */
+.badge{
+  margin-top:6px;
+  padding:4px 10px;
   border-radius:999px;
-  background:rgba(255,255,255,.1);
-  overflow:hidden;
+  font-size:11px;
+  font-family:Orbitron;
 }
-
-.progress-fill{
-  height:100%;
+.badge.locked{
+  background:rgba(255,255,255,.08);
+  opacity:.6;
+}
+.badge.verified{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
 }
 
-.skill{
-  margin-bottom:12px;
+/* Form */
+.field{
+  margin-top:14px;
+}
+label{
+  font-size:12px;
+  opacity:.8;
+}
+input{
+  width:100%;
+  margin-top:6px;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.2);
+  background:#020617;
+  color:#fff;
 }
 
+.save-btn{
+  margin-top:18px;
+  width:100%;
+  padding:12px;
+  border-radius:999px;
+  border:none;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  cursor:pointer;
+}
+
+/* Progress */
+.progress{
+  margin-top:14px;
+  font-size:12px;
+  opacity:.85;
+}
+
+/* Footer */
 .footer{
   position:fixed;
   bottom:0;left:0;right:0;
+  padding:14px 22px;
   background:rgba(0,0,0,.55);
-  backdrop-filter:blur(10px);
-  padding:12px;
   display:flex;
   justify-content:space-around;
+  backdrop-filter:blur(10px);
+}
+.fbtn{
+  width:56px;height:56px;
+  border-radius:18px;
+  background:rgba(255,255,255,.05);
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;color:#fff;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="brand">Zep Swipe — Profile</div>
-  <div id="zacBal">ZAC: 0</div>
-</header>
-
 <div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand">Student Profile</div>
+    <button class="home-btn" onclick="location.href='student-dashboard.html'">Home</button>
+  </div>
 
   <!-- PROFILE CARD -->
   <div class="card">
-    <div class="profile-top">
-      <div class="avatar">
-        <img id="avatarImg" src="" alt="">
-      </div>
-      <div>
-        <div class="name" id="walletShort">—</div>
-        <div class="small" id="university">University not set</div>
-        <input type="file" accept="image/*" onchange="uploadAvatar(event)">
-      </div>
+
+    <div class="avatar-wrap">
+      <img id="avatarPreview" class="avatar" src="" alt="Avatar"/>
+      <label class="upload-btn">
+        Upload avatar
+        <input type="file" accept="image/*" hidden onchange="uploadAvatar(event)">
+      </label>
+      <div id="verifyBadge" class="badge locked">Not Verified</div>
     </div>
-  </div>
 
-  <!-- BIO -->
-  <div class="card">
-    <h3>Bio</h3>
-    <textarea id="bio" style="width:100%;min-height:80px;border-radius:12px;background:#020617;color:#fff;border:1px solid rgba(255,255,255,.15);padding:10px;"></textarea>
-    <button onclick="saveBio()" style="margin-top:10px;">Save Bio</button>
-  </div>
+    <div class="field">
+      <label>Full name</label>
+      <input id="nameInput" placeholder="Your name">
+    </div>
 
-  <!-- LEARNING PROGRESS -->
-  <div class="card">
-    <h3>Learning Progress</h3>
-    <div id="skills"></div>
-  </div>
+    <div class="field">
+      <label>University</label>
+      <input id="uniInput" placeholder="University name">
+    </div>
 
-  <!-- ACHIEVEMENTS -->
-  <div class="card">
-    <h3>Achievements</h3>
-    <div id="achievements"></div>
+    <div class="field">
+      <label>Country</label>
+      <input id="countryInput" placeholder="Country">
+    </div>
+
+    <button class="save-btn" onclick="saveProfile()">Save Profile</button>
+
+    <div class="progress" id="progressText"></div>
+
   </div>
 
 </div>
 
+<!-- FOOTER -->
 <div class="footer">
-  <a href="student-dashboard.html">🏠</a>
-  <a href="learn-earn.html">📘</a>
-  <a href="wallet.html">💳</a>
+  <a class="fbtn" href="wallet.html">💼</a>
+  <a class="fbtn" href="learn-earn.html">🎓</a>
+  <a class="fbtn" href="profile.html">👤</a>
 </div>
 
 <script>
-/* -------- LOAD SESSION -------- */
-const student = JSON.parse(localStorage.getItem("zepStudent"));
-const learn = JSON.parse(localStorage.getItem("zepLearn")) || {zac:0,skills:{}};
+/* ---------------- LOAD ---------------- */
+window.onload = () => {
+  const profile = JSON.parse(localStorage.getItem("zepStudentProfile")||"{}");
+  const learn = JSON.parse(localStorage.getItem("zepProgress")||"{}");
 
-if(!student){ location.href="index.html"; }
+  if(profile.avatar){
+    document.getElementById("avatarPreview").src = profile.avatar;
+  }
+  document.getElementById("nameInput").value = profile.name || "";
+  document.getElementById("uniInput").value = profile.university || "";
+  document.getElementById("countryInput").value = profile.country || "";
 
-document.getElementById("walletShort").textContent =
-  student.wallet.slice(0,6)+"..."+student.wallet.slice(-4);
+  let completed = 0;
+  Object.values(learn).forEach(s=>{
+    completed += Math.max(0,(s.day||1)-1);
+  });
 
-document.getElementById("zacBal").textContent = "ZAC: " + learn.zac;
+  const badge = document.getElementById("verifyBadge");
+  if(completed >= 21){
+    badge.textContent = "Verified Student";
+    badge.className = "badge verified";
+  }
 
-/* -------- AVATAR -------- */
-const avatarImg = document.getElementById("avatarImg");
-if(student.avatar){ avatarImg.src = student.avatar; }
+  document.getElementById("progressText").textContent =
+    `Tasks completed: ${completed} / 21`;
+};
 
+/* ---------------- SAVE ---------------- */
+function saveProfile(){
+  const existing = JSON.parse(localStorage.getItem("zepStudentProfile")||"{}");
+
+  const profile = {
+    ...existing,
+    name: document.getElementById("nameInput").value.trim(),
+    university: document.getElementById("uniInput").value.trim(),
+    country: document.getElementById("countryInput").value.trim(),
+  };
+
+  localStorage.setItem("zepStudentProfile", JSON.stringify(profile));
+  alert("Profile saved ✅");
+}
+
+/* ---------------- AVATAR ---------------- */
 function uploadAvatar(e){
+  const file = e.target.files[0];
+  if(!file) return;
+
   const reader = new FileReader();
   reader.onload = ()=>{
-    student.avatar = reader.result;
-    localStorage.setItem("zepStudent",JSON.stringify(student));
-    avatarImg.src = reader.result;
+    document.getElementById("avatarPreview").src = reader.result;
+
+    const profile = JSON.parse(localStorage.getItem("zepStudentProfile")||"{}");
+    profile.avatar = reader.result;
+    localStorage.setItem("zepStudentProfile", JSON.stringify(profile));
   };
-  reader.readAsDataURL(e.target.files[0]);
-}
-
-/* -------- BIO -------- */
-const bioEl = document.getElementById("bio");
-bioEl.value = student.bio || "";
-
-function saveBio(){
-  student.bio = bioEl.value;
-  localStorage.setItem("zepStudent",JSON.stringify(student));
-  alert("Bio saved");
-}
-
-/* -------- SKILLS PROGRESS -------- */
-const skillsEl = document.getElementById("skills");
-Object.keys(learn.skills).forEach(skill=>{
-  const s = learn.skills[skill];
-  const percent = Math.round(((s.day-1)/21)*100);
-  skillsEl.innerHTML += `
-    <div class="skill">
-      <strong>${skill}</strong>
-      <div class="small">Day ${s.day-1}/21</div>
-      <div class="progress-bar">
-        <div class="progress-fill" style="width:${percent}%"></div>
-      </div>
-    </div>
-  `;
-});
-
-/* -------- ACHIEVEMENTS -------- */
-const achEl = document.getElementById("achievements");
-const completed = Object.entries(learn.skills).filter(([_,s])=>s.day>21);
-
-if(completed.length===0){
-  achEl.innerHTML="<div class='small'>No achievements yet</div>";
-}else{
-  completed.forEach(([skill])=>{
-    achEl.innerHTML += `<div>🏅 ${skill} completed</div>`;
-  });
+  reader.readAsDataURL(file);
 }
 </script>
 
