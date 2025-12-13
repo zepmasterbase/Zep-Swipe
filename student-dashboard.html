@@ -8,26 +8,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
 
 <style>
-/* (STYLES UNCHANGED — KEPT EXACTLY AS YOU PROVIDED) */
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --glass:rgba(255,255,255,0.06);
   --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
+  --glass:rgba(255,255,255,0.06);
 }
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:'Poppins',sans-serif;
+  font-family:Poppins,sans-serif;
   background:var(--bg);
   color:#fff;
-  overflow-x:hidden;
 }
 .container{
-  max-width:900px;
-  margin:26px auto 120px;
+  max-width:960px;
+  margin:24px auto 140px;
   padding:16px;
 }
+
+/* Header */
 .header{
   display:flex;
   justify-content:space-between;
@@ -35,12 +35,12 @@ body{
   padding:16px;
   border-radius:18px;
   background:var(--glass);
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(16px);
-  box-shadow:0 0 36px rgba(0,240,255,0.25);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(18px);
+  box-shadow:0 0 36px rgba(0,240,255,.25);
 }
 .brand{
-  font-family:'Orbitron';
+  font-family:Orbitron;
   font-size:1.5rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
@@ -51,6 +51,13 @@ body{
   align-items:center;
   gap:10px;
 }
+.addr{
+  font-family:Orbitron;
+  font-size:.75rem;
+  color:#bffcff;
+}
+
+/* Avatar */
 .avatar{
   width:44px;height:44px;
   border-radius:50%;
@@ -58,25 +65,26 @@ body{
   object-fit:cover;
   background:#020617;
 }
-.addr{
-  font-family:'Orbitron';
-  font-size:0.8rem;
-  color:#d7faff;
-  text-align:right;
-}
+
+/* Profile Card */
 .profile-card{
   margin-top:20px;
   padding:16px;
   border-radius:18px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
   display:flex;
-  align-items:center;
   gap:14px;
+  align-items:center;
+}
+.profile-card img{
+  width:64px;height:64px;
+  border-radius:50%;
+  border:2px solid var(--zep-violet);
 }
 .profile-meta h3{
   margin:0;
-  font-family:'Orbitron';
+  font-family:Orbitron;
   font-size:1rem;
 }
 .profile-meta p{
@@ -90,19 +98,21 @@ body{
   padding:4px 10px;
   border-radius:999px;
   font-size:10px;
-  font-family:'Orbitron';
+  font-family:Orbitron;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
+
+/* Portfolio */
 .portfolio{
   margin-top:22px;
   padding:18px;
   border-radius:20px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
 }
 .section-title{
-  font-family:'Orbitron';
+  font-family:Orbitron;
   font-size:1.1rem;
   margin-bottom:12px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
@@ -115,22 +125,26 @@ body{
   gap:14px;
 }
 .coin{
-  width:64px;height:64px;
+  width:60px;height:60px;
   border-radius:16px;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Orbitron';
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:Orbitron;
   font-size:18px;
   color:#050015;
 }
 .balance .big{
-  font-family:'Orbitron';
-  font-size:24px;
+  font-family:Orbitron;
+  font-size:22px;
 }
 .balance .small{
   font-size:12px;
   opacity:.8;
 }
+
+/* Quick Actions */
 .quick-grid{
   margin-top:20px;
   display:grid;
@@ -140,18 +154,23 @@ body{
 .quick{
   padding:14px;
   border-radius:16px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
   text-align:center;
   text-decoration:none;
   color:#fff;
 }
+.quick:hover{
+  box-shadow:0 0 26px rgba(156,77,255,.4);
+}
+
+/* Marketplace */
 .market{
   margin-top:18px;
   padding:16px;
   border-radius:18px;
-  background:rgba(0,0,0,0.65);
-  border:1px solid rgba(0,240,255,0.4);
+  background:rgba(0,0,0,.65);
+  border:1px solid rgba(0,240,255,.4);
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -160,58 +179,67 @@ body{
 }
 .market.locked{opacity:.45;pointer-events:none;}
 .market-title{
-  font-family:'Orbitron';
+  font-family:Orbitron;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
+
+/* Skills */
 .skills{
   margin-top:22px;
   padding:18px;
   border-radius:20px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.12);
 }
 .skills-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:10px;
 }
+@media(max-width:640px){.skills-grid{grid-template-columns:1fr}}
 .skill{
   padding:12px;
   border-radius:14px;
-  background:rgba(0,0,0,0.65);
-  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(0,0,0,.65);
+  border:1px solid rgba(255,255,255,.12);
   text-decoration:none;
   color:#fff;
 }
+.skill h4{
+  margin:0;
+  font-family:Orbitron;
+  font-size:.9rem;
+}
+.skill p{
+  margin-top:4px;
+  font-size:11px;
+  opacity:.8;
+}
+
+/* Footer */
 .footer{
   position:fixed;
   bottom:0;left:0;right:0;
   padding:14px 22px;
-  background:rgba(0,0,0,0.55);
-  backdrop-filter:blur(10px);
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(12px);
   display:flex;
   justify-content:space-around;
 }
 .fbtn{
-  width:54px;height:54px;
+  width:56px;height:56px;
   border-radius:16px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.08);
-  display:flex;align-items:center;justify-content:center;
-}
-.ai-bubble{
-  position:fixed;
-  right:18px;
-  bottom:100px;
-  padding:12px 18px;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  font-family:'Orbitron';
-  font-weight:700;
-  cursor:pointer;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  text-decoration:none;
+  color:#fff;
+  box-shadow:0 0 22px rgba(0,240,255,.25);
 }
 </style>
 </head>
@@ -220,16 +248,18 @@ body{
 
 <div class="container">
 
+  <!-- Header -->
   <div class="header">
     <div class="brand">Zep Swipe</div>
     <div class="header-right">
       <div id="walletShort" class="addr">—</div>
-      <img id="avatarImg" class="avatar" />
+      <img id="avatarSmall" class="avatar"/>
     </div>
   </div>
 
+  <!-- Profile -->
   <div class="profile-card">
-    <img id="avatarBig" class="avatar" style="width:64px;height:64px"/>
+    <img id="avatarBig"/>
     <div class="profile-meta">
       <h3 id="studentName">Student</h3>
       <p id="studentUni">—</p>
@@ -238,43 +268,92 @@ body{
     </div>
   </div>
 
-  <!-- REST UNCHANGED -->
+  <!-- Portfolio -->
+  <div class="portfolio">
+    <div class="section-title">Portfolio</div>
+    <div class="coin-row">
+      <div class="coin">ZAC</div>
+      <div class="balance">
+        <div class="big" id="zacAmount">0 ZAC</div>
+        <div class="small" id="zacUsd">≈ $0.00</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick -->
+  <div class="quick-grid">
+    <a href="wallet.html" class="quick">Wallet</a>
+    <a href="learn-earn.html" class="quick">Learn & Earn</a>
+  </div>
+
+  <!-- Marketplace -->
+  <a id="marketCard" class="market locked">
+    <div>
+      <div class="market-title">Swipe Merchants</div>
+      <div id="marketText" style="font-size:12px;opacity:.8">
+        Complete 21 days to unlock
+      </div>
+    </div>
+    <div>→</div>
+  </a>
+
+  <!-- Skills -->
+  <div class="skills">
+    <div class="section-title">Skill Tracks</div>
+    <div class="skills-grid">
+      <a href="learn-earn.html" class="skill"><h4>AI Prompt Engineering</h4><p>Prompt mastery</p></a>
+      <a href="learn-earn.html" class="skill"><h4>AI Content Creation</h4><p>Posts & scripts</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Social Design</h4><p>Visual systems</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Chatbot Builder</h4><p>Flows & logic</p></a>
+      <a href="learn-earn.html" class="skill"><h4>No-Code Websites</h4><p>Landing pages</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Video Editing</h4><p>Short-form edits</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Research & Lead Gen</h4><p>Data skills</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Micro-Automation</h4><p>Workflow logic</p></a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <a class="fbtn" href="wallet.html">💼</a>
+  <a class="fbtn" href="learn-earn.html">🎓</a>
+  <a class="fbtn" href="profile.html">👤</a>
 </div>
 
 <script>
 function shortAddr(a){return a?`${a.slice(0,6)}...${a.slice(-4)}`:'—';}
-
-const DEFAULT_AVATAR =
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%2300f0ff'/><text x='50%' y='55%' font-size='40' fill='%23050015' text-anchor='middle'>👤</text></svg>";
+function money(n){return Number(n).toFixed(2);}
 
 window.onload=()=>{
   const student = JSON.parse(localStorage.getItem("zepStudent"));
   const profile = JSON.parse(localStorage.getItem("zepProfile"));
-  const learn = JSON.parse(localStorage.getItem("zepProgress"))||{};
+  const progress = JSON.parse(localStorage.getItem("zepProgress"))||{};
 
-  if(!student){location.href="student-login.html";return;}
+  if(!student){ location.href="student-login.html"; return; }
 
   document.getElementById("walletShort").textContent = shortAddr(student.wallet);
 
-  const avatarSrc = profile?.avatar || DEFAULT_AVATAR;
-  const avatarImg = document.getElementById("avatarImg");
-  const avatarBig = document.getElementById("avatarBig");
-
-  avatarImg.src = avatarSrc;
-  avatarBig.src = avatarSrc;
-
-  avatarImg.onerror = avatarBig.onerror = ()=>{
-    avatarImg.src = avatarBig.src = DEFAULT_AVATAR;
-  };
+  const avatar = profile?.avatar || "https://api.dicebear.com/7.x/identicon/svg?seed=zep";
+  document.getElementById("avatarSmall").src = avatar;
+  document.getElementById("avatarBig").src = avatar;
 
   document.getElementById("studentName").textContent = profile?.name || "Student";
   document.getElementById("studentUni").textContent = profile?.university || "—";
   document.getElementById("studentCountry").textContent = profile?.country || "—";
 
+  const zac = student.zacAmount || 0;
+  document.getElementById("zacAmount").textContent = `${zac} ZAC`;
+  document.getElementById("zacUsd").textContent = `≈ $${money(zac*0.15)}`;
+
   let days=0;
-  Object.values(learn).forEach(s=>days+=Math.max(0,(s.day||1)-1));
+  Object.values(progress).forEach(p=>days+=Math.max(0,(p.day||1)-1));
 
   if(days>=21 || student.verified){
+    const m=document.getElementById("marketCard");
+    m.classList.remove("locked");
+    m.href="https://merchants.zepswipe.com";
+    document.getElementById("marketText").textContent="Verified — Start selling";
     document.getElementById("verifyBadge").innerHTML='<span class="badge">Verified</span>';
   }
 };
