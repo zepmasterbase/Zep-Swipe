@@ -6,7 +6,6 @@
 <title>Zep Swipe — Student Dashboard</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
 
 <style>
 :root{
@@ -15,8 +14,6 @@
   --glass:rgba(255,255,255,0.06);
   --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
 }
-
-/* Base */
 *{box-sizing:border-box}
 body{
   margin:0;
@@ -25,15 +22,13 @@ body{
   color:#fff;
   overflow-x:hidden;
 }
-
-/* Container */
 .container{
   max-width:900px;
-  margin:26px auto 110px;
+  margin:26px auto 120px;
   padding:16px;
 }
 
-/* Header */
+/* HEADER */
 .header{
   padding:18px;
   border-radius:18px;
@@ -43,13 +38,8 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  animation:glow 4s infinite alternate;
+  box-shadow:0 0 40px rgba(0,240,255,0.35);
 }
-@keyframes glow{
-  from{box-shadow:0 0 20px rgba(0,240,255,0.2)}
-  to{box-shadow:0 0 40px rgba(156,77,255,0.45)}
-}
-
 .brand{
   font-family:'Orbitron';
   font-size:1.6rem;
@@ -57,70 +47,96 @@ body{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-
 .addr{
   font-family:'Orbitron';
-  font-size:0.9rem;
+  font-size:0.85rem;
   color:#d7faff;
   text-align:right;
 }
-
 .logout{
   background:none;border:0;cursor:pointer;
-  filter:drop-shadow(0 0 8px rgba(255,80,80,0.8));
+  color:#ff6b6b;
+  font-size:14px;
 }
 
-/* Portfolio */
+/* PROFILE STRIP */
+.profile-strip{
+  margin-top:18px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px;
+  border-radius:16px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+}
+.avatar{
+  width:56px;height:56px;
+  border-radius:50%;
+  border:2px solid var(--zep-blue);
+  object-fit:cover;
+}
+.p-name{
+  font-family:Orbitron;
+  font-size:.95rem;
+}
+.p-meta{
+  font-size:12px;
+  opacity:.8;
+}
+.badge{
+  margin-left:auto;
+  font-family:Orbitron;
+  font-size:11px;
+  color:#00f0ff;
+  display:none;
+}
+
+/* PORTFOLIO */
 .portfolio{
-  margin-top:22px;
+  margin-top:20px;
   padding:20px;
   border-radius:20px;
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(16px);
 }
-
 .section-title{
   font-family:'Orbitron';
-  font-size:1.2rem;
+  font-size:1.15rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  margin-bottom:14px;
+  margin-bottom:12px;
 }
-
 .coin-row{
   display:flex;
   align-items:center;
   gap:14px;
 }
-
 .coin{
-  width:70px;height:70px;
-  border-radius:18px;
+  width:64px;height:64px;
+  border-radius:16px;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   display:flex;align-items:center;justify-content:center;
   font-family:'Orbitron';
   color:#050015;
-  font-size:20px;
+  font-size:18px;
 }
-
 .balance .big{
   font-family:'Orbitron';
-  font-size:26px;
+  font-size:24px;
 }
 .balance .small{
   opacity:.85;font-size:13px;
 }
 
-/* Quick actions */
+/* QUICK ACTIONS */
 .quick-grid{
   margin-top:20px;
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:14px;
 }
-
 .quick{
   padding:16px;
   border-radius:16px;
@@ -136,7 +152,7 @@ body{
   box-shadow:0 0 28px rgba(156,77,255,0.35);
 }
 
-/* Marketplace CTA */
+/* MARKETPLACE CTA */
 .market{
   margin-top:18px;
   padding:16px;
@@ -160,7 +176,7 @@ body{
   -webkit-text-fill-color:transparent;
 }
 
-/* Skills */
+/* SKILLS */
 .skills{
   margin-top:20px;
   padding:18px;
@@ -168,7 +184,6 @@ body{
   background:rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.12);
 }
-
 .skills-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -177,7 +192,6 @@ body{
 @media(max-width:640px){
   .skills-grid{grid-template-columns:1fr}
 }
-
 .skill{
   padding:12px;
   border-radius:14px;
@@ -193,7 +207,7 @@ body{
   margin:4px 0 0;font-size:11px;opacity:.8;
 }
 
-/* Footer */
+/* FOOTER */
 .footer{
   position:fixed;
   bottom:0;left:0;right:0;
@@ -210,6 +224,8 @@ body{
   border:1px solid rgba(255,255,255,0.08);
   display:flex;align-items:center;justify-content:center;
 }
+
+/* AI */
 .ai-bubble{
   position:fixed;
   right:18px;
@@ -229,16 +245,26 @@ body{
 
 <div class="container">
 
-  <!-- Header -->
+  <!-- HEADER -->
   <div class="header">
     <div class="brand">Zep Swipe</div>
     <div>
       <div id="walletShort" class="addr">—</div>
-      <button class="logout" id="logoutBtn">⎋</button>
+      <button class="logout" id="logoutBtn">Logout</button>
     </div>
   </div>
 
-  <!-- Portfolio -->
+  <!-- PROFILE STRIP -->
+  <div class="profile-strip">
+    <img id="avatar" class="avatar" src="https://via.placeholder.com/60">
+    <div>
+      <div class="p-name" id="studentName">Student</div>
+      <div class="p-meta" id="studentMeta">University · Country</div>
+    </div>
+    <div id="verifiedBadge" class="badge">✔ VERIFIED</div>
+  </div>
+
+  <!-- PORTFOLIO -->
   <div class="portfolio">
     <div class="section-title">Portfolio</div>
     <div class="coin-row">
@@ -250,13 +276,13 @@ body{
     </div>
   </div>
 
-  <!-- Quick -->
+  <!-- QUICK -->
   <div class="quick-grid">
     <a href="wallet.html" class="quick">Wallet</a>
     <a href="learn-earn.html" class="quick">Learn & Earn</a>
   </div>
 
-  <!-- Marketplace -->
+  <!-- MARKETPLACE -->
   <a id="marketCard" class="market locked">
     <div>
       <div class="market-title">Swipe Merchants</div>
@@ -267,7 +293,7 @@ body{
     <div>→</div>
   </a>
 
-  <!-- Skills -->
+  <!-- SKILLS -->
   <div class="skills">
     <div class="section-title">Skill Tracks</div>
     <div class="skills-grid">
@@ -287,7 +313,7 @@ body{
 <!-- AI -->
 <button class="ai-bubble" onclick="location.href='zep-ai.html'">🤖 Zep AI</button>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <div class="footer">
   <a class="fbtn" href="wallet.html">💼</a>
   <a class="fbtn" href="learn-earn.html">🎓</a>
@@ -305,22 +331,33 @@ document.getElementById("logoutBtn").onclick=()=>{
 
 window.onload=()=>{
   const student = JSON.parse(localStorage.getItem("zepStudent"));
-  const learn = JSON.parse(localStorage.getItem("zepLearn")) || {zac:0,skills:{}};
+  const profile = JSON.parse(localStorage.getItem("zepStudentProfile")||"{}");
+  const progress = JSON.parse(localStorage.getItem("zepProgress")||"{}");
 
   if(!student){location.href="student-login.html";return;}
 
   document.getElementById("walletShort").textContent = shortAddr(student.wallet);
 
-  const zac = learn.zac || 0;
+  document.getElementById("studentName").textContent = profile.name || "Student";
+  document.getElementById("studentMeta").textContent =
+    `${profile.university||"University"} · ${profile.country||"Country"}`;
+
+  if(profile.avatar){
+    document.getElementById("avatar").src = profile.avatar;
+  }
+
+  const zac = student.zacAmount || 0;
   document.getElementById("zacAmount").textContent = `${zac} ZAC`;
   document.getElementById("zacUsd").textContent = `≈ $${money(zac*0.15)}`;
 
-  let days=0;
-  Object.values(learn.skills).forEach(s=>{
-    days += Math.max(0,(s.day||1)-1);
-  });
+  // verification logic
+  let verified=false;
+  for(const c in progress){
+    if(progress[c].day>=21){ verified=true; break; }
+  }
 
-  if(days>=21){
+  if(verified){
+    document.getElementById("verifiedBadge").style.display="block";
     const m=document.getElementById("marketCard");
     m.classList.remove("locked");
     m.href="https://merchants.zepswipe.com";
