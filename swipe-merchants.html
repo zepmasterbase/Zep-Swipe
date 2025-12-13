@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Swipe Merchants — Zep Swipe</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+
+<style>
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --glass:rgba(255,255,255,0.06);
+  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);
+  color:#fff;
+  overflow-x:hidden;
+}
+.container{
+  max-width:1100px;
+  margin:24px auto 100px;
+  padding:16px;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px;
+  border-radius:18px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(18px);
+  box-shadow:0 0 45px rgba(0,240,255,.25);
+}
+.brand{
+  font-family:Orbitron;
+  font-size:1.4rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.tag{
+  font-size:12px;
+  opacity:.8;
+}
+
+/* GRID */
+.grid{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
+}
+
+/* MERCHANT CARD */
+.card{
+  padding:16px;
+  border-radius:18px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(14px);
+  transition:.25s;
+}
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 18px 60px rgba(156,77,255,.25);
+}
+
+/* AVATAR */
+.avatar{
+  width:72px;height:72px;
+  border-radius:50%;
+  overflow:hidden;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  display:flex;align-items:center;justify-content:center;
+}
+.avatar img{
+  width:100%;height:100%;object-fit:cover;
+}
+.avatar span{
+  font-family:Orbitron;
+  color:#050015;
+}
+
+/* CARD CONTENT */
+.name{
+  font-family:Orbitron;
+  font-size:.95rem;
+  margin-top:10px;
+}
+.wallet{
+  font-size:12px;
+  opacity:.75;
+}
+.uni{
+  font-size:12px;
+  margin-top:4px;
+  opacity:.85;
+}
+.badge{
+  display:inline-block;
+  margin-top:6px;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:11px;
+  font-family:Orbitron;
+  background:rgba(0,240,255,.25);
+  border:1px solid var(--zep-blue);
+}
+
+/* SKILLS */
+.skills{
+  margin-top:10px;
+}
+.skill{
+  display:inline-block;
+  margin:4px 4px 0 0;
+  padding:5px 8px;
+  font-size:11px;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+}
+
+/* ACTIONS */
+.actions{
+  margin-top:12px;
+  display:flex;
+  gap:8px;
+}
+.btn{
+  flex:1;
+  padding:8px 10px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  font-family:Orbitron;
+  font-size:11px;
+}
+.primary{
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+.ghost{
+  background:transparent;
+  border:1px solid rgba(255,255,255,.2);
+  color:#fff;
+}
+
+/* EMPTY */
+.empty{
+  text-align:center;
+  padding:40px;
+  opacity:.8;
+}
+
+/* FOOTER */
+.footer{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  padding:12px;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(10px);
+  display:flex;
+  justify-content:space-around;
+}
+.footer a{
+  color:#00f0ff;
+  font-family:Orbitron;
+  font-size:13px;
+  text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="brand">Swipe Merchants</div>
+      <div class="tag">Verified student talent · Base network</div>
+    </div>
+    <div class="tag" onclick="location.href='student-dashboard.html'" style="cursor:pointer">
+      ← Dashboard
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="grid" id="merchantGrid"></div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <a href="student-dashboard.html">Home</a>
+  <a href="learn-earn.html">Learn</a>
+  <a href="wallet.html">Wallet</a>
+  <a href="profile.html">Profile</a>
+</div>
+
+<script>
+/* AUTH */
+const student = JSON.parse(localStorage.getItem("zepStudent"));
+if(!student){ location.href="student-login.html"; }
+
+/* VERIFICATION CHECK */
+const verified = localStorage.getItem("zepVerified")==="true";
+if(!verified){
+  alert("Complete Learn & Earn to access Swipe Merchants.");
+  location.href="learn-earn.html";
+}
+
+/* DATA */
+const avatar = localStorage.getItem("zepAvatar");
+const uni    = localStorage.getItem("zepUniversity") || "University not set";
+const wallet = student.wallet;
+const short  = wallet.slice(0,6)+"..."+wallet.slice(-4);
+
+/* COURSES */
+const courses = [
+ "AI Prompt Engineering","No-Code Automation","Content Creation",
+ "Chatbot Building","Web Design","Data & Research","Digital Marketing","Freelancing"
+];
+
+let skills=[];
+courses.forEach(c=>{
+  const key="zep_"+c.split(" ")[0].toLowerCase();
+  const data=JSON.parse(localStorage.getItem(key));
+  if(data && data.day>=21) skills.push(c);
+});
+
+/* RENDER */
+const grid=document.getElementById("merchantGrid");
+
+if(skills.length===0){
+  grid.innerHTML=`<div class="empty">
+    No verified merchants yet.<br/>Complete Learn & Earn to appear here.
+  </div>`;
+}else{
+  grid.innerHTML=`
+    <div class="card">
+      <div class="avatar">
+        ${avatar?`<img src="${avatar}">`:`<span>Z</span>`}
+      </div>
+
+      <div class="name">${short}</div>
+      <div class="wallet">${wallet}</div>
+      <div class="uni">${uni}</div>
+
+      <div class="badge">Verified Student</div>
+
+      <div class="skills">
+        ${skills.map(s=>`<span class="skill">${s}</span>`).join("")}
+      </div>
+
+      <div class="actions">
+        <button class="btn ghost" onclick="alert('Profile view coming soon')">Profile</button>
+        <button class="btn primary" onclick="alert('Messaging coming soon')">Contact</button>
+      </div>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
