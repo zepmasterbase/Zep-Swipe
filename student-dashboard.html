@@ -17,265 +17,183 @@
 }
 
 /* Base */
+*{box-sizing:border-box}
 body{
   margin:0;
   font-family:'Poppins',sans-serif;
   background:var(--bg);
   color:#fff;
+  overflow-x:hidden;
 }
 
 /* Container */
 .container{
   max-width:900px;
-  margin:30px auto;
+  margin:26px auto 110px;
   padding:16px;
 }
 
-/* HEADER */
+/* Header */
 .header{
   padding:18px;
-  border-radius:16px;
+  border-radius:18px;
   background:var(--glass);
-  border:1px solid rgba(255,255,255,0.1);
-  backdrop-filter:blur(15px);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(16px);
   display:flex;
   justify-content:space-between;
   align-items:center;
-  animation:glowHeader 3.5s infinite alternate ease-in-out;
+  animation:glow 4s infinite alternate;
 }
-@keyframes glowHeader{
-  0%{box-shadow:0 0 18px rgba(0,240,255,0.20);}
-  100%{box-shadow:0 0 42px rgba(156,77,255,0.45);}
+@keyframes glow{
+  from{box-shadow:0 0 20px rgba(0,240,255,0.2)}
+  to{box-shadow:0 0 40px rgba(156,77,255,0.45)}
 }
 
 .brand{
   font-family:'Orbitron';
-  font-size:1.7rem;
-  font-weight:700;
+  font-size:1.6rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  text-shadow:0 0 22px rgba(0,240,255,0.7);
 }
 
-/* Wallet Address */
 .addr{
   font-family:'Orbitron';
-  font-size:0.95rem;
+  font-size:0.9rem;
   color:#d7faff;
   text-align:right;
 }
 
-/* Logout */
 .logout{
-  margin-left:8px;
-  background:transparent;
-  border:0;
-  cursor:pointer;
-  filter:drop-shadow(0 0 9px rgba(255,80,80,0.8));
+  background:none;border:0;cursor:pointer;
+  filter:drop-shadow(0 0 8px rgba(255,80,80,0.8));
 }
 
-/* Portfolio section */
-.portfolio-box{
-  margin-top:24px;
+/* Portfolio */
+.portfolio{
+  margin-top:22px;
   padding:20px;
-  border-radius:18px;
+  border-radius:20px;
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(255,255,255,0.12);
   backdrop-filter:blur(16px);
-  animation:pulsePortfolio 4s infinite alternate ease-in-out;
-}
-@keyframes pulsePortfolio {
-  0%{box-shadow:0 0 22px rgba(0,240,255,0.20);}
-  100%{box-shadow:0 0 40px rgba(156,77,255,0.30);}
 }
 
 .section-title{
   font-family:'Orbitron';
-  font-size:1.25rem;
+  font-size:1.2rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
 
-/* Coin Box */
+.coin-row{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
 .coin{
   width:70px;height:70px;
-  border-radius:20px;
-  background:linear-gradient(140deg,var(--zep-blue),var(--zep-violet));
+  border-radius:18px;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   display:flex;align-items:center;justify-content:center;
-  font-family:Orbitron;font-size:20px;color:#050015;
-  box-shadow:0 12px 40px rgba(0,240,255,0.15);
+  font-family:'Orbitron';
+  color:#050015;
+  font-size:20px;
 }
 
-.balance-text{
-  margin-left:16px;
-}
-.balance-text .big{
+.balance .big{
   font-family:'Orbitron';
   font-size:26px;
 }
-.balance-text .small{
-  opacity:0.85;
-  font-size:13px;
+.balance .small{
+  opacity:.85;font-size:13px;
 }
 
-/* Grid for Wallet + Earn mini actions */
-.mini-grid{
+/* Quick actions */
+.quick-grid{
   margin-top:20px;
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:14px;
 }
 
-.mini-card{
+.quick{
   padding:16px;
-  text-align:center;
+  border-radius:16px;
   background:rgba(255,255,255,0.05);
-  border-radius:16px;
-  backdrop-filter:blur(14px);
   border:1px solid rgba(255,255,255,0.12);
-  animation:pulseMini 3s infinite alternate ease-in-out;
-}
-@keyframes pulseMini{
-  0%{box-shadow:0 0 14px rgba(0,240,255,0.15);}
-  100%{box-shadow:0 0 30px rgba(156,77,255,0.25);}
-}
-
-.mini-card h3{
-  margin:6px 0 4px 0;
-  font-family:'Orbitron';
-  font-size:1rem;
-}
-.mini-card p{
-  margin:0;
-  font-size:12px;
-  opacity:0.78;
-}
-
-/* Disabled placeholders */
-.disabled-card{
-  margin-top:12px;
-  padding:18px;
-  background:rgba(255,255,255,0.02);
-  border-radius:15px;
-  border:1px dashed rgba(255,255,255,0.08);
-  opacity:0.35;
   text-align:center;
-  font-family:'Orbitron';
+  text-decoration:none;
+  color:#fff;
+  transition:.2s;
+}
+.quick:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 28px rgba(156,77,255,0.35);
 }
 
-/* Join Marketplace (active) */
-.market-card{
+/* Marketplace CTA */
+.market{
   margin-top:18px;
-  padding:16px 18px;
-  border-radius:16px;
+  padding:16px;
+  border-radius:18px;
   background:rgba(0,0,0,0.65);
-  border:1px solid rgba(0,240,255,0.35);
+  border:1px solid rgba(0,240,255,0.4);
   display:flex;
   justify-content:space-between;
   align-items:center;
   text-decoration:none;
   color:#fff;
-  box-shadow:0 0 24px rgba(0,240,255,0.22);
-  transition:transform .2s, box-shadow .2s, border-color .2s;
 }
-.market-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 0 34px rgba(156,77,255,0.5);
-  border-color:rgba(156,77,255,0.7);
+.market.locked{
+  opacity:.45;
+  pointer-events:none;
 }
-.market-card-title{
+.market-title{
   font-family:'Orbitron';
-  font-size:1rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.market-card-sub{
-  font-size:12px;
-  opacity:0.8;
-}
 
-/* Courses section */
-.courses-box{
+/* Skills */
+.skills{
   margin-top:20px;
   padding:18px;
-  border-radius:18px;
+  border-radius:20px;
   background:rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(16px);
 }
-.courses-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
-}
-.courses-subtitle{
-  font-size:12px;
-  opacity:0.8;
-}
-.courses-grid{
+
+.skills-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:10px;
-  margin-top:8px;
 }
 @media(max-width:640px){
-  .courses-grid{
-    grid-template-columns:1fr;
-  }
+  .skills-grid{grid-template-columns:1fr}
 }
-.course-card{
-  padding:10px 12px;
+
+.skill{
+  padding:12px;
   border-radius:14px;
-  background:rgba(0,0,0,0.7);
+  background:rgba(0,0,0,0.65);
   border:1px solid rgba(255,255,255,0.12);
   text-decoration:none;
   color:#fff;
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-  transition:transform .18s, box-shadow .18s, border-color .18s;
 }
-.course-card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 22px rgba(0,240,255,0.25);
-  border-color:rgba(0,240,255,0.6);
+.skill h4{
+  margin:0;font-family:'Orbitron';font-size:.9rem;
 }
-.course-title{
-  font-size:0.85rem;
-  font-family:'Orbitron';
-}
-.course-desc{
-  font-size:11px;
-  opacity:0.82;
-}
-.course-tag{
-  font-size:10px;
-  opacity:0.85;
-  margin-top:2px;
-  color:#a5f3fc;
+.skill p{
+  margin:4px 0 0;font-size:11px;opacity:.8;
 }
 
-/* Floating AI */
-.ai-bubble{
-  position:fixed;
-  right:18px;
-  bottom:110px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  padding:12px 20px;
-  border-radius:100px;
-  color:#050015;
-  font-family:'Orbitron';
-  font-weight:700;
-  cursor:pointer;
-  box-shadow:0 12px 40px rgba(156,77,255,0.35);
-}
-
-/* Footer Nav */
+/* Footer */
 .footer{
   position:fixed;
   bottom:0;left:0;right:0;
@@ -285,20 +203,24 @@ body{
   justify-content:space-around;
   backdrop-filter:blur(10px);
 }
-
 .fbtn{
-  width:58px;height:58px;
+  width:56px;height:56px;
   border-radius:18px;
-  background:rgba(255,255,255,0.04);
+  background:rgba(255,255,255,0.05);
   border:1px solid rgba(255,255,255,0.08);
   display:flex;align-items:center;justify-content:center;
-  transition:0.25s;
-  cursor:pointer;
-  filter:drop-shadow(0 0 14px rgba(0,240,255,0.15));
 }
-.fbtn:hover{
-  transform:translateY(-7px);
-  filter:drop-shadow(0 0 35px rgba(156,77,255,0.45));
+.ai-bubble{
+  position:fixed;
+  right:18px;
+  bottom:100px;
+  padding:12px 18px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-family:'Orbitron';
+  font-weight:700;
+  cursor:pointer;
 }
 </style>
 </head>
@@ -307,219 +229,104 @@ body{
 
 <div class="container">
 
-  <!-- HEADER -->
+  <!-- Header -->
   <div class="header">
     <div class="brand">Zep Swipe</div>
-
-    <div style="text-align:right;">
-      <div id="walletShort" class="addr">—</div>
-
-      <button class="logout" id="logoutBtn">
-        <svg width="22" height="22" fill="none" stroke="#ff6b6b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-          <polyline points="16 17 21 12 16 7"/>
-          <line x1="21" y1="12" x2="9" y2="12"/>
-        </svg>
-      </button>
-    </div>
-  </div>
-
-
-  <!-- PORTFOLIO -->
-  <div class="portfolio-box">
-
-    <div class="section-title">Portfolio</div>
-
-    <!-- ZAC row -->
-    <div style="display:flex;align-items:center;">
-      <div class="coin">ZAC</div>
-      <div class="balance-text">
-        <div class="big" id="zacAmount">25 ZAC (test)</div>
-        <div class="small" id="zacUsd">≈ $3.75 USD</div>
-      </div>
-    </div>
-
-    <hr style="opacity:0.10;margin:16px 0;">
-
-    <!-- USDT row -->
-    <div style="display:flex;justify-content:space-between;font-family:Orbitron;">
-      <div>USDT Balance</div>
-      <div id="usdtBal">$0.00</div>
-    </div>
-  </div>
-
-
-  <!-- MINI GRID -->
-  <div class="mini-grid">
-    <a href="wallet.html" class="mini-card" style="text-decoration:none;color:#fff;">
-      <h3>Wallet</h3>
-      <p>View balances & transactions</p>
-    </a>
-
-    <a href="learn-earn.html" class="mini-card" style="text-decoration:none;color:#fff;">
-      <h3>Earn</h3>
-      <p>Complete skills & unlock ZAC</p>
-    </a>
-  </div>
-
-  <!-- JOIN MARKETPLACE CTA -->
-  <a href="learn-earn.html" class="market-card">
     <div>
-      <div class="market-card-title">🛍 Join Freelance Marketplace</div>
-      <div class="market-card-sub">
-        Get certified on any Zep Swipe skill, then unlock your Swipe Merchants store to list real digital services.
-      </div>
-    </div>
-    <div style="font-family:'Orbitron';font-size:0.8rem;opacity:0.9;">
-      Start in Learn & Earn →
-    </div>
-  </a>
-
-  <!-- COURSES GRID -->
-  <div class="courses-box">
-    <div class="courses-header">
-      <div class="section-title" style="margin-bottom:0;font-size:1.05rem;">Skill Tracks</div>
-      <div class="courses-subtitle">8 practical courses · All roads lead to Learn & Earn</div>
-    </div>
-
-    <div class="courses-grid">
-      <a href="learn-earn.html" class="course-card">
-        <div class="course-title">AI Prompt Engineering</div>
-        <div class="course-desc">Design prompts that turn vague ideas into precise AI outputs.</div>
-        <div class="course-tag">Earn: XP + ZAC test rewards</div>
-      </a>
-      <a href="learn-earn.html" class="course-card">
-        <div class="course-title">AI Content Generation</div>
-        <div class="course-desc">Create posts, captions and scripts for brands and creators.</div>
-        <div class="course-tag">Sell: content packs & captions</div>
-      </a>
-      <a href="learn-earn.html" class="course-card">
-        <div class="course-title">Social Design (No-code)</div>
-        <div class="course-desc">Plan carousels, flyers and templates clients can edit in Canva.</div>
-        <div class="course-tag">Sell: social kits & templates</div>
-      </a>
-      <a href="learn-earn.html" class="course-card">
-        <div class="course-title">Chatbot Builder</div>
-        <div class="course-desc">Map simple FAQ bots for campus services and small businesses.</div>
-        <div class="course-tag">Sell: bot setup & flows</div>
-      </a>
-      <a href="learn-earn.html" class="course-card">
-        <div class="course-title">No-code Websites</div>
-        <div class="course-desc">Structure landing pages that actually convert visitors.</div>
-        <div class="course-tag">Sell: landing page builds</div>
-      </a>
-      <a href="learn-earn.html" class="course-card">
-        <div class="course-title">Micro Video Editor</div>
-        <div class="course-desc">Craft hooks, cuts and captions for short-form video.</div>
-        <div class="course-tag">Sell: clip packs & edits</div>
-      </a>
-      <a href="learn-earn.html" class="course-card">
-        <div class="course-title">Research & Lead Gen</div>
-        <div class="course-desc">Collect clean, useful data lists for small teams.</div>
-        <div class="course-tag">Sell: lead lists & research</div>
-      </a>
-      <a href="learn-earn.html" class="course-card">
-        <div class="course-title">Micro-Automation</div>
-        <div class="course-desc">Automate tiny repetitive tasks using no-code workflows.</div>
-        <div class="course-tag">Sell: workflow automations</div>
-      </a>
+      <div id="walletShort" class="addr">—</div>
+      <button class="logout" id="logoutBtn">⎋</button>
     </div>
   </div>
 
-  <!-- DISABLED FUTURE FEATURES -->
-  <div class="disabled-card">📦 Parcel On — Coming Soon</div>
-  <div class="disabled-card">🚗 Swipe Rides — Coming Soon</div>
+  <!-- Portfolio -->
+  <div class="portfolio">
+    <div class="section-title">Portfolio</div>
+    <div class="coin-row">
+      <div class="coin">ZAC</div>
+      <div class="balance">
+        <div class="big" id="zacAmount">0 ZAC</div>
+        <div class="small" id="zacUsd">≈ $0.00</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick -->
+  <div class="quick-grid">
+    <a href="wallet.html" class="quick">Wallet</a>
+    <a href="learn-earn.html" class="quick">Learn & Earn</a>
+  </div>
+
+  <!-- Marketplace -->
+  <a id="marketCard" class="market locked">
+    <div>
+      <div class="market-title">Swipe Merchants</div>
+      <div id="marketText" style="font-size:12px;opacity:.8">
+        Complete 21 daily tasks to unlock
+      </div>
+    </div>
+    <div>→</div>
+  </a>
+
+  <!-- Skills -->
+  <div class="skills">
+    <div class="section-title">Skill Tracks</div>
+    <div class="skills-grid">
+      <a href="learn-earn.html" class="skill"><h4>AI Prompting</h4><p>Turn ideas into outputs</p></a>
+      <a href="learn-earn.html" class="skill"><h4>AI Content</h4><p>Posts & captions</p></a>
+      <a href="learn-earn.html" class="skill"><h4>No-Code Design</h4><p>Social templates</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Chatbots</h4><p>FAQ & flows</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Websites</h4><p>Landing pages</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Video Editing</h4><p>Short-form clips</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Research</h4><p>Lead generation</p></a>
+      <a href="learn-earn.html" class="skill"><h4>Automation</h4><p>Micro workflows</p></a>
+    </div>
+  </div>
 
 </div>
 
+<!-- AI -->
+<button class="ai-bubble" onclick="location.href='zep-ai.html'">🤖 Zep AI</button>
 
-<!-- ZEP AI FLOAT -->
-<button class="ai-bubble" onclick="window.location.href='zep-ai.html'">
-  🤖 Ask Zep AI
-</button>
-
-
-<!-- FOOTER -->
+<!-- Footer -->
 <div class="footer">
-
-  <a class="fbtn" href="wallet.html">
-    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g1)" stroke-width="1.4">
-      <rect x="3" y="7" width="18" height="13" rx="2"/>
-      <path d="M3 11h18"/>
-      <defs><linearGradient id="g1"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
-    </svg>
-  </a>
-
-  <a class="fbtn" href="learn-earn.html">
-    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g2)" stroke-width="1.4">
-      <circle cx="12" cy="12" r="8"/>
-      <path d="M12 8v8M8 12h8"/>
-      <defs><linearGradient id="g2"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
-    </svg>
-  </a>
-
-  <a class="fbtn" href="zep-ai.html">
-    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g3)" stroke-width="1.4">
-      <circle cx="12" cy="12" r="9"/>
-      <circle cx="9" cy="10" r="1"/>
-      <circle cx="15" cy="10" r="1"/>
-      <path d="M8 15c2 2 6 2 8 0"/>
-      <defs><linearGradient id="g3"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
-    </svg>
-  </a>
-
-  <a class="fbtn" href="profile.html">
-    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g4)" stroke-width="1.4">
-      <circle cx="12" cy="8" r="3"/>
-      <path d="M4 20c1.5-4 7-6 8-6s6.5 2 8 6"/>
-      <defs><linearGradient id="g4"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
-    </svg>
-  </a>
-
+  <a class="fbtn" href="wallet.html">💼</a>
+  <a class="fbtn" href="learn-earn.html">🎓</a>
+  <a class="fbtn" href="profile.html">👤</a>
 </div>
-
 
 <script>
-/* SHORT ADDRESS */
 function shortAddr(a){return a?`${a.slice(0,6)}...${a.slice(-4)}`:'—';}
+function money(n){return Number(n).toFixed(2);}
 
-/* LOGOUT — UPDATED HERE ONLY */
-document.getElementById("logoutBtn").onclick = ()=>{
+document.getElementById("logoutBtn").onclick=()=>{
   localStorage.removeItem("zepStudent");
-  location.href="index.html";   // ✅ UPDATED FROM student-login.html TO index.html
+  location.href="index.html";
 };
 
-/* Base USDT contract */
-const USDT = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
-const ERC20_ABI = [
-  "function balanceOf(address owner) view returns (uint256)",
-  "function decimals() view returns (uint8)"
-];
+window.onload=()=>{
+  const student = JSON.parse(localStorage.getItem("zepStudent"));
+  const learn = JSON.parse(localStorage.getItem("zepLearn")) || {zac:0,skills:{}};
 
-/* ON LOAD */
-window.onload = async ()=>{
+  if(!student){location.href="student-login.html";return;}
 
-  const s = JSON.parse(localStorage.getItem("zepStudent"));
-  if(!s){ location.href="student-login.html"; return; }
+  document.getElementById("walletShort").textContent = shortAddr(student.wallet);
 
-  document.getElementById("walletShort").textContent = shortAddr(s.wallet);
+  const zac = learn.zac || 0;
+  document.getElementById("zacAmount").textContent = `${zac} ZAC`;
+  document.getElementById("zacUsd").textContent = `≈ $${money(zac*0.15)}`;
 
-  fetchUSDT(s.wallet);
-};
+  let days=0;
+  Object.values(learn.skills).forEach(s=>{
+    days += Math.max(0,(s.day||1)-1);
+  });
 
-/* Fetch USDT Balance using Base RPC */
-async function fetchUSDT(wallet){
-  try{
-    const provider = new ethers.JsonRpcProvider("https://mainnet.base.org");
-    const c = new ethers.Contract(USDT, ERC20_ABI, provider);
-    const dec = await c.decimals();
-    const bal = await c.balanceOf(wallet);
-    const f = Number(ethers.formatUnits(bal, dec));
-    document.getElementById("usdtBal").textContent = "$" + f.toFixed(2);
-  }catch(e){
-    document.getElementById("usdtBal").textContent = "$0.00";
+  if(days>=21){
+    const m=document.getElementById("marketCard");
+    m.classList.remove("locked");
+    m.href="https://merchants.zepswipe.com";
+    document.getElementById("marketText").textContent="You are verified. Start selling.";
   }
-}
+};
 </script>
 
 </body>
