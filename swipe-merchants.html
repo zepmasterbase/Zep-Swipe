@@ -2,20 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Swipe Merchants — Zep Swipe</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at top, #04001a 0%, #000010 100%);
+  --bg:radial-gradient(circle at 20% 10%, #06001c 0%, #000010 100%);
   --glass:rgba(255,255,255,0.06);
 }
-
 *{box-sizing:border-box}
 body{
   margin:0;
@@ -23,7 +22,6 @@ body{
   background:var(--bg);
   color:#fff;
 }
-
 .container{
   max-width:1100px;
   margin:24px auto 120px;
@@ -40,7 +38,7 @@ body{
   background:var(--glass);
   border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(16px);
-  box-shadow:0 0 40px rgba(0,240,255,.25);
+  box-shadow:0 0 36px rgba(0,240,255,.25);
 }
 .brand{
   font-family:Orbitron;
@@ -49,41 +47,51 @@ body{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.logout{
-  width:44px;height:44px;
+.header-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.icon-btn{
+  width:42px;height:42px;
   border-radius:50%;
-  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#050015;
   cursor:pointer;
-  box-shadow:0 0 22px rgba(0,240,255,.6);
-  font-size:20px;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-size:18px;
+  box-shadow:0 0 20px rgba(0,240,255,.4);
 }
 
 /* GRID */
+.section-title{
+  margin:26px 0 14px;
+  font-family:Orbitron;
+  font-size:1.2rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 .grid{
-  margin-top:24px;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:20px;
+  gap:16px;
 }
-@media(max-width:768px){
+@media(max-width:760px){
   .grid{grid-template-columns:1fr}
 }
 
 /* CARD */
 .card{
-  padding:18px;
-  border-radius:20px;
+  padding:16px;
+  border-radius:18px;
   background:rgba(0,0,0,.65);
   border:1px solid rgba(255,255,255,.12);
-  transition:.2s;
-}
-.card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 0 30px rgba(156,77,255,.35);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
 }
 .card h3{
   margin:0;
@@ -91,40 +99,43 @@ body{
   font-size:1rem;
 }
 .card p{
-  font-size:13px;
+  font-size:12px;
   opacity:.85;
 }
+.meta{
+  font-size:11px;
+  opacity:.75;
+}
 .price{
-  margin-top:10px;
   font-family:Orbitron;
   font-size:1.1rem;
-}
-.seller{
-  font-size:12px;
-  opacity:.7;
   margin-top:6px;
-  cursor:pointer;
-  text-decoration:underline;
 }
-
-/* BUTTON */
+.card-actions{
+  margin-top:12px;
+  display:flex;
+  gap:8px;
+}
 .btn{
-  margin-top:14px;
-  width:100%;
-  padding:12px;
+  flex:1;
+  padding:10px;
   border-radius:999px;
   border:none;
-  cursor:pointer;
   font-family:Orbitron;
+  font-size:11px;
+  cursor:pointer;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
-
-/* STATUS */
+.btn.secondary{
+  background:none;
+  border:1px solid rgba(255,255,255,.25);
+  color:#fff;
+}
 .status{
   margin-top:8px;
-  font-size:12px;
-  opacity:.85;
+  font-size:11px;
+  opacity:.8;
 }
 </style>
 </head>
@@ -136,136 +147,147 @@ body{
   <!-- HEADER -->
   <div class="header">
     <div class="brand">Swipe Merchants</div>
-    <div class="logout" onclick="logout()">⎋</div>
+
+    <div class="header-actions">
+      <!-- Student shortcuts -->
+      <div id="studentNav" style="display:none;gap:10px">
+        <div class="icon-btn" title="Student Dashboard"
+             onclick="location.href='student-dashboard.html'">🎓</div>
+        <div class="icon-btn" title="Learn & Earn"
+             onclick="location.href='learn-earn.html'">🧠</div>
+      </div>
+
+      <!-- Logout -->
+      <div class="icon-btn" title="Logout" onclick="logout()">⏻</div>
+    </div>
   </div>
 
-  <!-- MARKETPLACE -->
-  <div class="grid" id="marketplace"></div>
+  <!-- MARKET -->
+  <div class="section-title">Browse Student Services</div>
+  <div class="grid" id="marketGrid"></div>
 
 </div>
 
 <script>
 /* ---------------- CONFIG ---------------- */
-const USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913";
-const ERC20_ABI = [
+const USDC = "0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913";
+const ERC20_ABI=[
   "function transfer(address,uint256) returns(bool)",
   "function decimals() view returns(uint8)"
 ];
 
-/* ---------------- SAMPLE GIGS ---------------- */
-const gigs = [
-  {
-    id:"gig1",
-    title:"AI Content Writer",
-    desc:"Blogs, LinkedIn posts & SEO articles",
-    price:25,
-    seller:"0xSELLER_WALLET_1",
-    sellerName:"David · University of Lagos"
-  },
-  {
-    id:"gig2",
-    title:"No-Code Automation",
-    desc:"Zapier & Airtable workflows",
-    price:40,
-    seller:"0xSELLER_WALLET_2",
-    sellerName:"Amina · University of Ghana"
-  },
-  {
-    id:"gig3",
-    title:"Social Media Design",
-    desc:"Flyers, carousels & banners",
-    price:30,
-    seller:"0xSELLER_WALLET_3",
-    sellerName:"Samuel · Makerere University"
-  },
-  {
-    id:"gig4",
-    title:"Landing Page Builder",
-    desc:"No-code websites & funnels",
-    price:50,
-    seller:"0xSELLER_WALLET_4",
-    sellerName:"Zainab · FUT Minna"
-  }
-];
-
-let provider, signer, buyer;
-
-/* ---------------- RENDER ---------------- */
-const grid = document.getElementById("marketplace");
-
-gigs.forEach((g,i)=>{
-  const c=document.createElement("div");
-  c.className="card";
-  c.innerHTML=`
-    <h3>${g.title}</h3>
-    <p>${g.desc}</p>
-    <div class="price">${g.price} USDC</div>
-    <div class="seller" onclick="viewSeller('${g.seller}')">
-      ${g.sellerName}
-    </div>
-    <button class="btn" onclick="buy(${i})">Buy Service</button>
-    <div class="status" id="status-${i}"></div>
-  `;
-  grid.appendChild(c);
-});
-
-/* ---------------- WALLET ---------------- */
-async function connect(){
-  if(!window.ethereum) return alert("Install wallet");
-  provider = new ethers.BrowserProvider(window.ethereum);
-  await provider.send("eth_requestAccounts",[]);
-  signer = await provider.getSigner();
-  buyer = await signer.getAddress();
+/* ---------------- SESSION ---------------- */
+const student = JSON.parse(localStorage.getItem("zepStudent"));
+if(student){
+  document.getElementById("studentNav").style.display="flex";
 }
 
-connect();
+/* ---------------- SAMPLE SERVICES ---------------- */
+const services=[
+ {
+  id:1,
+  title:"AI Content Writer",
+  desc:"SEO blogs, LinkedIn posts & captions",
+  price:25,
+  seller:"0xSELLER_WALLET_1",
+  sellerName:"Ada · UNILAG",
+ },
+ {
+  id:2,
+  title:"No-Code Automation",
+  desc:"Zapier & workflow automation",
+  price:40,
+  seller:"0xSELLER_WALLET_2",
+  sellerName:"Samuel · Covenant",
+ },
+ {
+  id:3,
+  title:"Graphic Design",
+  desc:"Logos, flyers & brand kits",
+  price:30,
+  seller:"0xSELLER_WALLET_3",
+  sellerName:"Zainab · ABU",
+ },
+ {
+  id:4,
+  title:"Landing Page Builder",
+  desc:"Webflow & Framer pages",
+  price:50,
+  seller:"0xSELLER_WALLET_4",
+  sellerName:"Daniel · Ashesi",
+ }
+];
 
-/* ---------------- BUY ---------------- */
-async function buy(index){
-  const g = gigs[index];
-  const status = document.getElementById(`status-${index}`);
+let provider, signer;
 
-  if(!signer) return alert("Connect wallet");
+/* ---------------- RENDER ---------------- */
+const grid=document.getElementById("marketGrid");
+services.forEach(s=>{
+ const el=document.createElement("div");
+ el.className="card";
+ el.innerHTML=`
+  <div>
+    <h3>${s.title}</h3>
+    <p>${s.desc}</p>
+    <div class="meta">Seller: ${s.sellerName}</div>
+    <div class="price">${s.price} USDC</div>
+  </div>
+  <div>
+    <div class="card-actions">
+      <button class="btn secondary" onclick="viewSeller(${s.id})">Profile</button>
+      <button class="btn" onclick="buy(${s.id})">Buy</button>
+    </div>
+    <div class="status" id="status-${s.id}"></div>
+  </div>
+ `;
+ grid.appendChild(el);
+});
 
-  try{
-    status.textContent="Processing payment...";
-    const usdc = new ethers.Contract(USDC_ADDRESS, ERC20_ABI, signer);
-    const dec = await usdc.decimals();
-    const amount = ethers.parseUnits(g.price.toString(), dec);
+/* ---------------- BUY FLOW ---------------- */
+async function buy(id){
+ const svc=services.find(x=>x.id===id);
+ const status=document.getElementById(`status-${id}`);
 
-    const tx = await usdc.transfer(g.seller, amount);
-    await tx.wait();
+ if(!window.ethereum){
+  alert("Wallet required");
+  return;
+ }
 
-    // CREATE ORDER
-    const order={
-      id:"ORD-"+Date.now(),
-      buyer,
-      seller:g.seller,
-      gig:g.title,
-      price:g.price,
-      status:"active"
-    };
-    localStorage.setItem("zepOrder",JSON.stringify(order));
+ try{
+  provider=new ethers.BrowserProvider(window.ethereum);
+  await provider.send("eth_requestAccounts",[]);
+  signer=await provider.getSigner();
 
-    status.textContent="✅ Payment successful";
-    setTimeout(()=>location.href="order-chat.html",800);
+  status.textContent="Processing payment…";
+  const token=new ethers.Contract(USDC,ERC20_ABI,signer);
+  const dec=await token.decimals();
+  const tx=await token.transfer(
+    svc.seller,
+    ethers.parseUnits(svc.price.toString(),dec)
+  );
+  await tx.wait();
 
-  }catch(e){
-    console.error(e);
-    status.textContent="❌ Transaction failed";
-  }
+  status.textContent="✅ Paid — opening chat…";
+  setTimeout(()=>{
+    location.href=`order-chat.html?service=${id}`;
+  },800);
+
+ }catch(e){
+  console.error(e);
+  status.textContent="❌ Transaction failed";
+ }
 }
 
 /* ---------------- SELLER PROFILE ---------------- */
-function viewSeller(wallet){
-  location.href=`seller-profile.html?wallet=${wallet}`;
+function viewSeller(id){
+ location.href=`seller-profile.html?service=${id}`;
 }
 
 /* ---------------- LOGOUT ---------------- */
 function logout(){
-  localStorage.removeItem("zepStudent");
-  localStorage.removeItem("zepUser");
-  location.href="index.html";
+ localStorage.removeItem("zepStudent");
+ localStorage.removeItem("zepUser");
+ location.href="index.html";
 }
 </script>
 
