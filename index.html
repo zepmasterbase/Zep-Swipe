@@ -24,7 +24,6 @@ body{
   min-height:100vh;
 }
 
-/* LAYOUT */
 .wrapper{
   max-width:1100px;
   margin:0 auto;
@@ -58,49 +57,89 @@ header{
   box-shadow:0 0 28px rgba(0,240,255,.35);
 }
 
-/* HERO */
-.hero{
-  margin-top:80px;
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:50px;
+/* HERO ICON */
+.hero-icon{
+  margin:70px auto 30px;
+  display:flex;
+  justify-content:center;
+}
+
+.pulse{
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(0,240,255,.25), transparent 60%),
+    radial-gradient(circle at 70% 70%, rgba(156,77,255,.25), transparent 60%);
+  display:flex;
   align-items:center;
+  justify-content:center;
+  animation:pulse 4s infinite alternate;
+  box-shadow:0 0 90px rgba(0,240,255,.3);
 }
 
-@media(max-width:900px){
-  .hero{grid-template-columns:1fr;text-align:center}
+@keyframes pulse{
+  from{transform:scale(1);box-shadow:0 0 60px rgba(0,240,255,.25)}
+  to{transform:scale(1.05);box-shadow:0 0 120px rgba(156,77,255,.45)}
 }
 
-.hero h1{
+.core{
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#0b0328,#18004a);
+  border:1px solid rgba(255,255,255,.15);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.core span{
   font-family:Orbitron;
-  font-size:2.8rem;
-  line-height:1.1;
+  font-size:3.5rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* HERO TEXT */
+.hero-text{
+  text-align:center;
+  max-width:720px;
+  margin:0 auto;
+}
+
+.hero-text h1{
+  font-family:Orbitron;
+  font-size:2.4rem;
+  line-height:1.2;
   margin:0;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 
-.hero p{
-  margin-top:16px;
+.hero-text p{
+  margin-top:14px;
   font-size:1.05rem;
-  opacity:.88;
-  max-width:520px;
+  opacity:.85;
 }
 
-.hero-actions{
+/* CTA */
+.cta{
   margin-top:28px;
   display:flex;
+  justify-content:center;
   gap:14px;
   flex-wrap:wrap;
 }
 
-.hero-actions a{
+.cta a{
   padding:14px 26px;
   border-radius:999px;
   font-family:Orbitron;
-  text-decoration:none;
   font-size:13px;
+  text-decoration:none;
 }
 
 .primary{
@@ -113,75 +152,85 @@ header{
   color:#fff;
 }
 
-/* 3D STUDENT PLACEHOLDER */
-.student-wrap{
-  display:flex;
-  justify-content:center;
-}
-
-.pulse{
-  width:300px;
-  height:300px;
-  border-radius:50%;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(0,240,255,.25), transparent 60%),
-    radial-gradient(circle at 70% 70%, rgba(156,77,255,.25), transparent 60%);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  animation:pulse 4s infinite alternate;
-  box-shadow:0 0 80px rgba(0,240,255,.25);
-}
-
-@keyframes pulse{
-  from{transform:scale(1);box-shadow:0 0 60px rgba(0,240,255,.2)}
-  to{transform:scale(1.05);box-shadow:0 0 120px rgba(156,77,255,.35)}
-}
-
-.student-core{
-  width:200px;
-  height:200px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#0a0225,#140047);
-  border:1px solid rgba(255,255,255,.15);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 0 50px rgba(0,0,0,.8);
-}
-
-.student-core span{
-  font-family:Orbitron;
-  font-size:3.5rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-/* TRUST STRIP */
-.trust{
+/* CREATOR CARDS */
+.creators{
   margin-top:80px;
-  padding:28px;
-  border-radius:22px;
+}
+
+.section-title{
+  text-align:center;
+  font-family:Orbitron;
+  font-size:1.4rem;
+  margin-bottom:26px;
+}
+
+.creator-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+}
+
+.creator{
+  padding:18px;
+  border-radius:18px;
   background:var(--glass);
   border:1px solid rgba(255,255,255,.12);
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:18px;
   text-align:center;
 }
 
-.trust div{
-  font-size:13px;
-  opacity:.85;
+.avatar{
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  margin:0 auto 12px;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:Orbitron;
+  color:#050015;
+}
+
+.creator h4{
+  margin:6px 0 2px;
+  font-size:.95rem;
+}
+
+.creator p{
+  font-size:12px;
+  opacity:.75;
 }
 
 /* FOOTER */
 footer{
-  margin-top:90px;
+  margin-top:100px;
   text-align:center;
+}
+
+.socials{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  margin-bottom:10px;
+}
+
+.socials a{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  font-size:18px;
+  color:#fff;
+}
+
+footer p{
   font-size:12px;
-  opacity:.55;
+  opacity:.5;
 }
 </style>
 </head>
@@ -196,48 +245,68 @@ footer{
     <button class="login-btn" onclick="location.href='login.html'">Connect Wallet</button>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
-
-    <div>
-      <h1>
-        Find affordable student freelancers<br>
-        across African universities
-      </h1>
-
-      <p>
-        Zep Swipe connects businesses with vetted student creators who prove their skills publicly,
-        earn while learning, and deliver real work — not theory.
-      </p>
-
-      <div class="hero-actions">
-        <a href="login.html" class="primary">Browse Creators</a>
-        <a href="login.html" class="secondary">Join as Student</a>
+  <!-- HERO ICON -->
+  <div class="hero-icon">
+    <div class="pulse">
+      <div class="core">
+        <span>🎓</span>
       </div>
     </div>
+  </div>
 
-    <!-- 3D NEON STUDENT -->
-    <div class="student-wrap">
-      <div class="pulse">
-        <div class="student-core">
-          <span>🎓</span>
-        </div>
-      </div>
+  <!-- HERO TEXT -->
+  <section class="hero-text">
+    <h1>Where students become creators</h1>
+    <p>
+      Discover skilled student freelancers across African universities.
+      Learn, earn, and hire talent with public proof of real work.
+    </p>
+
+    <div class="cta">
+      <a href="login.html" class="primary">Browse Creators</a>
+      <a href="login.html" class="secondary">Join as Student</a>
     </div>
-
   </section>
 
-  <!-- TRUST -->
-  <section class="trust">
-    <div>✔ University-verified students</div>
-    <div>✔ Public proof of work on-chain</div>
-    <div>✔ Fair pricing for startups & SMEs</div>
-    <div>✔ Built on Base</div>
+  <!-- CREATOR CARDS -->
+  <section class="creators">
+    <div class="section-title">Student Creators</div>
+
+    <div class="creator-grid">
+      <div class="creator">
+        <div class="avatar">AI</div>
+        <h4>AI Prompt Engineer</h4>
+        <p>University of Lagos</p>
+      </div>
+
+      <div class="creator">
+        <div class="avatar">UX</div>
+        <h4>Product Designer</h4>
+        <p>University of Ghana</p>
+      </div>
+
+      <div class="creator">
+        <div class="avatar">VC</div>
+        <h4>Video Editor</h4>
+        <p>University of Nairobi</p>
+      </div>
+
+      <div class="creator">
+        <div class="avatar">NC</div>
+        <h4>No-Code Builder</h4>
+        <p>University of Ibadan</p>
+      </div>
+    </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    © 2025 Zep Swipe — Student Creator Economy
+    <div class="socials">
+      <a href="https://x.com/ZepSwipe" target="_blank">𝕏</a>
+      <a href="https://www.linkedin.com/company/zep-swipe/" target="_blank">in</a>
+      <a href="https://www.instagram.com/zepswipe" target="_blank">◎</a>
+    </div>
+    <p>© 2025 Zep Swipe — Student Creator Economy</p>
   </footer>
 
 </div>
