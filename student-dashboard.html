@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Zep Swipe — Student Dashboard</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
@@ -37,8 +37,8 @@ body{
   animation:pulse 3s ease-in-out infinite alternate;
 }
 @keyframes pulse{
-  from{box-shadow:0 0 22px rgba(0,240,255,.25)}
-  to{box-shadow:0 0 42px rgba(156,77,255,.45)}
+  from{box-shadow:0 0 18px rgba(0,240,255,.25)}
+  to{box-shadow:0 0 38px rgba(156,77,255,.45)}
 }
 .brand{
   font-family:Orbitron;
@@ -50,17 +50,87 @@ body{
 .wallet{
   font-family:Orbitron;
   font-size:.85rem;
-  cursor:pointer;
+  opacity:.9;
 }
 
 /* LAYOUT */
 .container{
   max-width:980px;
-  margin:28px auto 80px;
+  margin:26px auto 90px;
   padding:0 18px;
 }
 
-/* QUICK ACTIONS */
+/* PROFILE CARD */
+.profile{
+  display:flex;
+  gap:18px;
+  align-items:center;
+  padding:20px;
+  border-radius:22px;
+  background:rgba(0,0,0,.65);
+  border:1px solid rgba(255,255,255,.12);
+  margin-bottom:22px;
+}
+.avatar{
+  width:86px;height:86px;
+  border-radius:50%;
+  border:3px solid var(--zep-blue);
+  object-fit:cover;
+  background:#020617;
+}
+.profile-info h2{
+  margin:0;
+  font-family:Orbitron;
+  font-size:1.1rem;
+}
+.profile-info p{
+  margin:4px 0;
+  font-size:12px;
+  opacity:.85;
+}
+.badge{
+  display:inline-block;
+  margin-top:6px;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:10px;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+
+/* BALANCE */
+.balance-card{
+  margin-bottom:26px;
+  padding:20px;
+  border-radius:22px;
+  background:rgba(0,0,0,.7);
+  border:1px solid rgba(0,240,255,.35);
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+.zac-icon{
+  width:72px;height:72px;
+  border-radius:18px;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:Orbitron;
+  font-size:20px;
+  color:#050015;
+}
+.zac-amount{
+  font-family:Orbitron;
+  font-size:28px;
+}
+.zac-sub{
+  font-size:12px;
+  opacity:.8;
+}
+
+/* ACTIONS */
 .actions{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
@@ -78,7 +148,7 @@ body{
 }
 .action:hover{
   transform:translateY(-4px);
-  box-shadow:0 0 34px rgba(0,240,255,.35);
+  box-shadow:0 0 30px rgba(0,240,255,.35);
 }
 .action h3{
   font-family:Orbitron;
@@ -89,29 +159,7 @@ body{
   opacity:.85;
 }
 
-/* LIST SERVICE */
-.list-box{
-  margin-bottom:28px;
-  padding:18px;
-  border-radius:20px;
-  background:rgba(0,0,0,.7);
-  border:1px solid rgba(0,240,255,.4);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.list-box.locked{opacity:.45}
-.btn{
-  padding:10px 18px;
-  border-radius:999px;
-  border:none;
-  font-family:Orbitron;
-  cursor:pointer;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-}
-
-/* COURSES */
+/* SKILLS */
 .section-title{
   font-family:Orbitron;
   font-size:1.2rem;
@@ -120,25 +168,25 @@ body{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.courses{
+.skills{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:14px;
 }
-@media(max-width:640px){.courses{grid-template-columns:1fr}}
+@media(max-width:640px){.skills{grid-template-columns:1fr}}
 
-.course{
+.skill{
   padding:16px;
   border-radius:18px;
   background:rgba(0,0,0,.65);
   border:1px solid rgba(255,255,255,.12);
 }
-.course h4{
+.skill h4{
   font-family:Orbitron;
   margin:0;
   font-size:.95rem;
 }
-.course p{
+.skill p{
   font-size:11px;
   opacity:.8;
   margin:6px 0;
@@ -167,93 +215,111 @@ body{
 
 <div class="container">
 
+  <!-- PROFILE -->
+  <div class="profile">
+    <img id="avatar" class="avatar" alt="Student avatar"/>
+    <div class="profile-info">
+      <h2 id="studentName">Student</h2>
+      <p id="studentUni">—</p>
+      <p id="studentCountry">—</p>
+      <span id="verifyBadge"></span>
+    </div>
+  </div>
+
+  <!-- ZAC BALANCE -->
+  <div class="balance-card">
+    <div class="zac-icon">ZAC</div>
+    <div>
+      <div class="zac-amount" id="zacAmount">0</div>
+      <div class="zac-sub">Zep Cash earned from skills</div>
+    </div>
+  </div>
+
   <!-- QUICK ACTIONS -->
   <div class="actions">
-    <a href="swipe-merchants.html" class="action">
-      <h3>Browse Student Creators</h3>
-      <p>Hire verified students across African universities</p>
+    <a href="learn-earn.html" class="action">
+      <h3>Earn</h3>
+      <p>Complete daily skill challenges</p>
     </a>
 
     <a href="wallet.html" class="action">
       <h3>Wallet</h3>
-      <p>View ZAC, USDC & ETH balances</p>
+      <p>View balances & transactions</p>
     </a>
 
-    <a href="learn-earn.html" class="action">
-      <h3>Earn</h3>
-      <p>Complete daily tasks & earn ZAC</p>
+    <a href="swipe-merchants.html" class="action">
+      <h3>Browse Student Creators</h3>
+      <p>Hire verified students & creators</p>
     </a>
   </div>
 
-  <!-- LIST SERVICE -->
-  <div id="listBox" class="list-box locked">
-    <div>
-      <strong>List a Service</strong><br>
-      <span style="font-size:12px;opacity:.8">Unlock after completing 21 days</span>
-    </div>
-    <button class="btn" onclick="listService()">Create Gig</button>
-  </div>
-
-  <!-- COURSES -->
-  <div class="section-title">Skill Tracks</div>
-  <div class="courses" id="courseGrid"></div>
+  <!-- SKILLS -->
+  <div class="section-title">Skill Progress</div>
+  <div class="skills" id="skillsGrid"></div>
 
 </div>
 
 <script>
-const student = JSON.parse(localStorage.getItem("zepStudent"))||{};
-const progress = JSON.parse(localStorage.getItem("zepProgress"))||{};
+function shortAddr(a){return a ? a.slice(0,6)+"..."+a.slice(-4) : "—";}
 
-function short(a){return a.slice(0,6)+"..."+a.slice(-4)}
+/* LOAD DATA */
+const student = JSON.parse(localStorage.getItem("zepStudent")) || {};
+const profile = JSON.parse(localStorage.getItem("zepProfile")) || {};
+const progress = JSON.parse(localStorage.getItem("zepProgress")) || {};
 
-/* WALLET */
+/* HEADER */
 document.getElementById("walletShort").textContent =
-  student.wallet ? short(student.wallet) : "Connect Wallet";
+  student.wallet ? shortAddr(student.wallet) : "Connect Wallet";
 
-/* COURSES */
-const courses=[
- ["AI Prompt Engineering","Precision prompting"],
- ["AI Content Creation","Posts & scripts"],
- ["Social Design","Carousels & graphics"],
- ["Video Editing","Short-form clips"],
- ["No-Code Websites","Landing pages"],
- ["Chatbot Builder","FAQ & flows"],
- ["Research & Lead Gen","Clean datasets"],
- ["Micro-Automation","Workflow tools"]
+/* PROFILE */
+document.getElementById("studentName").textContent =
+  profile.name || "Student";
+document.getElementById("studentUni").textContent =
+  profile.university || "University not set";
+document.getElementById("studentCountry").textContent =
+  profile.country || "Country not set";
+
+/* AVATAR (never breaks) */
+const avatarURL = profile.avatar && profile.avatar.startsWith("http")
+  ? profile.avatar
+  : "https://avatars.githubusercontent.com/u/9919?v=4";
+document.getElementById("avatar").src = avatarURL;
+
+/* VERIFIED BADGE */
+if(student.verified){
+  document.getElementById("verifyBadge").innerHTML =
+    `<span class="badge">Verified Creator</span>`;
+}
+
+/* ZAC */
+document.getElementById("zacAmount").textContent =
+  student.zacAmount || 0;
+
+/* SKILLS */
+const skills=[
+ ["AI Prompt Engineering","prompt"],
+ ["AI Content Creation","content"],
+ ["Social Design","design"],
+ ["Video Editing","video"],
+ ["No-Code Websites","web"],
+ ["Chatbot Builder","bot"],
+ ["Research & Lead Gen","research"],
+ ["Micro-Automation","auto"]
 ];
 
-const grid=document.getElementById("courseGrid");
-courses.forEach((c,i)=>{
- const id=c[0].toLowerCase().replace(/ /g,"");
- const day=progress[id]?.day||1;
- const pct=(day-1)/21*100;
+const grid=document.getElementById("skillsGrid");
+skills.forEach(s=>{
+ const day = progress[s[1]]?.day || 1;
+ const pct = (day-1)/21*100;
  const d=document.createElement("div");
- d.className="course";
+ d.className="skill";
  d.innerHTML=`
-  <h4>${c[0]}</h4>
-  <p>${c[1]}</p>
+  <h4>${s[0]}</h4>
+  <p>Day ${day} of 21</p>
   <div class="progress"><span style="width:${pct}%"></span></div>
  `;
  grid.appendChild(d);
 });
-
-/* LIST SERVICE UNLOCK */
-let completed=0;
-Object.values(progress).forEach(p=>completed+=Math.max(0,(p.day||1)-1));
-if(completed>=21){
- const box=document.getElementById("listBox");
- box.classList.remove("locked");
- box.querySelector("span").textContent="You can now sell on the marketplace";
-}
-
-/* ACTION */
-function listService(){
- if(completed<21){
-  alert("Complete 21 days of at least one skill to unlock");
-  return;
- }
- location.href="create-gig.html";
-}
 </script>
 
 </body>
