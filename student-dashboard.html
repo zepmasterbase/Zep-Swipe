@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Zep Swipe — Student Dashboard</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
@@ -11,11 +11,10 @@
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
+  --bg:radial-gradient(circle at 20% 10%, #05001a 0%, #00000d 100%);
   --glass:rgba(255,255,255,0.06);
 }
 *{box-sizing:border-box}
-
 body{
   margin:0;
   font-family:Poppins,sans-serif;
@@ -23,275 +22,238 @@ body{
   color:#fff;
 }
 
-.container{
-  max-width:980px;
-  margin:24px auto 120px;
-  padding:16px;
-}
-
-/* Header */
+/* HEADER */
 .header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  padding:18px 22px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:16px 18px;
-  border-radius:18px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(16px);
+  background:rgba(0,0,0,.65);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  animation:pulse 3s ease-in-out infinite alternate;
+}
+@keyframes pulse{
+  from{box-shadow:0 0 22px rgba(0,240,255,.25)}
+  to{box-shadow:0 0 42px rgba(156,77,255,.45)}
 }
 .brand{
   font-family:Orbitron;
-  font-size:1.5rem;
+  font-size:1.4rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.avatar{
-  width:44px;height:44px;
-  border-radius:50%;
-  border:2px solid var(--zep-blue);
-  object-fit:cover;
+.wallet{
+  font-family:Orbitron;
+  font-size:.85rem;
+  cursor:pointer;
 }
 
-/* Profile */
-.profile{
-  margin-top:20px;
-  padding:18px;
-  border-radius:18px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.12);
-  display:flex;
-  gap:14px;
-  align-items:center;
-}
-.profile h3{
-  margin:0;
-  font-family:Orbitron;
-}
-.profile p{
-  margin:2px 0;
-  font-size:12px;
-  opacity:.85;
-}
-.badge{
-  display:inline-block;
-  margin-top:6px;
-  padding:5px 12px;
-  border-radius:999px;
-  font-size:11px;
-  font-family:Orbitron;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
+/* LAYOUT */
+.container{
+  max-width:980px;
+  margin:28px auto 80px;
+  padding:0 18px;
 }
 
-/* Section */
-.section{
-  margin-top:26px;
-}
-.section-title{
-  font-family:Orbitron;
-  font-size:1.1rem;
-  margin-bottom:12px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-/* Courses */
-.grid{
+/* QUICK ACTIONS */
+.actions{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:14px;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+  margin-bottom:26px;
 }
-.card{
-  padding:16px;
-  border-radius:16px;
+.action{
+  padding:18px;
+  border-radius:20px;
   background:rgba(0,0,0,.65);
   border:1px solid rgba(255,255,255,.12);
   text-decoration:none;
   color:#fff;
-  transition:.2s;
+  transition:.25s;
 }
-.card:hover{
+.action:hover{
   transform:translateY(-4px);
-  box-shadow:0 0 26px rgba(0,240,255,.35);
+  box-shadow:0 0 34px rgba(0,240,255,.35);
 }
-.card h4{
-  margin:0;
+.action h3{
   font-family:Orbitron;
-  font-size:.95rem;
+  margin:0 0 6px;
 }
-.card p{
-  margin-top:6px;
+.action p{
   font-size:12px;
-  opacity:.8;
+  opacity:.85;
 }
 
-/* Marketplace */
-.market{
+/* LIST SERVICE */
+.list-box{
+  margin-bottom:28px;
+  padding:18px;
+  border-radius:20px;
+  background:rgba(0,0,0,.7);
+  border:1px solid rgba(0,240,255,.4);
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:18px;
-  border-radius:18px;
-  background:rgba(0,0,0,.7);
-  border:1px solid rgba(0,240,255,.35);
-  text-decoration:none;
-  color:#fff;
 }
-.market span{
-  font-family:Orbitron;
-}
-
-/* Actions */
-.actions{
-  margin-top:16px;
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
+.list-box.locked{opacity:.45}
 .btn{
-  padding:12px 18px;
+  padding:10px 18px;
   border-radius:999px;
   border:none;
-  cursor:pointer;
   font-family:Orbitron;
+  cursor:pointer;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
-.btn.locked{
-  background:none;
-  border:1px solid rgba(255,255,255,.25);
-  color:#fff;
-  cursor:not-allowed;
-  opacity:.6;
-}
 
-/* Footer */
-.footer{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  padding:14px 22px;
-  background:rgba(0,0,0,.6);
-  backdrop-filter:blur(12px);
-  display:flex;
-  justify-content:space-around;
+/* COURSES */
+.section-title{
+  font-family:Orbitron;
+  font-size:1.2rem;
+  margin-bottom:14px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-.fbtn{
-  width:56px;height:56px;
+.courses{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+@media(max-width:640px){.courses{grid-template-columns:1fr}}
+
+.course{
+  padding:16px;
   border-radius:18px;
-  background:rgba(255,255,255,.06);
+  background:rgba(0,0,0,.65);
   border:1px solid rgba(255,255,255,.12);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  color:#fff;
-  font-size:20px;
-  box-shadow:0 0 24px rgba(0,240,255,.3);
+}
+.course h4{
+  font-family:Orbitron;
+  margin:0;
+  font-size:.95rem;
+}
+.course p{
+  font-size:11px;
+  opacity:.8;
+  margin:6px 0;
+}
+.progress{
+  height:6px;
+  border-radius:999px;
+  background:rgba(255,255,255,.12);
+  overflow:hidden;
+}
+.progress span{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
-  <!-- Header -->
-  <div class="header">
-    <div class="brand">Zep Swipe</div>
-    <img id="avatarTop" class="avatar" />
-  </div>
-
-  <!-- Profile -->
-  <div class="profile">
-    <img id="avatarBig" class="avatar" style="width:64px;height:64px"/>
-    <div>
-      <h3 id="studentName">Student</h3>
-      <p id="studentUni">—</p>
-      <p id="studentCountry">—</p>
-      <div id="verifyBadge"></div>
-    </div>
-  </div>
-
-  <!-- Learn & Earn -->
-  <div class="section">
-    <div class="section-title">Learn & Earn · Skill Tracks</div>
-    <div class="grid">
-      <a class="card" href="learn-earn.html"><h4>AI Prompt Engineering</h4><p>Precision prompting</p></a>
-      <a class="card" href="learn-earn.html"><h4>AI Content Creation</h4><p>Posts & scripts</p></a>
-      <a class="card" href="learn-earn.html"><h4>Social Design</h4><p>No-code visuals</p></a>
-      <a class="card" href="learn-earn.html"><h4>Video Editing</h4><p>Short-form clips</p></a>
-      <a class="card" href="learn-earn.html"><h4>No-Code Websites</h4><p>Landing pages</p></a>
-      <a class="card" href="learn-earn.html"><h4>Chatbots</h4><p>Flows & logic</p></a>
-      <a class="card" href="learn-earn.html"><h4>Research</h4><p>Lead generation</p></a>
-      <a class="card" href="learn-earn.html"><h4>Automation</h4><p>Micro workflows</p></a>
-    </div>
-  </div>
-
-  <!-- Marketplace -->
-  <div class="section">
-    <div class="section-title">Students Creators</div>
-
-    <a class="market" href="swipe-merchants.html">
-      <div>
-        <span>Browse Student Services</span>
-        <p style="font-size:12px;opacity:.8;margin:4px 0 0">
-          Hire verified creators from African universities
-        </p>
-      </div>
-      <div>→</div>
-    </a>
-
-    <div class="actions">
-      <button id="listBtn" class="btn locked">
-        🔒 List a Service (Unlock after 21 days)
-      </button>
-    </div>
-  </div>
-
+<!-- HEADER -->
+<div class="header">
+  <div class="brand">Zep Swipe · Student</div>
+  <div id="walletShort" class="wallet">—</div>
 </div>
 
-<!-- Footer -->
-<div class="footer">
-  <a class="fbtn" href="wallet.html">💼</a>
-  <a class="fbtn" href="learn-earn.html">🎓</a>
-  <a class="fbtn" href="profile.html">👤</a>
+<div class="container">
+
+  <!-- QUICK ACTIONS -->
+  <div class="actions">
+    <a href="swipe-merchants.html" class="action">
+      <h3>Browse Student Creators</h3>
+      <p>Hire verified students across African universities</p>
+    </a>
+
+    <a href="wallet.html" class="action">
+      <h3>Wallet</h3>
+      <p>View ZAC, USDC & ETH balances</p>
+    </a>
+
+    <a href="learn-earn.html" class="action">
+      <h3>Earn</h3>
+      <p>Complete daily tasks & earn ZAC</p>
+    </a>
+  </div>
+
+  <!-- LIST SERVICE -->
+  <div id="listBox" class="list-box locked">
+    <div>
+      <strong>List a Service</strong><br>
+      <span style="font-size:12px;opacity:.8">Unlock after completing 21 days</span>
+    </div>
+    <button class="btn" onclick="listService()">Create Gig</button>
+  </div>
+
+  <!-- COURSES -->
+  <div class="section-title">Skill Tracks</div>
+  <div class="courses" id="courseGrid"></div>
+
 </div>
 
 <script>
-function short(a){return a?.slice(0,6)+"..."+a?.slice(-4)}
+const student = JSON.parse(localStorage.getItem("zepStudent"))||{};
+const progress = JSON.parse(localStorage.getItem("zepProgress"))||{};
 
-window.onload=()=>{
-  const student = JSON.parse(localStorage.getItem("zepStudent"));
-  const profile = JSON.parse(localStorage.getItem("zepProfile"));
-  const progress = JSON.parse(localStorage.getItem("zepProgress"))||{};
+function short(a){return a.slice(0,6)+"..."+a.slice(-4)}
 
-  if(!student){ location.href="login.html"; return; }
+/* WALLET */
+document.getElementById("walletShort").textContent =
+  student.wallet ? short(student.wallet) : "Connect Wallet";
 
-  if(profile){
-    document.getElementById("studentName").textContent = profile.name || "Student";
-    document.getElementById("studentUni").textContent = profile.university || "—";
-    document.getElementById("studentCountry").textContent = profile.country || "—";
-    const img = profile.avatar || "https://avatars.githubusercontent.com/u/9919?v=4";
-    document.getElementById("avatarTop").src = img;
-    document.getElementById("avatarBig").src = img;
-  }
+/* COURSES */
+const courses=[
+ ["AI Prompt Engineering","Precision prompting"],
+ ["AI Content Creation","Posts & scripts"],
+ ["Social Design","Carousels & graphics"],
+ ["Video Editing","Short-form clips"],
+ ["No-Code Websites","Landing pages"],
+ ["Chatbot Builder","FAQ & flows"],
+ ["Research & Lead Gen","Clean datasets"],
+ ["Micro-Automation","Workflow tools"]
+];
 
-  let days = 0;
-  Object.values(progress).forEach(p=>{
-    days += Math.max(0,(p.day||1)-1);
-  });
+const grid=document.getElementById("courseGrid");
+courses.forEach((c,i)=>{
+ const id=c[0].toLowerCase().replace(/ /g,"");
+ const day=progress[id]?.day||1;
+ const pct=(day-1)/21*100;
+ const d=document.createElement("div");
+ d.className="course";
+ d.innerHTML=`
+  <h4>${c[0]}</h4>
+  <p>${c[1]}</p>
+  <div class="progress"><span style="width:${pct}%"></span></div>
+ `;
+ grid.appendChild(d);
+});
 
-  if(days >= 21 || student.verified){
-    document.getElementById("listBtn").classList.remove("locked");
-    document.getElementById("listBtn").textContent = "🚀 List a Service";
-    document.getElementById("listBtn").onclick = ()=>location.href="create-gig.html";
-    document.getElementById("verifyBadge").innerHTML =
-      `<span class="badge">Verified Creator</span>`;
-  }
-};
+/* LIST SERVICE UNLOCK */
+let completed=0;
+Object.values(progress).forEach(p=>completed+=Math.max(0,(p.day||1)-1));
+if(completed>=21){
+ const box=document.getElementById("listBox");
+ box.classList.remove("locked");
+ box.querySelector("span").textContent="You can now sell on the marketplace";
+}
+
+/* ACTION */
+function listService(){
+ if(completed<21){
+  alert("Complete 21 days of at least one skill to unlock");
+  return;
+ }
+ location.href="create-gig.html";
+}
 </script>
 
 </body>
