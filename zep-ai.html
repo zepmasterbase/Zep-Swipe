@@ -1,305 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zep AI — Student Assistant</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
-<script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Zep AI — Skill Companion</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
 <style>
-:root {
+:root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --glass:rgba(255,255,255,0.06);
-  --bg:radial-gradient(circle at 25% 10%, #050018 0%, #000010 100%);
+  --bg:radial-gradient(circle at 30% 10%, #050018 0%, #000010 100%);
+  --glass:rgba(255,255,255,.06);
 }
-
-*{box-sizing:border-box;}
-html,body{height:100%;margin:0;}
+*{box-sizing:border-box}
 body{
-  font-family:'Poppins',sans-serif;
+  margin:0;
+  font-family:Poppins,sans-serif;
   background:var(--bg);
   color:#fff;
-  display:flex; flex-direction:column;
-  overflow:hidden;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
 }
 
-/* HEADER */
-header{
-  flex-shrink:0;
-  display:flex; justify-content:space-between; align-items:center;
+/* Header */
+.header{
   padding:14px 18px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 0 30px rgba(0,240,255,0.3);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:var(--glass);
+  border-bottom:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(16px);
 }
-.logo{
-  font-family:'Orbitron';
-  font-size:1.3rem;
+.brand{
+  font-family:Orbitron;
+  font-size:1.2rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.logout-btn{
-  background:none; border:none; cursor:pointer;
-  filter:drop-shadow(0 0 8px var(--zep-blue));
-  transition:.3s;
-}
-.logout-btn:hover{
-  transform:scale(1.1);
-  filter:drop-shadow(0 0 14px var(--zep-violet));
+.home-btn{
+  font-family:Orbitron;
+  font-size:12px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
 }
 
-/* CHAT MAIN */
-main{
+/* Chat area */
+.chat{
   flex:1;
-  display:flex; flex-direction:column;
-  justify-content:flex-end; align-items:center;
-  padding:10px 16px 90px;
-}
-.chat-box{
-  width:100%; max-width:720px; flex:1;
-  display:flex; flex-direction:column;
-  background:var(--glass);
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(18px);
-  overflow:hidden;
-}
-.chat-area{
-  flex:1; overflow-y:auto; padding:16px;
+  padding:16px;
+  overflow-y:auto;
 }
 .msg{
-  margin:8px 0; padding:12px 16px;
-  border-radius:14px; line-height:1.5;
   max-width:85%;
-  animation:fadeIn .4s ease;
-}
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;transform:none;}
-}
-.user{
-  background:linear-gradient(90deg,var(--zep-violet),var(--zep-blue));
-  color:#050018; align-self:flex-end;
+  margin-bottom:14px;
+  padding:12px 14px;
+  border-radius:16px;
+  font-size:14px;
+  line-height:1.5;
 }
 .ai{
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.12);
-  color:#fff;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+}
+.user{
+  margin-left:auto;
+  background:linear-gradient(90deg,var(--zep-violet),var(--zep-blue));
+  color:#050015;
 }
 
-/* INPUT BAR */
+/* Input */
 .input-bar{
-  display:flex; align-items:center; gap:10px;
-  padding:12px 14px;
-  background:rgba(255,255,255,0.05);
-  border-top:1px solid rgba(255,255,255,0.08);
+  padding:12px;
+  background:rgba(0,0,0,.6);
+  border-top:1px solid rgba(255,255,255,.1);
+  display:flex;
+  gap:10px;
 }
 .input-bar input{
   flex:1;
-  background:rgba(255,255,255,0.1);
-  border:none; outline:none;
-  padding:12px 18px; border-radius:999px;
+  padding:12px 16px;
+  border-radius:999px;
+  border:none;
+  outline:none;
+  background:rgba(255,255,255,.1);
   color:#fff;
 }
-.send-btn{
+.send{
+  padding:12px 18px;
+  border-radius:999px;
+  border:none;
+  font-family:Orbitron;
+  font-weight:700;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  border:none; color:#050018; font-weight:700;
-  padding:12px 20px; border-radius:999px;
-  font-family:'Orbitron';
+  color:#050015;
   cursor:pointer;
 }
 
-/* FOOTER NAV */
-footer{
-  position:fixed; bottom:0; left:0; width:100%;
-  background:rgba(0,0,0,0.7);
-  backdrop-filter:blur(12px);
-  border-top:1px solid rgba(255,255,255,0.1);
-  display:flex; justify-content:space-around;
-  padding:10px 0;
-}
-.footer-icon svg{
-  width:28px; height:28px;
-  stroke:var(--zep-blue);
-  transition:.25s;
-}
-.footer-icon:hover svg{
-  stroke:var(--zep-violet);
-  transform:scale(1.1);
+/* Footer quick tips */
+.footer-tip{
+  text-align:center;
+  font-size:11px;
+  opacity:.7;
+  padding:6px 12px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">Zep AI — Student Assistant</div>
+<!-- HEADER -->
+<div class="header">
+  <div class="brand">Zep AI · Skill Companion</div>
+  <button class="home-btn" onclick="location.href='student-dashboard.html'">Home</button>
+</div>
 
-  <!-- Logout linked to index.html -->
-  <button class="logout-btn" onclick="window.location.href='index.html'" title="Logout">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#00f0ff" viewBox="0 0 24 24" width="26" height="26" stroke-width="1.8">
-      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-      <polyline points="10 17 15 12 10 7"/>
-      <line x1="15" y1="12" x2="3" y2="12"/>
-    </svg>
-  </button>
-</header>
+<!-- CHAT -->
+<div class="chat" id="chat"></div>
 
-<main>
-  <div class="chat-box">
-    <div class="chat-area" id="chatArea"></div>
+<!-- INPUT -->
+<div class="input-bar">
+  <input id="input" placeholder="Ask about your skill, task, or Zora post…" />
+  <button class="send" onclick="send()">Ask</button>
+</div>
 
-    <div class="input-bar">
-      <input
-        type="text"
-        id="userInput"
-        placeholder="Ask Zep AI about your digital skills, Learn & Earn tasks, or assignments..."
-        onkeypress="if(event.key==='Enter'){sendMessage()}"
-      />
-      <button class="send-btn" onclick="sendMessage()">Ask</button>
-    </div>
-  </div>
-</main>
-
-<!-- FOOTER -->
-<footer>
-  <a href="student-dashboard.html" class="footer-icon" title="Home">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
-      <rect x="3" y="7" width="18" height="13" rx="2"/>
-      <path d="M3 11h18"/>
-    </svg>
-  </a>
-
-  <a href="wallet.html" class="footer-icon" title="Wallet">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
-      <rect x="3" y="6" width="18" height="12" rx="2"/>
-      <path d="M16 12h5"/>
-    </svg>
-  </a>
-
-  <a href="learn-earn.html" class="footer-icon" title="Reward">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
-      <circle cx="12" cy="12" r="8"/>
-      <path d="M12 8v8M8 12h8"/>
-    </svg>
-  </a>
-
-  <a href="profile.html" class="footer-icon" title="Profile">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
-      <circle cx="12" cy="7" r="4"/>
-      <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
-    </svg>
-  </a>
-</footer>
+<div class="footer-tip">
+  💡 Tip: Ask “What should I post on Zora for Day 5 of AI Prompting?”
+</div>
 
 <script>
-// Load saved chat
-window.onload = () => {
-  const saved = localStorage.getItem("zepAIStudentChat");
-  const chat = document.getElementById("chatArea");
+const chat = document.getElementById("chat");
 
-  if (saved) {
-    chat.innerHTML = saved;
-  } else {
-    const welcome = document.createElement("div");
-    welcome.className = "msg ai";
-    welcome.innerHTML =
-      "👋 Hey student! I'm <strong>Zep AI</strong>. I can help you understand any of your 8 Zep Swipe skills, practise Learn & Earn tasks, and support you with assignments, summaries, explanations, maths and research. What do you want to work on today?";
-    chat.appendChild(welcome);
+function addMsg(text,type){
+  const d=document.createElement("div");
+  d.className="msg "+type;
+  d.textContent=text;
+  chat.appendChild(d);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+/* Welcome */
+addMsg(
+  "Hey 👋 I’m Zep AI.\n\nI help you:\n• Understand skills\n• Complete daily Learn & Earn tasks\n• Improve your work before posting on Zora\n• Become a verified creator on Swipe Merchants\n\nWhat are you working on today?",
+  "ai"
+);
+
+function send(){
+  const input=document.getElementById("input");
+  const text=input.value.trim();
+  if(!text) return;
+  addMsg(text,"user");
+  input.value="";
+
+  setTimeout(()=>respond(text),500);
+}
+
+function respond(q){
+  const t=q.toLowerCase();
+
+  if(t.includes("zora")){
+    addMsg(
+      "For Zora proof:\n\n1️⃣ Build something real (prompt, design, post, video)\n2️⃣ Share what you learned\n3️⃣ Explain *why* it matters\n\nPaste the Zora link back into Learn & Earn to earn ZAC.",
+      "ai"
+    );
+    return;
   }
-  chat.scrollTop = chat.scrollHeight;
-};
 
-function saveChat() {
-  localStorage.setItem("zepAIStudentChat", document.getElementById("chatArea").innerHTML);
-}
-
-function sendMessage() {
-  const input = document.getElementById("userInput");
-  const text = input.value.trim();
-  if (!text) return;
-
-  const chat = document.getElementById("chatArea");
-
-  const userMsg = document.createElement("div");
-  userMsg.className = "msg user";
-  userMsg.textContent = text;
-  chat.appendChild(userMsg);
-  input.value = "";
-
-  saveChat();
-  chat.scrollTop = chat.scrollHeight;
-
-  const aiMsg = document.createElement("div");
-  aiMsg.className = "msg ai";
-  aiMsg.textContent = "Zep AI is thinking...";
-  chat.appendChild(aiMsg);
-
-  setTimeout(() => {
-    typeOut(aiMsg, generateAIResponse(text));
-    saveChat();
-  }, 500);
-}
-
-function typeOut(element, text) {
-  element.textContent = "";
-  let i = 0;
-  let speed = 18;
-
-  function type() {
-    if (i < text.length) {
-      element.textContent += text.charAt(i);
-      i++;
-      setTimeout(type, speed);
-    }
+  if(t.includes("task") || t.includes("day")){
+    addMsg(
+      "Daily tasks are about **doing**, not theory.\n\nAsk yourself:\n• What did I build today?\n• Can someone learn from it?\n• Is it public?\n\nIf yes → it’s valid proof.",
+      "ai"
+    );
+    return;
   }
-  type();
-}
 
-function generateAIResponse(q) {
-  const txt = q.toLowerCase();
+  if(t.includes("prompt")){
+    addMsg(
+      "Great choice.\n\nA strong AI prompt has:\n• Clear role\n• Clear goal\n• Constraints\n• Example output\n\nTry rewriting your prompt with those 4 parts.",
+      "ai"
+    );
+    return;
+  }
 
-  // simple routing based on type of question
-  if (txt.includes("prompt") || txt.includes("ai") || txt.includes("skill") || txt.includes("learn & earn"))
-    return "💡 Let’s work on your Zep Swipe skills.\n\nTell me which skill track you’re focusing on (e.g. 'AI Prompt Engineering', 'Social Design', 'Chatbot Builder'), and I’ll give you practice ideas, examples, and ways to turn it into a service for clients.";
+  if(t.includes("improve") || t.includes("review")){
+    addMsg(
+      "Paste your idea or link here.\n\nI’ll help you:\n• Clarify it\n• Improve quality\n• Make it Zora-ready\n• Align it with Swipe Merchants skills",
+      "ai"
+    );
+    return;
+  }
 
-  if (txt.includes("explain") || txt.includes("definition"))
-    return "📘 Here's a simple explanation:\n\n" + explainConcept(q);
-
-  if (txt.includes("summar"))
-    return "📝 Here's a clean summary:\n\n" + summarizeText(q);
-
-  if (txt.includes("math") || txt.includes("solve"))
-    return "✏️ Let's solve it step-by-step:\n\n" + solveMath(q);
-
-  if (txt.includes("essay"))
-    return "📝 Here’s an essay draft outline you can use:\n\n" + essayTemplate(q);
-
-  if (txt.includes("research") || txt.includes("write"))
-    return "📚 Here's a structured research response:\n\n" + researchTemplate(q);
-
-  return "🤖 I can help you go deeper on your Zep Swipe skills, Learn & Earn tasks, essays or maths.\nTry: “Help me practise AI Prompt Engineering with an example task.”";
-}
-
-/* AI Helper Functions */
-function explainConcept(q){
-  return "This concept refers to the main idea you're studying. Tell me the exact topic (for example: 'explain tokenization in AI' or 'explain landing pages') and I’ll break it down in simple steps.";
-}
-function summarizeText(){
-  return "Paste the paragraph or text here and I’ll summarise it into short bullet points you can study from.";
-}
-function solveMath(){
-  return "Type the equation clearly, for example: 'Solve 3x + 5 = 20' or 'Simplify (2x² - 4x + 2)'. I’ll walk you through each step.";
-}
-function essayTemplate(topic){
-  return `**Essay Outline on ${topic}:**\n\n1. Introduction — define the topic and context.\n2. Main Argument — what you want to prove.\n3. Supporting Points — 2–3 paragraphs with examples.\n4. Counterpoint (optional) — handle the opposite view.\n5. Conclusion — summarise and give your final view.\n\nSend me the exact essay question and I can turn this outline into a full draft.`;
-}
-function researchTemplate(topic){
-  return `**Research Breakdown for: ${topic}**\n\n• Introduction — what are you studying and why?\n• Problem Statement — what issue or question are you trying to answer?\n• Method / Approach — how would you collect data or information?\n• Key Findings — what does the data or reading suggest?\n• Conclusion — what does it all mean for students, businesses, or your community?\n\nShare your assignment instructions and I’ll help you fill each section in a way that matches your rubric.`;
+  addMsg(
+    "I can help with:\n• Skill explanations\n• Daily task ideas\n• Zora proof structure\n• Improving your work\n\nTry asking:\n“What should I build for my skill today?”",
+    "ai"
+  );
 }
 </script>
 
