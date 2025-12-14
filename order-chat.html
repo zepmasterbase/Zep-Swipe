@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Order Chat — Zep Swipe</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+<style>
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at top, #04001a 0%, #000010 100%);
+  --glass:rgba(255,255,255,0.06);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:var(--bg);
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+}
+
+/* HEADER */
+.header{
+  padding:14px 16px;
+  background:var(--glass);
+  border-bottom:1px solid rgba(255,255,255,.12);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  backdrop-filter:blur(14px);
+}
+.header-left{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.avatar{
+  width:42px;height:42px;
+  border-radius:50%;
+  border:2px solid var(--zep-blue);
+  object-fit:cover;
+}
+.seller-info strong{
+  font-family:Orbitron;
+  font-size:.9rem;
+}
+.seller-info span{
+  font-size:11px;
+  opacity:.75;
+}
+.status{
+  font-family:Orbitron;
+  font-size:11px;
+  padding:6px 12px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+
+/* CHAT */
+.chat{
+  flex:1;
+  padding:16px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.msg{
+  max-width:75%;
+  padding:12px 14px;
+  border-radius:14px;
+  font-size:13px;
+  line-height:1.4;
+}
+.msg.buyer{
+  align-self:flex-end;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+.msg.seller{
+  align-self:flex-start;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+}
+.msg small{
+  display:block;
+  margin-top:6px;
+  font-size:10px;
+  opacity:.7;
+}
+
+/* DELIVERY BOX */
+.delivery{
+  margin:12px;
+  padding:14px;
+  border-radius:16px;
+  background:rgba(0,0,0,.6);
+  border:1px dashed rgba(0,240,255,.4);
+  font-size:12px;
+}
+.delivery strong{
+  font-family:Orbitron;
+}
+
+/* INPUT */
+.input-bar{
+  padding:14px;
+  background:rgba(0,0,0,.65);
+  border-top:1px solid rgba(255,255,255,.12);
+  display:flex;
+  gap:10px;
+}
+.input-bar input{
+  flex:1;
+  padding:12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.2);
+  background:#020617;
+  color:#fff;
+}
+.send{
+  padding:12px 18px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+
+/* FOOTER NOTE */
+.footer-note{
+  text-align:center;
+  font-size:10px;
+  opacity:.6;
+  padding-bottom:8px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <img id="avatar" class="avatar"/>
+    <div class="seller-info">
+      <strong id="sellerName">Seller</strong><br>
+      <span id="serviceTitle">Service</span>
+    </div>
+  </div>
+  <div class="status" id="orderStatus">PAID</div>
+</div>
+
+<!-- CHAT -->
+<div class="chat" id="chatBox"></div>
+
+<!-- DELIVERY -->
+<div class="delivery" id="deliveryBox" style="display:none">
+  <strong>📦 Delivery</strong><br>
+  <span id="deliveryLink"></span>
+</div>
+
+<!-- INPUT -->
+<div class="input-bar">
+  <input id="msgInput" placeholder="Type your message…" />
+  <button class="send" onclick="sendMsg()">Send</button>
+</div>
+
+<div class="footer-note">
+  Payments are completed · Files delivered inside chat
+</div>
+
+<script>
+/* ---------------- MOCK ORDER DATA ---------------- */
+const order = {
+  seller:{
+    name:"Verified Student Creator",
+    avatar:"https://avatars.githubusercontent.com/u/9919?v=4"
+  },
+  service:"AI Content Writing",
+  status:"PAID"
+};
+
+const chatKey = "zepOrderChat";
+
+/* ---------------- INIT ---------------- */
+document.getElementById("sellerName").textContent = order.seller.name;
+document.getElementById("serviceTitle").textContent = order.service;
+document.getElementById("orderStatus").textContent = order.status;
+document.getElementById("avatar").src = order.seller.avatar;
+
+const chatBox = document.getElementById("chatBox");
+const history = JSON.parse(localStorage.getItem(chatKey) || "[]");
+history.forEach(renderMsg);
+
+/* ---------------- FUNCTIONS ---------------- */
+function sendMsg(){
+  const input = document.getElementById("msgInput");
+  const text = input.value.trim();
+  if(!text) return;
+
+  const msg = {
+    from:"buyer",
+    text,
+    time:new Date().toLocaleTimeString()
+  };
+
+  history.push(msg);
+  localStorage.setItem(chatKey,JSON.stringify(history));
+  renderMsg(msg);
+  input.value="";
+}
+
+function renderMsg(m){
+  const d = document.createElement("div");
+  d.className = "msg "+m.from;
+  d.innerHTML = `
+    ${m.text}
+    <small>${m.time}</small>
+  `;
+  chatBox.appendChild(d);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+/* ---------------- MOCK DELIVERY ----------------
+   Seller would trigger this later
+----------------------------------*/
+setTimeout(()=>{
+  const delivery = {
+    link:"https://drive.google.com/file/d/123"
+  };
+  document.getElementById("deliveryBox").style.display="block";
+  document.getElementById("deliveryLink").innerHTML =
+    `<a href="${delivery.link}" target="_blank" style="color:var(--zep-blue)">Download files</a>`;
+}, 8000);
+</script>
+
+</body>
+</html>
