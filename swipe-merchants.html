@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Swipe Merchants — Zep Swipe</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --glass:rgba(255,255,255,0.06);
-  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
+  --bg:radial-gradient(circle at 25% 10%, #050018 0%, #000010 100%);
 }
+
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:'Poppins',sans-serif;
+  font-family:Poppins,sans-serif;
   background:var(--bg);
   color:#fff;
-  overflow-x:hidden;
 }
+
 .container{
   max-width:1100px;
-  margin:24px auto 100px;
+  margin:24px auto 120px;
   padding:16px;
 }
 
@@ -33,149 +34,148 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:18px;
+  padding:16px;
   border-radius:18px;
   background:var(--glass);
   border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(18px);
-  box-shadow:0 0 45px rgba(0,240,255,.25);
+  backdrop-filter:blur(16px);
+  box-shadow:0 0 30px rgba(0,240,255,.25);
 }
+
 .brand{
   font-family:Orbitron;
-  font-size:1.4rem;
+  font-size:1.5rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.tag{
+
+.header-actions{
+  display:flex;
+  gap:10px;
+}
+
+.btn{
+  padding:10px 18px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  font-family:Orbitron;
   font-size:12px;
-  opacity:.8;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+
+/* HERO */
+.hero{
+  margin-top:26px;
+  padding:26px;
+  border-radius:20px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+}
+
+.hero h1{
+  margin:0;
+  font-family:Orbitron;
+  font-size:1.6rem;
+}
+.hero p{
+  margin-top:8px;
+  font-size:14px;
+  opacity:.85;
 }
 
 /* GRID */
 .grid{
-  margin-top:20px;
+  margin-top:26px;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:16px;
 }
 
-/* MERCHANT CARD */
 .card{
   padding:16px;
   border-radius:18px;
-  background:rgba(255,255,255,.05);
+  background:rgba(0,0,0,.65);
   border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(14px);
-  transition:.25s;
-}
-.card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 18px 60px rgba(156,77,255,.25);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
 }
 
-/* AVATAR */
-.avatar{
-  width:72px;height:72px;
-  border-radius:50%;
-  overflow:hidden;
-  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  display:flex;align-items:center;justify-content:center;
-}
-.avatar img{
-  width:100%;height:100%;object-fit:cover;
-}
-.avatar span{
-  font-family:Orbitron;
-  color:#050015;
-}
-
-/* CARD CONTENT */
-.name{
+.card h3{
+  margin:0;
   font-family:Orbitron;
   font-size:.95rem;
-  margin-top:10px;
 }
-.wallet{
+.card p{
   font-size:12px;
-  opacity:.75;
-}
-.uni{
-  font-size:12px;
-  margin-top:4px;
   opacity:.85;
 }
-.badge{
-  display:inline-block;
-  margin-top:6px;
-  padding:4px 10px;
-  border-radius:999px;
+
+.meta{
   font-size:11px;
+  opacity:.7;
+}
+
+.price{
   font-family:Orbitron;
-  background:rgba(0,240,255,.25);
-  border:1px solid var(--zep-blue);
+  font-size:1rem;
 }
 
-/* SKILLS */
-.skills{
-  margin-top:10px;
-}
-.skill{
-  display:inline-block;
-  margin:4px 4px 0 0;
-  padding:5px 8px;
-  font-size:11px;
-  border-radius:999px;
-  background:rgba(255,255,255,.08);
-}
-
-/* ACTIONS */
-.actions{
-  margin-top:12px;
-  display:flex;
-  gap:8px;
-}
-.btn{
-  flex:1;
-  padding:8px 10px;
+.buy-btn{
+  margin-top:auto;
+  padding:10px;
   border-radius:999px;
   border:none;
   cursor:pointer;
   font-family:Orbitron;
-  font-size:11px;
-}
-.primary{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
-.ghost{
-  background:transparent;
-  border:1px solid rgba(255,255,255,.2);
-  color:#fff;
+
+/* SELL CTA */
+.sell-box{
+  margin-top:28px;
+  padding:20px;
+  border-radius:20px;
+  background:rgba(0,0,0,.6);
+  border:1px dashed rgba(0,240,255,.45);
+  text-align:center;
 }
 
-/* EMPTY */
-.empty{
-  text-align:center;
-  padding:40px;
-  opacity:.8;
+.sell-box h3{
+  font-family:Orbitron;
+  margin-bottom:6px;
+}
+.sell-box p{
+  font-size:13px;
+  opacity:.85;
 }
 
 /* FOOTER */
 .footer{
   position:fixed;
   bottom:0;left:0;right:0;
-  padding:12px;
+  padding:14px 22px;
   background:rgba(0,0,0,.6);
-  backdrop-filter:blur(10px);
+  backdrop-filter:blur(12px);
   display:flex;
   justify-content:space-around;
 }
-.footer a{
-  color:#00f0ff;
-  font-family:Orbitron;
-  font-size:13px;
+
+.fbtn{
+  width:56px;height:56px;
+  border-radius:18px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
   text-decoration:none;
+  font-size:18px;
+  box-shadow:0 0 22px rgba(0,240,255,.25);
 }
 </style>
 </head>
@@ -183,91 +183,119 @@ body{
 <body>
 
 <div class="container">
+
   <!-- HEADER -->
   <div class="header">
-    <div>
-      <div class="brand">Swipe Merchants</div>
-      <div class="tag">Verified student talent · Base network</div>
-    </div>
-    <div class="tag" onclick="location.href='student-dashboard.html'" style="cursor:pointer">
-      ← Dashboard
+    <div class="brand">Swipe Merchants</div>
+    <div class="header-actions">
+      <button class="btn" onclick="goDashboard()">Dashboard</button>
     </div>
   </div>
 
-  <!-- GRID -->
-  <div class="grid" id="merchantGrid"></div>
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Hire verified student creators</h1>
+    <p>
+      Real skills. Public proof. Fair pricing.  
+      Browse services built by students who earned their credibility on Zep Swipe.
+    </p>
+  </div>
+
+  <!-- MARKETPLACE GRID -->
+  <div class="grid" id="marketGrid"></div>
+
+  <!-- SELL CTA -->
+  <div class="sell-box" id="sellBox">
+    <h3>Want to sell your skills?</h3>
+    <p>
+      Complete the 21-day proof challenge to unlock selling on Swipe Merchants.
+    </p>
+    <button class="btn" onclick="location.href='learn-earn.html'">
+      Start Learn & Earn
+    </button>
+  </div>
+
 </div>
 
 <!-- FOOTER -->
 <div class="footer">
-  <a href="student-dashboard.html">Home</a>
-  <a href="learn-earn.html">Learn</a>
-  <a href="wallet.html">Wallet</a>
-  <a href="profile.html">Profile</a>
+  <a class="fbtn" href="index.html">🏠</a>
+  <a class="fbtn" href="student-dashboard.html">🎓</a>
+  <a class="fbtn" href="profile.html">👤</a>
 </div>
 
 <script>
-/* AUTH */
-const student = JSON.parse(localStorage.getItem("zepStudent"));
-if(!student){ location.href="student-login.html"; }
-
-/* VERIFICATION CHECK */
-const verified = localStorage.getItem("zepVerified")==="true";
-if(!verified){
-  alert("Complete Learn & Earn to access Swipe Merchants.");
-  location.href="learn-earn.html";
-}
-
-/* DATA */
-const avatar = localStorage.getItem("zepAvatar");
-const uni    = localStorage.getItem("zepUniversity") || "University not set";
-const wallet = student.wallet;
-const short  = wallet.slice(0,6)+"..."+wallet.slice(-4);
-
-/* COURSES */
-const courses = [
- "AI Prompt Engineering","No-Code Automation","Content Creation",
- "Chatbot Building","Web Design","Data & Research","Digital Marketing","Freelancing"
+/* SAMPLE SERVICES (replace later with on-chain / backend data) */
+const services = [
+  {
+    title:"AI Content Writer",
+    desc:"Blog posts, LinkedIn content & captions",
+    creator:"University of Lagos · Nigeria",
+    price:"25 USDC"
+  },
+  {
+    title:"No-Code Landing Page",
+    desc:"Framer / Carrd landing pages",
+    creator:"University of Nairobi · Kenya",
+    price:"40 USDC"
+  },
+  {
+    title:"Short-Form Video Editor",
+    desc:"TikTok, Reels & YouTube Shorts",
+    creator:"Ashesi University · Ghana",
+    price:"30 USDC"
+  }
 ];
 
-let skills=[];
-courses.forEach(c=>{
-  const key="zep_"+c.split(" ")[0].toLowerCase();
-  const data=JSON.parse(localStorage.getItem(key));
-  if(data && data.day>=21) skills.push(c);
+const grid = document.getElementById("marketGrid");
+
+services.forEach(s=>{
+  const c=document.createElement("div");
+  c.className="card";
+  c.innerHTML=`
+    <h3>${s.title}</h3>
+    <p>${s.desc}</p>
+    <div class="meta">Creator: ${s.creator}</div>
+    <div class="price">${s.price}</div>
+    <button class="buy-btn" onclick="buyService()">Buy Service</button>
+  `;
+  grid.appendChild(c);
 });
 
-/* RENDER */
-const grid=document.getElementById("merchantGrid");
-
-if(skills.length===0){
-  grid.innerHTML=`<div class="empty">
-    No verified merchants yet.<br/>Complete Learn & Earn to appear here.
-  </div>`;
-}else{
-  grid.innerHTML=`
-    <div class="card">
-      <div class="avatar">
-        ${avatar?`<img src="${avatar}">`:`<span>Z</span>`}
-      </div>
-
-      <div class="name">${short}</div>
-      <div class="wallet">${wallet}</div>
-      <div class="uni">${uni}</div>
-
-      <div class="badge">Verified Student</div>
-
-      <div class="skills">
-        ${skills.map(s=>`<span class="skill">${s}</span>`).join("")}
-      </div>
-
-      <div class="actions">
-        <button class="btn ghost" onclick="alert('Profile view coming soon')">Profile</button>
-        <button class="btn primary" onclick="alert('Messaging coming soon')">Contact</button>
-      </div>
-    </div>
-  `;
+/* BUY LOGIC */
+function buyService(){
+  const user = JSON.parse(localStorage.getItem("zepStudent"));
+  if(!user){
+    alert("Please connect your wallet to continue.");
+    location.href="login.html";
+    return;
+  }
+  alert("Checkout coming next — escrow + USDC payment.");
 }
+
+/* DASHBOARD ROUTING */
+function goDashboard(){
+  const user = JSON.parse(localStorage.getItem("zepStudent"));
+  if(user){
+    location.href="student-dashboard.html";
+  }else{
+    location.href="login.html";
+  }
+}
+
+/* SELL ACCESS */
+window.onload = ()=>{
+  const student = JSON.parse(localStorage.getItem("zepStudent"));
+  if(student?.verified){
+    document.getElementById("sellBox").innerHTML = `
+      <h3>You’re verified 🎉</h3>
+      <p>You can now list services on Swipe Merchants.</p>
+      <button class="btn" onclick="location.href='merchant-dashboard.html'">
+        Go to Seller Dashboard
+      </button>
+    `;
+  }
+};
 </script>
 
 </body>
