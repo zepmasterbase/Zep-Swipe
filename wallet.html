@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Zep Swipe — Wallet</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
+  --glass:rgba(255,255,255,.06);
   --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
-  --glass:rgba(255,255,255,0.06);
 }
 *{box-sizing:border-box}
 body{
@@ -21,169 +21,145 @@ body{
   font-family:Poppins,sans-serif;
   background:var(--bg);
   color:#fff;
-  overflow-x:hidden;
 }
 .container{
-  max-width:900px;
-  margin:26px auto 120px;
+  max-width:920px;
+  margin:26px auto 140px;
   padding:16px;
 }
 
-/* HEADER */
+/* Header */
 .header{
-  padding:18px 20px;
-  border-radius:20px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(18px);
   display:flex;
   justify-content:space-between;
   align-items:center;
-  box-shadow:0 0 36px rgba(0,240,255,.35);
+  padding:16px;
+  border-radius:18px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(16px);
+  box-shadow:0 0 28px rgba(0,240,255,.25);
 }
 .brand{
   font-family:Orbitron;
-  font-size:1.45rem;
+  font-size:1.4rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 .addr{
   font-family:Orbitron;
-  font-size:.8rem;
-  color:#d7faff;
+  font-size:.85rem;
   cursor:pointer;
-  opacity:.9;
 }
 
-/* WALLET CARD */
-.wallet-card{
-  margin-top:22px;
-  padding:20px;
-  border-radius:22px;
+/* Cards */
+.card{
+  margin-top:20px;
+  padding:18px;
+  border-radius:20px;
   background:rgba(255,255,255,.05);
   border:1px solid rgba(255,255,255,.12);
 }
 .section-title{
   font-family:Orbitron;
-  font-size:1.05rem;
+  font-size:1.1rem;
+  margin-bottom:14px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  margin-bottom:14px;
 }
 
-/* ASSETS */
+/* Assets */
 .asset{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:16px;
-  border-radius:18px;
+  padding:14px;
+  border-radius:16px;
   background:rgba(0,0,0,.6);
   border:1px solid rgba(255,255,255,.12);
-  margin-bottom:14px;
+  margin-bottom:12px;
 }
-.asset-left{
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
+.asset-left{display:flex;gap:14px;align-items:center}
 .coin{
-  width:56px;height:56px;
-  border-radius:16px;
+  width:54px;height:54px;
+  border-radius:14px;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family:Orbitron;
-  font-size:15px;
-  color:#050015;
-  box-shadow:0 0 24px rgba(0,240,255,.5);
+  display:flex;align-items:center;justify-content:center;
+  font-family:Orbitron;color:#050015;
 }
-.asset-name{
-  font-family:Orbitron;
-  font-size:.85rem;
-}
-.asset-sub{
-  font-size:11px;
-  opacity:.8;
-}
-.asset-right{
-  text-align:right;
-}
-.asset-right strong{
-  font-family:Orbitron;
-  font-size:.95rem;
-}
-.asset-actions{
-  margin-top:6px;
-  display:flex;
-  gap:6px;
-}
+.asset-name{font-family:Orbitron;font-size:.9rem}
+.asset-sub{font-size:11px;opacity:.8}
+.asset-right{text-align:right}
+.asset-right strong{font-family:Orbitron}
+.actions{margin-top:6px;display:flex;gap:6px}
+
 .btn{
   padding:6px 12px;
-  font-size:11px;
   border-radius:999px;
   border:none;
-  cursor:pointer;
+  font-size:11px;
   font-family:Orbitron;
+  cursor:pointer;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
-  box-shadow:0 0 14px rgba(0,240,255,.4);
 }
 .btn.secondary{
   background:none;
   border:1px solid rgba(255,255,255,.25);
   color:#fff;
-  box-shadow:none;
 }
 
-/* ACTIVITY */
-.activity{
-  margin-top:22px;
-  padding:18px;
-  border-radius:20px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.12);
-}
+/* Activity */
 .tx{
   font-size:12px;
   opacity:.85;
-  margin-bottom:8px;
+  padding:8px 0;
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-/* FOOTER */
+/* Footer */
 .footer{
   position:fixed;
   bottom:0;left:0;right:0;
   padding:14px 22px;
-  background:rgba(0,0,0,.55);
+  background:rgba(0,0,0,.6);
   backdrop-filter:blur(12px);
   display:flex;
   justify-content:space-around;
-  border-top:1px solid rgba(255,255,255,.08);
 }
 .fbtn{
-  width:58px;height:58px;
-  border-radius:20px;
-  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  color:#fff;
-  font-size:22px;
-  box-shadow:
-    inset 0 0 10px rgba(255,255,255,.1),
-    0 0 18px rgba(0,240,255,.45);
-  transition:.25s;
+  width:56px;height:56px;
+  border-radius:18px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;color:#fff;text-decoration:none;
+  box-shadow:0 0 22px rgba(0,240,255,.25);
 }
-.fbtn:hover{
-  transform:translateY(-6px);
-  box-shadow:
-    inset 0 0 14px rgba(255,255,255,.15),
-    0 0 36px rgba(156,77,255,.7);
+
+/* Modal */
+.modal-back{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.75);
+  display:none;align-items:center;justify-content:center;
+  z-index:999;
+}
+.modal{
+  width:92%;max-width:420px;
+  background:rgba(10,15,40,.96);
+  padding:18px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.15);
+}
+input{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.2);
+  background:#020617;color:#fff;
 }
 </style>
 </head>
@@ -192,15 +168,15 @@ body{
 
 <div class="container">
 
-  <!-- HEADER -->
+  <!-- Header -->
   <div class="header">
     <div class="brand">Zep Swipe · Wallet</div>
     <div id="walletAddr" class="addr" onclick="copyAddr()">—</div>
   </div>
 
-  <!-- WALLET -->
-  <div class="wallet-card">
-    <div class="section-title">Assets · Base Network</div>
+  <!-- Assets -->
+  <div class="card">
+    <div class="section-title">Assets (Base)</div>
 
     <!-- ZAC -->
     <div class="asset">
@@ -213,7 +189,7 @@ body{
       </div>
       <div class="asset-right">
         <strong id="zacBal">0 ZAC</strong>
-        <div class="asset-actions">
+        <div class="actions">
           <button class="btn secondary" onclick="copyAddr()">Receive</button>
         </div>
       </div>
@@ -230,9 +206,9 @@ body{
       </div>
       <div class="asset-right">
         <strong id="usdcBal">—</strong>
-        <div class="asset-actions">
+        <div class="actions">
           <button class="btn secondary" onclick="copyAddr()">Receive</button>
-          <button class="btn" onclick="sendAlert('USDC')">Send</button>
+          <button class="btn" onclick="openSend('USDC')">Send</button>
         </div>
       </div>
     </div>
@@ -243,28 +219,39 @@ body{
         <div class="coin">ETH</div>
         <div>
           <div class="asset-name">Ethereum</div>
-          <div class="asset-sub">Gas & transfers</div>
+          <div class="asset-sub">Gas</div>
         </div>
       </div>
       <div class="asset-right">
         <strong id="ethBal">—</strong>
-        <div class="asset-actions">
+        <div class="actions">
           <button class="btn secondary" onclick="copyAddr()">Receive</button>
-          <button class="btn" onclick="sendAlert('ETH')">Send</button>
+          <button class="btn" onclick="openSend('ETH')">Send</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ACTIVITY -->
-  <div class="activity">
-    <div class="section-title">Activity</div>
-    <div class="tx">🎓 Earned 25 ZAC — Learn & Earn</div>
+  <!-- Activity -->
+  <div class="card">
+    <div class="section-title">On-chain Activity</div>
+    <div id="activity"></div>
   </div>
 
 </div>
 
-<!-- FOOTER -->
+<!-- Send Modal -->
+<div class="modal-back" id="sendModal">
+  <div class="modal">
+    <h3 id="sendTitle"></h3>
+    <input id="to" placeholder="Recipient address"/>
+    <input id="amount" placeholder="Amount"/>
+    <button class="btn" style="margin-top:12px;width:100%" onclick="send()">Send</button>
+    <button class="btn secondary" style="margin-top:8px;width:100%" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- Footer -->
 <div class="footer">
   <a class="fbtn" href="student-dashboard.html">🏠</a>
   <a class="fbtn" href="learn-earn.html">🎓</a>
@@ -272,46 +259,86 @@ body{
 </div>
 
 <script>
-const USDC="0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
+const USDC="0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913";
 const ERC20_ABI=[
-  "function balanceOf(address) view returns(uint256)",
-  "function decimals() view returns(uint8)"
+ "function balanceOf(address) view returns(uint256)",
+ "function decimals() view returns(uint8)",
+ "function transfer(address,uint256) returns(bool)",
+ "event Transfer(address indexed from,address indexed to,uint256 value)"
 ];
+
+let provider, signer, user, assetType;
 
 function short(a){return a.slice(0,6)+"..."+a.slice(-4)}
 
 function copyAddr(){
-  const s=JSON.parse(localStorage.getItem("zepStudent"));
-  navigator.clipboard.writeText(s.wallet);
-  alert("Wallet address copied");
+ navigator.clipboard.writeText(user.wallet);
+ alert("Wallet copied");
 }
 
-function sendAlert(asset){
-  alert(asset+" sending enabled via connected wallet.\n(ZAC is locked)");
+function openSend(type){
+ assetType=type;
+ document.getElementById("sendTitle").textContent="Send "+type;
+ document.getElementById("sendModal").style.display="flex";
+}
+
+function closeModal(){
+ document.getElementById("sendModal").style.display="none";
+}
+
+async function send(){
+ const to=document.getElementById("to").value;
+ const amount=document.getElementById("amount").value;
+ if(!to||!amount) return alert("Fill all fields");
+
+ if(assetType==="ETH"){
+   const tx=await signer.sendTransaction({to,value:ethers.parseEther(amount)});
+   await tx.wait();
+ }else{
+   const c=new ethers.Contract(USDC,ERC20_ABI,signer);
+   const d=await c.decimals();
+   const tx=await c.transfer(to,ethers.parseUnits(amount,d));
+   await tx.wait();
+ }
+ alert("Transaction sent");
+ location.reload();
+}
+
+async function loadActivity(){
+ const activity=document.getElementById("activity");
+ const block=await provider.getBlockNumber();
+
+ const usdc=new ethers.Contract(USDC,ERC20_ABI,provider);
+ const logs=await usdc.queryFilter(usdc.filters.Transfer(null,user.wallet),block-5000,block);
+
+ logs.slice(-5).reverse().forEach(l=>{
+   activity.innerHTML+=`<div class="tx">📥 USDC received</div>`;
+ });
 }
 
 window.onload=async()=>{
-  const s=JSON.parse(localStorage.getItem("zepStudent"));
-  if(!s){location.href="student-login.html";return;}
+ user=JSON.parse(localStorage.getItem("zepStudent"));
+ if(!user){location.href="login.html";return;}
 
-  document.getElementById("walletAddr").textContent=short(s.wallet);
-  document.getElementById("zacBal").textContent=(s.zacAmount||0)+" ZAC";
+ provider=new ethers.BrowserProvider(window.ethereum);
+ signer=await provider.getSigner();
 
-  const provider=new ethers.JsonRpcProvider("https://mainnet.base.org");
+ document.getElementById("walletAddr").textContent=short(user.wallet);
+ document.getElementById("zacBal").textContent=(user.zacAmount||0)+" ZAC";
 
-  try{
-    const c=new ethers.Contract(USDC,ERC20_ABI,provider);
-    const d=await c.decimals();
-    const b=await c.balanceOf(s.wallet);
-    document.getElementById("usdcBal").textContent=
-      Number(ethers.formatUnits(b,d)).toFixed(2)+" USDC";
-  }catch{document.getElementById("usdcBal").textContent="0.00 USDC";}
+ const rpc=new ethers.JsonRpcProvider("https://mainnet.base.org");
 
-  try{
-    const e=await provider.getBalance(s.wallet);
-    document.getElementById("ethBal").textContent=
-      Number(ethers.formatEther(e)).toFixed(4)+" ETH";
-  }catch{document.getElementById("ethBal").textContent="0.0000 ETH";}
+ const usdc=new ethers.Contract(USDC,ERC20_ABI,rpc);
+ const d=await usdc.decimals();
+ const b=await usdc.balanceOf(user.wallet);
+ document.getElementById("usdcBal").textContent=
+   Number(ethers.formatUnits(b,d)).toFixed(2)+" USDC";
+
+ const eth=await rpc.getBalance(user.wallet);
+ document.getElementById("ethBal").textContent=
+   Number(ethers.formatEther(eth)).toFixed(4)+" ETH";
+
+ loadActivity();
 };
 </script>
 
