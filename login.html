@@ -8,14 +8,13 @@
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
-<script src="https://cdn.tailwindcss.com"></script>
-
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --glass:rgba(255,255,255,0.08);
 }
+*{box-sizing:border-box}
 body{
   margin:0;
   height:100vh;
@@ -27,6 +26,8 @@ body{
   justify-content:center;
   overflow:hidden;
 }
+
+/* Glow orbs */
 .orb{
   position:absolute;
   width:420px;height:420px;
@@ -34,6 +35,10 @@ body{
   filter:blur(60px);
   opacity:.18;
 }
+.orb.blue{background:var(--zep-blue);bottom:-160px;right:-160px}
+.orb.violet{background:var(--zep-violet);top:-140px;left:-140px}
+
+/* Card */
 .card{
   width:92%;
   max-width:420px;
@@ -44,20 +49,29 @@ body{
   backdrop-filter:blur(18px);
   box-shadow:0 0 40px rgba(0,240,255,.25);
   text-align:center;
+  z-index:2;
 }
+
+/* Brand */
 .brand{
   font-family:Orbitron;
   font-size:2.2rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  margin-bottom:10px;
+  margin-bottom:6px;
 }
+.sub{
+  font-size:12px;
+  opacity:.75;
+}
+
+/* Roles */
 .role-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
-  margin:18px 0;
+  margin:20px 0;
 }
 .role{
   padding:14px;
@@ -66,11 +80,21 @@ body{
   cursor:pointer;
   transition:.2s;
 }
+.role:hover{
+  box-shadow:0 0 20px rgba(0,240,255,.25);
+}
 .role.active{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
   border:none;
+  box-shadow:0 0 30px rgba(0,240,255,.6);
 }
+.role span{
+  font-size:11px;
+  opacity:.8;
+}
+
+/* Button */
 .btn{
   margin-top:14px;
   width:100%;
@@ -83,89 +107,115 @@ body{
   color:#050015;
   cursor:pointer;
   box-shadow:0 0 28px rgba(0,240,255,.45);
+  transition:.2s;
 }
-.small{font-size:12px;opacity:.7}
+.btn:hover{
+  transform:scale(1.05);
+}
+
+.footer{
+  margin-top:18px;
+  font-size:11px;
+  opacity:.5;
+}
 </style>
 </head>
 
 <body>
 
-<div class="orb" style="top:-120px;left:-140px;background:var(--zep-violet)"></div>
-<div class="orb" style="bottom:-160px;right:-160px;background:var(--zep-blue)"></div>
+<div class="orb violet"></div>
+<div class="orb blue"></div>
 
 <div class="card">
   <div class="brand">Zep Swipe</div>
-  <p class="small">Choose how you want to use the platform</p>
+  <div class="sub">Choose how you want to use the platform</div>
 
-  <!-- ROLE SELECT -->
+  <!-- Role Selection -->
   <div class="role-grid">
     <div class="role active" id="studentRole" onclick="selectRole('student')">
-      🎓 Student<br><span class="small">Learn · Earn · Sell</span>
+      🎓 Student<br>
+      <span>Learn · Earn · Build</span>
     </div>
     <div class="role" id="clientRole" onclick="selectRole('client')">
-      💼 Client<br><span class="small">Hire Creators</span>
+      💼 Client<br>
+      <span>Hire Student Creators</span>
     </div>
   </div>
 
   <button class="btn" onclick="connectWallet()">🔗 Connect Wallet</button>
 
-  <p class="small mt-4">Base network · Wallet login</p>
+  <div class="footer">Base Network · Wallet Login</div>
 </div>
 
 <script>
 let selectedRole = "student";
+let roleChosenManually = false;
 
 function selectRole(role){
+  roleChosenManually = true;
   selectedRole = role;
-  document.getElementById("studentRole").classList.remove("active");
-  document.getElementById("clientRole").classList.remove("active");
-  document.getElementById(role+"Role").classList.add("active");
+
+  const studentEl = document.getElementById("studentRole");
+  const clientEl  = document.getElementById("clientRole");
+
+  if(studentEl) studentEl.classList.remove("active");
+  if(clientEl)  clientEl.classList.remove("active");
+
+  const activeEl = document.getElementById(role + "Role");
+  if(activeEl) activeEl.classList.add("active");
 }
 
-/* CONNECT WALLET */
+/* Connect Wallet */
 async function connectWallet(){
   if(!window.ethereum){
-    alert("Install MetaMask or Coinbase Wallet");
+    alert("Please install MetaMask or Coinbase Wallet.");
     return;
   }
 
   try{
-    const accounts = await window.ethereum.request({method:"eth_requestAccounts"});
-    if(!accounts.length) return;
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts"
+    });
+
+    if(!accounts || !accounts.length) return;
 
     const wallet = accounts[0];
 
-    // Save unified session
     localStorage.setItem("zepSession", JSON.stringify({
       wallet,
       role: selectedRole,
-      loggedIn: true
+      loggedIn: true,
+      ts: Date.now()
     }));
 
-    // Role-based redirect
     setTimeout(()=>{
-      if(selectedRole==="student"){
-        window.location.href="student-dashboard.html";
-      }else{
-        window.location.href="swipe-merchants.html";
-      }
-    },300);
+      window.location.href =
+        selectedRole === "student"
+          ? "student-dashboard.html"
+          : "swipe-merchants.html";
+    }, 300);
 
   }catch(err){
     console.error(err);
-    alert("Wallet connection failed");
+    alert("Wallet connection failed.");
   }
 }
 
-/* AUTO LOGIN */
-window.addEventListener("load",()=>{
-  const session = JSON.parse(localStorage.getItem("zepSession"));
-  if(session && session.loggedIn){
-    if(session.role==="student"){
-      window.location.href="student-dashboard.html";
-    }else{
-      window.location.href="swipe-merchants.html";
+/* Auto Login */
+window.addEventListener("load", ()=>{
+  const raw = localStorage.getItem("zepSession");
+  if(!raw) return;
+
+  try{
+    const session = JSON.parse(raw);
+    if(session.loggedIn && !roleChosenManually){
+      window.location.href =
+        session.role === "student"
+          ? "student-dashboard.html"
+          : "swipe-merchants.html";
     }
+  }catch(e){
+    localStorage.removeItem("zepSession");
   }
 });
 </script>
