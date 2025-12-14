@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Zep Swipe — Marketplace</title>
+<title>Swipe Merchants — Zep Swipe</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
@@ -12,8 +12,8 @@
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at top, #030018 0%, #00000d 100%);
   --glass:rgba(255,255,255,0.06);
-  --bg:radial-gradient(circle at 25% 10%, #04001a 0%, #000010 100%);
 }
 *{box-sizing:border-box}
 body{
@@ -23,8 +23,8 @@ body{
   color:#fff;
 }
 .container{
-  max-width:1100px;
-  margin:26px auto 120px;
+  max-width:1150px;
+  margin:24px auto 120px;
   padding:16px;
 }
 
@@ -38,57 +38,61 @@ body{
   background:var(--glass);
   border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(16px);
-  box-shadow:0 0 34px rgba(0,240,255,.25);
 }
 .brand{
   font-family:Orbitron;
-  font-size:1.4rem;
+  font-size:1.5rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.header-actions{
-  display:flex;
-  gap:10px;
-}
-.icon-btn{
-  width:46px;height:46px;
-  border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  font-size:20px;
+.wallet-btn{
+  padding:8px 16px;
+  border-radius:999px;
+  border:none;
+  font-family:Orbitron;
   cursor:pointer;
-  box-shadow:0 0 26px rgba(0,240,255,.4);
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+
+/* FILTERS */
+.filters{
+  margin-top:20px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+select,input{
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.15);
+  background:#020617;
+  color:#fff;
 }
 
 /* GRID */
-.section-title{
-  margin:28px 0 14px;
-  font-family:Orbitron;
-  font-size:1.1rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
 .grid{
+  margin-top:24px;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:18px;
+  gap:20px;
 }
-@media(max-width:700px){
+@media(max-width:768px){
   .grid{grid-template-columns:1fr}
 }
 
 /* CARD */
 .card{
   padding:18px;
-  border-radius:18px;
-  background:rgba(0,0,0,.65);
+  border-radius:20px;
+  background:rgba(0,0,0,.7);
   border:1px solid rgba(255,255,255,.12);
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+  transition:.25s;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 34px rgba(0,240,255,.35);
 }
 .card h3{
   margin:0;
@@ -96,17 +100,34 @@ body{
   font-size:1rem;
 }
 .card p{
-  font-size:12px;
+  font-size:13px;
   opacity:.85;
+  margin:6px 0;
+}
+.tag{
+  display:inline-block;
+  margin-top:6px;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:10px;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+.meta{
+  margin-top:10px;
+  font-size:12px;
+  opacity:.75;
 }
 .price{
+  margin-top:12px;
   font-family:Orbitron;
-  font-size:1.05rem;
+  font-size:1.1rem;
 }
 .actions{
+  margin-top:14px;
   display:flex;
   gap:8px;
-  margin-top:6px;
 }
 .btn{
   flex:1;
@@ -115,35 +136,39 @@ body{
   border:none;
   cursor:pointer;
   font-family:Orbitron;
-  font-size:12px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
+  font-size:12px;
 }
-.btn.secondary{
+.btn.ghost{
   background:none;
   border:1px solid rgba(255,255,255,.25);
   color:#fff;
 }
 
-/* SELL CTA */
-.sell-box{
-  margin-top:30px;
-  padding:20px;
-  border-radius:20px;
-  background:rgba(0,0,0,.7);
-  border:1px solid rgba(0,240,255,.4);
-  text-align:center;
+/* FOOTER */
+.footer{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  padding:14px 22px;
+  background:rgba(0,0,0,.65);
+  backdrop-filter:blur(12px);
+  display:flex;
+  justify-content:space-around;
 }
-.badge{
-  display:inline-block;
-  padding:6px 14px;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  font-family:Orbitron;
-  font-size:11px;
+.fbtn{
+  width:56px;height:56px;
+  border-radius:18px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  color:#fff;
+  font-size:20px;
+  box-shadow:0 0 26px rgba(0,240,255,.3);
 }
-.small{font-size:12px;opacity:.8}
 </style>
 </head>
 
@@ -154,110 +179,111 @@ body{
   <!-- HEADER -->
   <div class="header">
     <div class="brand">Swipe Merchants</div>
-    <div class="header-actions">
-      <div class="icon-btn" title="Logout" onclick="logout()">⎋</div>
-    </div>
+    <button class="wallet-btn" onclick="connectWallet()" id="walletBtn">Connect Wallet</button>
   </div>
 
-  <!-- MARKETPLACE -->
-  <div class="section-title">Student Creator Services</div>
-  <div class="grid" id="market"></div>
-
-  <!-- SELL ACCESS -->
-  <div class="sell-box" id="sellBox" style="display:none">
-    <h3 class="section-title">Sell on Swipe</h3>
-    <p class="small">Complete at least <b>21 days of skill proof</b> to list services.</p>
-    <span class="badge">Verified Creators Only</span>
+  <!-- FILTERS -->
+  <div class="filters">
+    <select id="categoryFilter">
+      <option value="all">All Categories</option>
+      <option value="AI">AI</option>
+      <option value="Design">Design</option>
+      <option value="Video">Video</option>
+      <option value="Web">Web</option>
+      <option value="Automation">Automation</option>
+      <option value="Research">Research</option>
+    </select>
+    <input id="searchInput" placeholder="Search services..." />
   </div>
+
+  <!-- MARKET -->
+  <div class="grid" id="marketGrid"></div>
 
 </div>
 
+<!-- FOOTER -->
+<div class="footer">
+  <a class="fbtn" href="student-dashboard.html">🏠</a>
+  <a class="fbtn" href="wallet.html">💼</a>
+  <a class="fbtn" href="profile.html">👤</a>
+</div>
+
 <script>
-/* SESSION */
-const session = JSON.parse(localStorage.getItem("zepSession")) || {};
-const student = JSON.parse(localStorage.getItem("zepStudent")) || {};
-const progress = JSON.parse(localStorage.getItem("zepProgress")) || {};
+/* ---------------- WALLET ---------------- */
+let provider, signer, buyerWallet;
 
-/* SAMPLE GIGS */
-const gigs=[
- {
-  title:"AI Content Writer",
-  desc:"Blogs, threads & captions with AI",
-  price:25,
-  seller:"0xSELLER1",
-  profile:"seller-profile.html"
- },
- {
-  title:"No-Code Website",
-  desc:"Landing pages in Webflow/Framer",
-  price:40,
-  seller:"0xSELLER2",
-  profile:"seller-profile.html"
- },
- {
-  title:"Video Editor",
-  desc:"Short-form reels & TikTok edits",
-  price:30,
-  seller:"0xSELLER3",
-  profile:"seller-profile.html"
- },
- {
-  title:"Research Assistant",
-  desc:"Lead gen & data cleanup",
-  price:20,
-  seller:"0xSELLER4",
-  profile:"seller-profile.html"
- }
-];
-
-const market=document.getElementById("market");
-
-/* RENDER */
-gigs.forEach((g,i)=>{
- const d=document.createElement("div");
- d.className="card";
- d.innerHTML=`
-  <h3>${g.title}</h3>
-  <p>${g.desc}</p>
-  <div class="price">${g.price} USDC</div>
-  <div class="actions">
-    <button class="btn" onclick="buy(${i})">Buy</button>
-    <button class="btn secondary" onclick="viewSeller()">Seller</button>
-  </div>
- `;
- market.appendChild(d);
-});
-
-/* BUY */
-async function buy(i){
- if(!window.ethereum){
-  alert("Wallet required");
-  return;
- }
- alert("Payment flow:\nUSDC → Seller Wallet\n(Chat opens after payment)");
- window.location.href="order-chat.html";
+async function connectWallet(){
+  if(!window.ethereum){
+    alert("Install MetaMask or Coinbase Wallet");
+    return;
+  }
+  provider = new ethers.BrowserProvider(window.ethereum);
+  await provider.send("eth_requestAccounts",[]);
+  signer = await provider.getSigner();
+  buyerWallet = await signer.getAddress();
+  document.getElementById("walletBtn").textContent =
+    buyerWallet.slice(0,6)+"..."+buyerWallet.slice(-4);
 }
 
-/* SELLER PROFILE */
-function viewSeller(){
- window.location.href="seller-profile.html";
+/* ---------------- LOAD GIGS ---------------- */
+const grid = document.getElementById("marketGrid");
+
+function loadGigs(){
+  const gigs = JSON.parse(localStorage.getItem("zepGigs") || "[]");
+  const cat = document.getElementById("categoryFilter").value;
+  const q = document.getElementById("searchInput").value.toLowerCase();
+
+  grid.innerHTML = "";
+
+  gigs
+  .filter(g =>
+    (cat==="all" || g.category===cat) &&
+    (g.title.toLowerCase().includes(q) || g.description.toLowerCase().includes(q))
+  )
+  .forEach(g=>{
+    const d=document.createElement("div");
+    d.className="card";
+    d.innerHTML=`
+      <h3>${g.title}</h3>
+      <p>${g.description}</p>
+      <span class="tag">${g.category}</span>
+      <div class="meta">
+        ${g.sellerName} · ${g.university}<br>
+        Delivery: ${g.deliveryDays} days
+      </div>
+      <div class="price">${g.price} USDC</div>
+      <div class="actions">
+        <button class="btn ghost" onclick="viewSeller('${g.sellerWallet}')">Profile</button>
+        <button class="btn" onclick="buyGig('${g.id}')">Buy</button>
+      </div>
+    `;
+    grid.appendChild(d);
+  });
+
+  if(!gigs.length){
+    grid.innerHTML="<p style='opacity:.6'>No services listed yet.</p>";
+  }
 }
 
-/* SELL ACCESS */
-let completed=0;
-Object.values(progress).forEach(p=>{
- completed+=Math.max(0,(p.day||1)-1);
-});
-
-if(!student.verified && session.role==="student"){
- document.getElementById("sellBox").style.display="block";
+function viewSeller(wallet){
+  localStorage.setItem("viewSeller", wallet);
+  location.href="seller-profile.html";
 }
 
-/* LOGOUT */
-function logout(){
- localStorage.removeItem("zepSession");
- window.location.href="index.html";
+/* ---------------- BUY ---------------- */
+function buyGig(id){
+  if(!signer){
+    alert("Connect wallet to purchase");
+    return;
+  }
+  localStorage.setItem("activeOrder", id);
+  location.href="order-chat.html";
 }
+
+/* ---------------- INIT ---------------- */
+document.getElementById("categoryFilter").onchange = loadGigs;
+document.getElementById("searchInput").oninput = loadGigs;
+loadGigs();
 </script>
 
 </body>
