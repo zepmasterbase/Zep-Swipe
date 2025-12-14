@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zep Swipe — Login</title>
+<title>Zep Swipe — Student Login</title>
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
@@ -15,6 +15,7 @@
   --glass:rgba(255,255,255,0.08);
 }
 *{box-sizing:border-box}
+
 body{
   margin:0;
   height:100vh;
@@ -27,7 +28,7 @@ body{
   overflow:hidden;
 }
 
-/* Glow orbs */
+/* Neon Orbs */
 .orb{
   position:absolute;
   width:420px;height:420px;
@@ -38,11 +39,11 @@ body{
 .orb.blue{background:var(--zep-blue);bottom:-160px;right:-160px}
 .orb.violet{background:var(--zep-violet);top:-140px;left:-140px}
 
-/* Card */
+/* Login Card */
 .card{
   width:92%;
-  max-width:420px;
-  padding:28px;
+  max-width:400px;
+  padding:30px;
   border-radius:22px;
   background:var(--glass);
   border:1px solid rgba(255,255,255,.15);
@@ -59,44 +60,17 @@ body{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  margin-bottom:6px;
-}
-.sub{
-  font-size:12px;
-  opacity:.75;
+  margin-bottom:8px;
 }
 
-/* Roles */
-.role-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin:20px 0;
-}
-.role{
-  padding:14px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.2);
-  cursor:pointer;
-  transition:.2s;
-}
-.role:hover{
-  box-shadow:0 0 20px rgba(0,240,255,.25);
-}
-.role.active{
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  border:none;
-  box-shadow:0 0 30px rgba(0,240,255,.6);
-}
-.role span{
-  font-size:11px;
-  opacity:.8;
+.sub{
+  font-size:13px;
+  opacity:.75;
+  margin-bottom:20px;
 }
 
 /* Button */
 .btn{
-  margin-top:14px;
   width:100%;
   padding:14px;
   border:none;
@@ -109,9 +83,7 @@ body{
   box-shadow:0 0 28px rgba(0,240,255,.45);
   transition:.2s;
 }
-.btn:hover{
-  transform:scale(1.05);
-}
+.btn:hover{transform:scale(1.05)}
 
 .footer{
   margin-top:18px;
@@ -128,44 +100,22 @@ body{
 
 <div class="card">
   <div class="brand">Zep Swipe</div>
-  <div class="sub">Choose how you want to use the platform</div>
-
-  <!-- Role Selection -->
-  <div class="role-grid">
-    <div class="role active" id="studentRole" onclick="selectRole('student')">
-      🎓 Student<br>
-      <span>Learn · Earn · Build</span>
-    </div>
-    <div class="role" id="clientRole" onclick="selectRole('client')">
-      💼 Client<br>
-      <span>Hire Student Creators</span>
-    </div>
+  <div class="sub">
+    Connect your wallet to access your <b>Student Dashboard</b>
   </div>
 
-  <button class="btn" onclick="connectWallet()">🔗 Connect Wallet</button>
+  <button class="btn" onclick="connectWallet()">
+    🔗 Connect Wallet
+  </button>
 
-  <div class="footer">Base Network · Wallet Login</div>
+  <div class="footer">
+    Base Network · Student Access Only
+  </div>
 </div>
 
 <script>
-let selectedRole = "student";
-let roleChosenManually = false;
+const BASE_CHAIN_ID = "0x2105"; // Base Mainnet
 
-function selectRole(role){
-  roleChosenManually = true;
-  selectedRole = role;
-
-  const studentEl = document.getElementById("studentRole");
-  const clientEl  = document.getElementById("clientRole");
-
-  if(studentEl) studentEl.classList.remove("active");
-  if(clientEl)  clientEl.classList.remove("active");
-
-  const activeEl = document.getElementById(role + "Role");
-  if(activeEl) activeEl.classList.add("active");
-}
-
-/* Connect Wallet */
 async function connectWallet(){
   if(!window.ethereum){
     alert("Please install MetaMask or Coinbase Wallet.");
@@ -173,27 +123,40 @@ async function connectWallet(){
   }
 
   try{
+    // Request accounts
     const accounts = await window.ethereum.request({
       method: "eth_requestAccounts"
     });
-
     if(!accounts || !accounts.length) return;
 
     const wallet = accounts[0];
 
-    localStorage.setItem("zepSession", JSON.stringify({
+    // Ensure Base network
+    const chainId = await window.ethereum.request({ method: "eth_chainId" });
+    if(chainId !== BASE_CHAIN_ID){
+      try{
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: BASE_CHAIN_ID }]
+        });
+      }catch(err){
+        alert("Please switch to Base Network to continue.");
+        return;
+      }
+    }
+
+    // Save student session
+    localStorage.setItem("zepStudent", JSON.stringify({
       wallet,
-      role: selectedRole,
       loggedIn: true,
-      ts: Date.now()
+      verified: false,
+      createdAt: Date.now()
     }));
 
+    // Redirect
     setTimeout(()=>{
-      window.location.href =
-        selectedRole === "student"
-          ? "student-dashboard.html"
-          : "swipe-merchants.html";
-    }, 300);
+      window.location.href = "student-dashboard.html";
+    },300);
 
   }catch(err){
     console.error(err);
@@ -201,21 +164,18 @@ async function connectWallet(){
   }
 }
 
-/* Auto Login */
+/* Auto-login */
 window.addEventListener("load", ()=>{
-  const raw = localStorage.getItem("zepSession");
+  const raw = localStorage.getItem("zepStudent");
   if(!raw) return;
 
   try{
-    const session = JSON.parse(raw);
-    if(session.loggedIn && !roleChosenManually){
-      window.location.href =
-        session.role === "student"
-          ? "student-dashboard.html"
-          : "swipe-merchants.html";
+    const student = JSON.parse(raw);
+    if(student.loggedIn){
+      window.location.href = "student-dashboard.html";
     }
-  }catch(e){
-    localStorage.removeItem("zepSession");
+  }catch{
+    localStorage.removeItem("zepStudent");
   }
 });
 </script>
