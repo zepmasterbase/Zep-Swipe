@@ -2,19 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Seller Profile — Swipe Merchants</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Seller Profile — Zep Swipe</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at top, #04001a 0%, #000010 100%);
+  --bg:radial-gradient(circle at 20% 10%, #06001c 0%, #000010 100%);
   --glass:rgba(255,255,255,0.06);
 }
-
 *{box-sizing:border-box}
 body{
   margin:0;
@@ -22,7 +21,6 @@ body{
   background:var(--bg);
   color:#fff;
 }
-
 .container{
   max-width:900px;
   margin:26px auto 120px;
@@ -39,141 +37,153 @@ body{
   background:var(--glass);
   border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(16px);
+  box-shadow:0 0 36px rgba(0,240,255,.25);
 }
 .brand{
   font-family:Orbitron;
-  font-size:1.4rem;
+  font-size:1.3rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.back{
-  font-size:13px;
+.icon-btn{
+  width:42px;height:42px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   cursor:pointer;
-  opacity:.8;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-size:18px;
 }
 
 /* PROFILE CARD */
 .profile{
   margin-top:20px;
-  padding:20px;
+  padding:18px;
   border-radius:20px;
   background:rgba(0,0,0,.65);
   border:1px solid rgba(255,255,255,.12);
   display:flex;
-  gap:18px;
+  gap:16px;
   align-items:center;
 }
 .avatar{
-  width:86px;height:86px;
+  width:80px;height:80px;
   border-radius:50%;
   border:2px solid var(--zep-blue);
   object-fit:cover;
-  background:#020617;
 }
-.info h2{
+.profile-meta h2{
   margin:0;
   font-family:Orbitron;
   font-size:1.1rem;
 }
-.info p{
-  margin:4px 0;
-  font-size:13px;
+.profile-meta p{
+  margin:2px 0;
+  font-size:12px;
   opacity:.85;
 }
 .badge{
   display:inline-block;
   margin-top:6px;
-  padding:6px 14px;
+  padding:4px 12px;
   border-radius:999px;
-  font-size:11px;
+  font-size:10px;
   font-family:Orbitron;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
 
-/* STATS */
-.stats{
-  margin-top:18px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-}
-.stat{
-  padding:14px;
-  border-radius:16px;
-  background:rgba(255,255,255,.05);
+/* SECTION */
+.section{
+  margin-top:24px;
+  padding:18px;
+  border-radius:20px;
+  background:rgba(255,255,255,.04);
   border:1px solid rgba(255,255,255,.12);
-  text-align:center;
 }
-.stat strong{
-  font-family:Orbitron;
-  font-size:1.1rem;
-}
-.stat span{
-  font-size:11px;
-  opacity:.75;
-}
-
-/* SERVICES */
 .section-title{
-  margin:26px 0 14px;
   font-family:Orbitron;
-  font-size:1.1rem;
+  font-size:1rem;
+  margin-bottom:10px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
+/* SKILLS */
+.skills{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
 }
-@media(max-width:700px){
-  .grid{grid-template-columns:1fr}
+.skill{
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:11px;
+  background:rgba(0,0,0,.6);
+  border:1px solid rgba(255,255,255,.2);
 }
 
-.card{
-  padding:16px;
-  border-radius:18px;
+/* GIG */
+.gig{
+  padding:14px;
+  border-radius:16px;
   background:rgba(0,0,0,.65);
   border:1px solid rgba(255,255,255,.12);
 }
-.card h4{
+.gig h3{
   margin:0;
   font-family:Orbitron;
   font-size:.95rem;
 }
-.card p{
-  font-size:12px;
-  opacity:.85;
-}
 .price{
-  margin-top:8px;
   font-family:Orbitron;
+  font-size:1.1rem;
+  margin-top:6px;
 }
 .btn{
-  margin-top:12px;
+  margin-top:10px;
   width:100%;
-  padding:10px;
+  padding:12px;
   border-radius:999px;
   border:none;
-  font-family:Orbitron;
   cursor:pointer;
+  font-family:Orbitron;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
 
-/* CONTACT */
-.contact{
-  margin-top:26px;
-  padding:18px;
-  border-radius:20px;
-  background:rgba(0,0,0,.7);
-  border:1px solid rgba(0,240,255,.35);
+/* ZORA */
+.zora{
+  font-size:12px;
 }
-.small{font-size:12px;opacity:.8}
+.zora a{
+  color:var(--zep-blue);
+  text-decoration:none;
+}
+
+/* FOOTER */
+.footer{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  padding:14px 22px;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(10px);
+  display:flex;
+  justify-content:space-around;
+}
+.fbtn{
+  width:56px;height:56px;
+  border-radius:18px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;
+  color:#fff;
+}
 </style>
 </head>
 
@@ -184,100 +194,110 @@ body{
   <!-- HEADER -->
   <div class="header">
     <div class="brand">Seller Profile</div>
-    <div class="back" onclick="history.back()">← Back</div>
+    <div class="icon-btn" title="Back" onclick="history.back()">←</div>
   </div>
 
   <!-- PROFILE -->
   <div class="profile">
-    <img id="avatar" class="avatar"/>
-    <div class="info">
+    <img id="avatar" class="avatar" src="https://avatars.githubusercontent.com/u/9919?v=4"/>
+    <div class="profile-meta">
       <h2 id="name">Student Creator</h2>
-      <p id="uni">—</p>
-      <p id="country">—</p>
-      <div id="badge"></div>
+      <p id="school">University — Country</p>
+      <span id="verifyBadge"></span>
     </div>
   </div>
 
-  <!-- STATS -->
-  <div class="stats">
-    <div class="stat">
-      <strong id="tasks">0</strong><br><span>Tasks Completed</span>
-    </div>
-    <div class="stat">
-      <strong id="sales">0</strong><br><span>Sales</span>
-    </div>
-    <div class="stat">
-      <strong>5★</strong><br><span>Rating</span>
-    </div>
-  </div>
-
-  <!-- SERVICES -->
-  <div class="section-title">Services</div>
-  <div class="grid" id="services"></div>
-
-  <!-- CONTACT -->
-  <div class="contact">
-    <div class="section-title">Contact Seller</div>
-    <p class="small">
-      You can contact this seller <b>after purchasing</b> a service.
-      Payments are secured and sent instantly on Base.
+  <!-- BIO -->
+  <div class="section">
+    <div class="section-title">About</div>
+    <p id="bio" style="font-size:13px;opacity:.85">
+      I help clients get real results using practical digital skills learned through Zep Swipe.
     </p>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="section">
+    <div class="section-title">Skills</div>
+    <div class="skills" id="skills"></div>
+  </div>
+
+  <!-- PROOF -->
+  <div class="section">
+    <div class="section-title">Public Proof (Zora)</div>
+    <div class="zora" id="zoraProof"></div>
+  </div>
+
+  <!-- GIG -->
+  <div class="section">
+    <div class="section-title">Service</div>
+    <div class="gig">
+      <h3 id="gigTitle">Service Title</h3>
+      <p id="gigDesc" style="font-size:12px;opacity:.85"></p>
+      <div class="price" id="gigPrice"></div>
+      <button class="btn" onclick="buy()">Buy Service</button>
+    </div>
   </div>
 
 </div>
 
-<script>
-/* ---------------- GET WALLET ---------------- */
-const params = new URLSearchParams(location.search);
-const wallet = params.get("wallet");
+<!-- FOOTER -->
+<div class="footer">
+  <a class="fbtn" href="index.html">🏠</a>
+  <a class="fbtn" href="swipe-merchants.html">🛒</a>
+  <a class="fbtn" href="learn-earn.html">🎓</a>
+</div>
 
-/* ---------------- MOCK DATA ----------------
-   In real use: pulled from localStorage or API
----------------------------------------------*/
-const sellerProfile = {
-  name: "Verified Student Creator",
-  university: "University of Lagos",
-  country: "Nigeria",
-  avatar: "https://avatars.githubusercontent.com/u/9919?v=4",
-  verified: true,
-  completed: 21,
-  sales: 8,
-  services:[
-    {title:"AI Content Writing", desc:"Blogs & LinkedIn posts", price:25},
-    {title:"No-Code Automation", desc:"Zapier workflows", price:40}
-  ]
+<script>
+/* ---------------- MOCK DATA (REPLACE WITH REAL SOURCE LATER) ---------------- */
+const seller={
+  name:"Ada Johnson",
+  university:"University of Lagos · Nigeria",
+  verified:true,
+  avatar:"https://avatars.githubusercontent.com/u/9919?v=4",
+  bio:"AI content writer focused on SEO blogs, landing pages, and social growth.",
+  skills:["AI Writing","SEO","Content Strategy","Prompt Engineering"],
+  zora:[
+    "https://zora.co/collect/base:example1",
+    "https://zora.co/collect/base:example2"
+  ],
+  gig:{
+    title:"AI Content Writer",
+    desc:"High-quality blogs, LinkedIn posts, and SEO content delivered fast.",
+    price:"25 USDC"
+  }
 };
 
 /* ---------------- RENDER ---------------- */
-document.getElementById("name").textContent = sellerProfile.name;
-document.getElementById("uni").textContent = sellerProfile.university;
-document.getElementById("country").textContent = sellerProfile.country;
-document.getElementById("avatar").src = sellerProfile.avatar;
-document.getElementById("tasks").textContent = sellerProfile.completed;
-document.getElementById("sales").textContent = sellerProfile.sales;
+document.getElementById("name").textContent=seller.name;
+document.getElementById("school").textContent=seller.university;
+document.getElementById("avatar").src=seller.avatar;
+document.getElementById("bio").textContent=seller.bio;
+document.getElementById("gigTitle").textContent=seller.gig.title;
+document.getElementById("gigDesc").textContent=seller.gig.desc;
+document.getElementById("gigPrice").textContent=seller.gig.price;
 
-if(sellerProfile.verified){
-  document.getElementById("badge").innerHTML =
-    `<span class="badge">Verified Zep Creator</span>`;
+if(seller.verified){
+ document.getElementById("verifyBadge").innerHTML=`<span class="badge">Verified Seller</span>`;
 }
 
-/* SERVICES */
-const grid = document.getElementById("services");
-sellerProfile.services.forEach(s=>{
-  const d=document.createElement("div");
-  d.className="card";
-  d.innerHTML=`
-    <h4>${s.title}</h4>
-    <p>${s.desc}</p>
-    <div class="price">${s.price} USDC</div>
-    <button class="btn" onclick="buy()">Buy Service</button>
-  `;
-  grid.appendChild(d);
+const skills=document.getElementById("skills");
+seller.skills.forEach(s=>{
+ const el=document.createElement("div");
+ el.className="skill";
+ el.textContent=s;
+ skills.appendChild(el);
 });
 
+const zora=document.getElementById("zoraProof");
+seller.zora.forEach(l=>{
+ const p=document.createElement("div");
+ p.innerHTML=`🔗 <a href="${l}" target="_blank">${l}</a>`;
+ zora.appendChild(p);
+});
+
+/* ---------------- BUY ---------------- */
 function buy(){
-  alert("Redirecting to purchase from marketplace.");
-  location.href="swipe-merchants.html";
+ location.href="order-chat.html";
 }
 </script>
 
