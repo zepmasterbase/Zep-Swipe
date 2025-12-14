@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Swipe Merchants — Zep Swipe</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Zep Swipe — Marketplace</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 20% 10%, #06001c 0%, #000010 100%);
   --glass:rgba(255,255,255,0.06);
+  --bg:radial-gradient(circle at 25% 10%, #04001a 0%, #000010 100%);
 }
 *{box-sizing:border-box}
 body{
@@ -24,7 +24,7 @@ body{
 }
 .container{
   max-width:1100px;
-  margin:24px auto 120px;
+  margin:26px auto 120px;
   padding:16px;
 }
 
@@ -33,12 +33,12 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:16px;
+  padding:16px 18px;
   border-radius:18px;
   background:var(--glass);
   border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(16px);
-  box-shadow:0 0 36px rgba(0,240,255,.25);
+  box-shadow:0 0 34px rgba(0,240,255,.25);
 }
 .brand{
   font-family:Orbitron;
@@ -50,26 +50,23 @@ body{
 .header-actions{
   display:flex;
   gap:10px;
-  align-items:center;
 }
 .icon-btn{
-  width:42px;height:42px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
+  width:46px;height:46px;
+  border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
-  font-size:18px;
-  box-shadow:0 0 20px rgba(0,240,255,.4);
+  font-size:20px;
+  cursor:pointer;
+  box-shadow:0 0 26px rgba(0,240,255,.4);
 }
 
 /* GRID */
 .section-title{
-  margin:26px 0 14px;
+  margin:28px 0 14px;
   font-family:Orbitron;
-  font-size:1.2rem;
+  font-size:1.1rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -77,21 +74,21 @@ body{
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:16px;
+  gap:18px;
 }
-@media(max-width:760px){
+@media(max-width:700px){
   .grid{grid-template-columns:1fr}
 }
 
 /* CARD */
 .card{
-  padding:16px;
+  padding:18px;
   border-radius:18px;
   background:rgba(0,0,0,.65);
   border:1px solid rgba(255,255,255,.12);
   display:flex;
   flex-direction:column;
-  justify-content:space-between;
+  gap:10px;
 }
 .card h3{
   margin:0;
@@ -102,28 +99,23 @@ body{
   font-size:12px;
   opacity:.85;
 }
-.meta{
-  font-size:11px;
-  opacity:.75;
-}
 .price{
   font-family:Orbitron;
-  font-size:1.1rem;
-  margin-top:6px;
+  font-size:1.05rem;
 }
-.card-actions{
-  margin-top:12px;
+.actions{
   display:flex;
   gap:8px;
+  margin-top:6px;
 }
 .btn{
   flex:1;
   padding:10px;
   border-radius:999px;
   border:none;
-  font-family:Orbitron;
-  font-size:11px;
   cursor:pointer;
+  font-family:Orbitron;
+  font-size:12px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
@@ -132,11 +124,26 @@ body{
   border:1px solid rgba(255,255,255,.25);
   color:#fff;
 }
-.status{
-  margin-top:8px;
-  font-size:11px;
-  opacity:.8;
+
+/* SELL CTA */
+.sell-box{
+  margin-top:30px;
+  padding:20px;
+  border-radius:20px;
+  background:rgba(0,0,0,.7);
+  border:1px solid rgba(0,240,255,.4);
+  text-align:center;
 }
+.badge{
+  display:inline-block;
+  padding:6px 14px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-family:Orbitron;
+  font-size:11px;
+}
+.small{font-size:12px;opacity:.8}
 </style>
 </head>
 
@@ -147,147 +154,109 @@ body{
   <!-- HEADER -->
   <div class="header">
     <div class="brand">Swipe Merchants</div>
-
     <div class="header-actions">
-      <!-- Student shortcuts -->
-      <div id="studentNav" style="display:none;gap:10px">
-        <div class="icon-btn" title="Student Dashboard"
-             onclick="location.href='student-dashboard.html'">🎓</div>
-        <div class="icon-btn" title="Learn & Earn"
-             onclick="location.href='learn-earn.html'">🧠</div>
-      </div>
-
-      <!-- Logout -->
-      <div class="icon-btn" title="Logout" onclick="logout()">⏻</div>
+      <div class="icon-btn" title="Logout" onclick="logout()">⎋</div>
     </div>
   </div>
 
-  <!-- MARKET -->
-  <div class="section-title">Browse Student Services</div>
-  <div class="grid" id="marketGrid"></div>
+  <!-- MARKETPLACE -->
+  <div class="section-title">Student Creator Services</div>
+  <div class="grid" id="market"></div>
+
+  <!-- SELL ACCESS -->
+  <div class="sell-box" id="sellBox" style="display:none">
+    <h3 class="section-title">Sell on Swipe</h3>
+    <p class="small">Complete at least <b>21 days of skill proof</b> to list services.</p>
+    <span class="badge">Verified Creators Only</span>
+  </div>
 
 </div>
 
 <script>
-/* ---------------- CONFIG ---------------- */
-const USDC = "0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913";
-const ERC20_ABI=[
-  "function transfer(address,uint256) returns(bool)",
-  "function decimals() view returns(uint8)"
-];
+/* SESSION */
+const session = JSON.parse(localStorage.getItem("zepSession")) || {};
+const student = JSON.parse(localStorage.getItem("zepStudent")) || {};
+const progress = JSON.parse(localStorage.getItem("zepProgress")) || {};
 
-/* ---------------- SESSION ---------------- */
-const student = JSON.parse(localStorage.getItem("zepStudent"));
-if(student){
-  document.getElementById("studentNav").style.display="flex";
-}
-
-/* ---------------- SAMPLE SERVICES ---------------- */
-const services=[
+/* SAMPLE GIGS */
+const gigs=[
  {
-  id:1,
   title:"AI Content Writer",
-  desc:"SEO blogs, LinkedIn posts & captions",
+  desc:"Blogs, threads & captions with AI",
   price:25,
-  seller:"0xSELLER_WALLET_1",
-  sellerName:"Ada · UNILAG",
+  seller:"0xSELLER1",
+  profile:"seller-profile.html"
  },
  {
-  id:2,
-  title:"No-Code Automation",
-  desc:"Zapier & workflow automation",
+  title:"No-Code Website",
+  desc:"Landing pages in Webflow/Framer",
   price:40,
-  seller:"0xSELLER_WALLET_2",
-  sellerName:"Samuel · Covenant",
+  seller:"0xSELLER2",
+  profile:"seller-profile.html"
  },
  {
-  id:3,
-  title:"Graphic Design",
-  desc:"Logos, flyers & brand kits",
+  title:"Video Editor",
+  desc:"Short-form reels & TikTok edits",
   price:30,
-  seller:"0xSELLER_WALLET_3",
-  sellerName:"Zainab · ABU",
+  seller:"0xSELLER3",
+  profile:"seller-profile.html"
  },
  {
-  id:4,
-  title:"Landing Page Builder",
-  desc:"Webflow & Framer pages",
-  price:50,
-  seller:"0xSELLER_WALLET_4",
-  sellerName:"Daniel · Ashesi",
+  title:"Research Assistant",
+  desc:"Lead gen & data cleanup",
+  price:20,
+  seller:"0xSELLER4",
+  profile:"seller-profile.html"
  }
 ];
 
-let provider, signer;
+const market=document.getElementById("market");
 
-/* ---------------- RENDER ---------------- */
-const grid=document.getElementById("marketGrid");
-services.forEach(s=>{
- const el=document.createElement("div");
- el.className="card";
- el.innerHTML=`
-  <div>
-    <h3>${s.title}</h3>
-    <p>${s.desc}</p>
-    <div class="meta">Seller: ${s.sellerName}</div>
-    <div class="price">${s.price} USDC</div>
-  </div>
-  <div>
-    <div class="card-actions">
-      <button class="btn secondary" onclick="viewSeller(${s.id})">Profile</button>
-      <button class="btn" onclick="buy(${s.id})">Buy</button>
-    </div>
-    <div class="status" id="status-${s.id}"></div>
+/* RENDER */
+gigs.forEach((g,i)=>{
+ const d=document.createElement("div");
+ d.className="card";
+ d.innerHTML=`
+  <h3>${g.title}</h3>
+  <p>${g.desc}</p>
+  <div class="price">${g.price} USDC</div>
+  <div class="actions">
+    <button class="btn" onclick="buy(${i})">Buy</button>
+    <button class="btn secondary" onclick="viewSeller()">Seller</button>
   </div>
  `;
- grid.appendChild(el);
+ market.appendChild(d);
 });
 
-/* ---------------- BUY FLOW ---------------- */
-async function buy(id){
- const svc=services.find(x=>x.id===id);
- const status=document.getElementById(`status-${id}`);
-
+/* BUY */
+async function buy(i){
  if(!window.ethereum){
   alert("Wallet required");
   return;
  }
-
- try{
-  provider=new ethers.BrowserProvider(window.ethereum);
-  await provider.send("eth_requestAccounts",[]);
-  signer=await provider.getSigner();
-
-  status.textContent="Processing payment…";
-  const token=new ethers.Contract(USDC,ERC20_ABI,signer);
-  const dec=await token.decimals();
-  const tx=await token.transfer(
-    svc.seller,
-    ethers.parseUnits(svc.price.toString(),dec)
-  );
-  await tx.wait();
-
-  status.textContent="✅ Paid — opening chat…";
-  setTimeout(()=>{
-    location.href=`order-chat.html?service=${id}`;
-  },800);
-
- }catch(e){
-  console.error(e);
-  status.textContent="❌ Transaction failed";
- }
+ alert("Payment flow:\nUSDC → Seller Wallet\n(Chat opens after payment)");
+ window.location.href="order-chat.html";
 }
 
-/* ---------------- SELLER PROFILE ---------------- */
-function viewSeller(id){
- location.href=`seller-profile.html?service=${id}`;
+/* SELLER PROFILE */
+function viewSeller(){
+ window.location.href="seller-profile.html";
 }
 
-/* ---------------- LOGOUT ---------------- */
+/* SELL ACCESS */
+let completed=0;
+Object.values(progress).forEach(p=>{
+ completed+=Math.max(0,(p.day||1)-1);
+});
+
+if(!student.verified && session.role==="student"){
+ document.getElementById("sellBox").style.display="block";
+}
+
+/* LOGOUT */
 function logout(){
- localStorage.removeItem("zepStudent");
- localStorage.removeItem("zepUser");
- location.href="index.html";
+ localStorage.removeItem("zepSession");
+ window.location.href="index.html";
 }
 </script>
 
