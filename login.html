@@ -9,155 +9,139 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
 <style>
-:root {
+:root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --glass: rgba(255,255,255,0.08);
+  --glass:rgba(255,255,255,0.08);
 }
 
 *{box-sizing:border-box}
-body {
+body{
+  margin:0;
   font-family:'Poppins',sans-serif;
   background:radial-gradient(circle at 25% 10%, #06001c 0%, #000012 100%);
   height:100vh;
-  color:white;
-  margin:0;
+  color:#fff;
   display:flex;
-  flex-direction:column;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   overflow:hidden;
 }
 
-/* LOGO */
-h1 {
+/* Glow orbs */
+.orb{
+  position:absolute;
+  width:420px;height:420px;
+  border-radius:50%;
+  opacity:.15;
+  filter:blur(50px);
+}
+.orb.blue{background:var(--zep-blue);top:-140px;left:-140px}
+.orb.violet{background:var(--zep-violet);bottom:-160px;right:-160px}
+
+/* Card */
+.card{
+  width:92%;
+  max-width:380px;
+  padding:28px;
+  border-radius:22px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.15);
+  backdrop-filter:blur(18px);
+  box-shadow:0 0 40px rgba(0,240,255,.25);
+  text-align:center;
+  z-index:2;
+}
+
+/* Logo */
+h1{
   font-family:'Orbitron';
-  font-size:2.2rem;
+  font-size:2.1rem;
+  margin:0 0 10px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  text-shadow:0 0 22px rgba(0,240,255,0.45);
-  margin-bottom:1rem;
-  animation: glowPulse 3s ease-in-out infinite;
-}
-@keyframes glowPulse {
-  0% { text-shadow:0 0 14px rgba(0,240,255,0.4); }
-  50% { text-shadow:0 0 38px rgba(156,77,255,0.9); }
-  100% { text-shadow:0 0 14px rgba(0,240,255,0.4); }
+  text-shadow:0 0 26px rgba(0,240,255,.45);
 }
 
-/* CARD */
-.login-box {
-  background: var(--glass);
-  padding: 2rem 2.2rem;
-  border-radius: 1.6rem;
-  border:1px solid rgba(255,255,255,0.15);
-  backdrop-filter: blur(18px);
-  box-shadow:0 0 35px rgba(0,240,255,0.25);
-  text-align:center;
-  width: 90%;
-  max-width: 380px;
-}
-
-/* ROLE PICK */
-.role-grid{
+/* Role buttons */
+.roles{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
-  margin-bottom:16px;
+  margin:18px 0;
 }
 .role{
   padding:14px;
   border-radius:16px;
-  background:rgba(0,0,0,.5);
-  border:1px solid rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(0,0,0,.4);
   cursor:pointer;
   transition:.2s;
-  font-size:13px;
 }
 .role.active{
-  border-color:var(--zep-blue);
-  box-shadow:0 0 18px rgba(0,240,255,.45);
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050018;
+  border:none;
 }
-.role span{
-  font-family:'Orbitron';
-  font-size:12px;
+.role small{
   display:block;
-  margin-top:4px;
+  font-size:11px;
   opacity:.85;
 }
 
 /* Button */
-.glow-btn {
-  width: 100%;
-  padding: 14px;
-  margin-top: 10px;
+.btn{
+  width:100%;
+  padding:14px;
+  margin-top:14px;
+  border-radius:999px;
   border:none;
-  border-radius: 999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  cursor:pointer;
   font-family:'Orbitron';
   font-weight:700;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050018;
-  cursor:pointer;
-  box-shadow:0 0 22px rgba(0,240,255,0.45);
-  transition:0.3s;
+  box-shadow:0 0 30px rgba(0,240,255,.45);
+  transition:.25s;
 }
-.glow-btn:hover {
-  transform:scale(1.05);
-  box-shadow:0 0 45px rgba(156,77,255,0.7);
-}
+.btn:hover{transform:scale(1.05)}
 
-/* ORBS */
-.orb {
-  position:absolute;
-  width:420px; height:420px;
-  border-radius:50%;
-  opacity:0.14;
-  filter:blur(40px);
-  animation:float 6s infinite alternate ease-in-out;
-}
-@keyframes float {
-  from { transform: translateY(0); }
-  to { transform: translateY(-25px); }
+.footer{
+  margin-top:16px;
+  font-size:11px;
+  opacity:.5;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Background orbs -->
-<div class="orb" style="top:-120px; left:-140px; background:var(--zep-violet);"></div>
-<div class="orb" style="bottom:-150px; right:-150px; background:var(--zep-blue);"></div>
+<div class="orb blue"></div>
+<div class="orb violet"></div>
 
-<h1>Zep Swipe</h1>
-
-<div class="login-box">
-
-  <p style="font-size:13px;opacity:.8;margin-bottom:12px">
+<div class="card">
+  <h1>Zep Swipe</h1>
+  <p style="opacity:.8;font-size:13px;margin-bottom:10px">
     Choose how you want to use Zep Swipe
   </p>
 
   <!-- ROLE SELECT -->
-  <div class="role-grid">
+  <div class="roles">
     <div class="role active" id="studentRole" onclick="selectRole('student')">
       🎓 Student
-      <span>Learn · Earn · Sell skills</span>
+      <small>Learn, earn & sell skills</small>
     </div>
     <div class="role" id="clientRole" onclick="selectRole('client')">
-      🛍 Client
-      <span>Hire verified creators</span>
+      🛒 Client
+      <small>Hire verified creators</small>
     </div>
   </div>
 
-  <button class="glow-btn" onclick="connectWallet()">
-    🔗 Connect Wallet
-  </button>
+  <button class="btn" onclick="connectWallet()">🔗 Connect Wallet</button>
 
+  <div class="footer">© 2025 Zep Swipe</div>
 </div>
-
-<footer style="margin-top:20px;opacity:.45;font-size:11px">
-  © 2025 Zep Swipe — Student Creator Economy
-</footer>
 
 <script>
 let selectedRole = "student";
@@ -166,67 +150,58 @@ function selectRole(role){
   selectedRole = role;
   document.getElementById("studentRole").classList.remove("active");
   document.getElementById("clientRole").classList.remove("active");
-
-  if(role === "student"){
-    document.getElementById("studentRole").classList.add("active");
-  } else {
-    document.getElementById("clientRole").classList.add("active");
-  }
+  document.getElementById(role+"Role").classList.add("active");
 }
 
-/* WALLET LOGIN */
-async function connectWallet() {
-  if (!window.ethereum) {
-    alert("🚨 No wallet detected! Use MetaMask or Coinbase Wallet.");
+async function connectWallet(){
+  if(!window.ethereum){
+    alert("Install MetaMask or open with Coinbase Wallet.");
     return;
   }
 
-  try {
-    const accounts = await window.ethereum.request({
-      method: "eth_requestAccounts"
-    });
-
-    if (!accounts || accounts.length === 0) {
-      alert("⚠️ Wallet not connected.");
-      return;
-    }
+  try{
+    const accounts = await window.ethereum.request({ method:"eth_requestAccounts" });
+    if(!accounts || !accounts.length) return;
 
     const wallet = accounts[0];
 
-    // Save session
+    /* Save session */
     localStorage.setItem("zepSession", JSON.stringify({
-      wallet,
-      role: selectedRole,
-      loggedIn: true
+      role: selectedRole
     }));
 
-    setTimeout(() => {
-      if(selectedRole === "student"){
-        window.location.href = "student-dashboard.html";
-      } else {
-        window.location.href = "swipe-merchants.html";
-      }
-    }, 300);
+    if(selectedRole === "student"){
+      localStorage.setItem("zepStudent", JSON.stringify({
+        wallet,
+        loggedIn:true
+      }));
+      setTimeout(()=>location.href="student-dashboard.html",300);
+    } else {
+      localStorage.setItem("zepClient", JSON.stringify({
+        wallet,
+        loggedIn:true
+      }));
+      setTimeout(()=>location.href="swipe-merchants.html",300);
+    }
 
-  } catch (err) {
+  }catch(err){
     console.error(err);
-    alert("⚠️ Wallet connection failed.");
+    alert("Wallet connection failed");
   }
 }
 
-/* AUTO LOGIN */
-window.addEventListener("load", () => {
-  const s = JSON.parse(localStorage.getItem("zepSession"));
-  if(s && s.loggedIn){
-    setTimeout(()=>{
-      if(s.role === "student"){
-        window.location.href = "student-dashboard.html";
-      }else{
-        window.location.href = "swipe-merchants.html";
-      }
-    },300);
+/* Auto redirect if logged in */
+window.onload = ()=>{
+  const session = JSON.parse(localStorage.getItem("zepSession"));
+  if(!session) return;
+
+  if(session.role === "student" && localStorage.getItem("zepStudent")){
+    location.href="student-dashboard.html";
   }
-});
+  if(session.role === "client" && localStorage.getItem("zepClient")){
+    location.href="swipe-merchants.html";
+  }
+};
 </script>
 
 </body>
