@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Zep Swipe — Student Profile</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -11,10 +11,9 @@
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
   --glass:rgba(255,255,255,0.06);
+  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
 }
-
 *{box-sizing:border-box}
 body{
   margin:0;
@@ -22,130 +21,124 @@ body{
   background:var(--bg);
   color:#fff;
 }
-
 .container{
-  max-width:720px;
-  margin:24px auto 110px;
+  max-width:880px;
+  margin:26px auto 120px;
   padding:16px;
 }
 
 /* Header */
 .header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   padding:16px;
   border-radius:18px;
   background:var(--glass);
   border:1px solid rgba(255,255,255,.12);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
   backdrop-filter:blur(16px);
+  box-shadow:0 0 34px rgba(0,240,255,.25);
 }
-
 .brand{
   font-family:Orbitron;
-  font-size:1.3rem;
+  font-size:1.4rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-
-.home-btn{
-  padding:8px 14px;
-  border-radius:999px;
-  border:none;
+.btn{
   font-family:Orbitron;
   font-size:12px;
+  padding:8px 16px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
-  cursor:pointer;
 }
 
-/* Card */
-.card{
-  margin-top:18px;
-  padding:18px;
-  border-radius:20px;
-  background:rgba(255,255,255,0.05);
+/* Profile Card */
+.profile-card{
+  margin-top:22px;
+  padding:20px;
+  border-radius:22px;
+  background:rgba(255,255,255,.05);
   border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(16px);
-}
-
-/* Avatar */
-.avatar-wrap{
   display:flex;
-  flex-direction:column;
+  gap:18px;
   align-items:center;
-  gap:10px;
 }
-
 .avatar{
-  width:96px;
-  height:96px;
+  width:92px;height:92px;
   border-radius:50%;
-  background:#020617;
-  border:2px solid var(--zep-blue);
+  border:3px solid var(--zep-blue);
   object-fit:cover;
+  background:#020617;
 }
-
-.upload-btn{
-  font-size:12px;
+.profile-info h2{
+  margin:0;
+  font-family:Orbitron;
+}
+.profile-info p{
+  margin:4px 0;
+  font-size:13px;
   opacity:.85;
-  cursor:pointer;
-  text-decoration:underline;
 }
-
-/* Verification badge */
 .badge{
+  display:inline-block;
   margin-top:6px;
-  padding:4px 10px;
+  padding:5px 14px;
   border-radius:999px;
   font-size:11px;
   font-family:Orbitron;
-}
-.badge.locked{
-  background:rgba(255,255,255,.08);
-  opacity:.6;
-}
-.badge.verified{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
 
+/* Sections */
+.section{
+  margin-top:24px;
+  padding:18px;
+  border-radius:20px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.12);
+}
+.section-title{
+  font-family:Orbitron;
+  font-size:1.1rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:12px;
+}
+
 /* Form */
-.field{
-  margin-top:14px;
-}
-label{
-  font-size:12px;
-  opacity:.8;
-}
 input{
   width:100%;
-  margin-top:6px;
   padding:12px;
+  margin-top:8px;
   border-radius:12px;
   border:1px solid rgba(255,255,255,.2);
   background:#020617;
   color:#fff;
 }
-
 .save-btn{
-  margin-top:18px;
+  margin-top:14px;
   width:100%;
   padding:12px;
   border-radius:999px;
   border:none;
+  cursor:pointer;
   font-family:Orbitron;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
-  cursor:pointer;
 }
 
-/* Progress */
-.progress{
-  margin-top:14px;
+/* Proof */
+.proof{
   font-size:12px;
   opacity:.85;
+  margin-bottom:6px;
 }
 
 /* Footer */
@@ -154,16 +147,18 @@ input{
   bottom:0;left:0;right:0;
   padding:14px 22px;
   background:rgba(0,0,0,.55);
+  backdrop-filter:blur(10px);
   display:flex;
   justify-content:space-around;
-  backdrop-filter:blur(10px);
 }
 .fbtn{
   width:56px;height:56px;
   border-radius:18px;
   background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
   display:flex;align-items:center;justify-content:center;
-  text-decoration:none;color:#fff;
+  text-decoration:none;
+  color:#fff;
 }
 </style>
 </head>
@@ -172,112 +167,99 @@ input{
 
 <div class="container">
 
-  <!-- HEADER -->
+  <!-- Header -->
   <div class="header">
-    <div class="brand">Student Profile</div>
-    <button class="home-btn" onclick="location.href='student-dashboard.html'">Home</button>
+    <div class="brand">Zep Swipe · Profile</div>
+    <button class="btn" onclick="location.href='student-dashboard.html'">Home</button>
   </div>
 
-  <!-- PROFILE CARD -->
-  <div class="card">
-
-    <div class="avatar-wrap">
-      <img id="avatarPreview" class="avatar" src="" alt="Avatar"/>
-      <label class="upload-btn">
-        Upload avatar
-        <input type="file" accept="image/*" hidden onchange="uploadAvatar(event)">
-      </label>
-      <div id="verifyBadge" class="badge locked">Not Verified</div>
+  <!-- Profile -->
+  <div class="profile-card">
+    <img id="avatarImg" class="avatar"/>
+    <div class="profile-info">
+      <h2 id="name">Student</h2>
+      <p id="uni">—</p>
+      <p id="country">—</p>
+      <div id="badge"></div>
     </div>
+  </div>
 
-    <div class="field">
-      <label>Full name</label>
-      <input id="nameInput" placeholder="Your name">
-    </div>
-
-    <div class="field">
-      <label>University</label>
-      <input id="uniInput" placeholder="University name">
-    </div>
-
-    <div class="field">
-      <label>Country</label>
-      <input id="countryInput" placeholder="Country">
-    </div>
-
+  <!-- Edit -->
+  <div class="section">
+    <div class="section-title">Edit Profile</div>
+    <input id="nameInput" placeholder="Full name"/>
+    <input id="uniInput" placeholder="University"/>
+    <input id="countryInput" placeholder="Country"/>
+    <input id="avatarInput" placeholder="Avatar image URL"/>
     <button class="save-btn" onclick="saveProfile()">Save Profile</button>
+  </div>
 
-    <div class="progress" id="progressText"></div>
-
+  <!-- Proof -->
+  <div class="section">
+    <div class="section-title">Public Proof (Zora)</div>
+    <div id="proofList"></div>
   </div>
 
 </div>
 
-<!-- FOOTER -->
+<!-- Footer -->
 <div class="footer">
   <a class="fbtn" href="wallet.html">💼</a>
   <a class="fbtn" href="learn-earn.html">🎓</a>
-  <a class="fbtn" href="profile.html">👤</a>
+  <a class="fbtn" href="student-dashboard.html">🏠</a>
 </div>
 
 <script>
-/* ---------------- LOAD ---------------- */
-window.onload = () => {
-  const profile = JSON.parse(localStorage.getItem("zepStudentProfile")||"{}");
-  const learn = JSON.parse(localStorage.getItem("zepProgress")||"{}");
+const student = JSON.parse(localStorage.getItem("zepStudent"));
+if(!student){location.href="login.html";}
 
-  if(profile.avatar){
-    document.getElementById("avatarPreview").src = profile.avatar;
-  }
-  document.getElementById("nameInput").value = profile.name || "";
-  document.getElementById("uniInput").value = profile.university || "";
-  document.getElementById("countryInput").value = profile.country || "";
+const profileKey="zepProfile";
+let profile = JSON.parse(localStorage.getItem(profileKey)) || {};
 
-  let completed = 0;
-  Object.values(learn).forEach(s=>{
-    completed += Math.max(0,(s.day||1)-1);
+const avatarFallback =
+  "https://avatars.githubusercontent.com/u/9919?v=4";
+
+/* Render */
+function render(){
+  document.getElementById("name").textContent = profile.name || "Student";
+  document.getElementById("uni").textContent = profile.university || "—";
+  document.getElementById("country").textContent = profile.country || "—";
+
+  const img = document.getElementById("avatarImg");
+  img.src = profile.avatar || avatarFallback;
+  img.onerror = ()=>img.src=avatarFallback;
+
+  document.getElementById("badge").innerHTML =
+    student.verified ? `<span class="badge">Verified Creator</span>` : "";
+
+  // Proof
+  const proofs = JSON.parse(localStorage.getItem("zepProgress"))||{};
+  const box=document.getElementById("proofList");
+  box.innerHTML="";
+  Object.values(proofs).forEach(p=>{
+    if(p.proof){
+      const d=document.createElement("div");
+      d.className="proof";
+      d.innerHTML=`🔗 <a href="${p.proof}" target="_blank">${p.proof}</a>`;
+      box.appendChild(d);
+    }
   });
+}
 
-  const badge = document.getElementById("verifyBadge");
-  if(completed >= 21){
-    badge.textContent = "Verified Student";
-    badge.className = "badge verified";
-  }
-
-  document.getElementById("progressText").textContent =
-    `Tasks completed: ${completed} / 21`;
-};
-
-/* ---------------- SAVE ---------------- */
+/* Save */
 function saveProfile(){
-  const existing = JSON.parse(localStorage.getItem("zepStudentProfile")||"{}");
-
-  const profile = {
-    ...existing,
-    name: document.getElementById("nameInput").value.trim(),
-    university: document.getElementById("uniInput").value.trim(),
-    country: document.getElementById("countryInput").value.trim(),
+  profile={
+    name:nameInput.value.trim(),
+    university:uniInput.value.trim(),
+    country:countryInput.value.trim(),
+    avatar:avatarInput.value.trim()
   };
-
-  localStorage.setItem("zepStudentProfile", JSON.stringify(profile));
-  alert("Profile saved ✅");
+  localStorage.setItem(profileKey,JSON.stringify(profile));
+  alert("Profile updated");
+  render();
 }
 
-/* ---------------- AVATAR ---------------- */
-function uploadAvatar(e){
-  const file = e.target.files[0];
-  if(!file) return;
-
-  const reader = new FileReader();
-  reader.onload = ()=>{
-    document.getElementById("avatarPreview").src = reader.result;
-
-    const profile = JSON.parse(localStorage.getItem("zepStudentProfile")||"{}");
-    profile.avatar = reader.result;
-    localStorage.setItem("zepStudentProfile", JSON.stringify(profile));
-  };
-  reader.readAsDataURL(file);
-}
+render();
 </script>
 
 </body>
