@@ -6,7 +6,9 @@
 <title>Zep Swipe — Login</title>
 
 <!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+<script src="https://cdn.tailwindcss.com"></script>
 
 <style>
 :root{
@@ -14,35 +16,27 @@
   --zep-violet:#9c4dff;
   --glass:rgba(255,255,255,0.08);
 }
-
-*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:'Poppins',sans-serif;
-  background:radial-gradient(circle at 25% 10%, #06001c 0%, #000012 100%);
   height:100vh;
+  background:radial-gradient(circle at 25% 10%, #06001c 0%, #000012 100%);
   color:#fff;
+  font-family:Poppins,sans-serif;
   display:flex;
   align-items:center;
   justify-content:center;
   overflow:hidden;
 }
-
-/* Glow orbs */
 .orb{
   position:absolute;
   width:420px;height:420px;
   border-radius:50%;
-  opacity:.15;
-  filter:blur(50px);
+  filter:blur(60px);
+  opacity:.18;
 }
-.orb.blue{background:var(--zep-blue);top:-140px;left:-140px}
-.orb.violet{background:var(--zep-violet);bottom:-160px;right:-160px}
-
-/* Card */
 .card{
   width:92%;
-  max-width:380px;
+  max-width:420px;
   padding:28px;
   border-radius:22px;
   background:var(--glass);
@@ -50,22 +44,16 @@ body{
   backdrop-filter:blur(18px);
   box-shadow:0 0 40px rgba(0,240,255,.25);
   text-align:center;
-  z-index:2;
 }
-
-/* Logo */
-h1{
-  font-family:'Orbitron';
-  font-size:2.1rem;
-  margin:0 0 10px;
+.brand{
+  font-family:Orbitron;
+  font-size:2.2rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  text-shadow:0 0 26px rgba(0,240,255,.45);
+  margin-bottom:10px;
 }
-
-/* Role buttons */
-.roles{
+.role-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
@@ -75,72 +63,53 @@ h1{
   padding:14px;
   border-radius:16px;
   border:1px solid rgba(255,255,255,.2);
-  background:rgba(0,0,0,.4);
   cursor:pointer;
   transition:.2s;
 }
 .role.active{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050018;
+  color:#050015;
   border:none;
 }
-.role small{
-  display:block;
-  font-size:11px;
-  opacity:.85;
-}
-
-/* Button */
 .btn{
+  margin-top:14px;
   width:100%;
   padding:14px;
-  margin-top:14px;
-  border-radius:999px;
   border:none;
-  cursor:pointer;
-  font-family:'Orbitron';
-  font-weight:700;
+  border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050018;
-  box-shadow:0 0 30px rgba(0,240,255,.45);
-  transition:.25s;
+  font-family:Orbitron;
+  font-weight:700;
+  color:#050015;
+  cursor:pointer;
+  box-shadow:0 0 28px rgba(0,240,255,.45);
 }
-.btn:hover{transform:scale(1.05)}
-
-.footer{
-  margin-top:16px;
-  font-size:11px;
-  opacity:.5;
-}
+.small{font-size:12px;opacity:.7}
 </style>
 </head>
 
 <body>
 
-<div class="orb blue"></div>
-<div class="orb violet"></div>
+<div class="orb" style="top:-120px;left:-140px;background:var(--zep-violet)"></div>
+<div class="orb" style="bottom:-160px;right:-160px;background:var(--zep-blue)"></div>
 
 <div class="card">
-  <h1>Zep Swipe</h1>
-  <p style="opacity:.8;font-size:13px;margin-bottom:10px">
-    Choose how you want to use Zep Swipe
-  </p>
+  <div class="brand">Zep Swipe</div>
+  <p class="small">Choose how you want to use the platform</p>
 
   <!-- ROLE SELECT -->
-  <div class="roles">
+  <div class="role-grid">
     <div class="role active" id="studentRole" onclick="selectRole('student')">
-      🎓 Student
-      <small>Learn, earn & sell skills</small>
+      🎓 Student<br><span class="small">Learn · Earn · Sell</span>
     </div>
     <div class="role" id="clientRole" onclick="selectRole('client')">
-      🛒 Client
-      <small>Hire verified creators</small>
+      💼 Client<br><span class="small">Hire Creators</span>
     </div>
   </div>
 
   <button class="btn" onclick="connectWallet()">🔗 Connect Wallet</button>
 
-  <div class="footer">© 2025 Zep Swipe</div>
+  <p class="small mt-4">Base network · Wallet login</p>
 </div>
 
 <script>
@@ -153,36 +122,34 @@ function selectRole(role){
   document.getElementById(role+"Role").classList.add("active");
 }
 
+/* CONNECT WALLET */
 async function connectWallet(){
   if(!window.ethereum){
-    alert("Install MetaMask or open with Coinbase Wallet.");
+    alert("Install MetaMask or Coinbase Wallet");
     return;
   }
 
   try{
-    const accounts = await window.ethereum.request({ method:"eth_requestAccounts" });
-    if(!accounts || !accounts.length) return;
+    const accounts = await window.ethereum.request({method:"eth_requestAccounts"});
+    if(!accounts.length) return;
 
     const wallet = accounts[0];
 
-    /* Save session */
+    // Save unified session
     localStorage.setItem("zepSession", JSON.stringify({
-      role: selectedRole
+      wallet,
+      role: selectedRole,
+      loggedIn: true
     }));
 
-    if(selectedRole === "student"){
-      localStorage.setItem("zepStudent", JSON.stringify({
-        wallet,
-        loggedIn:true
-      }));
-      setTimeout(()=>location.href="student-dashboard.html",300);
-    } else {
-      localStorage.setItem("zepClient", JSON.stringify({
-        wallet,
-        loggedIn:true
-      }));
-      setTimeout(()=>location.href="swipe-merchants.html",300);
-    }
+    // Role-based redirect
+    setTimeout(()=>{
+      if(selectedRole==="student"){
+        window.location.href="student-dashboard.html";
+      }else{
+        window.location.href="swipe-merchants.html";
+      }
+    },300);
 
   }catch(err){
     console.error(err);
@@ -190,18 +157,17 @@ async function connectWallet(){
   }
 }
 
-/* Auto redirect if logged in */
-window.onload = ()=>{
+/* AUTO LOGIN */
+window.addEventListener("load",()=>{
   const session = JSON.parse(localStorage.getItem("zepSession"));
-  if(!session) return;
-
-  if(session.role === "student" && localStorage.getItem("zepStudent")){
-    location.href="student-dashboard.html";
+  if(session && session.loggedIn){
+    if(session.role==="student"){
+      window.location.href="student-dashboard.html";
+    }else{
+      window.location.href="swipe-merchants.html";
+    }
   }
-  if(session.role === "client" && localStorage.getItem("zepClient")){
-    location.href="swipe-merchants.html";
-  }
-};
+});
 </script>
 
 </body>
