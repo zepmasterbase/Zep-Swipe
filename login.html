@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zep Swipe — Student Login</title>
+<title>Zep Swipe — Login</title>
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
-<!-- Tailwind -->
-<script src="https://cdn.tailwindcss.com"></script>
 
 <style>
 :root {
@@ -18,6 +15,7 @@
   --glass: rgba(255,255,255,0.08);
 }
 
+*{box-sizing:border-box}
 body {
   font-family:'Poppins',sans-serif;
   background:radial-gradient(circle at 25% 10%, #06001c 0%, #000012 100%);
@@ -31,7 +29,7 @@ body {
   overflow:hidden;
 }
 
-/* LOGO TEXT */
+/* LOGO */
 h1 {
   font-family:'Orbitron';
   font-size:2.2rem;
@@ -39,10 +37,9 @@ h1 {
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   text-shadow:0 0 22px rgba(0,240,255,0.45);
-  margin-bottom:0.8rem;
+  margin-bottom:1rem;
   animation: glowPulse 3s ease-in-out infinite;
 }
-
 @keyframes glowPulse {
   0% { text-shadow:0 0 14px rgba(0,240,255,0.4); }
   50% { text-shadow:0 0 38px rgba(156,77,255,0.9); }
@@ -53,7 +50,7 @@ h1 {
 .login-box {
   background: var(--glass);
   padding: 2rem 2.2rem;
-  border-radius: 1.5rem;
+  border-radius: 1.6rem;
   border:1px solid rgba(255,255,255,0.15);
   backdrop-filter: blur(18px);
   box-shadow:0 0 35px rgba(0,240,255,0.25);
@@ -62,11 +59,39 @@ h1 {
   max-width: 380px;
 }
 
+/* ROLE PICK */
+.role-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:16px;
+}
+.role{
+  padding:14px;
+  border-radius:16px;
+  background:rgba(0,0,0,.5);
+  border:1px solid rgba(255,255,255,.15);
+  cursor:pointer;
+  transition:.2s;
+  font-size:13px;
+}
+.role.active{
+  border-color:var(--zep-blue);
+  box-shadow:0 0 18px rgba(0,240,255,.45);
+}
+.role span{
+  font-family:'Orbitron';
+  font-size:12px;
+  display:block;
+  margin-top:4px;
+  opacity:.85;
+}
+
 /* Button */
 .glow-btn {
   width: 100%;
   padding: 14px;
-  margin-top: 14px;
+  margin-top: 10px;
   border:none;
   border-radius: 999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
@@ -82,7 +107,7 @@ h1 {
   box-shadow:0 0 45px rgba(156,77,255,0.7);
 }
 
-/* Floating background orbs */
+/* ORBS */
 .orb {
   position:absolute;
   width:420px; height:420px;
@@ -100,7 +125,7 @@ h1 {
 
 <body>
 
-<!-- Background glowing circles -->
+<!-- Background orbs -->
 <div class="orb" style="top:-120px; left:-140px; background:var(--zep-violet);"></div>
 <div class="orb" style="bottom:-150px; right:-150px; background:var(--zep-blue);"></div>
 
@@ -108,9 +133,21 @@ h1 {
 
 <div class="login-box">
 
-  <p class="text-sm opacity-80 mb-4">
-    Connect your wallet to access your <b>Student Dashboard</b>.
+  <p style="font-size:13px;opacity:.8;margin-bottom:12px">
+    Choose how you want to use Zep Swipe
   </p>
+
+  <!-- ROLE SELECT -->
+  <div class="role-grid">
+    <div class="role active" id="studentRole" onclick="selectRole('student')">
+      🎓 Student
+      <span>Learn · Earn · Sell skills</span>
+    </div>
+    <div class="role" id="clientRole" onclick="selectRole('client')">
+      🛍 Client
+      <span>Hire verified creators</span>
+    </div>
+  </div>
 
   <button class="glow-btn" onclick="connectWallet()">
     🔗 Connect Wallet
@@ -118,59 +155,76 @@ h1 {
 
 </div>
 
-<footer class="mt-6 opacity-40 text-xs">
-  © 2025 Zep Swipe — Student Web3 Network
+<footer style="margin-top:20px;opacity:.45;font-size:11px">
+  © 2025 Zep Swipe — Student Creator Economy
 </footer>
 
 <script>
-/* -----------------------------
-   WALLET LOGIN LOGIC (unchanged)
-------------------------------*/
+let selectedRole = "student";
+
+function selectRole(role){
+  selectedRole = role;
+  document.getElementById("studentRole").classList.remove("active");
+  document.getElementById("clientRole").classList.remove("active");
+
+  if(role === "student"){
+    document.getElementById("studentRole").classList.add("active");
+  } else {
+    document.getElementById("clientRole").classList.add("active");
+  }
+}
+
+/* WALLET LOGIN */
 async function connectWallet() {
   if (!window.ethereum) {
-    alert("🚨 No wallet detected! Install MetaMask or use Coinbase Wallet.");
+    alert("🚨 No wallet detected! Use MetaMask or Coinbase Wallet.");
     return;
   }
 
   try {
-    console.log("⏳ Requesting wallet...");
     const accounts = await window.ethereum.request({
       method: "eth_requestAccounts"
     });
 
     if (!accounts || accounts.length === 0) {
-      alert("⚠️ No wallet connected.");
+      alert("⚠️ Wallet not connected.");
       return;
     }
 
     const wallet = accounts[0];
-    console.log("Wallet connected:", wallet);
 
-    // Save student session
-    localStorage.setItem(
-      "zepStudent",
-      JSON.stringify({ wallet, loggedIn: true })
-    );
+    // Save session
+    localStorage.setItem("zepSession", JSON.stringify({
+      wallet,
+      role: selectedRole,
+      loggedIn: true
+    }));
 
-    // MetaMask mobile requires small delay
     setTimeout(() => {
-      console.log("➡️ Redirecting to student-dashboard.html");
-      window.location.href = "student-dashboard.html";
+      if(selectedRole === "student"){
+        window.location.href = "student-dashboard.html";
+      } else {
+        window.location.href = "swipe-merchants.html";
+      }
     }, 300);
 
   } catch (err) {
-    console.error("Login error:", err);
+    console.error(err);
     alert("⚠️ Wallet connection failed.");
   }
 }
 
-// Auto login if already authenticated
+/* AUTO LOGIN */
 window.addEventListener("load", () => {
-  const user = JSON.parse(localStorage.getItem("zepStudent"));
-  if (user && user.loggedIn) {
-    setTimeout(() => {
-      window.location.href = "student-dashboard.html";
-    }, 300);
+  const s = JSON.parse(localStorage.getItem("zepSession"));
+  if(s && s.loggedIn){
+    setTimeout(()=>{
+      if(s.role === "student"){
+        window.location.href = "student-dashboard.html";
+      }else{
+        window.location.href = "swipe-merchants.html";
+      }
+    },300);
   }
 });
 </script>
