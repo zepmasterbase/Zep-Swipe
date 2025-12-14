@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Zep Swipe — Student Creator Economy</title>
 
-<meta name="description" content="Zep Swipe helps university students build real digital skills, publish public proof, earn Zep Cash (ZAC), and sell services on Swipe Merchants." />
-<meta name="base:app_id" content="693d41f2d19763ca26ddc261" />
+<meta name="description" content="Zep Swipe is a student creator economy where students learn by doing, earn on-chain rewards, and sell verified digital skills." />
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
@@ -17,69 +16,76 @@
   --bg:radial-gradient(circle at top, #020014 0%, #00000a 100%);
   --glass:rgba(255,255,255,0.06);
 }
+
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:Poppins,sans-serif;
   background:var(--bg);
   color:#fff;
+  min-height:100vh;
 }
-a{text-decoration:none;color:inherit}
 
-.container{
+/* Layout */
+.wrapper{
   max-width:1100px;
   margin:0 auto;
-  padding:24px 16px 100px;
+  padding:24px;
 }
 
 /* Header */
-.header{
-  position:fixed;
-  top:16px;
-  left:50%;
-  transform:translateX(-50%);
-  width:calc(100% - 32px);
-  max-width:1100px;
-  padding:14px 18px;
-  border-radius:16px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.1);
-  backdrop-filter:blur(16px);
+header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  z-index:50;
+  padding:16px 20px;
+  border-radius:18px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(18px);
+  box-shadow:0 0 36px rgba(0,240,255,0.25);
 }
+
 .brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.brand-logo{
+  width:44px;height:44px;
+  border-radius:14px;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  display:flex;align-items:center;justify-content:center;
+  font-family:Orbitron;
+  font-weight:700;
+  color:#050015;
+}
+.brand-name{
   font-family:Orbitron;
   font-size:1.4rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.nav{
-  display:flex;
-  gap:14px;
-}
-.nav a{
-  font-size:13px;
-  opacity:.85;
-}
-.nav a.primary{
-  padding:8px 16px;
+
+.header-btn{
+  padding:10px 18px;
   border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
+  border:none;
+  cursor:pointer;
   font-family:Orbitron;
   font-size:12px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
 }
 
 /* Hero */
 .hero{
-  margin-top:120px;
+  margin-top:90px;
   display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:36px;
+  grid-template-columns:1.2fr 1fr;
+  gap:48px;
+  align-items:center;
 }
 @media(max-width:900px){
   .hero{grid-template-columns:1fr}
@@ -87,57 +93,64 @@ a{text-decoration:none;color:inherit}
 
 .hero h1{
   font-family:Orbitron;
-  font-size:2.6rem;
-  line-height:1.1;
+  font-size:3rem;
+  line-height:1.05;
   margin:0 0 14px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 .hero p{
-  font-size:15px;
-  opacity:.9;
+  font-size:1rem;
+  opacity:.85;
   max-width:520px;
+  margin-bottom:28px;
 }
 
-.cta{
-  margin-top:22px;
+/* CTA */
+.cta-row{
   display:flex;
   gap:14px;
   flex-wrap:wrap;
 }
-.btn{
-  padding:12px 22px;
+.cta{
+  padding:14px 26px;
   border-radius:999px;
   font-family:Orbitron;
-  font-size:13px;
+  font-weight:700;
+  text-decoration:none;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
+  box-shadow:0 0 28px rgba(0,240,255,.35);
 }
-.btn.secondary{
+.cta.secondary{
   background:none;
-  border:1px solid rgba(255,255,255,.25);
   color:#fff;
+  border:1px solid rgba(255,255,255,0.18);
 }
 
-/* Hero Card */
+/* Right Card */
 .hero-card{
   padding:22px;
   border-radius:22px;
-  background:rgba(0,0,0,.6);
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 0 40px rgba(0,240,255,.25);
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(18px);
 }
 .hero-card h3{
   font-family:Orbitron;
+  font-size:1rem;
   margin:0 0 10px;
 }
-.stat{
-  margin-top:12px;
-  padding:12px;
-  border-radius:14px;
-  background:rgba(255,255,255,.05);
+.hero-card ul{
+  padding:0;
+  margin:0;
+  list-style:none;
+}
+.hero-card li{
   font-size:13px;
+  opacity:.85;
+  margin-bottom:10px;
 }
 
 /* Sections */
@@ -146,158 +159,118 @@ a{text-decoration:none;color:inherit}
 }
 .section-title{
   font-family:Orbitron;
-  font-size:1.4rem;
-  margin-bottom:14px;
+  font-size:1.2rem;
+  margin-bottom:24px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 
-/* Grid */
-.grid{
+/* Features */
+.features{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:16px;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
 }
-.card{
+.feature{
   padding:18px;
   border-radius:18px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.65);
+  border:1px solid rgba(255,255,255,0.12);
 }
-.card h4{
+.feature h4{
   font-family:Orbitron;
+  font-size:.9rem;
   margin:0 0 6px;
-  font-size:.95rem;
 }
-.card p{
-  font-size:13px;
-  opacity:.85;
-}
-
-/* Marketplace */
-.market-cta{
-  margin-top:60px;
-  padding:26px;
-  border-radius:24px;
-  background:linear-gradient(180deg, rgba(0,240,255,.15), rgba(0,0,0,.7));
-  border:1px solid rgba(0,240,255,.4);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:16px;
-}
-.market-cta h2{
-  font-family:Orbitron;
-  margin:0;
-}
-.market-cta p{
-  font-size:14px;
-  opacity:.9;
+.feature p{
+  font-size:12px;
+  opacity:.8;
 }
 
 /* Footer */
-.footer{
-  margin-top:80px;
-  padding-top:30px;
-  border-top:1px solid rgba(255,255,255,.1);
+footer{
+  margin-top:100px;
+  padding:28px 0;
   text-align:center;
   font-size:12px;
-  opacity:.7;
+  opacity:.6;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="brand">Zep Swipe</div>
-  <div class="nav">
-    <a href="learn-earn.html">Learn & Earn</a>
-    <a href="swipe-merchants.html">Marketplace</a>
-    <a href="login.html" class="primary">Get Started</a>
-  </div>
-</div>
+<div class="wrapper">
 
-<div class="container">
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="brand-logo">Z</div>
+      <div class="brand-name">Zep Swipe</div>
+    </div>
+    <button class="header-btn" onclick="location.href='login.html'">Connect</button>
+  </header>
 
   <!-- HERO -->
   <section class="hero">
     <div>
-      <h1>Build skills. Publish proof. Earn as a student creator.</h1>
+      <h1>Where students become creators.</h1>
       <p>
-        Zep Swipe helps university students learn by doing — complete real digital tasks,
-        publish public proof on Zora, earn Zep Cash (ZAC), and sell services on Swipe Merchants.
+        Zep Swipe is a student creator economy.
+        Learn by doing, earn on-chain rewards, and turn verified skills into income.
       </p>
 
-      <div class="cta">
-        <a href="login.html" class="btn">Start Free</a>
-        <a href="learn-earn.html" class="btn secondary">Explore Skill Tracks</a>
+      <div class="cta-row">
+        <a href="login.html" class="cta">Get Started</a>
+        <a href="login.html" class="cta secondary">Browse Creators</a>
       </div>
     </div>
 
     <div class="hero-card">
-      <h3>Creator Identity</h3>
-      <div class="stat">✔ Wallet = Profile + Proof</div>
-      <div class="stat">✔ Public Zora verification</div>
-      <div class="stat">✔ Earn while learning</div>
-      <div class="stat">✔ Verified student marketplace</div>
+      <h3>What happens on Zep Swipe</h3>
+      <ul>
+        <li>🎓 Students complete real 21-day skill challenges</li>
+        <li>🧾 Public proof of work via Zora & links</li>
+        <li>💎 Earn Zep Cash (ZAC) as you learn</li>
+        <li>🛍 Verified students sell services on Swipe Merchants</li>
+      </ul>
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
+  <!-- FEATURES -->
   <section class="section">
-    <div class="section-title">How Zep Swipe Works</div>
-    <div class="grid">
-      <div class="card">
-        <h4>1. Learn by Doing</h4>
-        <p>Complete 21-day practical challenges across AI, no-code, design, and automation.</p>
+    <div class="section-title">Built for a new student economy</div>
+
+    <div class="features">
+      <div class="feature">
+        <h4>Proof over grades</h4>
+        <p>Every skill is backed by public work, not certificates.</p>
       </div>
-      <div class="card">
-        <h4>2. Publish Proof</h4>
-        <p>Post your work publicly on Zora and submit links for transparent verification.</p>
+      <div class="feature">
+        <h4>Wallet identity</h4>
+        <p>Your wallet tracks progress, rewards, and reputation.</p>
       </div>
-      <div class="card">
-        <h4>3. Earn ZAC</h4>
-        <p>Receive Zep Cash rewards for every completed task.</p>
+      <div class="feature">
+        <h4>Earn while learning</h4>
+        <p>Daily tasks unlock ZAC rewards as you level up.</p>
       </div>
-      <div class="card">
-        <h4>4. Sell Skills</h4>
-        <p>List your verified services on Swipe Merchants and start earning from clients.</p>
+      <div class="feature">
+        <h4>Student marketplace</h4>
+        <p>Clients hire verified student creators directly.</p>
       </div>
     </div>
   </section>
 
-  <!-- SKILLS -->
-  <section class="section">
-    <div class="section-title">Skill Tracks</div>
-    <div class="grid">
-      <div class="card"><h4>AI Prompt Engineering</h4><p>Production-ready prompts</p></div>
-      <div class="card"><h4>AI Content Creation</h4><p>Posts, scripts, storytelling</p></div>
-      <div class="card"><h4>No-Code Design</h4><p>Visual assets & templates</p></div>
-      <div class="card"><h4>Video Editing</h4><p>Short-form & reels</p></div>
-      <div class="card"><h4>No-Code Websites</h4><p>Landing pages</p></div>
-      <div class="card"><h4>Chatbot Building</h4><p>FAQ & AI flows</p></div>
-      <div class="card"><h4>Research & Lead Gen</h4><p>Data collection</p></div>
-      <div class="card"><h4>Automation</h4><p>Micro workflows</p></div>
-    </div>
-  </section>
-
-  <!-- MARKETPLACE CTA -->
-  <section class="market-cta">
-    <div>
-      <h2>Swipe Merchants</h2>
-      <p>Browse verified student creators and hire talent with real proof of work.</p>
-    </div>
-    <a href="swipe-merchants.html" class="btn">Visit Marketplace</a>
+  <!-- FINAL CTA -->
+  <section class="section" style="text-align:center">
+    <a href="login.html" class="cta">Enter Zep Swipe</a>
   </section>
 
   <!-- FOOTER -->
-  <div class="footer">
-    © <span id="year"></span> Zep Swipe · Built on Base
-  </div>
+  <footer>
+    © <span id="year"></span> Zep Swipe — Student Creator Economy
+  </footer>
 
 </div>
 
