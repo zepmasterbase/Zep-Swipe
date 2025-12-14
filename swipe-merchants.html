@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Swipe Merchants — Zep Swipe</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -12,9 +12,10 @@
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 25% 10%, #050018 0%, #000010 100%);
+  --bg:radial-gradient(circle at top, #04001a 0%, #000010 100%);
   --glass:rgba(255,255,255,0.06);
 }
+
 *{box-sizing:border-box}
 body{
   margin:0;
@@ -23,26 +24,24 @@ body{
   color:#fff;
 }
 
-/* CONTAINER */
 .container{
   max-width:1100px;
-  margin:30px auto 80px;
+  margin:24px auto 120px;
   padding:16px;
 }
 
 /* HEADER */
 .header{
-  padding:16px 18px;
-  border-radius:18px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.1);
   display:flex;
   justify-content:space-between;
   align-items:center;
-  backdrop-filter:blur(14px);
-  box-shadow:0 0 32px rgba(0,240,255,.25);
+  padding:16px;
+  border-radius:18px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(16px);
+  box-shadow:0 0 40px rgba(0,240,255,.25);
 }
-
 .brand{
   font-family:Orbitron;
   font-size:1.4rem;
@@ -50,37 +49,27 @@ body{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-
-/* LOGOUT ICON */
 .logout{
-  width:48px;height:48px;
-  border-radius:16px;
+  width:44px;height:44px;
+  border-radius:50%;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   display:flex;
   align-items:center;
   justify-content:center;
-  cursor:pointer;
-  box-shadow:
-    0 0 22px rgba(0,240,255,.6),
-    inset 0 -4px 12px rgba(0,0,0,.4);
-  transition:.25s;
-}
-.logout:hover{
-  transform:scale(1.08) rotate(6deg);
-}
-.logout span{
-  font-size:20px;
   color:#050015;
+  cursor:pointer;
+  box-shadow:0 0 22px rgba(0,240,255,.6);
+  font-size:20px;
 }
 
-/* GRID — 2 PER ROW */
+/* GRID */
 .grid{
-  margin-top:26px;
+  margin-top:24px;
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:20px;
 }
-@media(max-width:700px){
+@media(max-width:768px){
   .grid{grid-template-columns:1fr}
 }
 
@@ -88,46 +77,54 @@ body{
 .card{
   padding:18px;
   border-radius:20px;
-  background:var(--glass);
+  background:rgba(0,0,0,.65);
   border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(16px);
-  box-shadow:0 0 28px rgba(0,0,0,.6);
+  transition:.2s;
 }
-
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 30px rgba(156,77,255,.35);
+}
 .card h3{
+  margin:0;
   font-family:Orbitron;
   font-size:1rem;
-  margin:0;
 }
 .card p{
   font-size:13px;
   opacity:.85;
-  margin:8px 0 12px;
 }
-
 .price{
+  margin-top:10px;
   font-family:Orbitron;
   font-size:1.1rem;
-  margin-bottom:10px;
+}
+.seller{
+  font-size:12px;
+  opacity:.7;
+  margin-top:6px;
+  cursor:pointer;
+  text-decoration:underline;
 }
 
+/* BUTTON */
 .btn{
+  margin-top:14px;
   width:100%;
   padding:12px;
   border-radius:999px;
   border:none;
-  font-family:Orbitron;
-  font-weight:700;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050018;
   cursor:pointer;
-  box-shadow:0 0 22px rgba(0,240,255,.4);
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
 }
 
+/* STATUS */
 .status{
   margin-top:8px;
   font-size:12px;
-  opacity:.8;
+  opacity:.85;
 }
 </style>
 </head>
@@ -139,9 +136,7 @@ body{
   <!-- HEADER -->
   <div class="header">
     <div class="brand">Swipe Merchants</div>
-    <div class="logout" onclick="logout()" title="Logout">
-      <span>⎋</span>
-    </div>
+    <div class="logout" onclick="logout()">⎋</div>
   </div>
 
   <!-- MARKETPLACE -->
@@ -151,96 +146,126 @@ body{
 
 <script>
 /* ---------------- CONFIG ---------------- */
-const USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913"; // USDC Base
+const USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913";
 const ERC20_ABI = [
-  "function decimals() view returns (uint8)",
-  "function transfer(address to, uint amount) returns (bool)"
+  "function transfer(address,uint256) returns(bool)",
+  "function decimals() view returns(uint8)"
 ];
 
-/* ---------------- SAMPLE SERVICES ---------------- */
-const listings = [
+/* ---------------- SAMPLE GIGS ---------------- */
+const gigs = [
   {
+    id:"gig1",
     title:"AI Content Writer",
-    desc:"Blog posts, X threads & LinkedIn content",
+    desc:"Blogs, LinkedIn posts & SEO articles",
     price:25,
-    seller:"0xSELLER_WALLET_1"
+    seller:"0xSELLER_WALLET_1",
+    sellerName:"David · University of Lagos"
   },
   {
-    title:"No-Code Website Builder",
-    desc:"Landing pages & MVPs",
+    id:"gig2",
+    title:"No-Code Automation",
+    desc:"Zapier & Airtable workflows",
     price:40,
-    seller:"0xSELLER_WALLET_2"
+    seller:"0xSELLER_WALLET_2",
+    sellerName:"Amina · University of Ghana"
   },
   {
-    title:"Graphic Designer",
-    desc:"Logos, flyers & brand kits",
+    id:"gig3",
+    title:"Social Media Design",
+    desc:"Flyers, carousels & banners",
     price:30,
-    seller:"0xSELLER_WALLET_3"
+    seller:"0xSELLER_WALLET_3",
+    sellerName:"Samuel · Makerere University"
   },
   {
-    title:"Video Editor",
-    desc:"Short-form & reels",
-    price:35,
-    seller:"0xSELLER_WALLET_4"
+    id:"gig4",
+    title:"Landing Page Builder",
+    desc:"No-code websites & funnels",
+    price:50,
+    seller:"0xSELLER_WALLET_4",
+    sellerName:"Zainab · FUT Minna"
   }
 ];
 
-let provider, signer;
+let provider, signer, buyer;
 
-/* ---------------- INIT ---------------- */
-const market = document.getElementById("marketplace");
+/* ---------------- RENDER ---------------- */
+const grid = document.getElementById("marketplace");
 
-listings.forEach((l,i)=>{
+gigs.forEach((g,i)=>{
   const c=document.createElement("div");
   c.className="card";
   c.innerHTML=`
-    <h3>${l.title}</h3>
-    <p>${l.desc}</p>
-    <div class="price">${l.price} USDC</div>
-    <button class="btn" onclick="buy(${i})">Pay & Hire</button>
+    <h3>${g.title}</h3>
+    <p>${g.desc}</p>
+    <div class="price">${g.price} USDC</div>
+    <div class="seller" onclick="viewSeller('${g.seller}')">
+      ${g.sellerName}
+    </div>
+    <button class="btn" onclick="buy(${i})">Buy Service</button>
     <div class="status" id="status-${i}"></div>
   `;
-  market.appendChild(c);
+  grid.appendChild(c);
 });
 
 /* ---------------- WALLET ---------------- */
 async function connect(){
-  if(!window.ethereum) return alert("Install MetaMask or Coinbase Wallet");
+  if(!window.ethereum) return alert("Install wallet");
   provider = new ethers.BrowserProvider(window.ethereum);
   await provider.send("eth_requestAccounts",[]);
   signer = await provider.getSigner();
+  buyer = await signer.getAddress();
 }
+
+connect();
 
 /* ---------------- BUY ---------------- */
 async function buy(index){
-  if(!signer) await connect();
+  const g = gigs[index];
+  const status = document.getElementById(`status-${index}`);
 
-  const item=listings[index];
-  const status=document.getElementById(`status-${index}`);
+  if(!signer) return alert("Connect wallet");
 
   try{
-    status.textContent="Processing payment…";
+    status.textContent="Processing payment...";
+    const usdc = new ethers.Contract(USDC_ADDRESS, ERC20_ABI, signer);
+    const dec = await usdc.decimals();
+    const amount = ethers.parseUnits(g.price.toString(), dec);
 
-    const usdc=new ethers.Contract(USDC_ADDRESS,ERC20_ABI,signer);
-    const dec=await usdc.decimals();
-    const amount=ethers.parseUnits(item.price.toString(),dec);
-
-    // 🔥 DIRECT PAYMENT TO STUDENT WALLET
-    const tx=await usdc.transfer(item.seller,amount);
-    status.textContent="Confirming on Base…";
+    const tx = await usdc.transfer(g.seller, amount);
     await tx.wait();
 
-    status.textContent="✅ Paid successfully — student funded";
+    // CREATE ORDER
+    const order={
+      id:"ORD-"+Date.now(),
+      buyer,
+      seller:g.seller,
+      gig:g.title,
+      price:g.price,
+      status:"active"
+    };
+    localStorage.setItem("zepOrder",JSON.stringify(order));
+
+    status.textContent="✅ Payment successful";
+    setTimeout(()=>location.href="order-chat.html",800);
+
   }catch(e){
     console.error(e);
     status.textContent="❌ Transaction failed";
   }
 }
 
+/* ---------------- SELLER PROFILE ---------------- */
+function viewSeller(wallet){
+  location.href=`seller-profile.html?wallet=${wallet}`;
+}
+
 /* ---------------- LOGOUT ---------------- */
 function logout(){
-  localStorage.clear();
-  window.location.href="index.html";
+  localStorage.removeItem("zepStudent");
+  localStorage.removeItem("zepUser");
+  location.href="index.html";
 }
 </script>
 
