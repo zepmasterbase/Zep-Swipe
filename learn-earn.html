@@ -24,7 +24,7 @@ body{
 }
 .container{
   max-width:980px;
-  margin:24px auto 160px;
+  margin:24px auto 140px;
   padding:16px;
 }
 
@@ -68,7 +68,7 @@ body{
 }
 .courses{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:14px;
 }
 .course{
@@ -90,7 +90,6 @@ body{
   height:100%;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
 }
-.small{font-size:12px;opacity:.85}
 
 /* Modal */
 .modal-back{
@@ -104,12 +103,13 @@ body{
 }
 .modal{
   width:95%;
-  max-width:480px;
+  max-width:460px;
   background:rgba(10,15,40,.96);
   padding:18px;
   border-radius:20px;
   border:1px solid rgba(255,255,255,.15);
 }
+.small{font-size:12px;opacity:.85}
 input{
   width:100%;
   margin-top:10px;
@@ -118,24 +118,6 @@ input{
   border:1px solid rgba(255,255,255,.2);
   background:#020617;
   color:#fff;
-}
-
-/* Verify */
-.verify-box{
-  margin-top:26px;
-  padding:18px;
-  border-radius:20px;
-  background:rgba(0,0,0,.65);
-  border:1px solid rgba(0,240,255,.35);
-}
-.badge{
-  display:inline-block;
-  padding:6px 14px;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  font-family:Orbitron;
-  font-size:11px;
 }
 
 /* Footer */
@@ -149,11 +131,13 @@ input{
   justify-content:space-around;
 }
 .fbtn{
-  width:58px;height:58px;
+  width:56px;height:56px;
   border-radius:18px;
   background:rgba(255,255,255,.05);
   border:1px solid rgba(255,255,255,.1);
-  display:flex;align-items:center;justify-content:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   font-size:20px;
   text-decoration:none;
   color:#fff;
@@ -172,23 +156,8 @@ input{
     <button class="btn" onclick="location.href='student-dashboard.html'">Home</button>
   </div>
 
-  <div class="section-title">8 Skill Tracks · 21-Day Public Proof Challenge</div>
+  <div class="section-title">21-Day Skill Mastery Tracks</div>
   <div class="courses" id="courseGrid"></div>
-
-  <!-- Verification -->
-  <div class="verify-box" id="verifyBox" style="display:none">
-    <h3 class="section-title">Verification Unlocked</h3>
-    <p class="small">
-      You completed <strong>21 real public tasks</strong> and earned ZAC rewards.
-    </p>
-    <ul class="small">
-      <li>✔ Verified Creator Badge</li>
-      <li>✔ Swipe Merchants access</li>
-      <li>✔ Public skill identity</li>
-    </ul>
-    <button class="btn" onclick="payVerification()">Pay $5 USDC & Verify</button>
-    <p class="small" id="payStatus"></p>
-  </div>
 
 </div>
 
@@ -198,7 +167,7 @@ input{
     <h3 id="modalTitle"></h3>
     <p id="modalTask" class="small"></p>
     <input id="proof" placeholder="Paste Zora post link (required)" />
-    <button class="btn" onclick="submitTask()">Submit Task</button>
+    <button class="btn" onclick="submitTask()">Submit Proof</button>
     <button class="btn" style="margin-top:8px;background:none;color:#fff;border:1px solid rgba(255,255,255,.2)" onclick="closeModal()">Close</button>
   </div>
 </div>
@@ -206,91 +175,245 @@ input{
 <!-- Footer -->
 <div class="footer">
   <a class="fbtn" href="student-dashboard.html">🏠</a>
-  <a class="fbtn" href="profile.html">👤</a>
   <a class="fbtn" href="https://zora.co" target="_blank">🌈</a>
+  <a class="fbtn" href="profile.html">👤</a>
 </div>
 
 <script>
-/* ---------------- CONFIG ---------------- */
-const VERIFY_TO="0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
-const USDC="0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913";
-const ERC20_ABI=["function transfer(address,uint256) returns(bool)","function decimals() view returns(uint8)"];
-
-/* ---------------- COURSES ---------------- */
+/* COURSES */
 const courses=[
  {id:"prompt",title:"AI Prompt Engineering"},
  {id:"content",title:"AI Content Creation"},
- {id:"design",title:"Social Design"},
+ {id:"design",title:"No-Code Design"},
  {id:"video",title:"Video Editing"},
- {id:"web",title:"No-Code Websites"},
- {id:"bot",title:"Chatbot Builder"},
+ {id:"web",title:"Websites"},
+ {id:"bot",title:"Chatbot Building"},
  {id:"research",title:"Research & Lead Gen"},
- {id:"auto",title:"Micro-Automation"}
+ {id:"auto",title:"Automation"}
 ];
 
-/* ---------------- 21 DAILY PRACTICAL TASKS ---------------- */
-const tasks=[
-"Create a basic AI prompt and post the output explanation on Zora",
-"Improve the prompt for accuracy and explain changes publicly",
-"Create a reusable prompt template and publish it",
-"Generate a content outline with AI and explain strategy",
-"Create a full social post using AI",
-"Publish a short AI content guide",
-"Design a simple visual asset",
-"Create a reusable design template",
-"Explain design decisions publicly",
-"Edit a 15-second short video",
-"Add captions and hooks",
-"Publish before/after comparison",
-"Create a landing page wireframe",
-"Build the page using no-code",
-"Explain conversion logic",
-"Map a chatbot conversation",
-"Build FAQ logic",
+/* COURSE-SPECIFIC 21-DAY TASKS */
+const tasks={
+prompt:[
+"Write a basic AI prompt and publish output",
+"Improve the prompt using constraints",
+"Add role + context to the prompt",
+"Create a reusable prompt template",
+"Design a prompt for summarization",
+"Design a prompt for ideation",
+"Prompt for reasoning (step-by-step)",
+"Compare outputs of 2 prompt versions",
+"Prompt for data extraction",
+"Prompt for tone control",
+"Prompt for accuracy improvement",
+"Build a prompt library (3 prompts)",
+"Explain prompt failures publicly",
+"Prompt chaining example",
+"Prompt for business use case",
+"Prompt for marketing copy",
+"Prompt for coding help",
+"Prompt evaluation rubric",
+"Optimize prompt for speed",
+"Create prompt for client task",
+"Publish final mastered prompt"
+],
+content:[
+"Generate a content idea using AI",
+"Create a content outline",
+"Write a long-form post",
+"Convert post to short thread",
+"Create hook variations",
+"Generate captions",
+"Optimize content tone",
+"Create CTA variants",
+"Repurpose content to carousel",
+"Content calendar (7 days)",
+"Audience persona creation",
+"SEO-optimized content",
+"Content rewrite for clarity",
+"Storytelling with AI",
+"Content for brand voice",
+"Educational content piece",
+"Promotional content",
+"Analyze engagement",
+"Improve underperforming content",
+"Client-ready content pack",
+"Publish full content system"
+],
+design:[
+"Design a simple social post",
+"Create brand color palette",
+"Typography selection",
+"Layout hierarchy exercise",
+"Redesign existing post",
+"Create carousel design",
+"Design thumbnail",
+"Visual consistency test",
+"Accessibility check",
+"Design for mobile",
+"Design for desktop",
+"Create reusable template",
+"Explain design choices",
+"Design for conversion",
+"Design for storytelling",
+"Design client brief",
+"Before/after redesign",
+"Feedback iteration",
+"Design speed challenge",
+"Final brand kit",
+"Publish full design pack"
+],
+video:[
+"Edit raw clip",
+"Add basic cuts",
+"Add captions",
+"Add hook",
+"Sound cleanup",
+"Color correction",
+"Aspect ratio edits",
+"Add transitions",
+"Add text overlays",
+"Speed ramping",
+"Story structure edit",
+"Export for platforms",
+"Thumbnail creation",
+"Before/after edit",
+"Edit for engagement",
+"Edit client content",
+"Batch editing",
+"Optimize export",
+"Feedback revision",
+"Final showreel",
+"Publish video portfolio"
+],
+web:[
+"Website wireframe",
+"Landing page structure",
+"Hero section design",
+"Copy + layout pairing",
+"Mobile responsiveness",
+"CTA optimization",
+"SEO basics",
+"Performance check",
+"Accessibility check",
+"No-code build",
+"Deploy website",
+"Analytics setup",
+"Conversion logic",
+"Client brief mapping",
+"Design iteration",
+"Form integration",
+"Page speed optimization",
+"Feedback improvement",
+"Final polish",
+"Publish website",
+"Website case study"
+],
+bot:[
+"Define chatbot goal",
+"Map conversation flow",
+"Create intents",
+"Build FAQ bot",
+"Test edge cases",
+"Improve responses",
+"Tone customization",
+"Add fallback logic",
+"User testing",
+"Analytics review",
+"Optimize flows",
+"Add lead capture",
+"Bot deployment",
+"Client use case",
+"Security review",
+"Error handling",
+"Multi-language support",
+"Refinement iteration",
+"Final demo",
 "Publish bot demo",
-"Collect a dataset",
-"Clean and structure the data",
-"Publish final dataset + reflection"
-];
+"Bot case study"
+],
+research:[
+"Define research goal",
+"Identify data sources",
+"Collect dataset",
+"Clean data",
+"Structure data",
+"Analyze trends",
+"Generate insights",
+"Create lead list",
+"Validate data accuracy",
+"Visualize findings",
+"Summarize insights",
+"Client research brief",
+"Competitive analysis",
+"Market sizing",
+"Persona insights",
+"Decision framework",
+"Report formatting",
+"Insight storytelling",
+"Final research pack",
+"Publish research",
+"Research case study"
+],
+auto:[
+"Identify automation task",
+"Map workflow",
+"Select tools",
+"Create trigger",
+"Create action",
+"Test automation",
+"Error handling",
+"Optimize speed",
+"Add conditions",
+"Scale workflow",
+"Multi-step automation",
+"Documentation",
+"Client use case",
+"Security check",
+"Monitoring setup",
+"Iteration improvement",
+"Automation demo",
+"Efficiency analysis",
+"Final workflow",
+"Publish automation",
+"Automation case study"
+]
+};
 
 let active=null;
 const progress=JSON.parse(localStorage.getItem("zepProgress")||"{}");
 const student=JSON.parse(localStorage.getItem("zepStudent")||"{}");
 
-/* ---------------- RENDER ---------------- */
+/* Render */
 const grid=document.getElementById("courseGrid");
 courses.forEach(c=>{
  const d=progress[c.id]?.day||1;
  const pct=(d-1)/21*100;
  const el=document.createElement("div");
  el.className="course";
- el.innerHTML=`
-  <strong>${c.title}</strong>
-  <div class="small">Day ${d} / 21</div>
-  <div class="progress"><span style="width:${pct}%"></span></div>
- `;
+ el.innerHTML=`<strong>${c.title}</strong>
+ <div class="small">Day ${d}/21</div>
+ <div class="progress"><span style="width:${pct}%"></span></div>`;
  el.onclick=()=>openCourse(c);
  grid.appendChild(el);
 });
 
-/* ---------------- MODAL ---------------- */
 function openCourse(c){
  active=c;
  const day=progress[c.id]?.day||1;
  document.getElementById("modalTitle").textContent=c.title;
- document.getElementById("modalTask").textContent=`Day ${day}: ${tasks[day-1]}`;
+ document.getElementById("modalTask").textContent=`Day ${day}: ${tasks[c.id][day-1]}`;
  document.getElementById("proof").value="";
  modalBack.style.display="flex";
 }
 function closeModal(){modalBack.style.display="none";}
 
-/* ---------------- SUBMIT TASK ---------------- */
+/* Submit */
 function submitTask(){
  const link=document.getElementById("proof").value.trim();
- if(!link || !link.includes("zora")) return alert("Zora proof link required");
-
+ if(!link || !link.includes("zora")) return alert("Zora proof required");
  const today=new Date().toDateString();
- if(progress[active.id]?.last===today) return alert("Only one task per day");
+ if(progress[active.id]?.last===today) return alert("Only one task per course per day");
 
  const day=progress[active.id]?.day||1;
  progress[active.id]={day:Math.min(day+1,21),last:today,proof:link};
@@ -299,30 +422,7 @@ function submitTask(){
  student.zacAmount=(student.zacAmount||0)+25;
  localStorage.setItem("zepStudent",JSON.stringify(student));
 
- alert("Task verified 🎉 +25 ZAC earned");
- location.reload();
-}
-
-/* ---------------- VERIFY ---------------- */
-let completed=0;
-Object.values(progress).forEach(p=>completed+=Math.max(0,(p.day||1)-1));
-if(completed>=21 && !student.verified){
- document.getElementById("verifyBox").style.display="block";
-}
-
-/* ---------------- PAY VERIFICATION ---------------- */
-async function payVerification(){
- if(!window.ethereum) return alert("Wallet required");
- const provider=new ethers.BrowserProvider(window.ethereum);
- const signer=await provider.getSigner();
- const usdc=new ethers.Contract(USDC,ERC20_ABI,signer);
- const dec=await usdc.decimals();
- const tx=await usdc.transfer(VERIFY_TO,ethers.parseUnits("5",dec));
- document.getElementById("payStatus").textContent="Confirming transaction…";
- await tx.wait();
- student.verified=true;
- localStorage.setItem("zepStudent",JSON.stringify(student));
- alert("Verified 🎉 Marketplace unlocked");
+ alert("+25 ZAC earned");
  location.reload();
 }
 </script>
