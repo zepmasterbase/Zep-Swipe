@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Order Chat — Zep Swipe</title>
+<title>Zep Swipe · Order</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
 
@@ -11,122 +11,104 @@
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at top, #04001a 0%, #000010 100%);
+  --bg:radial-gradient(circle at 20% 10%, #030018 0%, #00000c 100%);
   --glass:rgba(255,255,255,0.06);
 }
-
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:Poppins,sans-serif;
   background:var(--bg);
   color:#fff;
-  display:flex;
-  flex-direction:column;
-  height:100vh;
 }
-
-/* HEADER */
-.header{
-  padding:14px 16px;
-  background:var(--glass);
-  border-bottom:1px solid rgba(255,255,255,.12);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  backdrop-filter:blur(14px);
-}
-.header-left{
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
-.avatar{
-  width:42px;height:42px;
-  border-radius:50%;
-  border:2px solid var(--zep-blue);
-  object-fit:cover;
-}
-.seller-info strong{
-  font-family:Orbitron;
-  font-size:.9rem;
-}
-.seller-info span{
-  font-size:11px;
-  opacity:.75;
-}
-.status{
-  font-family:Orbitron;
-  font-size:11px;
-  padding:6px 12px;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-}
-
-/* CHAT */
-.chat{
-  flex:1;
+.container{
+  max-width:900px;
+  margin:24px auto 120px;
   padding:16px;
-  overflow-y:auto;
+}
+
+/* Header */
+.header{
   display:flex;
-  flex-direction:column;
-  gap:12px;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px;
+  border-radius:18px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(16px);
 }
-.msg{
-  max-width:75%;
-  padding:12px 14px;
-  border-radius:14px;
-  font-size:13px;
-  line-height:1.4;
-}
-.msg.buyer{
-  align-self:flex-end;
+.brand{
+  font-family:Orbitron;
+  font-size:1.3rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-.msg.seller{
-  align-self:flex-start;
-  background:rgba(255,255,255,.08);
+.logout{
+  cursor:pointer;
+  font-size:22px;
+}
+
+/* Order Card */
+.card{
+  margin-top:20px;
+  padding:18px;
+  border-radius:20px;
+  background:rgba(0,0,0,.65);
   border:1px solid rgba(255,255,255,.12);
 }
-.msg small{
-  display:block;
-  margin-top:6px;
-  font-size:10px;
-  opacity:.7;
+.title{
+  font-family:Orbitron;
+  font-size:1rem;
+}
+.small{
+  font-size:12px;
+  opacity:.8;
 }
 
-/* DELIVERY BOX */
-.delivery{
-  margin:12px;
-  padding:14px;
-  border-radius:16px;
-  background:rgba(0,0,0,.6);
-  border:1px dashed rgba(0,240,255,.4);
-  font-size:12px;
-}
-.delivery strong{
+/* Countdown */
+.countdown{
+  margin-top:12px;
+  padding:12px;
+  border-radius:14px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(0,240,255,.35);
   font-family:Orbitron;
 }
 
-/* INPUT */
-.input-bar{
-  padding:14px;
-  background:rgba(0,0,0,.65);
-  border-top:1px solid rgba(255,255,255,.12);
-  display:flex;
-  gap:10px;
+/* Chat */
+.chat{
+  margin-top:18px;
+  height:260px;
+  overflow-y:auto;
+  padding:12px;
+  border-radius:14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.12);
 }
-.input-bar input{
+.msg{
+  margin-bottom:10px;
+  font-size:13px;
+}
+.msg.you{color:#9ff}
+.msg.them{color:#fff}
+
+/* Chat Input */
+.chat-input{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+.chat-input input{
   flex:1;
   padding:12px;
-  border-radius:999px;
+  border-radius:12px;
   border:1px solid rgba(255,255,255,.2);
   background:#020617;
   color:#fff;
 }
-.send{
+.btn{
   padding:12px 18px;
   border-radius:999px;
   border:none;
@@ -136,112 +118,170 @@ body{
   color:#050015;
 }
 
-/* FOOTER NOTE */
-.footer-note{
-  text-align:center;
-  font-size:10px;
-  opacity:.6;
-  padding-bottom:8px;
+/* Delivery */
+.delivery{
+  margin-top:20px;
+  padding:16px;
+  border-radius:18px;
+  background:rgba(0,0,0,.6);
+  border:1px solid rgba(255,255,255,.15);
+}
+.file{
+  font-size:12px;
+  margin-top:6px;
+}
+
+/* Completion */
+.complete-btn{
+  margin-top:14px;
+  width:100%;
+}
+
+/* Review Modal */
+.modal-back{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+.modal{
+  width:90%;
+  max-width:420px;
+  background:#050018;
+  padding:18px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.2);
+}
+.stars span{
+  font-size:24px;
+  cursor:pointer;
+}
+textarea{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  background:#020617;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.2);
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="header-left">
-    <img id="avatar" class="avatar"/>
-    <div class="seller-info">
-      <strong id="sellerName">Seller</strong><br>
-      <span id="serviceTitle">Service</span>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand">Zep Swipe · Order</div>
+    <div class="logout" onclick="location.href='index.html'">⎋</div>
+  </div>
+
+  <!-- ORDER INFO -->
+  <div class="card">
+    <div class="title">Logo Design for Startup</div>
+    <p class="small">Seller: <b>@student_creator</b></p>
+    <p class="small">Paid: <b>25 USDC</b> · Base Network</p>
+
+    <div class="countdown" id="countdown">Delivery in: —</div>
+
+    <p class="small" style="margin-top:8px">
+      🔗 On-chain receipt:
+      <a href="#" target="_blank" style="color:var(--zep-blue)">View transaction</a>
+    </p>
+  </div>
+
+  <!-- CHAT -->
+  <div class="card">
+    <div class="title">Order Chat</div>
+    <div class="chat" id="chatBox">
+      <div class="msg them">Hi! I’ve started working on your order.</div>
+    </div>
+
+    <div class="chat-input">
+      <input id="chatMsg" placeholder="Send a message…"/>
+      <button class="btn" onclick="sendMsg()">Send</button>
     </div>
   </div>
-  <div class="status" id="orderStatus">PAID</div>
+
+  <!-- DELIVERY -->
+  <div class="delivery">
+    <div class="title">Delivery</div>
+    <p class="small">Files delivered by seller:</p>
+    <div class="file">📄 logo-final.png</div>
+
+    <button class="btn complete-btn" onclick="markCompleted()">
+      ✅ Mark as Completed
+    </button>
+  </div>
+
 </div>
 
-<!-- CHAT -->
-<div class="chat" id="chatBox"></div>
-
-<!-- DELIVERY -->
-<div class="delivery" id="deliveryBox" style="display:none">
-  <strong>📦 Delivery</strong><br>
-  <span id="deliveryLink"></span>
-</div>
-
-<!-- INPUT -->
-<div class="input-bar">
-  <input id="msgInput" placeholder="Type your message…" />
-  <button class="send" onclick="sendMsg()">Send</button>
-</div>
-
-<div class="footer-note">
-  Payments are completed · Files delivered inside chat
+<!-- REVIEW MODAL -->
+<div class="modal-back" id="reviewModal">
+  <div class="modal">
+    <div class="title">Leave a Review</div>
+    <div class="stars" id="stars">
+      <span onclick="rate(1)">★</span>
+      <span onclick="rate(2)">★</span>
+      <span onclick="rate(3)">★</span>
+      <span onclick="rate(4)">★</span>
+      <span onclick="rate(5)">★</span>
+    </div>
+    <textarea id="reviewText" placeholder="Write your feedback…"></textarea>
+    <button class="btn" style="margin-top:12px" onclick="submitReview()">Submit Review</button>
+  </div>
 </div>
 
 <script>
-/* ---------------- MOCK ORDER DATA ---------------- */
-const order = {
-  seller:{
-    name:"Verified Student Creator",
-    avatar:"https://avatars.githubusercontent.com/u/9919?v=4"
-  },
-  service:"AI Content Writing",
-  status:"PAID"
-};
+/* Countdown */
+const deadline = Date.now() + 1000*60*60*24*2;
+setInterval(()=>{
+  const diff = deadline - Date.now();
+  if(diff<=0){
+    document.getElementById("countdown").textContent="Delivery overdue";
+    return;
+  }
+  const h=Math.floor(diff/36e5);
+  const m=Math.floor(diff%36e5/6e4);
+  document.getElementById("countdown").textContent=
+    `Delivery in: ${h}h ${m}m`;
+},1000);
 
-const chatKey = "zepOrderChat";
-
-/* ---------------- INIT ---------------- */
-document.getElementById("sellerName").textContent = order.seller.name;
-document.getElementById("serviceTitle").textContent = order.service;
-document.getElementById("orderStatus").textContent = order.status;
-document.getElementById("avatar").src = order.seller.avatar;
-
-const chatBox = document.getElementById("chatBox");
-const history = JSON.parse(localStorage.getItem(chatKey) || "[]");
-history.forEach(renderMsg);
-
-/* ---------------- FUNCTIONS ---------------- */
+/* Chat */
 function sendMsg(){
-  const input = document.getElementById("msgInput");
-  const text = input.value.trim();
-  if(!text) return;
-
-  const msg = {
-    from:"buyer",
-    text,
-    time:new Date().toLocaleTimeString()
-  };
-
-  history.push(msg);
-  localStorage.setItem(chatKey,JSON.stringify(history));
-  renderMsg(msg);
-  input.value="";
+  const i=document.getElementById("chatMsg");
+  if(!i.value) return;
+  const d=document.createElement("div");
+  d.className="msg you";
+  d.textContent=i.value;
+  document.getElementById("chatBox").appendChild(d);
+  i.value="";
 }
 
-function renderMsg(m){
-  const d = document.createElement("div");
-  d.className = "msg "+m.from;
-  d.innerHTML = `
-    ${m.text}
-    <small>${m.time}</small>
-  `;
-  chatBox.appendChild(d);
-  chatBox.scrollTop = chatBox.scrollHeight;
+/* Complete */
+function markCompleted(){
+  document.getElementById("reviewModal").style.display="flex";
 }
 
-/* ---------------- MOCK DELIVERY ----------------
-   Seller would trigger this later
-----------------------------------*/
-setTimeout(()=>{
-  const delivery = {
-    link:"https://drive.google.com/file/d/123"
-  };
-  document.getElementById("deliveryBox").style.display="block";
-  document.getElementById("deliveryLink").innerHTML =
-    `<a href="${delivery.link}" target="_blank" style="color:var(--zep-blue)">Download files</a>`;
-}, 8000);
+/* Review */
+let rating=0;
+function rate(n){
+  rating=n;
+  [...document.querySelectorAll("#stars span")].forEach((s,i)=>{
+    s.style.color=i<n?"gold":"#555";
+  });
+}
+function submitReview(){
+  if(!rating) return alert("Rate first");
+  alert("🎉 Order completed & review submitted");
+  document.getElementById("reviewModal").style.display="none";
+  location.href="swipe-merchants.html";
+}
 </script>
 
 </body>
