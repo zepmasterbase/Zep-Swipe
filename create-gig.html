@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Create Service — Zep Swipe</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+<style>
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at top, #030016 0%, #000010 100%);
+  --glass:rgba(255,255,255,0.06);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:var(--bg);
+  color:#fff;
+}
+
+.container{
+  max-width:720px;
+  margin:26px auto 120px;
+  padding:16px;
+}
+
+/* HEADER */
+.header{
+  padding:16px;
+  border-radius:18px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(16px);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.brand{
+  font-family:Orbitron;
+  font-size:1.3rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.btn{
+  font-family:Orbitron;
+  font-size:12px;
+  padding:8px 16px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+
+/* LOCK */
+.lock-box{
+  margin-top:24px;
+  padding:22px;
+  border-radius:20px;
+  background:rgba(0,0,0,.65);
+  border:1px dashed rgba(0,240,255,.45);
+  text-align:center;
+}
+.lock-box h2{
+  font-family:Orbitron;
+  margin-bottom:8px;
+}
+.lock-box p{
+  font-size:13px;
+  opacity:.85;
+}
+.lock-icon{
+  font-size:48px;
+  margin-bottom:10px;
+}
+
+/* FORM */
+.form{
+  margin-top:22px;
+  padding:22px;
+  border-radius:20px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
+  display:none;
+}
+label{
+  display:block;
+  margin-top:14px;
+  font-size:12px;
+  opacity:.8;
+}
+input,textarea,select{
+  width:100%;
+  margin-top:6px;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.2);
+  background:#020617;
+  color:#fff;
+}
+textarea{resize:none}
+.submit{
+  margin-top:20px;
+  width:100%;
+  padding:14px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+
+/* FOOTER */
+.footer{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  padding:14px 22px;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(12px);
+  display:flex;
+  justify-content:space-around;
+}
+.fbtn{
+  width:56px;height:56px;
+  border-radius:18px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+  text-decoration:none;
+  color:#fff;
+  box-shadow:0 0 22px rgba(0,240,255,.25);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand">Create Service</div>
+    <button class="btn" onclick="location.href='student-dashboard.html'">Home</button>
+  </div>
+
+  <!-- LOCK -->
+  <div class="lock-box" id="lockBox">
+    <div class="lock-icon">🔒</div>
+    <h2>Seller Access Locked</h2>
+    <p>
+      Complete <strong>21 days</strong> of real tasks in at least
+      <strong>one skill track</strong> to unlock service creation.
+    </p>
+    <p>
+      This keeps Swipe Merchants trusted, fair, and student-verified.
+    </p>
+    <br>
+    <button class="btn" onclick="location.href='learn-earn.html'">
+      Go to Learn & Earn
+    </button>
+  </div>
+
+  <!-- FORM -->
+  <div class="form" id="gigForm">
+    <h3 style="font-family:Orbitron">New Service</h3>
+
+    <label>Service Title</label>
+    <input id="title" placeholder="I will write high-converting AI content" />
+
+    <label>Category</label>
+    <select id="category">
+      <option>AI & Writing</option>
+      <option>Design</option>
+      <option>Video Editing</option>
+      <option>No-Code Websites</option>
+      <option>Research</option>
+      <option>Automation</option>
+    </select>
+
+    <label>Description</label>
+    <textarea id="desc" rows="4"
+      placeholder="Explain what the buyer will receive, delivery time, and format."></textarea>
+
+    <label>Price (USDC)</label>
+    <input id="price" type="number" min="5" placeholder="25" />
+
+    <label>Delivery Time (days)</label>
+    <input id="delivery" type="number" min="1" placeholder="3" />
+
+    <button class="submit" onclick="publishGig()">Publish Service</button>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <a class="fbtn" href="student-dashboard.html">🏠</a>
+  <a class="fbtn" href="learn-earn.html">🎓</a>
+  <a class="fbtn" href="profile.html">👤</a>
+</div>
+
+<script>
+/* -------------------------
+   UNLOCK LOGIC
+------------------------- */
+const progress = JSON.parse(localStorage.getItem("zepProgress")||"{}");
+
+let unlocked=false;
+Object.values(progress).forEach(p=>{
+  if((p.day||1) >= 22) unlocked=true;
+});
+
+if(unlocked){
+  document.getElementById("lockBox").style.display="none";
+  document.getElementById("gigForm").style.display="block";
+}
+
+/* -------------------------
+   PUBLISH GIG
+------------------------- */
+function publishGig(){
+  const title = document.getElementById("title").value.trim();
+  const desc  = document.getElementById("desc").value.trim();
+  const price = document.getElementById("price").value;
+  const cat   = document.getElementById("category").value;
+  const del   = document.getElementById("delivery").value;
+
+  if(!title || !desc || !price) {
+    alert("Please complete all required fields.");
+    return;
+  }
+
+  const student = JSON.parse(localStorage.getItem("zepStudent")||"{}");
+  const profile = JSON.parse(localStorage.getItem("zepProfile")||"{}");
+
+  const gigs = JSON.parse(localStorage.getItem("zepGigs")||"[]");
+
+  gigs.push({
+    id:Date.now(),
+    title,
+    desc,
+    category:cat,
+    price,
+    delivery:del,
+    seller:{
+      wallet:student.wallet,
+      name:profile.name || "Verified Student",
+      university:profile.university || "",
+      avatar:profile.avatar || ""
+    }
+  });
+
+  localStorage.setItem("zepGigs",JSON.stringify(gigs));
+
+  alert("✅ Service published successfully!");
+  location.href="swipe-merchants.html";
+}
+</script>
+
+</body>
+</html>
