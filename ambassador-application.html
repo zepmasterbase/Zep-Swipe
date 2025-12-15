@@ -6,17 +6,18 @@
 <title>Zep Swipe — Campus Ambassador Application</title>
 
 <!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
+  --bg:radial-gradient(circle at 25% 10%, #050018 0%, #00000c 100%);
   --glass:rgba(255,255,255,0.06);
 }
 
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:Poppins,sans-serif;
@@ -27,9 +28,9 @@ body{
 
 /* Wrapper */
 .wrapper{
-  max-width:1100px;
+  max-width:1000px;
   margin:0 auto;
-  padding:28px 20px 80px;
+  padding:28px 18px 80px;
 }
 
 /* Header */
@@ -37,7 +38,9 @@ header{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  margin-bottom:40px;
 }
+
 .brand{
   font-family:Orbitron;
   font-size:1.6rem;
@@ -45,7 +48,8 @@ header{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.back-btn{
+
+.home-btn{
   padding:10px 18px;
   border-radius:999px;
   border:none;
@@ -54,68 +58,73 @@ header{
   cursor:pointer;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
+  box-shadow:0 0 26px rgba(0,240,255,.35);
 }
 
 /* Hero */
 .hero{
-  margin:60px auto 30px;
   text-align:center;
-  max-width:720px;
+  max-width:760px;
+  margin:0 auto 36px;
 }
+
 .hero h1{
   font-family:Orbitron;
-  font-size:2.4rem;
+  font-size:2.2rem;
   margin:0;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
+
 .hero p{
   margin-top:14px;
   font-size:1.05rem;
   opacity:.85;
-  line-height:1.6;
 }
 
-/* Info cards */
+/* Info Cards */
 .info-grid{
-  margin:50px auto;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:18px;
+  gap:16px;
+  margin:36px 0;
 }
+
 .info{
   padding:18px;
   border-radius:18px;
   background:var(--glass);
   border:1px solid rgba(255,255,255,.12);
-}
-.info h4{
-  margin:0 0 6px;
-  font-family:Orbitron;
-  font-size:.95rem;
-}
-.info p{
-  font-size:12px;
-  opacity:.8;
-  line-height:1.5;
+  text-align:center;
 }
 
-/* Form container */
-.form-box{
+.info h3{
+  font-family:Orbitron;
+  font-size:.95rem;
+  margin:0 0 6px;
+}
+
+.info p{
+  font-size:12px;
+  opacity:.75;
+}
+
+/* Form Container */
+.form-wrap{
   margin-top:40px;
-  padding:14px;
-  border-radius:22px;
+  padding:18px;
+  border-radius:20px;
   background:rgba(0,0,0,.6);
   border:1px solid rgba(0,240,255,.35);
-  box-shadow:0 0 40px rgba(0,240,255,.25);
+  box-shadow:0 0 50px rgba(0,240,255,.18);
 }
-.form-box iframe{
+
+.form-wrap iframe{
   width:100%;
-  height:900px;
+  min-height:1200px;
   border:none;
   border-radius:16px;
-  background:#fff;
 }
 
 /* Footer */
@@ -123,6 +132,7 @@ footer{
   margin-top:90px;
   text-align:center;
 }
+
 footer p{
   font-size:12px;
   opacity:.5;
@@ -137,45 +147,42 @@ footer p{
   <!-- HEADER -->
   <header>
     <div class="brand">Zep Swipe</div>
-    <button class="back-btn" onclick="location.href='index.html'">← Back</button>
+    <button class="home-btn" onclick="location.href='index.html'">Home</button>
   </header>
 
   <!-- HERO -->
   <section class="hero">
     <h1>Campus Ambassador Program</h1>
     <p>
-      Help students earn while they learn.<br>
-      Build the first student-first creator economy — starting from Africa, usable globally.
+      Help students learn by doing, publish proof of work on Zora,
+      and unlock real income opportunities through Zep Swipe.
     </p>
   </section>
 
   <!-- INFO -->
   <section class="info-grid">
     <div class="info">
-      <h4>🎓 Who We’re Looking For</h4>
-      <p>Student leaders, educators, and builders who can drive real participation on campus.</p>
+      <h3>🎓 Who Can Apply</h3>
+      <p>University students & campus leaders across Africa</p>
     </div>
-
     <div class="info">
-      <h4>🛠 What You’ll Do</h4>
-      <p>Onboard students, support 21-day skill challenges, and encourage public proof on Zora.</p>
+      <h3>🚀 Your Role</h3>
+      <p>Onboard students, guide learning & public proof of work</p>
     </div>
-
     <div class="info">
-      <h4>💸 Rewards</h4>
-      <p>Performance-based grants (up to $250), early access, and founding recognition.</p>
+      <h3>💸 Rewards</h3>
+      <p>Grants, recognition & early access opportunities</p>
     </div>
-
     <div class="info">
-      <h4>🌍 Impact</h4>
-      <p>Turn campuses into creator hubs — not waiting rooms.</p>
+      <h3>🌍 Impact</h3>
+      <p>Turn campuses into creator & freelancer hubs</p>
     </div>
   </section>
 
   <!-- FORM -->
-  <section class="form-box">
+  <section class="form-wrap">
     <iframe 
-      src="https://docs.google.com/forms/d/e/1FAIpQLScTY3gq4KPu247A1K99/viewform?embedded=true"
+      src="https://docs.google.com/forms/d/e/HJRmMjG8WdL7MRV39/viewform?embedded=true"
       loading="lazy">
       Loading…
     </iframe>
@@ -183,7 +190,7 @@ footer p{
 
   <!-- FOOTER -->
   <footer>
-    <p>© 2025 Zep Swipe — Student Creator Economy</p>
+    <p>© 2025 Zep Swipe — Building the Student Creator Economy</p>
   </footer>
 
 </div>
