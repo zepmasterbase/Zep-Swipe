@@ -1,193 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zep Swipe — Campus Market</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Campus Deals</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --zep-blue:#00f0ff;
-    --zep-violet:#9c4dff;
-    --bg:radial-gradient(circle at 25% 10%, #050018 0%, #00000c 100%);
-    --glass:rgba(255,255,255,0.08);
-  }
+:root {
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at 25% 10%, #050018 0%, #00000c 100%);
+  --glass:rgba(255,255,255,0.08);
+}
 
-  body{
-    margin:0;
-    font-family:Poppins,sans-serif;
-    background: var(--bg);
-    color:#fff;
-    min-height:100vh;
-    padding:20px;
-  }
+body {
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background: var(--bg);
+  color:#fff;
+  min-height:100vh;
+  padding:20px;
+}
 
-  h1{
-    font-family:Orbitron;
-    font-size:1.6rem;
-    background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    text-align:center;
-    margin-bottom:24px;
-  }
+/* HEADER */
+header {
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  padding:16px 24px;
+  backdrop-filter: blur(16px);
+  border-radius:16px;
+  margin-bottom:40px;
+  background: radial-gradient(circle at center, rgba(0,240,255,0.15), rgba(156,77,255,0.15));
+  animation: pulseHeader 4s infinite alternate;
+}
+@keyframes pulseHeader {
+  0% { box-shadow: 0 0 20px rgba(0,240,255,0.2);}
+  50% { box-shadow: 0 0 50px rgba(156,77,255,0.4);}
+  100% { box-shadow: 0 0 20px rgba(0,240,255,0.2);}
+}
+header .brand {
+  font-family: Orbitron;
+  font-size:1.8rem;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.header-actions a, .header-actions button {
+  font-family: Orbitron;
+  font-size:14px;
+  text-decoration:none;
+  padding:8px 16px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  transition:0.3s;
+  margin-left:10px;
+}
+.header-actions a { background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050015; }
+.header-actions button { background:var(--glass); color:#fff; border:1px solid rgba(255,255,255,0.12);}
+.header-actions a:hover, .header-actions button:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
 
-  .store-card{
-    background: var(--glass);
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:18px;
-    padding:16px;
-    margin-bottom:16px;
-    box-shadow:0 0 28px rgba(0,240,255,.25);
-  }
+/* SECTION TITLES */
+h2.section-title {
+  font-family: Orbitron;
+  text-align:center;
+  font-size:1.8rem;
+  margin-bottom:24px;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-  .store-logo{
-    width:100%;
-    max-height:150px;
-    object-fit:contain;
-    border-radius:12px;
-    margin-bottom:12px;
-  }
+/* GRID */
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:20px;
+  max-width:1000px;
+  margin:0 auto 60px auto;
+}
 
-  .store-name{
-    font-family:Orbitron;
-    font-size:1.2rem;
-    margin-bottom:6px;
-  }
+/* 3D Neon Card */
+.card {
+  background:var(--glass);
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,0.12);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  box-shadow:0 0 24px rgba(0,240,255,0.25);
+  transition: transform 0.4s, box-shadow 0.4s;
+  perspective:1000px;
+}
+.card:hover {
+  transform: rotateY(10deg) rotateX(6deg) scale(1.05);
+  box-shadow:0 0 60px rgba(156,77,255,0.45);
+}
+.card svg {
+  width:80px;
+  height:80px;
+  margin-bottom:12px;
+  animation: neonPulse 2s infinite alternate;
+  filter: drop-shadow(0 0 6px #00f0ff) drop-shadow(0 0 10px #9c4dff);
+}
+@keyframes neonPulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 6px #00f0ff) drop-shadow(0 0 10px #9c4dff);}
+  50% { transform: scale(1.1); filter: drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 16px #9c4dff);}
+  100% { transform: scale(1); filter: drop-shadow(0 0 6px #00f0ff) drop-shadow(0 0 10px #9c4dff);}
+}
+.card span {
+  font-size:0.9rem;
+  margin-top:4px;
+}
 
-  .store-info{
-    font-size:13px;
-    opacity:.85;
-    margin-bottom:6px;
-  }
+/* VIEW BUTTON */
+.view-btn {
+  display:inline-block;
+  margin-top:10px;
+  padding:8px 16px;
+  border-radius:999px;
+  font-family:Orbitron;
+  font-weight:700;
+  text-decoration:none;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  box-shadow:0 0 20px rgba(0,240,255,0.35);
+  transition:0.25s;
+}
+.view-btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
+}
 
-  .distance{
-    font-weight:700;
-    color: var(--zep-blue);
-  }
+/* FOOTER */
+footer {
+  text-align:center;
+  padding:40px 20px;
+  font-size:12px;
+  color:rgba(255,255,255,0.5);
+}
 
-  .view-btn{
-    display:inline-block;
-    margin-top:10px;
-    padding:10px 20px;
-    border-radius:999px;
-    font-family:Orbitron;
-    font-weight:700;
-    text-decoration:none;
-    background:linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-    color:#050015;
-    box-shadow:0 0 20px rgba(0,240,255,.35);
-    transition:.25s;
-  }
-
-  .view-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 0 36px rgba(156,77,255,.45);
-  }
-
-  @media(max-width:480px){
-    h1{ font-size:1.3rem; }
-    .view-btn{ padding:8px 16px; font-size:12px; }
-  }
+/* MOBILE */
+@media(max-width:600px){
+  .card svg { width:60px; height:60px; }
+}
 </style>
 </head>
-
 <body>
 
-<h1>Campus Market — Student Deals</h1>
+<header>
+  <div class="brand">Zep Swipe</div>
+  <div class="header-actions">
+    <a href="deals.html">Campus Marketplace</a>
+    <button onclick="location.href='login.html'">Connect Wallet</button>
+  </div>
+</header>
 
-<div id="storesContainer"></div>
+<h2 class="section-title">Food & Restaurants Deals</h2>
+<div class="grid" id="foodGrid"></div>
+
+<h2 class="section-title">Clothing & Merchandise Deals</h2>
+<div class="grid" id="clothingGrid"></div>
+
+<footer>
+  © 2025 Zep Swipe — Student Creator Economy
+</footer>
 
 <script>
-  // ----------------------------
-  // Define store data
-  // ----------------------------
-  const stores = [
-    {
-      name: "Campus Cafe",
-      logo: "https://via.placeholder.com/300x150.png?text=Campus+Cafe",
-      address: "123 Campus Road, Cape Town",
-      lat: -33.9571,
-      lng: 18.4603,
-      hours: "Mon-Fri 08:00-18:00",
-      deals: ["20% off coffee", "Buy 2 get 1 free pastries"]
-    },
-    {
-      name: "BookHub Store",
-      logo: "https://via.placeholder.com/300x150.png?text=BookHub",
-      address: "45 University Avenue, Durban",
-      lat: -29.8587,
-      lng: 31.0218,
-      hours: "Mon-Fri 09:00-17:00",
-      deals: ["10% off textbooks", "Free notebook with purchase"]
-    }
-    // Add more stores here by following the same object structure
-  ];
+// ------------------ Data ------------------
+const foodDeals = [
+  { name:"Campus Cafe", svg:'<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" stroke="cyan" stroke-width="4" fill="none"/><path d="M20,40 l24,-24" stroke="magenta" stroke-width="3"/></svg>'},
+  { name:"Snack Shack", svg:'<svg viewBox="0 0 64 64"><rect x="16" y="16" width="32" height="32" stroke="cyan" stroke-width="4" fill="none"/><circle cx="32" cy="32" r="8" stroke="magenta" stroke-width="3" fill="none"/></svg>'},
+  { name:"BookHub Cafe", svg:'<svg viewBox="0 0 64 64"><polygon points="32,8 56,56 8,56" stroke="cyan" stroke-width="3" fill="none"/><circle cx="32" cy="32" r="10" stroke="magenta" stroke-width="3"/></svg>'}
+];
 
-  const container = document.getElementById("storesContainer");
+const clothingDeals = [
+  { name:"Campus Apparel", svg:'<svg viewBox="0 0 64 64"><rect x="20" y="16" width="24" height="32" stroke="cyan" stroke-width="3" fill="none"/><path d="M20,16 l24,32" stroke="magenta" stroke-width="2"/></svg>'},
+  { name:"Uni Shoes", svg:'<svg viewBox="0 0 64 64"><ellipse cx="32" cy="32" rx="20" ry="12" stroke="cyan" stroke-width="3" fill="none"/><line x1="12" y1="32" x2="52" y2="32" stroke="magenta" stroke-width="2"/></svg>'},
+  { name:"Zep Merch", svg:'<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="24" stroke="cyan" stroke-width="3" fill="none"/><path d="M32,8 L32,56 M8,32 L56,32" stroke="magenta" stroke-width="2"/></svg>'}
+];
 
-  function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2){
-    const R = 6371; // km
-    const dLat = (lat2-lat1)*Math.PI/180;
-    const dLon = (lon2-lon1)*Math.PI/180;
-    const a = Math.sin(dLat/2)*Math.sin(dLat/2)+
-              Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*
-              Math.sin(dLon/2)*Math.sin(dLon/2);
-    const c = 2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
-    return R*c;
-  }
+// ------------------ Render ------------------
+function renderDeals(gridId, deals){
+  const grid = document.getElementById(gridId);
+  deals.forEach(deal=>{
+    const card = document.createElement("div");
+    card.className="card";
+    card.innerHTML = `${deal.svg}<span>${deal.name}</span><a href="deals.html" class="view-btn">View Deal</a>`;
+    grid.appendChild(card);
+  });
+}
 
-  // Get user location
-  function displayStores(position){
-    const userLat = position.coords.latitude;
-    const userLon = position.coords.longitude;
-
-    stores.forEach(store=>{
-      const distance = getDistanceFromLatLonInKm(userLat,userLon,store.lat,store.lng).toFixed(2);
-      
-      const div = document.createElement("div");
-      div.className = "store-card";
-
-      div.innerHTML = `
-        <img src="${store.logo}" alt="${store.name}" class="store-logo">
-        <div class="store-name">${store.name}</div>
-        <div class="store-info">Address: ${store.address}</div>
-        <div class="store-info">Hours: ${store.hours}</div>
-        <div class="distance">Distance: ${distance} km</div>
-        <a href="#" class="view-btn" onclick='viewStore(${JSON.stringify(store)})'>View Store Details</a>
-      `;
-      container.appendChild(div);
-    });
-  }
-
-  function locationError(err){
-    stores.forEach(store=>{
-      const div = document.createElement("div");
-      div.className = "store-card";
-
-      div.innerHTML = `
-        <img src="${store.logo}" alt="${store.name}" class="store-logo">
-        <div class="store-name">${store.name}</div>
-        <div class="store-info">Address: ${store.address}</div>
-        <div class="store-info">Hours: ${store.hours}</div>
-        <div class="distance">Distance: unavailable</div>
-        <a href="#" class="view-btn" onclick='viewStore(${JSON.stringify(store)})'>View Store Details</a>
-      `;
-      container.appendChild(div);
-    });
-  }
-
-  if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(displayStores, locationError);
-  } else {
-    locationError();
-  }
-
-  // Save selected store to localStorage and redirect
-  function viewStore(store){
-    localStorage.setItem("currentStore", JSON.stringify(store));
-    window.location.href = "store.html";
-  }
+renderDeals('foodGrid', foodDeals);
+renderDeals('clothingGrid', clothingDeals);
 </script>
 
 </body>
