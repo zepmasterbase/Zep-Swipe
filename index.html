@@ -47,19 +47,36 @@ header {
   -webkit-text-fill-color: transparent;
 }
 
-.nav-links a {
-  margin-left: 20px;
+.header-grid {
+  display: flex;
+  gap: 12px;
+}
+
+.header-grid a, .header-grid button {
   font-family: Orbitron;
   font-size: 14px;
   text-decoration: none;
-  color: #fff;
-  padding: 8px 16px;
   border-radius: 999px;
+  padding: 8px 16px;
+  cursor: pointer;
   transition: .3s;
+  border: none;
 }
 
-.nav-links a:hover {
+.header-grid a {
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  color: #050015;
+}
+
+.header-grid button {
   background: var(--glass);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+.header-grid a:hover, .header-grid button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 36px rgba(156,77,255,.45);
 }
 
 /* HERO SECTION */
@@ -83,7 +100,7 @@ header {
   align-items: center;
   justify-content: center;
   animation: pulse 4s infinite alternate;
-  box-shadow: 0 0 90px rgba(0,240,255,0.3);
+  box-shadow: 0 0 90px rgba(0,240,255,.3);
 }
 
 @keyframes pulse {
@@ -102,18 +119,20 @@ header {
 /* HERO TEXT */
 .hero-text h1 {
   font-family: Orbitron;
-  font-size: 2.8rem;
+  font-size: 2.4rem;
   line-height: 1.2;
+  margin-bottom: 16px;
+  max-width: 550px;
   background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 16px;
 }
 
 .hero-text p {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--text-light);
-  max-width: 600px;
+  max-width: 480px;
+  line-height: 1.5;
 }
 
 /* CTA */
@@ -145,12 +164,6 @@ header {
   box-shadow: 0 0 36px rgba(156,77,255,.45);
 }
 
-.cta a.secondary {
-  border: 1px solid rgba(255,255,255,.25);
-  color: #fff;
-}
-
-/* FOOTER */
 footer {
   text-align: center;
   padding: 40px 20px 20px;
@@ -180,17 +193,9 @@ footer {
 }
 
 @media(max-width:600px){
-  .hero-text h1 {
-    font-size: 2rem;
-  }
-  .pulse-circle {
-    width: 200px;
-    height: 200px;
-  }
-  .hero img {
-    width: 110px;
-    height: 110px;
-  }
+  .hero-text h1 { font-size: 1.9rem; }
+  .pulse-circle { width: 200px; height: 200px; }
+  .hero img { width: 110px; height: 110px; }
 }
 </style>
 </head>
@@ -201,11 +206,10 @@ footer {
   <!-- HEADER -->
   <header>
     <div class="brand">Zep Swipe</div>
-    <nav class="nav-links">
+    <div class="header-grid">
       <a href="deals.html">Deals</a>
-      <a href="business.html">List Your Deal</a>
-      <a href="login.html">Connect Wallet</a>
-    </nav>
+      <button onclick="location.href='login.html'">Connect Wallet</button>
+    </div>
   </header>
 
   <!-- HERO -->
@@ -214,12 +218,11 @@ footer {
       <img src="student-entrepreneur.jpg" alt="Student Entrepreneur">
     </div>
     <div class="hero-text">
-      <h1>Where Students Become Creators</h1>
-      <p>Learn by doing, publish your work publicly, and earn globally. Zep Swipe empowers students to transform skills into income.</p>
+      <h1>University Students Become Verified Freelancers in 21 Days</h1>
+      <p>Students can also browse nearby student deals from brands and restaurants using their student ID, turning skills into real income and savings.</p>
     </div>
     <div class="cta">
-      <a href="deals.html" class="primary">Browse Student Deals</a>
-      <a href="business.html" class="secondary">List Your Deal</a>
+      <a href="deals.html" class="primary">Browse Deals</a>
     </div>
   </section>
 
