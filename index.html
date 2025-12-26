@@ -76,7 +76,7 @@ header {
 .deals h2 { font-family:Orbitron; text-align:center; margin-bottom:28px; font-size:1.8rem; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 .deals-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:20px; justify-items:center; }
 .deal-card { width:140px; height:140px; border-radius:16px; background:var(--glass); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px; border:1px solid rgba(255,255,255,0.12); transition:0.3s; }
-.deal-card img { width:60px; height:60px; object-fit:contain; margin-bottom:8px; }
+.deal-card svg { width:60px; height:60px; margin-bottom:8px; }
 .deal-card:hover { transform:translateY(-4px); box-shadow:0 0 30px rgba(156,77,255,.45); }
 .deal-card span { font-size:0.85rem; }
 
@@ -127,7 +127,7 @@ footer { text-align:center; padding:40px 20px; font-size:12px; color:rgba(255,25
       </svg>
     </div>
     <h1>Students Become Verified Freelancers in 21 Days</h1>
-    <p>Discover student deals from top brands & restaurants using your student ID while learning and earning real rewards.</p>
+    <p>Explore student deals and gigs from top brands & restaurants while learning and earning rewards.</p>
     <div class="cta">
       <a href="login.html" class="primary">Become a Freelancer</a>
       <a href="deals.html" class="secondary">Browse Campus Deals</a>
@@ -139,28 +139,29 @@ footer { text-align:center; padding:40px 20px; font-size:12px; color:rgba(255,25
   <section class="deals">
     <h2>Popular Student Deals</h2>
     <div class="deals-grid">
+      <!-- 3D Neon-style brand icons -->
       <a href="deals.html" class="deal-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Woolworths-logo.png" alt="Woolworths">
+        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke="#00f0ff" stroke-width="4" fill="none"/><text x="50%" y="55%" text-anchor="middle" fill="#00f0ff" font-family="Orbitron" font-size="18">W</text></svg>
         <span>Woolworths</span>
       </a>
       <a href="deals.html" class="deal-card">
-        <img src="https://upload.wikimedia.org/wikipedia/en/b/b7/KFC_logo.svg" alt="KFC">
+        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke="#9c4dff" stroke-width="4" fill="none"/><text x="50%" y="55%" text-anchor="middle" fill="#9c4dff" font-family="Orbitron" font-size="18">K</text></svg>
         <span>KFC</span>
       </a>
       <a href="deals.html" class="deal-card">
-        <img src="https://upload.wikimedia.org/wikipedia/en/8/88/Nando%27s_logo.svg" alt="Nando's">
+        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke="#00f0ff" stroke-width="4" fill="none"/><text x="50%" y="55%" text-anchor="middle" fill="#00f0ff" font-family="Orbitron" font-size="18">N</text></svg>
         <span>Nando's</span>
       </a>
       <a href="deals.html" class="deal-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/McDonald%27s_logo.svg" alt="McDonald's">
+        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke="#9c4dff" stroke-width="4" fill="none"/><text x="50%" y="55%" text-anchor="middle" fill="#9c4dff" font-family="Orbitron" font-size="18">M</text></svg>
         <span>McDonald's</span>
       </a>
       <a href="deals.html" class="deal-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Zara_Logo.svg" alt="Zara">
+        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke="#00f0ff" stroke-width="4" fill="none"/><text x="50%" y="55%" text-anchor="middle" fill="#00f0ff" font-family="Orbitron" font-size="18">Z</text></svg>
         <span>Zara</span>
       </a>
       <a href="deals.html" class="deal-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Puma_logo.svg" alt="Puma">
+        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke="#9c4dff" stroke-width="4" fill="none"/><text x="50%" y="55%" text-anchor="middle" fill="#9c4dff" font-family="Orbitron" font-size="18">P</text></svg>
         <span>Puma</span>
       </a>
     </div>
