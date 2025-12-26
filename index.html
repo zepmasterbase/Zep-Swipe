@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Zep Swipe — Student Creator Economy</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500,600&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -13,21 +13,22 @@
   --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
   --glass:rgba(255,255,255,0.06);
+  --glass-hover:rgba(255,255,255,0.12);
+  --text-light:rgba(255,255,255,0.85);
 }
 
-*{box-sizing:border-box}
+*{box-sizing:border-box; margin:0; padding:0;}
 body{
-  margin:0;
   font-family:Poppins,sans-serif;
   background:var(--bg);
   color:#fff;
-  min-height:100vh;
+  line-height:1.6;
 }
 
 .wrapper{
   max-width:1100px;
   margin:0 auto;
-  padding:24px 20px 80px;
+  padding:30px 20px;
 }
 
 /* HEADER */
@@ -35,224 +36,165 @@ header{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  padding:12px 0;
 }
 
 .brand{
   font-family:Orbitron;
-  font-size:1.6rem;
+  font-size:1.8rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 
-.login-btn{
-  padding:10px 20px;
+.nav-links a{
+  margin-left:20px;
+  font-family:Orbitron;
+  font-size:14px;
+  text-decoration:none;
+  color:#fff;
+  padding:8px 16px;
   border-radius:999px;
-  border:none;
-  font-family:Orbitron;
-  font-size:12px;
-  cursor:pointer;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  box-shadow:0 0 28px rgba(0,240,255,.35);
+  transition:.3s;
 }
 
-/* HERO ICON */
-.hero-icon{
-  margin:70px auto 30px;
-  display:flex;
-  justify-content:center;
+.nav-links a:hover{
+  background:var(--glass-hover);
 }
 
-.pulse{
-  width:260px;
-  height:260px;
-  border-radius:50%;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(0,240,255,.25), transparent 60%),
-    radial-gradient(circle at 70% 70%, rgba(156,77,255,.25), transparent 60%);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  animation:pulse 4s infinite alternate;
-  box-shadow:0 0 90px rgba(0,240,255,.3);
-}
-
-@keyframes pulse{
-  from{transform:scale(1);box-shadow:0 0 60px rgba(0,240,255,.25)}
-  to{transform:scale(1.05);box-shadow:0 0 120px rgba(156,77,255,.45)}
-}
-
-.core{
-  width:180px;
-  height:180px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#0b0328,#18004a);
-  border:1px solid rgba(255,255,255,.15);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.core span{
-  font-family:Orbitron;
-  font-size:3.5rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-/* HERO TEXT */
-.hero-text{
+/* HERO SECTION */
+.hero{
   text-align:center;
-  max-width:720px;
-  margin:0 auto;
+  padding:100px 20px 60px;
 }
 
-.hero-text h1{
+.hero h1{
   font-family:Orbitron;
-  font-size:2.4rem;
+  font-size:2.8rem;
   line-height:1.2;
-  margin:0;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
+  margin-bottom:20px;
 }
 
-.hero-text p{
-  margin-top:14px;
-  font-size:1.05rem;
-  opacity:.85;
+.hero p{
+  font-size:1.1rem;
+  color:var(--text-light);
+  max-width:600px;
+  margin:0 auto 30px;
 }
 
-/* CTA */
-.cta{
-  margin-top:28px;
+.hero .cta{
   display:flex;
   justify-content:center;
   gap:14px;
   flex-wrap:wrap;
 }
 
-.cta a{
-  padding:14px 26px;
+.hero .cta a{
+  padding:14px 28px;
   border-radius:999px;
   font-family:Orbitron;
-  font-size:13px;
+  font-size:14px;
+  font-weight:600;
   text-decoration:none;
+  transition:.3s;
 }
 
-.primary{
+.hero .cta a.primary{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
 
-.secondary{
+.hero .cta a.primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
+}
+
+.hero .cta a.secondary{
   border:1px solid rgba(255,255,255,.25);
   color:#fff;
 }
 
-/* STUDENT DEALS SECTION */
-.student-deals{
+/* FEATURES SECTION */
+.features{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:24px;
+  margin:80px 0;
   text-align:center;
-  margin:60px auto 40px;
 }
 
-.student-deals h2{
+.feature{
+  padding:28px 20px;
+  border-radius:20px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.12);
+  transition:.3s;
+}
+
+.feature:hover{
+  background:var(--glass-hover);
+}
+
+.feature h3{
   font-family:Orbitron;
-  font-size:1.6rem;
+  font-size:1.2rem;
+  margin-bottom:12px;
+}
+
+.feature p{
+  font-size:0.95rem;
+  color:var(--text-light);
+}
+
+/* DEALS CTA */
+.deals-section{
+  text-align:center;
+  margin:100px 0 60px;
+}
+
+.deals-section h2{
+  font-family:Orbitron;
+  font-size:1.8rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   margin-bottom:16px;
 }
 
-.student-deals p{
+.deals-section p{
   font-size:1rem;
-  opacity:.85;
-  margin-bottom:20px;
+  color:var(--text-light);
+  margin-bottom:24px;
 }
 
-.student-deals a{
-  padding:12px 24px;
+.deals-section a{
+  padding:14px 28px;
   border-radius:999px;
   font-family:Orbitron;
-  font-weight:700;
-  font-size:13px;
+  font-weight:600;
+  font-size:14px;
   text-decoration:none;
-  margin:6px;
-  display:inline-block;
-  transition:.25s;
 }
 
-.student-deals a.primary{
+.deals-section a.primary{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
 }
 
-.student-deals a.primary:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 36px rgba(156,77,255,.45);
-}
-
-.student-deals a.secondary{
+.deals-section a.secondary{
   border:1px solid rgba(255,255,255,.25);
   color:#fff;
 }
 
-/* CREATOR CARDS */
-.creators{
-  margin-top:80px;
-}
-
-.section-title{
-  text-align:center;
-  font-family:Orbitron;
-  font-size:1.4rem;
-  margin-bottom:26px;
-}
-
-.creator-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:18px;
-}
-
-.creator{
-  padding:18px;
-  border-radius:18px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.12);
-  text-align:center;
-}
-
-.avatar{
-  width:64px;
-  height:64px;
-  border-radius:50%;
-  margin:0 auto 12px;
-  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family:Orbitron;
-  color:#050015;
-}
-
-.creator h4{
-  margin:6px 0 2px;
-  font-size:.95rem;
-}
-
-.creator p{
-  font-size:12px;
-  opacity:.75;
-}
-
 /* FOOTER */
 footer{
-  margin-top:100px;
   text-align:center;
+  padding:40px 20px 20px;
+  font-size:12px;
+  color:rgba(255,255,255,0.5);
 }
 
 .socials{
@@ -263,8 +205,8 @@ footer{
 }
 
 .socials a{
-  width:42px;
-  height:42px;
+  width:36px;
+  height:36px;
   border-radius:50%;
   background:rgba(255,255,255,.06);
   border:1px solid rgba(255,255,255,.12);
@@ -272,17 +214,20 @@ footer{
   align-items:center;
   justify-content:center;
   text-decoration:none;
-  font-size:18px;
+  font-size:16px;
   color:#fff;
 }
 
-footer p{
-  font-size:12px;
-  opacity:.5;
+@media(max-width:600px){
+  .hero h1{
+    font-size:2rem;
+  }
+  .features{
+    gap:16px;
+  }
 }
 </style>
 </head>
-
 <body>
 
 <div class="wrapper">
@@ -290,69 +235,49 @@ footer p{
   <!-- HEADER -->
   <header>
     <div class="brand">Zep Swipe</div>
-    <button class="login-btn" onclick="location.href='login.html'">Connect Wallet</button>
+    <nav class="nav-links">
+      <a href="deals.html">Deals</a>
+      <a href="business.html">List Your Deal</a>
+      <a href="login.html">Connect Wallet</a>
+    </nav>
   </header>
 
-  <!-- HERO ICON -->
-  <div class="hero-icon">
-    <div class="pulse">
-      <div class="core">
-        <span>🎓</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- HERO TEXT -->
-  <section class="hero-text">
-    <h1>Where students become creators</h1>
-    <p>
-      Discover skilled student freelancers across African universities.
-      Learn, earn, and hire talent with public proof of real work.
-    </p>
-
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h1>Learn, Earn & Publish Real Work</h1>
+    <p>Zep Swipe empowers students to become creators, build skills, and earn globally with public proof of their work.</p>
     <div class="cta">
       <a href="swipe-merchants.html" class="primary">Browse Creators</a>
       <a href="login.html" class="secondary">Join as Student</a>
     </div>
   </section>
 
-  <!-- STUDENT DEALS SECTION -->
-  <section class="student-deals">
-    <h2>Student Deals Near You – Show Your Student ID & Save</h2>
-    <p>Discover discounts and perks at local stores and services.</p>
-    <a href="deals.html" class="primary">Browse Deals</a>
-    <a href="business.html" class="secondary">List Your Deal</a>
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="feature">
+      <h3>Learn by Doing</h3>
+      <p>Complete daily skill tasks and gain hands-on experience instead of just theory.</p>
+    </div>
+    <div class="feature">
+      <h3>Publish Public Proof</h3>
+      <p>Show your work on Zora to validate your skills and build your reputation.</p>
+    </div>
+    <div class="feature">
+      <h3>Earn Globally</h3>
+      <p>Receive rewards and freelance opportunities directly in your wallet.</p>
+    </div>
+    <div class="feature">
+      <h3>Student Deals</h3>
+      <p>Access exclusive student deals and discounts at local stores near you.</p>
+    </div>
   </section>
 
-  <!-- CREATOR CARDS -->
-  <section class="creators">
-    <div class="section-title">Student Creators</div>
-
-    <div class="creator-grid">
-      <div class="creator">
-        <div class="avatar">AI</div>
-        <h4>AI Prompt Engineer</h4>
-        <p>University of Lagos</p>
-      </div>
-
-      <div class="creator">
-        <div class="avatar">UX</div>
-        <h4>Product Designer</h4>
-        <p>University of Ghana</p>
-      </div>
-
-      <div class="creator">
-        <div class="avatar">VC</div>
-        <h4>Video Editor</h4>
-        <p>University of Nairobi</p>
-      </div>
-
-      <div class="creator">
-        <div class="avatar">NC</div>
-        <h4>No-Code Builder</h4>
-        <p>University of Ibadan</p>
-      </div>
-    </div>
+  <!-- DEALS CTA -->
+  <section class="deals-section">
+    <h2>Student Deals Near You – Show Your Student ID & Save</h2>
+    <p>Browse discounts, perks, and exclusive offers from local stores and services.</p>
+    <a href="deals.html" class="primary">Browse Deals</a>
+    <a href="business.html" class="secondary">List Your Deal</a>
   </section>
 
   <!-- FOOTER -->
@@ -366,6 +291,5 @@ footer p{
   </footer>
 
 </div>
-
 </body>
 </html>
