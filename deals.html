@@ -8,7 +8,7 @@
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
+  --bg:radial-gradient(circle at 25% 10%, #050018 0%, #00000c 100%);
   --glass:rgba(255,255,255,0.08);
   --text-light: rgba(255,255,255,0.85);
 }
@@ -29,7 +29,7 @@ header{
   align-items:center;
   padding:16px 24px;
   border-radius:16px;
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(16px);
   background: radial-gradient(circle at center, rgba(0,240,255,0.2), rgba(156,77,255,0.2));
   margin-bottom:32px;
   animation: pulseHeader 4s infinite alternate;
@@ -48,7 +48,10 @@ header .list-deals{
   transition:0.3s;
   text-decoration:none;
 }
-header .list-deals:hover{transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45);}
+header .list-deals:hover{
+  transform:translateY(-2px); 
+  box-shadow:0 0 36px rgba(156,77,255,.45);
+}
 header .logo{
   font-family:Orbitron,sans-serif;
   font-size:1.8rem;
@@ -88,6 +91,7 @@ header .logo{
   box-shadow:0 8px 20px rgba(0,240,255,0.2);
   transition:transform 0.3s, box-shadow 0.3s;
   perspective:1000px;
+  cursor:pointer;
   animation: pulseCard 4s infinite alternate;
 }
 @keyframes pulseCard{
@@ -103,6 +107,8 @@ header .logo{
   width:100px;
   height:100px;
   margin-bottom:12px;
+  border-radius:12px;
+  object-fit:contain;
 }
 .deal-name{
   font-family:Orbitron,sans-serif;
@@ -150,7 +156,7 @@ header .logo{
 </header>
 
 <section class="deals-section">
-  <h2>Popular Campus Deals</h2>
+  <h2>Popular Campus Stores</h2>
   <div class="deals-grid" id="dealsGrid1"></div>
 </section>
 
@@ -161,8 +167,7 @@ header .logo{
 
 <script>
 // ----------------------------
-// Sample student deals data
-// Add more stores by copying the object structure below
+// Sample student stores data
 // ----------------------------
 const deals1 = [
   {name:"Campus Cafe",desc:"20% off coffee & pastries",lat:-33.9571,lng:18.4603,logo:"https://via.placeholder.com/100x100.png?text=Cafe"},
@@ -175,7 +180,7 @@ const deals2 = [
 ];
 
 // ----------------------------
-// Distance calculation function
+// Distance calculation
 // ----------------------------
 function getDistance(lat1, lon1, lat2, lon2){
   const R = 6371;
@@ -201,18 +206,17 @@ function renderDeals(gridId,deals,userLat,userLon){
       <div class="deal-name">${deal.name}</div>
       <div class="deal-desc">${deal.desc}</div>
       <div class="deal-distance">Distance: ${distance}</div>
-      <a href="#" class="view-btn" onclick='viewStore(${JSON.stringify(deal)})'>View Store Details</a>
+      <a href="store.html" class="view-btn" onclick='viewStore(${JSON.stringify(deal)})'>View Store Details</a>
     `;
     container.appendChild(card);
   });
 }
 
 // ----------------------------
-// Save store to localStorage for future backend
+// Save store to localStorage
 // ----------------------------
 function viewStore(store){
   localStorage.setItem("currentStore",JSON.stringify(store));
-  alert(`${store.name} saved! Implement redirect to store details page later.`);
 }
 
 // ----------------------------
