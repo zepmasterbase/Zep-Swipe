@@ -29,16 +29,17 @@ header {
   justify-content: space-between;
   align-items:center;
   padding: 18px 24px;
-  background: radial-gradient(circle at center, rgba(0,240,255,0.15), rgba(156,77,255,0.15));
-  backdrop-filter: blur(12px);
-  border-radius: 12px;
+  background: radial-gradient(circle at center, rgba(0,240,255,0.2), rgba(156,77,255,0.2));
+  backdrop-filter: blur(14px);
+  border-radius: 16px;
   margin: 16px;
   animation: pulseHeader 4s infinite alternate;
+  box-shadow:0 0 30px rgba(0,240,255,0.25);
 }
 
 @keyframes pulseHeader {
   0% { box-shadow: 0 0 20px rgba(0,240,255,0.2); }
-  50% { box-shadow: 0 0 40px rgba(156,77,255,0.4); }
+  50% { box-shadow: 0 0 50px rgba(156,77,255,0.4); }
   100% { box-shadow: 0 0 20px rgba(0,240,255,0.2); }
 }
 
@@ -75,7 +76,7 @@ header {
 
 .header-actions a:hover, .header-actions button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 36px rgba(156,77,255,0.45);
+  box-shadow: 0 0 36px rgba(156,77,255,.45);
 }
 
 /* HERO */
@@ -210,7 +211,8 @@ footer {
   <header>
     <div class="brand">Zep Swipe</div>
     <div class="header-actions">
-      <a href="deals.html">Deals</a>
+      <a href="deals.html">Campus Market</a>
+      <a href="business.html">List Campus Deal</a>
       <button onclick="location.href='login.html'">Connect Wallet</button>
     </div>
   </header>
