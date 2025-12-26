@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Campus Deals</title>
 <style>
-:root {
+:root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
@@ -34,10 +34,10 @@ header{
   margin-bottom:32px;
   animation: pulseHeader 4s infinite alternate;
 }
-@keyframes pulseHeader {
-  0% { box-shadow: 0 0 20px rgba(0,240,255,0.25);}
-  50% { box-shadow: 0 0 50px rgba(156,77,255,0.4);}
-  100% { box-shadow: 0 0 20px rgba(0,240,255,0.25);}
+@keyframes pulseHeader{
+  0%{box-shadow:0 0 20px rgba(0,240,255,0.25);}
+  50%{box-shadow:0 0 50px rgba(156,77,255,0.4);}
+  100%{box-shadow:0 0 20px rgba(0,240,255,0.25);}
 }
 header .list-deals{
   font-family:Orbitron,sans-serif;
@@ -46,6 +46,7 @@ header .list-deals{
   background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
   transition:0.3s;
+  text-decoration:none;
 }
 header .list-deals:hover{transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45);}
 header .logo{
@@ -56,7 +57,7 @@ header .logo{
   -webkit-text-fill-color:transparent;
 }
 
-/* DEALS GRID */
+/* DEALS GRID SECTION */
 .deals-section{
   margin-bottom:60px;
 }
@@ -69,13 +70,15 @@ header .logo{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
+
+/* GRID */
 .deals-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:24px;
 }
 
-/* 3D Neon Deal Cards */
+/* DEAL CARD */
 .deal-card{
   background: var(--glass);
   border-radius:16px;
@@ -85,6 +88,12 @@ header .logo{
   box-shadow:0 8px 20px rgba(0,240,255,0.2);
   transition:transform 0.3s, box-shadow 0.3s;
   perspective:1000px;
+  animation: pulseCard 4s infinite alternate;
+}
+@keyframes pulseCard{
+  0%{box-shadow:0 8px 20px rgba(0,240,255,0.15);}
+  50%{box-shadow:0 12px 28px rgba(156,77,255,0.25);}
+  100%{box-shadow:0 8px 20px rgba(0,240,255,0.15);}
 }
 .deal-card:hover{
   transform: rotateY(5deg) rotateX(3deg) scale(1.03);
@@ -120,6 +129,7 @@ header .logo{
   color:#050015;
   box-shadow:0 0 16px rgba(0,240,255,.35);
   transition:0.25s;
+  text-decoration:none;
 }
 .view-btn:hover{
   transform:translateY(-2px);
@@ -139,13 +149,11 @@ header .logo{
   <div class="logo">Zep Swipe</div>
 </header>
 
-<!-- FIRST DEALS GRID -->
 <section class="deals-section">
   <h2>Popular Campus Deals</h2>
   <div class="deals-grid" id="dealsGrid1"></div>
 </section>
 
-<!-- SECOND DEALS GRID -->
 <section class="deals-section">
   <h2>Student Favorites</h2>
   <div class="deals-grid" id="dealsGrid2"></div>
@@ -153,19 +161,21 @@ header .logo{
 
 <script>
 // ----------------------------
-// Sample deal data
+// Sample student deals data
+// Add more stores by copying the object structure below
 // ----------------------------
 const deals1 = [
   {name:"Campus Cafe",desc:"20% off coffee & pastries",lat:-33.9571,lng:18.4603,logo:"https://via.placeholder.com/100x100.png?text=Cafe"},
-  {name:"BookHub Store",desc:"10% off textbooks & free notebook",lat:-29.8587,lng:31.0218,logo:"https://via.placeholder.com/100x100.png?text=Book"},
+  {name:"BookHub Store",desc:"10% off textbooks & free notebook",lat:-29.8587,lng:31.0218,logo:"https://via.placeholder.com/100x100.png?text=Books"},
 ];
+
 const deals2 = [
   {name:"Tech Gear",desc:"15% off student gadgets",lat:-26.2041,lng:28.0473,logo:"https://via.placeholder.com/100x100.png?text=Tech"},
   {name:"Student Fashion",desc:"Buy 1 Get 1 Free T-shirts",lat:-25.7479,lng:28.2293,logo:"https://via.placeholder.com/100x100.png?text=Fashion"},
 ];
 
 // ----------------------------
-// Distance calculation
+// Distance calculation function
 // ----------------------------
 function getDistance(lat1, lon1, lat2, lon2){
   const R = 6371;
@@ -198,13 +208,16 @@ function renderDeals(gridId,deals,userLat,userLon){
 }
 
 // ----------------------------
-// GEOLOCATION & localStorage
+// Save store to localStorage for future backend
 // ----------------------------
 function viewStore(store){
   localStorage.setItem("currentStore",JSON.stringify(store));
-  alert(`${store.name} saved! Redirect to details page later.`);
+  alert(`${store.name} saved! Implement redirect to store details page later.`);
 }
 
+// ----------------------------
+// Geolocation
+// ----------------------------
 function locationError(){
   renderDeals("dealsGrid1",deals1);
   renderDeals("dealsGrid2",deals2);
@@ -222,6 +235,5 @@ if(navigator.geolocation){
   locationError();
 }
 </script>
-
 </body>
 </html>
