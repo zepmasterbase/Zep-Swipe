@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Submit Student Deal</title>
+<style>
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at 25% 10%, #050018 0%, #00000c 100%);
+  --glass:rgba(255,255,255,0.08);
+}
+
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background: var(--bg);
+  color:#fff;
+  min-height:100vh;
+  padding:20px;
+}
+
+h1{
+  font-family:Orbitron;
+  font-size:1.6rem;
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-align:center;
+  margin-bottom:16px;
+}
+
+p.instructions{
+  font-size:14px;
+  opacity:.85;
+  text-align:center;
+  margin-bottom:24px;
+}
+
+form{
+  background: var(--glass);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;
+  padding:20px;
+  max-width:500px;
+  margin:0 auto;
+  box-shadow:0 0 28px rgba(0,240,255,.25);
+}
+
+label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:600;
+}
+
+input, textarea, select{
+  width:100%;
+  padding:10px;
+  margin-bottom:16px;
+  border-radius:12px;
+  border:none;
+  font-family:Poppins,sans-serif;
+}
+
+textarea{
+  resize: vertical;
+  min-height:80px;
+}
+
+.submit-btn{
+  padding:12px 24px;
+  border:none;
+  border-radius:999px;
+  font-family:Orbitron;
+  font-weight:700;
+  font-size:14px;
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  color:#050015;
+  cursor:pointer;
+  box-shadow:0 0 20px rgba(0,240,255,.35);
+  transition:.25s;
+  width:100%;
+}
+
+.submit-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
+}
+
+.thank-you{
+  text-align:center;
+  font-size:16px;
+  margin-top:16px;
+  color:var(--zep-blue);
+  display:none;
+}
+
+.submissions{
+  max-width:500px;
+  margin:20px auto;
+  padding:16px;
+  background: rgba(0,0,0,0.4);
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.submissions h3{
+  text-align:center;
+  margin-bottom:12px;
+}
+
+.submission-item{
+  margin-bottom:12px;
+  padding:8px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+  font-size:13px;
+  opacity:.9;
+}
+
+@media(max-width:480px){
+  h1{ font-size:1.3rem; }
+}
+</style>
+</head>
+<body>
+
+<h1>Submit Your Student Deal</h1>
+<p class="instructions">
+  Your deal will be verified and listed for students at no cost.
+</p>
+
+<form id="dealForm">
+  <label for="storeName">Store Name</label>
+  <input type="text" id="storeName" name="storeName" required placeholder="Enter store name">
+
+  <label for="storeLogo">Store Logo/Image URL</label>
+  <input type="url" id="storeLogo" name="storeLogo" placeholder="Enter image URL">
+
+  <label for="storeAddress">Store Address</label>
+  <input type="text" id="storeAddress" name="storeAddress" required placeholder="Enter full address">
+
+  <label for="dealDesc">Deal Description</label>
+  <textarea id="dealDesc" name="dealDesc" required placeholder="Describe the student deal"></textarea>
+
+  <label for="dealCategory">Deal Category</label>
+  <select id="dealCategory" name="dealCategory" required>
+    <option value="">Select a category</option>
+    <option value="Food">Food</option>
+    <option value="Retail">Retail</option>
+    <option value="Services">Services</option>
+    <option value="Other">Other</option>
+  </select>
+
+  <label for="contactInfo">Contact Info (Phone or Email)</label>
+  <input type="text" id="contactInfo" name="contactInfo" placeholder="e.g. +123456789 or email@example.com">
+
+  <button type="submit" class="submit-btn">Submit Deal</button>
+</form>
+
+<div class="thank-you" id="thankYou">Thank you! We will review your deal and contact you soon.</div>
+
+<!-- Submissions list -->
+<div class="submissions" id="submissions">
+  <h3>Submitted Deals (Local)</h3>
+  <div id="submissionList"></div>
+</div>
+
+<script>
+const form = document.getElementById('dealForm');
+const thankYou = document.getElementById('thankYou');
+const submissionList = document.getElementById('submissionList');
+
+// Load existing submissions from localStorage
+let deals = JSON.parse(localStorage.getItem('studentDeals')) || [];
+
+// Function to render submissions
+function renderSubmissions(){
+  submissionList.innerHTML = '';
+  if(deals.length === 0){
+    submissionList.innerHTML = '<p>No submissions yet.</p>';
+    return;
+  }
+  deals.forEach((deal, index)=>{
+    const div = document.createElement('div');
+    div.className = 'submission-item';
+    div.innerHTML = `
+      <strong>${deal.storeName}</strong> (${deal.dealCategory})<br>
+      ${deal.dealDesc}<br>
+      Address: ${deal.storeAddress}<br>
+      Contact: ${deal.contactInfo || 'N/A'}
+    `;
+    submissionList.appendChild(div);
+  });
+}
+
+// Initial render
+renderSubmissions();
+
+// Handle form submission
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const newDeal = {
+    storeName: form.storeName.value,
+    storeLogo: form.storeLogo.value,
+    storeAddress: form.storeAddress.value,
+    dealDesc: form.dealDesc.value,
+    dealCategory: form.dealCategory.value,
+    contactInfo: form.contactInfo.value
+  };
+
+  deals.push(newDeal);
+  localStorage.setItem('studentDeals', JSON.stringify(deals));
+
+  thankYou.style.display = 'block';
+  form.reset();
+  renderSubmissions();
+});
+</script>
+
+</body>
+</html>
