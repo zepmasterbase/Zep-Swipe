@@ -3,202 +3,193 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Student Deals</title>
+<title>Zep Swipe — Campus Deals</title>
 <style>
-  :root {
-    --zep-blue: #00f0ff;
-    --zep-violet: #9c4dff;
-    --bg: radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
-    --glass: rgba(255,255,255,0.08);
-    --text-light: rgba(255,255,255,0.85);
-  }
+:root {
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
+  --glass:rgba(255,255,255,0.08);
+  --text-light: rgba(255,255,255,0.85);
+}
 
-  body {
-    margin:0;
-    font-family: Poppins,sans-serif;
-    background: var(--bg);
-    color:#fff;
-    min-height:100vh;
-    padding:16px;
-  }
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background: var(--bg);
+  color:#fff;
+  min-height:100vh;
+  padding:16px;
+}
 
-  a { text-decoration: none; }
+/* HEADER */
+header{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  padding:16px 24px;
+  border-radius:16px;
+  backdrop-filter: blur(14px);
+  background: radial-gradient(circle at center, rgba(0,240,255,0.2), rgba(156,77,255,0.2));
+  margin-bottom:32px;
+  animation: pulseHeader 4s infinite alternate;
+}
+@keyframes pulseHeader {
+  0% { box-shadow: 0 0 20px rgba(0,240,255,0.25);}
+  50% { box-shadow: 0 0 50px rgba(156,77,255,0.4);}
+  100% { box-shadow: 0 0 20px rgba(0,240,255,0.25);}
+}
+header .list-deals{
+  font-family:Orbitron,sans-serif;
+  padding: 8px 16px;
+  border-radius:999px;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  transition:0.3s;
+}
+header .list-deals:hover{transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45);}
+header .logo{
+  font-family:Orbitron,sans-serif;
+  font-size:1.8rem;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-  /* HEADER */
-  header {
-    display:flex;
-    justify-content: space-between;
-    align-items:center;
-    padding:16px 24px;
-    border-radius:16px;
-    backdrop-filter: blur(14px);
-    background: radial-gradient(circle at center, rgba(0,240,255,0.15), rgba(156,77,255,0.15));
-    margin-bottom: 32px;
-    animation: pulseHeader 4s infinite alternate;
-  }
-  @keyframes pulseHeader {
-    0% { box-shadow: 0 0 20px rgba(0,240,255,0.25);}
-    50% { box-shadow: 0 0 50px rgba(156,77,255,0.4);}
-    100% { box-shadow: 0 0 20px rgba(0,240,255,0.25);}
-  }
-  .brand {
-    font-family: Orbitron, sans-serif;
-    font-size:1.8rem;
-    background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-  }
-  .header-actions a {
-    font-family: Orbitron, sans-serif;
-    padding: 8px 16px;
-    border-radius:999px;
-    background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-    color: #050015;
-    transition:0.3s;
-  }
-  .header-actions a:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
+/* DEALS GRID */
+.deals-section{
+  margin-bottom:60px;
+}
+.deals-section h2{
+  font-family:Orbitron,sans-serif;
+  font-size:1.6rem;
+  margin-bottom:24px;
+  text-align:left;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.deals-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+}
 
-  /* DEALS GRID */
-  .deals-container {
-    display:grid;
-    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-    gap:24px;
-  }
+/* 3D Neon Deal Cards */
+.deal-card{
+  background: var(--glass);
+  border-radius:16px;
+  padding:20px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,0.12);
+  box-shadow:0 8px 20px rgba(0,240,255,0.2);
+  transition:transform 0.3s, box-shadow 0.3s;
+  perspective:1000px;
+}
+.deal-card:hover{
+  transform: rotateY(5deg) rotateX(3deg) scale(1.03);
+  box-shadow:0 16px 40px rgba(156,77,255,0.35);
+}
+.deal-icon{
+  width:100px;
+  height:100px;
+  margin-bottom:12px;
+}
+.deal-name{
+  font-family:Orbitron,sans-serif;
+  font-size:1.2rem;
+  margin-bottom:6px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.deal-desc,.deal-distance{
+  font-size:0.9rem;
+  color:var(--text-light);
+  margin-bottom:6px;
+}
+.view-btn{
+  display:inline-block;
+  margin-top:10px;
+  padding:10px 20px;
+  border-radius:999px;
+  font-family:Orbitron,sans-serif;
+  font-weight:600;
+  font-size:14px;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  box-shadow:0 0 16px rgba(0,240,255,.35);
+  transition:0.25s;
+}
+.view-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
+}
 
-  .deal-card {
-    background: var(--glass);
-    border:1px solid rgba(255,255,255,0.12);
-    border-radius:18px;
-    padding:20px;
-    box-shadow: 0 8px 20px rgba(0,240,255,0.2);
-    transition: transform 0.3s, box-shadow 0.3s;
-    perspective: 1000px;
-  }
-  .deal-card:hover {
-    transform: rotateY(5deg) rotateX(3deg) scale(1.03);
-    box-shadow: 0 16px 40px rgba(156,77,255,0.35);
-  }
-  .deal-logo {
-    width:100%;
-    max-height:120px;
-    object-fit:contain;
-    border-radius:12px;
-    margin-bottom:12px;
-    transition: transform 0.3s;
-  }
-  .deal-card:hover .deal-logo { transform: scale(1.05) rotateZ(2deg); }
-  .deal-name {
-    font-family: Orbitron, sans-serif;
-    font-size:1.2rem;
-    margin-bottom:6px;
-    background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-  }
-  .deal-desc, .deal-address, .deal-distance {
-    font-size:0.9rem;
-    color:var(--text-light);
-    margin-bottom:6px;
-  }
-  .view-btn {
-    display:inline-block;
-    margin-top:10px;
-    padding:10px 20px;
-    border-radius:999px;
-    font-family:Orbitron, sans-serif;
-    font-weight:600;
-    font-size:14px;
-    background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-    color:#050015;
-    box-shadow:0 0 16px rgba(0,240,255,.35);
-    transition:0.25s;
-  }
-  .view-btn:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
-
-  @media(max-width:600px){
-    header { flex-direction: column; gap:12px; }
-    .deals-container { grid-template-columns: 1fr; }
-  }
+@media(max-width:600px){
+  header{flex-direction:column; gap:12px;}
+  .deals-grid{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">Zep Swipe</div>
-  <div class="header-actions">
-    <a href="business.html">List Deals</a>
-  </div>
+  <a href="business.html" class="list-deals">List Deals</a>
+  <div class="logo">Zep Swipe</div>
 </header>
 
-<div class="deals-container" id="dealsContainer"></div>
+<!-- FIRST DEALS GRID -->
+<section class="deals-section">
+  <h2>Popular Campus Deals</h2>
+  <div class="deals-grid" id="dealsGrid1"></div>
+</section>
+
+<!-- SECOND DEALS GRID -->
+<section class="deals-section">
+  <h2>Student Favorites</h2>
+  <div class="deals-grid" id="dealsGrid2"></div>
+</section>
 
 <script>
 // ----------------------------
-// DEALS DATA
+// Sample deal data
 // ----------------------------
-const deals = [
-  {
-    name: "Campus Cafe",
-    description: "20% off coffee & pastries",
-    address: "123 Campus Road, Cape Town",
-    lat: -33.9571,
-    lng: 18.4603,
-    logo: "https://via.placeholder.com/300x150.png?text=Campus+Cafe"
-  },
-  {
-    name: "BookHub Store",
-    description: "10% off textbooks, free notebook with purchase",
-    address: "45 University Avenue, Durban",
-    lat: -29.8587,
-    lng: 31.0218,
-    logo: "https://via.placeholder.com/300x150.png?text=BookHub"
-  },
-  {
-    name: "Tech Gear",
-    description: "15% off all gadgets for students",
-    address: "67 Tech Street, Johannesburg",
-    lat: -26.2041,
-    lng: 28.0473,
-    logo: "https://via.placeholder.com/300x150.png?text=Tech+Gear"
-  },
-  {
-    name: "Student Fashion",
-    description: "Buy 1 Get 1 Free on all T-shirts",
-    address: "89 Fashion Ave, Pretoria",
-    lat: -25.7479,
-    lng: 28.2293,
-    logo: "https://via.placeholder.com/300x150.png?text=Student+Fashion"
-  }
+const deals1 = [
+  {name:"Campus Cafe",desc:"20% off coffee & pastries",lat:-33.9571,lng:18.4603,logo:"https://via.placeholder.com/100x100.png?text=Cafe"},
+  {name:"BookHub Store",desc:"10% off textbooks & free notebook",lat:-29.8587,lng:31.0218,logo:"https://via.placeholder.com/100x100.png?text=Book"},
+];
+const deals2 = [
+  {name:"Tech Gear",desc:"15% off student gadgets",lat:-26.2041,lng:28.0473,logo:"https://via.placeholder.com/100x100.png?text=Tech"},
+  {name:"Student Fashion",desc:"Buy 1 Get 1 Free T-shirts",lat:-25.7479,lng:28.2293,logo:"https://via.placeholder.com/100x100.png?text=Fashion"},
 ];
 
 // ----------------------------
-// DISTANCE CALCULATION
+// Distance calculation
 // ----------------------------
-function getDistance(lat1, lon1, lat2, lon2) {
-  const R = 6371; // km
+function getDistance(lat1, lon1, lat2, lon2){
+  const R = 6371;
   const dLat = (lat2-lat1)*Math.PI/180;
   const dLon = (lon2-lon1)*Math.PI/180;
   const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
   const c = 2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
-  return R*c;
+  return (R*c).toFixed(2)+" km";
 }
 
 // ----------------------------
-// RENDER DEALS
+// Render deals grid
 // ----------------------------
-const container = document.getElementById("dealsContainer");
-
-function renderDeals(userLat, userLon){
-  container.innerHTML = "";
+function renderDeals(gridId,deals,userLat,userLon){
+  const container = document.getElementById(gridId);
+  container.innerHTML="";
   deals.forEach(deal=>{
-    const distance = (userLat && userLon) ? getDistance(userLat,userLon,deal.lat,deal.lng).toFixed(2)+" km" : "Unavailable";
+    const distance = userLat && userLon ? getDistance(userLat,userLon,deal.lat,deal.lng) : "Unavailable";
     const card = document.createElement("div");
-    card.className = "deal-card";
-    card.innerHTML = `
-      ${deal.logo? `<img src="${deal.logo}" alt="${deal.name} Logo" class="deal-logo">`:""}
+    card.className="deal-card";
+    card.innerHTML=`
+      <img src="${deal.logo}" class="deal-icon" alt="${deal.name}">
       <div class="deal-name">${deal.name}</div>
-      <div class="deal-desc">${deal.description}</div>
-      <div class="deal-address">Address: ${deal.address}</div>
+      <div class="deal-desc">${deal.desc}</div>
       <div class="deal-distance">Distance: ${distance}</div>
       <a href="#" class="view-btn" onclick='viewStore(${JSON.stringify(deal)})'>View Store Details</a>
     `;
@@ -207,29 +198,28 @@ function renderDeals(userLat, userLon){
 }
 
 // ----------------------------
-// GEOLOCATION
+// GEOLOCATION & localStorage
 // ----------------------------
-function locationError(err){
-  console.warn("Geolocation not available or denied. Showing deals without distance.");
-  renderDeals();
+function viewStore(store){
+  localStorage.setItem("currentStore",JSON.stringify(store));
+  alert(`${store.name} saved! Redirect to details page later.`);
+}
+
+function locationError(){
+  renderDeals("dealsGrid1",deals1);
+  renderDeals("dealsGrid2",deals2);
 }
 
 if(navigator.geolocation){
   navigator.geolocation.getCurrentPosition(
-    pos => renderDeals(pos.coords.latitude,pos.coords.longitude),
+    pos=>{
+      renderDeals("dealsGrid1",deals1,pos.coords.latitude,pos.coords.longitude);
+      renderDeals("dealsGrid2",deals2,pos.coords.latitude,pos.coords.longitude);
+    },
     locationError
   );
 }else{
   locationError();
-}
-
-// ----------------------------
-// LOCALSTORAGE - Save store on click
-// ----------------------------
-function viewStore(store){
-  localStorage.setItem("currentStore", JSON.stringify(store));
-  alert(`${store.name} saved to localStorage! You can redirect to a store details page later.`);
-  // Example: window.location.href = "store.html";
 }
 </script>
 
