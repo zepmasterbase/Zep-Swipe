@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Student Creator Economy</title>
+<title>Zep Swipe — Campus Deals & Student Freelancers</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -13,15 +13,8 @@
   --glass:rgba(255,255,255,0.08);
   --text-light: rgba(255,255,255,0.85);
 }
-
 * { box-sizing:border-box; margin:0; padding:0; }
-
-body {
-  font-family: Poppins, sans-serif;
-  background: var(--bg);
-  color: #fff;
-  min-height: 100vh;
-}
+body { font-family:Poppins,sans-serif; background:var(--bg); color:#fff; min-height:100vh; }
 
 /* HEADER */
 header {
@@ -29,219 +22,104 @@ header {
   justify-content: space-between;
   align-items:center;
   padding: 18px 24px;
-  background: radial-gradient(circle at center, rgba(0,240,255,0.2), rgba(156,77,255,0.2));
   backdrop-filter: blur(14px);
-  border-radius: 16px;
+  border-radius: 12px;
   margin: 16px;
+  background: radial-gradient(circle at center, rgba(0,240,255,0.15), rgba(156,77,255,0.15));
   animation: pulseHeader 4s infinite alternate;
-  box-shadow:0 0 30px rgba(0,240,255,0.25);
 }
-
 @keyframes pulseHeader {
   0% { box-shadow: 0 0 20px rgba(0,240,255,0.2); }
   50% { box-shadow: 0 0 50px rgba(156,77,255,0.4); }
   100% { box-shadow: 0 0 20px rgba(0,240,255,0.2); }
 }
-
-.brand {
-  font-family: Orbitron;
-  font-size: 1.8rem;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
+.brand { font-family:Orbitron; font-size:1.8rem; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 .header-actions a, .header-actions button {
-  font-family: Orbitron;
-  font-size: 14px;
-  text-decoration: none;
-  padding: 8px 18px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  transition: 0.3s;
-  margin-left: 10px;
+  font-family:Orbitron; font-size:14px; text-decoration:none; padding:8px 18px; border-radius:999px; border:none; cursor:pointer; transition:0.3s; margin-left:10px;
 }
-
-.header-actions a {
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-  color: #050015;
-}
-
-.header-actions button {
-  background: var(--glass);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.12);
-}
-
-.header-actions a:hover, .header-actions button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 36px rgba(156,77,255,.45);
-}
+.header-actions a { background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet)); color:#050015; }
+.header-actions button { background:var(--glass); color:#fff; border:1px solid rgba(255,255,255,0.12); }
+.header-actions a:hover, .header-actions button:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
 
 /* HERO */
-.hero {
-  text-align: center;
-  margin-top: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 32px;
-  padding: 0 24px;
-}
+.hero { text-align:center; margin-top:80px; padding:0 24px; }
+.hero h1 { font-family:Orbitron; font-size:2.6rem; line-height:1.2; margin-bottom:12px; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero p { font-size:1.05rem; color:var(--text-light); max-width:550px; margin:0 auto; line-height:1.5; }
+.cta { margin-top:20px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
+.cta a { padding:14px 28px; border-radius:999px; font-family:Orbitron; font-weight:600; font-size:14px; text-decoration:none; transition:0.3s; }
+.cta a.primary { background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050015; }
+.cta a.secondary { border:1px solid rgba(255,255,255,.25); color:#fff; }
+.cta a.primary:hover, .cta a.secondary:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
 
-.pulse-circle {
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(0,240,255,0.25), transparent 60%),
-              radial-gradient(circle at 70% 70%, rgba(156,77,255,0.25), transparent 60%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: pulse 4s infinite alternate;
-  box-shadow:0 0 90px rgba(0,240,255,.3);
-}
+/* DEALS GRID */
+.deals { margin:60px auto; max-width:1000px; padding:0 20px; }
+.deals h2 { font-family:Orbitron; text-align:center; margin-bottom:28px; font-size:1.8rem; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.deals-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:20px; justify-items:center; }
+.deal-card { width:140px; height:140px; border-radius:16px; background:var(--glass); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px; border:1px solid rgba(255,255,255,0.12); transition:0.3s; }
+.deal-card img { width:60px; height:60px; object-fit:contain; margin-bottom:8px; }
+.deal-card:hover { transform:translateY(-4px); box-shadow:0 0 30px rgba(156,77,255,0.45); }
+.deal-card span { font-size:0.85rem; }
 
-@keyframes pulse {
-  from { transform: scale(1); box-shadow:0 0 60px rgba(0,240,255,.25);}
-  to { transform: scale(1.05); box-shadow:0 0 120px rgba(156,77,255,.45);}
-}
-
-.pulse-circle svg {
-  width: 140px;
-  height: 140px;
-}
-
-/* HERO TEXT */
-.hero-text h1 {
-  font-family: Orbitron;
-  font-size: 2.6rem;
-  line-height: 1.2;
-  margin-bottom: 12px;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.hero-text p {
-  font-size: 1.05rem;
-  color: var(--text-light);
-  max-width: 500px;
-  line-height: 1.5;
-  margin: 0 auto;
-}
-
-/* CTA BUTTONS */
-.cta {
-  display: flex;
-  gap: 18px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.cta a {
-  padding: 14px 28px;
-  border-radius: 999px;
-  font-family: Orbitron;
-  font-weight: 600;
-  font-size: 14px;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-.cta a.primary {
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-  color: #050015;
-}
-
-.cta a.secondary {
-  border:1px solid rgba(255,255,255,.25);
-  color:#fff;
-}
-
-.cta a.primary:hover, .cta a.secondary:hover {
-  transform: translateY(-2px);
-  box-shadow:0 0 36px rgba(156,77,255,.45);
-}
+/* LIST YOUR DEAL */
+.list-deal { margin:60px auto; text-align:center; }
+.list-deal h3 { font-family:Orbitron; font-size:1.8rem; margin-bottom:16px; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.list-deal a { display:inline-block; margin-top:12px; padding:14px 28px; border-radius:999px; font-family:Orbitron; font-weight:600; font-size:14px; text-decoration:none; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050015; transition:0.3s; }
+.list-deal a:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
 
 /* FOOTER */
-footer {
-  text-align:center;
-  padding: 40px 20px;
-  font-size: 12px;
-  color: rgba(255,255,255,0.5);
-}
-
-.socials {
-  display:flex;
-  justify-content:center;
-  gap:18px;
-  margin-bottom:10px;
-}
-
-.socials a {
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  background: rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.12);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  font-size:16px;
-  color:#fff;
-}
+footer { text-align:center; padding:40px 20px; font-size:12px; color:rgba(255,255,255,0.5); }
+.socials { display:flex; justify-content:center; gap:18px; margin-bottom:10px; }
+.socials a { width:36px; height:36px; border-radius:50%; background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:16px; color:#fff; }
 
 @media(max-width:600px){
-  .hero-text h1 { font-size:2rem; }
-  .pulse-circle { width:200px; height:200px; }
-  .pulse-circle svg { width:110px; height:110px; }
+  .hero h1 { font-size:2rem; }
+  .deals-grid { grid-template-columns:repeat(auto-fit,minmax(100px,1fr)); gap:12px; }
+  .deal-card { width:100px; height:100px; }
 }
 </style>
 </head>
 
 <body>
-
 <div class="wrapper">
 
   <!-- HEADER -->
   <header>
     <div class="brand">Zep Swipe</div>
     <div class="header-actions">
-      <a href="deals.html">Campus Market</a>
-      <a href="business.html">List Campus Deal</a>
+      <a href="deals.html">Campus Marketplace</a>
       <button onclick="location.href='login.html'">Connect Wallet</button>
     </div>
   </header>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="pulse-circle">
-      <!-- Lightweight 3D student SVG illustration -->
-      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="32" cy="32" r="32" fill="url(#grad)"/>
-        <defs>
-          <radialGradient id="grad" cx="32" cy="32" r="32">
-            <stop offset="0%" stop-color="#00f0ff"/>
-            <stop offset="100%" stop-color="#9c4dff"/>
-          </radialGradient>
-        </defs>
-        <text x="50%" y="55%" text-anchor="middle" font-size="20" fill="#050015" font-family="Orbitron">🎓</text>
-      </svg>
-    </div>
-
-    <div class="hero-text">
-      <h1>Become a Verified Freelancer in 21 Days</h1>
-      <p>Students can also explore nearby deals from brands and restaurants using their student ID, earning real rewards while learning.</p>
-    </div>
-
+    <h1>Students Become Verified Freelancers in 21 Days</h1>
+    <p>Browse nearby student deals from brands & restaurants using your student ID while earning real rewards.</p>
     <div class="cta">
       <a href="freelancer.html" class="primary">Become a Freelancer</a>
-      <a href="swipe-merchants.html" class="secondary">Browse Student Creators</a>
+      <a href="deals.html" class="secondary">Browse Campus Deals</a>
     </div>
+  </section>
+
+  <!-- DEALS GRID -->
+  <section class="deals">
+    <h2>Popular Student Deals</h2>
+    <div class="deals-grid">
+      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=W" alt="Woolworths"><span>Woolworths</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=KFC" alt="KFC"><span>KFC</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=Nando's" alt="Nando's"><span>Nando's</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=McD" alt="McDonald's"><span>McDonald's</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=Z" alt="Zara"><span>Zara</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=H&M" alt="H&M"><span>H&M</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=P" alt="Puma"><span>Puma</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=Ad" alt="Adidas"><span>Adidas</span></a>
+    </div>
+  </section>
+
+  <!-- LIST YOUR DEAL -->
+  <section class="list-deal">
+    <h3>List Your Campus Deal</h3>
+    <a href="business.html">Become a Freelancer</a>
   </section>
 
   <!-- FOOTER -->
