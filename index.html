@@ -22,16 +22,16 @@ header {
   justify-content: space-between;
   align-items:center;
   padding: 18px 24px;
-  backdrop-filter: blur(14px);
-  border-radius: 12px;
+  border-radius: 16px;
   margin: 16px;
-  background: radial-gradient(circle at center, rgba(0,240,255,0.15), rgba(156,77,255,0.15));
+  backdrop-filter: blur(16px);
+  background: radial-gradient(circle at center, rgba(0,240,255,0.2), rgba(156,77,255,0.2));
   animation: pulseHeader 4s infinite alternate;
 }
 @keyframes pulseHeader {
-  0% { box-shadow: 0 0 20px rgba(0,240,255,0.2); }
-  50% { box-shadow: 0 0 50px rgba(156,77,255,0.4); }
-  100% { box-shadow: 0 0 20px rgba(0,240,255,0.2); }
+  0% { box-shadow: 0 0 20px rgba(0,240,255,0.25); }
+  50% { box-shadow: 0 0 50px rgba(156,77,255,0.45); }
+  100% { box-shadow: 0 0 20px rgba(0,240,255,0.25); }
 }
 .brand { font-family:Orbitron; font-size:1.8rem; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 .header-actions a, .header-actions button {
@@ -42,14 +42,33 @@ header {
 .header-actions a:hover, .header-actions button:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
 
 /* HERO */
-.hero { text-align:center; margin-top:80px; padding:0 24px; }
+.hero { text-align:center; margin-top:60px; padding:0 24px; display:flex; flex-direction:column; align-items:center; gap:28px; }
 .hero h1 { font-family:Orbitron; font-size:2.6rem; line-height:1.2; margin-bottom:12px; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 .hero p { font-size:1.05rem; color:var(--text-light); max-width:550px; margin:0 auto; line-height:1.5; }
-.cta { margin-top:20px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
+.cta { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:20px; }
 .cta a { padding:14px 28px; border-radius:999px; font-family:Orbitron; font-weight:600; font-size:14px; text-decoration:none; transition:0.3s; }
 .cta a.primary { background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050015; }
 .cta a.secondary { border:1px solid rgba(255,255,255,.25); color:#fff; }
 .cta a.primary:hover, .cta a.secondary:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
+
+/* 3D Neon Student Circle */
+.student-circle {
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, rgba(0,240,255,0.25), transparent 60%),
+              radial-gradient(circle at 70% 70%, rgba(156,77,255,0.25), transparent 60%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation: pulse 4s infinite alternate;
+  box-shadow:0 0 90px rgba(0,240,255,.3);
+}
+@keyframes pulse {
+  from { transform: scale(1); box-shadow:0 0 60px rgba(0,240,255,.25);}
+  to { transform: scale(1.05); box-shadow:0 0 120px rgba(156,77,255,.45);}
+}
+.student-circle svg { width:160px; height:160px; }
 
 /* DEALS GRID */
 .deals { margin:60px auto; max-width:1000px; padding:0 20px; }
@@ -57,7 +76,7 @@ header {
 .deals-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:20px; justify-items:center; }
 .deal-card { width:140px; height:140px; border-radius:16px; background:var(--glass); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px; border:1px solid rgba(255,255,255,0.12); transition:0.3s; }
 .deal-card img { width:60px; height:60px; object-fit:contain; margin-bottom:8px; }
-.deal-card:hover { transform:translateY(-4px); box-shadow:0 0 30px rgba(156,77,255,0.45); }
+.deal-card:hover { transform:translateY(-4px); box-shadow:0 0 30px rgba(156,77,255,.45); }
 .deal-card span { font-size:0.85rem; }
 
 /* LIST YOUR DEAL */
@@ -75,10 +94,11 @@ footer { text-align:center; padding:40px 20px; font-size:12px; color:rgba(255,25
   .hero h1 { font-size:2rem; }
   .deals-grid { grid-template-columns:repeat(auto-fit,minmax(100px,1fr)); gap:12px; }
   .deal-card { width:100px; height:100px; }
+  .student-circle { width:200px; height:200px; }
+  .student-circle svg { width:120px; height:120px; }
 }
 </style>
 </head>
-
 <body>
 <div class="wrapper">
 
@@ -93,8 +113,21 @@ footer { text-align:center; padding:40px 20px; font-size:12px; color:rgba(255,25
 
   <!-- HERO -->
   <section class="hero">
+    <div class="student-circle">
+      <!-- Neon 3D student SVG illustration -->
+      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="32" fill="url(#grad)"/>
+        <defs>
+          <radialGradient id="grad" cx="32" cy="32" r="32">
+            <stop offset="0%" stop-color="#00f0ff"/>
+            <stop offset="100%" stop-color="#9c4dff"/>
+          </radialGradient>
+        </defs>
+        <text x="50%" y="55%" text-anchor="middle" font-size="20" fill="#050015" font-family="Orbitron">🎓</text>
+      </svg>
+    </div>
     <h1>Students Become Verified Freelancers in 21 Days</h1>
-    <p>Browse nearby student deals from brands & restaurants using your student ID while earning real rewards.</p>
+    <p>Discover student deals from top brands & restaurants using your student ID while learning and earning real rewards.</p>
     <div class="cta">
       <a href="freelancer.html" class="primary">Become a Freelancer</a>
       <a href="deals.html" class="secondary">Browse Campus Deals</a>
@@ -105,14 +138,14 @@ footer { text-align:center; padding:40px 20px; font-size:12px; color:rgba(255,25
   <section class="deals">
     <h2>Popular Student Deals</h2>
     <div class="deals-grid">
-      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=W" alt="Woolworths"><span>Woolworths</span></a>
-      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=KFC" alt="KFC"><span>KFC</span></a>
-      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=Nando's" alt="Nando's"><span>Nando's</span></a>
-      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=McD" alt="McDonald's"><span>McDonald's</span></a>
-      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=Z" alt="Zara"><span>Zara</span></a>
-      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=H&M" alt="H&M"><span>H&M</span></a>
-      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=P" alt="Puma"><span>Puma</span></a>
-      <a href="deals.html" class="deal-card"><img src="https://via.placeholder.com/60?text=Ad" alt="Adidas"><span>Adidas</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Woolworths-logo.png" alt="Woolworths"><span>Woolworths</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://upload.wikimedia.org/wikipedia/en/b/b7/KFC_logo.svg" alt="KFC"><span>KFC</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://upload.wikimedia.org/wikipedia/en/8/88/Nando%27s_logo.svg" alt="Nando's"><span>Nando's</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/McDonald%27s_logo.svg" alt="McDonald's"><span>McDonald's</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Zara_Logo.svg" alt="Zara"><span>Zara</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/H%26M-Logo.svg" alt="H&M"><span>H&M</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Puma_logo.svg" alt="Puma"><span>Puma</span></a>
+      <a href="deals.html" class="deal-card"><img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas"><span>Adidas</span></a>
     </div>
   </section>
 
