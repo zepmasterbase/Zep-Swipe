@@ -1,229 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Student Creator Economy</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --zep-blue:#00f0ff;
-  --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
-  --glass:rgba(255,255,255,0.06);
-  --glass-hover:rgba(255,255,255,0.12);
-  --text-light:rgba(255,255,255,0.85);
+:root {
+  --zep-blue: #00f0ff;
+  --zep-violet: #9c4dff;
+  --bg: radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
+  --glass: rgba(255, 255, 255, 0.06);
+  --text-light: rgba(255, 255, 255, 0.85);
 }
 
-*{box-sizing:border-box; margin:0; padding:0;}
-body{
-  font-family:Poppins,sans-serif;
-  background:var(--bg);
-  color:#fff;
-  line-height:1.6;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Poppins, sans-serif;
+  background: var(--bg);
+  color: #fff;
+  min-height: 100vh;
 }
 
-.wrapper{
-  max-width:1100px;
-  margin:0 auto;
-  padding:30px 20px;
+.wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 20px 80px;
 }
 
 /* HEADER */
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px 0;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
 }
 
-.brand{
-  font-family:Orbitron;
-  font-size:1.8rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+.brand {
+  font-family: Orbitron;
+  font-size: 1.8rem;
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.nav-links a{
-  margin-left:20px;
-  font-family:Orbitron;
-  font-size:14px;
-  text-decoration:none;
-  color:#fff;
-  padding:8px 16px;
-  border-radius:999px;
-  transition:.3s;
+.nav-links a {
+  margin-left: 20px;
+  font-family: Orbitron;
+  font-size: 14px;
+  text-decoration: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 999px;
+  transition: .3s;
 }
 
-.nav-links a:hover{
-  background:var(--glass-hover);
+.nav-links a:hover {
+  background: var(--glass);
 }
 
 /* HERO SECTION */
-.hero{
-  text-align:center;
-  padding:100px 20px 60px;
+.hero {
+  text-align: center;
+  padding: 120px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
 }
 
-.hero h1{
-  font-family:Orbitron;
-  font-size:2.8rem;
-  line-height:1.2;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  margin-bottom:20px;
+/* Pulsing Circle */
+.pulse-circle {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(0,240,255,0.25), transparent 60%),
+              radial-gradient(circle at 70% 70%, rgba(156,77,255,0.25), transparent 60%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 4s infinite alternate;
+  box-shadow: 0 0 90px rgba(0,240,255,0.3);
 }
 
-.hero p{
-  font-size:1.1rem;
-  color:var(--text-light);
-  max-width:600px;
-  margin:0 auto 30px;
+@keyframes pulse {
+  from { transform: scale(1); box-shadow: 0 0 60px rgba(0,240,255,0.25); }
+  to { transform: scale(1.05); box-shadow: 0 0 120px rgba(156,77,255,0.45); }
 }
 
-.hero .cta{
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  flex-wrap:wrap;
+.hero img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255,255,255,0.2);
 }
 
-.hero .cta a{
-  padding:14px 28px;
-  border-radius:999px;
-  font-family:Orbitron;
-  font-size:14px;
-  font-weight:600;
-  text-decoration:none;
-  transition:.3s;
+/* HERO TEXT */
+.hero-text h1 {
+  font-family: Orbitron;
+  font-size: 2.8rem;
+  line-height: 1.2;
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
 }
 
-.hero .cta a.primary{
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
+.hero-text p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  max-width: 600px;
 }
 
-.hero .cta a.primary:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 36px rgba(156,77,255,.45);
+/* CTA */
+.cta {
+  margin-top: 28px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.hero .cta a.secondary{
-  border:1px solid rgba(255,255,255,.25);
-  color:#fff;
+.cta a {
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-family: Orbitron;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: .3s;
 }
 
-/* FEATURES SECTION */
-.features{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:24px;
-  margin:80px 0;
-  text-align:center;
+.cta a.primary {
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  color: #050015;
 }
 
-.feature{
-  padding:28px 20px;
-  border-radius:20px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,0.12);
-  transition:.3s;
+.cta a.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 36px rgba(156,77,255,.45);
 }
 
-.feature:hover{
-  background:var(--glass-hover);
-}
-
-.feature h3{
-  font-family:Orbitron;
-  font-size:1.2rem;
-  margin-bottom:12px;
-}
-
-.feature p{
-  font-size:0.95rem;
-  color:var(--text-light);
-}
-
-/* DEALS CTA */
-.deals-section{
-  text-align:center;
-  margin:100px 0 60px;
-}
-
-.deals-section h2{
-  font-family:Orbitron;
-  font-size:1.8rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  margin-bottom:16px;
-}
-
-.deals-section p{
-  font-size:1rem;
-  color:var(--text-light);
-  margin-bottom:24px;
-}
-
-.deals-section a{
-  padding:14px 28px;
-  border-radius:999px;
-  font-family:Orbitron;
-  font-weight:600;
-  font-size:14px;
-  text-decoration:none;
-}
-
-.deals-section a.primary{
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-}
-
-.deals-section a.secondary{
-  border:1px solid rgba(255,255,255,.25);
-  color:#fff;
+.cta a.secondary {
+  border: 1px solid rgba(255,255,255,.25);
+  color: #fff;
 }
 
 /* FOOTER */
-footer{
-  text-align:center;
-  padding:40px 20px 20px;
-  font-size:12px;
-  color:rgba(255,255,255,0.5);
+footer {
+  text-align: center;
+  padding: 40px 20px 20px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
 }
 
-.socials{
-  display:flex;
-  justify-content:center;
-  gap:18px;
-  margin-bottom:10px;
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 10px;
 }
 
-.socials a{
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.12);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  font-size:16px;
-  color:#fff;
+.socials a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 16px;
+  color: #fff;
 }
 
 @media(max-width:600px){
-  .hero h1{
-    font-size:2rem;
+  .hero-text h1 {
+    font-size: 2rem;
   }
-  .features{
-    gap:16px;
+  .pulse-circle {
+    width: 200px;
+    height: 200px;
+  }
+  .hero img {
+    width: 110px;
+    height: 110px;
   }
 }
 </style>
@@ -242,42 +208,19 @@ footer{
     </nav>
   </header>
 
-  <!-- HERO SECTION -->
+  <!-- HERO -->
   <section class="hero">
-    <h1>Learn, Earn & Publish Real Work</h1>
-    <p>Zep Swipe empowers students to become creators, build skills, and earn globally with public proof of their work.</p>
+    <div class="pulse-circle">
+      <img src="student-entrepreneur.jpg" alt="Student Entrepreneur">
+    </div>
+    <div class="hero-text">
+      <h1>Where Students Become Creators</h1>
+      <p>Learn by doing, publish your work publicly, and earn globally. Zep Swipe empowers students to transform skills into income.</p>
+    </div>
     <div class="cta">
-      <a href="swipe-merchants.html" class="primary">Browse Creators</a>
-      <a href="login.html" class="secondary">Join as Student</a>
+      <a href="deals.html" class="primary">Browse Student Deals</a>
+      <a href="business.html" class="secondary">List Your Deal</a>
     </div>
-  </section>
-
-  <!-- FEATURES -->
-  <section class="features">
-    <div class="feature">
-      <h3>Learn by Doing</h3>
-      <p>Complete daily skill tasks and gain hands-on experience instead of just theory.</p>
-    </div>
-    <div class="feature">
-      <h3>Publish Public Proof</h3>
-      <p>Show your work on Zora to validate your skills and build your reputation.</p>
-    </div>
-    <div class="feature">
-      <h3>Earn Globally</h3>
-      <p>Receive rewards and freelance opportunities directly in your wallet.</p>
-    </div>
-    <div class="feature">
-      <h3>Student Deals</h3>
-      <p>Access exclusive student deals and discounts at local stores near you.</p>
-    </div>
-  </section>
-
-  <!-- DEALS CTA -->
-  <section class="deals-section">
-    <h2>Student Deals Near You – Show Your Student ID & Save</h2>
-    <p>Browse discounts, perks, and exclusive offers from local stores and services.</p>
-    <a href="deals.html" class="primary">Browse Deals</a>
-    <a href="business.html" class="secondary">List Your Deal</a>
   </section>
 
   <!-- FOOTER -->
@@ -291,5 +234,6 @@ footer{
   </footer>
 
 </div>
+
 </body>
 </html>
