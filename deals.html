@@ -4,150 +4,119 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Campus Deals</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --zep-blue:#00f0ff;
-  --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 25% 10%, #050018 0%, #00000c 100%);
-  --glass:rgba(255,255,255,0.08);
-}
+  /* ROOT VARIABLES */
+  :root {
+    --zep-blue: #00f0ff;
+    --zep-violet: #9c4dff;
+    --bg: radial-gradient(circle at 25% 10%, #050018 0%, #00000c 100%);
+    --glass: rgba(255,255,255,0.08);
+    --text-light: rgba(255,255,255,0.85);
+  }
 
-body {
-  margin:0;
-  font-family:Poppins,sans-serif;
-  background: var(--bg);
-  color:#fff;
-  min-height:100vh;
-  padding:20px;
-}
+  /* GLOBAL */
+  body { 
+    margin:0; 
+    font-family: Poppins, sans-serif; 
+    background: var(--bg); 
+    color: #fff; 
+    min-height:100vh; 
+    padding: 16px;
+  }
 
-/* HEADER */
-header {
-  display:flex;
-  justify-content: space-between;
-  align-items:center;
-  padding:16px 24px;
-  backdrop-filter: blur(16px);
-  border-radius:16px;
-  margin-bottom:40px;
-  background: radial-gradient(circle at center, rgba(0,240,255,0.15), rgba(156,77,255,0.15));
-  animation: pulseHeader 4s infinite alternate;
-}
-@keyframes pulseHeader {
-  0% { box-shadow: 0 0 20px rgba(0,240,255,0.2);}
-  50% { box-shadow: 0 0 50px rgba(156,77,255,0.4);}
-  100% { box-shadow: 0 0 20px rgba(0,240,255,0.2);}
-}
-header .brand {
-  font-family: Orbitron;
-  font-size:1.8rem;
-  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.header-actions a, .header-actions button {
-  font-family: Orbitron;
-  font-size:14px;
-  text-decoration:none;
-  padding:8px 16px;
-  border-radius:999px;
-  border:none;
-  cursor:pointer;
-  transition:0.3s;
-  margin-left:10px;
-}
-.header-actions a { background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050015; }
-.header-actions button { background:var(--glass); color:#fff; border:1px solid rgba(255,255,255,0.12);}
-.header-actions a:hover, .header-actions button:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
+  a { text-decoration: none; }
 
-/* SECTION TITLES */
-h2.section-title {
-  font-family: Orbitron;
-  text-align:center;
-  font-size:1.8rem;
-  margin-bottom:24px;
-  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
+  /* HEADER */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-radius: 16px;
+    backdrop-filter: blur(14px);
+    background: radial-gradient(circle at center, rgba(0,240,255,0.2), rgba(156,77,255,0.2));
+    margin-bottom: 32px;
+    animation: pulseHeader 4s infinite alternate;
+  }
+  @keyframes pulseHeader {
+    0% { box-shadow: 0 0 20px rgba(0,240,255,0.25);}
+    50% { box-shadow: 0 0 50px rgba(156,77,255,0.45);}
+    100% { box-shadow: 0 0 20px rgba(0,240,255,0.25);}
+  }
+  .brand {
+    font-family: Orbitron, sans-serif;
+    font-size: 1.8rem;
+    background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header-actions a {
+    font-family: Orbitron, sans-serif;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+    color: #050015;
+    transition: 0.3s;
+  }
+  .header-actions a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 36px rgba(156,77,255,.45);
+  }
 
-/* GRID */
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:20px;
-  max-width:1000px;
-  margin:0 auto 60px auto;
-}
+  /* DEAL CARDS */
+  .deal-card {
+    background: var(--glass);
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(0,240,255,0.25);
+  }
+  .deal-card img {
+    width: 100%;
+    max-height: 120px;
+    object-fit: contain;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  .deal-name {
+    font-family: Orbitron, sans-serif;
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+  }
+  .deal-desc {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-bottom: 6px;
+  }
+  .deal-address, .deal-distance {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 6px;
+  }
+  .view-btn {
+    display:inline-block;
+    margin-top: 8px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-family: Orbitron, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+    color: #050015;
+    box-shadow: 0 0 20px rgba(0,240,255,.35);
+    transition: 0.25s;
+  }
+  .view-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:0 0 36px rgba(156,77,255,.45);
+  }
 
-/* 3D Neon Card */
-.card {
-  background:var(--glass);
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,0.12);
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  box-shadow:0 0 24px rgba(0,240,255,0.25);
-  transition: transform 0.4s, box-shadow 0.4s;
-  perspective:1000px;
-}
-.card:hover {
-  transform: rotateY(10deg) rotateX(6deg) scale(1.05);
-  box-shadow:0 0 60px rgba(156,77,255,0.45);
-}
-.card svg {
-  width:80px;
-  height:80px;
-  margin-bottom:12px;
-  animation: neonPulse 2s infinite alternate;
-  filter: drop-shadow(0 0 6px #00f0ff) drop-shadow(0 0 10px #9c4dff);
-}
-@keyframes neonPulse {
-  0% { transform: scale(1); filter: drop-shadow(0 0 6px #00f0ff) drop-shadow(0 0 10px #9c4dff);}
-  50% { transform: scale(1.1); filter: drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 16px #9c4dff);}
-  100% { transform: scale(1); filter: drop-shadow(0 0 6px #00f0ff) drop-shadow(0 0 10px #9c4dff);}
-}
-.card span {
-  font-size:0.9rem;
-  margin-top:4px;
-}
-
-/* VIEW BUTTON */
-.view-btn {
-  display:inline-block;
-  margin-top:10px;
-  padding:8px 16px;
-  border-radius:999px;
-  font-family:Orbitron;
-  font-weight:700;
-  text-decoration:none;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  box-shadow:0 0 20px rgba(0,240,255,0.35);
-  transition:0.25s;
-}
-.view-btn:hover {
-  transform:translateY(-2px);
-  box-shadow:0 0 36px rgba(156,77,255,.45);
-}
-
-/* FOOTER */
-footer {
-  text-align:center;
-  padding:40px 20px;
-  font-size:12px;
-  color:rgba(255,255,255,0.5);
-}
-
-/* MOBILE */
-@media(max-width:600px){
-  .card svg { width:60px; height:60px; }
-}
+  /* RESPONSIVE */
+  @media(max-width:600px){
+    header { flex-direction: column; gap: 12px; }
+    .deal-card img { max-height: 100px; }
+  }
 </style>
 </head>
 <body>
@@ -155,48 +124,92 @@ footer {
 <header>
   <div class="brand">Zep Swipe</div>
   <div class="header-actions">
-    <a href="deals.html">Campus Marketplace</a>
-    <button onclick="location.href='login.html'">Connect Wallet</button>
+    <a href="business.html">List Deals</a>
   </div>
 </header>
 
-<h2 class="section-title">Food & Restaurants Deals</h2>
-<div class="grid" id="foodGrid"></div>
-
-<h2 class="section-title">Clothing & Merchandise Deals</h2>
-<div class="grid" id="clothingGrid"></div>
-
-<footer>
-  © 2025 Zep Swipe — Student Creator Economy
-</footer>
+<div id="dealsContainer">
+  <!-- Deal cards will be injected here -->
+</div>
 
 <script>
-// ------------------ Data ------------------
-const foodDeals = [
-  { name:"Campus Cafe", svg:'<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" stroke="cyan" stroke-width="4" fill="none"/><path d="M20,40 l24,-24" stroke="magenta" stroke-width="3"/></svg>'},
-  { name:"Snack Shack", svg:'<svg viewBox="0 0 64 64"><rect x="16" y="16" width="32" height="32" stroke="cyan" stroke-width="4" fill="none"/><circle cx="32" cy="32" r="8" stroke="magenta" stroke-width="3" fill="none"/></svg>'},
-  { name:"BookHub Cafe", svg:'<svg viewBox="0 0 64 64"><polygon points="32,8 56,56 8,56" stroke="cyan" stroke-width="3" fill="none"/><circle cx="32" cy="32" r="10" stroke="magenta" stroke-width="3"/></svg>'}
+// ----------------------------
+// STORE DATA
+// ----------------------------
+const deals = [
+  {
+    name: "Campus Cafe",
+    description: "20% off coffee & pastries",
+    address: "123 Campus Road, Cape Town",
+    lat: -33.9571,
+    lng: 18.4603,
+    logo: "https://via.placeholder.com/300x150.png?text=Campus+Cafe"
+  },
+  {
+    name: "BookHub Store",
+    description: "10% off textbooks, free notebook with purchase",
+    address: "45 University Avenue, Durban",
+    lat: -29.8587,
+    lng: 31.0218,
+    logo: "https://via.placeholder.com/300x150.png?text=BookHub"
+  }
+  // Add more stores here:
+  // { name: "Store Name", description: "Deal Info", address: "Full Address", lat: 0.0000, lng: 0.0000, logo: "optional_image_url" }
 ];
 
-const clothingDeals = [
-  { name:"Campus Apparel", svg:'<svg viewBox="0 0 64 64"><rect x="20" y="16" width="24" height="32" stroke="cyan" stroke-width="3" fill="none"/><path d="M20,16 l24,32" stroke="magenta" stroke-width="2"/></svg>'},
-  { name:"Uni Shoes", svg:'<svg viewBox="0 0 64 64"><ellipse cx="32" cy="32" rx="20" ry="12" stroke="cyan" stroke-width="3" fill="none"/><line x1="12" y1="32" x2="52" y2="32" stroke="magenta" stroke-width="2"/></svg>'},
-  { name:"Zep Merch", svg:'<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="24" stroke="cyan" stroke-width="3" fill="none"/><path d="M32,8 L32,56 M8,32 L56,32" stroke="magenta" stroke-width="2"/></svg>'}
-];
+// ----------------------------
+// DISTANCE CALCULATION
+// ----------------------------
+function getDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // km
+  const dLat = (lat2-lat1) * Math.PI/180;
+  const dLon = (lon2-lon1) * Math.PI/180;
+  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
+}
 
-// ------------------ Render ------------------
-function renderDeals(gridId, deals){
-  const grid = document.getElementById(gridId);
-  deals.forEach(deal=>{
+// ----------------------------
+// RENDER DEALS
+// ----------------------------
+const container = document.getElementById("dealsContainer");
+
+function renderDeals(userLat, userLon) {
+  container.innerHTML = "";
+  deals.forEach(deal => {
+    const distance = (userLat && userLon) ? getDistance(userLat, userLon, deal.lat, deal.lng).toFixed(2) + " km" : "Unavailable";
     const card = document.createElement("div");
-    card.className="card";
-    card.innerHTML = `${deal.svg}<span>${deal.name}</span><a href="deals.html" class="view-btn">View Deal</a>`;
-    grid.appendChild(card);
+    card.className = "deal-card";
+    card.innerHTML = `
+      ${deal.logo ? `<img src="${deal.logo}" alt="${deal.name} Logo">` : ""}
+      <div class="deal-name">${deal.name}</div>
+      <div class="deal-desc">${deal.description}</div>
+      <div class="deal-address">Address: ${deal.address}</div>
+      <div class="deal-distance">Distance: ${distance}</div>
+      <a href="#" class="view-btn">View Store Details</a>
+    `;
+    container.appendChild(card);
   });
 }
 
-renderDeals('foodGrid', foodDeals);
-renderDeals('clothingGrid', clothingDeals);
+// ----------------------------
+// GET GEOLOCATION
+// ----------------------------
+function locationError(err) {
+  console.warn("Geolocation not available or denied. Showing deals without distance.");
+  renderDeals();
+}
+
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    pos => renderDeals(pos.coords.latitude, pos.coords.longitude),
+    locationError
+  );
+} else {
+  locationError();
+}
 </script>
 
 </body>
