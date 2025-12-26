@@ -13,61 +13,63 @@
   --text-light: rgba(255,255,255,0.85);
 }
 
-/* Base Styles */
+/* Base styles */
 body{
   margin:0;
   font-family:Poppins,sans-serif;
   background: var(--bg);
   color:#fff;
   min-height:100vh;
-  padding:16px;
 }
 
 /* HEADER */
 header{
+  width:100%;
   display:flex;
   justify-content: space-between;
   align-items:center;
   padding:16px 24px;
-  border-radius:16px;
+  border-radius:0 0 16px 16px;
   backdrop-filter: blur(16px);
   background: radial-gradient(circle at center, rgba(0,240,255,0.2), rgba(156,77,255,0.2));
-  margin-bottom:32px;
   animation: pulseHeader 4s infinite alternate;
+  position:sticky;
+  top:0;
+  z-index:1000;
 }
 @keyframes pulseHeader{
   0%{box-shadow:0 0 20px rgba(0,240,255,0.25);}
   50%{box-shadow:0 0 50px rgba(156,77,255,0.4);}
   100%{box-shadow:0 0 20px rgba(0,240,255,0.25);}
 }
+header .logo{
+  font-family:Orbitron,sans-serif;
+  font-size:1.6rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 header .list-deals{
   font-family:Orbitron,sans-serif;
-  padding: 8px 16px;
+  padding:8px 16px;
   border-radius:999px;
   background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
-  transition:0.3s;
   text-decoration:none;
+  transition:0.3s;
 }
 header .list-deals:hover{
-  transform:translateY(-2px); 
+  transform:translateY(-2px);
   box-shadow:0 0 36px rgba(156,77,255,.45);
-}
-header .logo{
-  font-family:Orbitron,sans-serif;
-  font-size:1.8rem;
-  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
 }
 
 /* SEARCH BAR */
 .search-container{
-  margin-bottom:32px;
+  margin:16px auto;
   text-align:center;
 }
 .search-container input{
-  width:80%;
+  width:90%;
   max-width:400px;
   padding:12px 16px;
   border-radius:999px;
@@ -76,18 +78,16 @@ header .logo{
   font-size:1rem;
   background:var(--glass);
   color:#fff;
-  text-align:center;
 }
 
-/* DEALS GRID SECTION */
+/* DEAL GRID SECTION */
 .deals-section{
-  margin-bottom:60px;
+  margin:32px 16px;
 }
 .deals-section h2{
   font-family:Orbitron,sans-serif;
-  font-size:1.6rem;
-  margin-bottom:24px;
-  text-align:left;
+  font-size:1.5rem;
+  margin-bottom:16px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -96,86 +96,73 @@ header .logo{
 /* GRID */
 .deals-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:24px;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:16px;
 }
 
 /* DEAL CARD */
 .deal-card{
   background: var(--glass);
   border-radius:16px;
-  padding:20px;
+  padding:16px;
   text-align:center;
   border:1px solid rgba(255,255,255,0.12);
-  box-shadow:0 8px 20px rgba(0,240,255,0.2);
+  box-shadow:0 8px 20px rgba(0,240,255,0.15);
   transition:transform 0.3s, box-shadow 0.3s;
-  perspective:1000px;
   cursor:pointer;
-  animation: pulseCard 4s infinite alternate;
-}
-@keyframes pulseCard{
-  0%{box-shadow:0 8px 20px rgba(0,240,255,0.15);}
-  50%{box-shadow:0 12px 28px rgba(156,77,255,0.25);}
-  100%{box-shadow:0 8px 20px rgba(0,240,255,0.15);}
 }
 .deal-card:hover{
-  transform: rotateY(5deg) rotateX(3deg) scale(1.03);
-  box-shadow:0 16px 40px rgba(156,77,255,0.35);
+  transform: scale(1.05);
+  box-shadow:0 16px 40px rgba(156,77,255,0.3);
 }
-
-/* 3D Neon Icon */
 .deal-icon{
-  width:100px;
-  height:100px;
-  margin-bottom:12px;
+  width:80px;
+  height:80px;
+  margin-bottom:8px;
 }
-
-/* Text info */
 .deal-name{
   font-family:Orbitron,sans-serif;
-  font-size:1.2rem;
-  margin-bottom:6px;
+  font-size:1.1rem;
+  margin-bottom:4px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 .deal-desc,.deal-distance{
-  font-size:0.9rem;
+  font-size:0.85rem;
   color:var(--text-light);
-  margin-bottom:6px;
+  margin-bottom:4px;
 }
-
 .view-btn{
   display:inline-block;
-  margin-top:10px;
-  padding:10px 20px;
+  margin-top:6px;
+  padding:8px 16px;
   border-radius:999px;
   font-family:Orbitron,sans-serif;
   font-weight:600;
-  font-size:14px;
+  font-size:13px;
   background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
-  box-shadow:0 0 16px rgba(0,240,255,.35);
-  transition:0.25s;
   text-decoration:none;
+  box-shadow:0 0 16px rgba(0,240,255,.25);
 }
 .view-btn:hover{
   transform:translateY(-2px);
   box-shadow:0 0 36px rgba(156,77,255,.45);
 }
 
-@media(max-width:600px){
-  header{flex-direction:column; gap:12px;}
-  .deals-grid{grid-template-columns:1fr;}
-  .search-container input{width:100%;}
+@media(max-width:480px){
+  header{flex-direction:column; gap:8px; padding:12px;}
+  .search-container input{width:95%;}
+  .deal-card{padding:12px;}
 }
 </style>
 </head>
 <body>
 
 <header>
-  <a href="business.html" class="list-deals">List Deals</a>
   <div class="logo">Zep Swipe</div>
+  <a href="business.html" class="list-deals">List Deals</a>
 </header>
 
 <div class="search-container">
@@ -193,93 +180,74 @@ header .logo{
 </section>
 
 <script>
-// ----------------------------
-// Sample stores with neon 3D SVG icons
-// ----------------------------
-const stores1 = [
+// Sample stores with lightweight 3D neon placeholders
+const stores1=[
   {name:"Campus Cafe",desc:"20% off coffee & pastries",lat:-33.9571,lng:18.4603,logo:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Placeholder_light_blue.svg"},
   {name:"BookHub Store",desc:"10% off textbooks & free notebook",lat:-29.8587,lng:31.0218,logo:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Placeholder_light_blue.svg"},
 ];
-const stores2 = [
+const stores2=[
   {name:"Tech Gear",desc:"15% off student gadgets",lat:-26.2041,lng:28.0473,logo:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Placeholder_light_blue.svg"},
   {name:"Student Fashion",desc:"Buy 1 Get 1 Free T-shirts",lat:-25.7479,lng:28.2293,logo:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Placeholder_light_blue.svg"},
 ];
 
-// ----------------------------
-// Calculate distance
-// ----------------------------
+// Distance calculation
 function getDistance(lat1, lon1, lat2, lon2){
-  const R = 6371;
-  const dLat = (lat2-lat1)*Math.PI/180;
-  const dLon = (lon2-lon1)*Math.PI/180;
-  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
-  const c = 2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  const R=6371;
+  const dLat=(lat2-lat1)*Math.PI/180;
+  const dLon=(lon2-lon1)*Math.PI/180;
+  const a=Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+  const c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
   return (R*c).toFixed(2)+" km";
 }
 
-// ----------------------------
 // Render grid
-// ----------------------------
 function renderGrid(gridId,stores,userLat,userLon){
-  const container = document.getElementById(gridId);
+  const container=document.getElementById(gridId);
   container.innerHTML="";
   stores.forEach(store=>{
-    // Filter by distance < 50km for example
-    const distance = userLat && userLon ? getDistance(userLat,userLon,store.lat,store.lng) : null;
-    if(distance){
-      const card = document.createElement("div");
-      card.className="deal-card";
-      card.innerHTML=`
-        <img src="${store.logo}" class="deal-icon" alt="${store.name}">
-        <div class="deal-name">${store.name}</div>
-        <div class="deal-desc">${store.desc}</div>
-        <div class="deal-distance">Distance: ${distance}</div>
-        <a href="store.html" class="view-btn" onclick='viewStore(${JSON.stringify(store)})'>View Store Details</a>
-      `;
-      container.appendChild(card);
-    }
+    const distance=userLat&&userLon?getDistance(userLat,userLon,store.lat,store.lng):"Unavailable";
+    const card=document.createElement("div");
+    card.className="deal-card";
+    card.innerHTML=`
+      <img src="${store.logo}" class="deal-icon" alt="${store.name}">
+      <div class="deal-name">${store.name}</div>
+      <div class="deal-desc">${store.desc}</div>
+      <div class="deal-distance">Distance: ${distance}</div>
+      <a href="store.html" class="view-btn" onclick='viewStore(${JSON.stringify(store)})'>View Store</a>
+    `;
+    container.appendChild(card);
   });
 }
 
-// ----------------------------
-// Save store in localStorage
-// ----------------------------
+// Save store to localStorage
 function viewStore(store){
   localStorage.setItem("currentStore",JSON.stringify(store));
 }
 
-// ----------------------------
-// Geolocation and filtering
-// ----------------------------
+// Geolocation
 function loadStores(position){
-  const userLat = position.coords.latitude;
-  const userLon = position.coords.longitude;
+  const userLat=position.coords.latitude;
+  const userLon=position.coords.longitude;
   renderGrid("dealsGrid1",stores1,userLat,userLon);
   renderGrid("dealsGrid2",stores2,userLat,userLon);
 }
-
 function locationError(){
-  console.warn("Geolocation unavailable. Showing no stores.");
-  document.getElementById("dealsGrid1").innerHTML="<p>No nearby deals available</p>";
-  document.getElementById("dealsGrid2").innerHTML="<p>No nearby deals available</p>";
+  renderGrid("dealsGrid1",stores1,null,null);
+  renderGrid("dealsGrid2",stores2,null,null);
 }
-
 if(navigator.geolocation){
   navigator.geolocation.getCurrentPosition(loadStores,locationError);
 }else{
   locationError();
 }
 
-// ----------------------------
-// Search filter
-// ----------------------------
-const searchInput = document.getElementById("searchInput");
-searchInput.addEventListener("input", function(){
-  const term = this.value.toLowerCase();
+// Search functionality
+document.getElementById("searchInput").addEventListener("input", function(){
+  const term=this.value.toLowerCase();
   ["dealsGrid1","dealsGrid2"].forEach(gridId=>{
     document.querySelectorAll(`#${gridId} .deal-card`).forEach(card=>{
-      const name = card.querySelector(".deal-name").textContent.toLowerCase();
-      card.style.display = name.includes(term) ? "block" : "none";
+      const name=card.querySelector(".deal-name").textContent.toLowerCase();
+      card.style.display=name.includes(term)?"block":"none";
     });
   });
 });
