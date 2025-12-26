@@ -19,25 +19,26 @@ body { font-family:Poppins,sans-serif; background:var(--bg); color:#fff; min-hei
 /* HEADER */
 header {
   display:flex;
-  justify-content: space-between;
+  justify-content:space-between;
   align-items:center;
-  padding: 18px 24px;
-  border-radius: 16px;
-  margin: 16px;
-  backdrop-filter: blur(16px);
-  background: radial-gradient(circle at center, rgba(0,240,255,0.2), rgba(156,77,255,0.2));
-  animation: pulseHeader 4s infinite alternate;
+  padding:18px 24px;
+  border-radius:16px;
+  margin:16px;
+  backdrop-filter:blur(16px);
+  background: radial-gradient(circle at center, rgba(0,240,255,0.25), rgba(156,77,255,0.25));
+  animation:pulseHeader 4s infinite alternate;
 }
 @keyframes pulseHeader {
-  0% { box-shadow: 0 0 20px rgba(0,240,255,0.25); }
-  50% { box-shadow: 0 0 50px rgba(156,77,255,0.45); }
-  100% { box-shadow: 0 0 20px rgba(0,240,255,0.25); }
+  0% { box-shadow:0 0 20px rgba(0,240,255,0.25); }
+  50% { box-shadow:0 0 50px rgba(156,77,255,0.45); }
+  100% { box-shadow:0 0 20px rgba(0,240,255,0.25); }
 }
 .brand { font-family:Orbitron; font-size:1.8rem; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.header-actions { display:grid; grid-template-columns:repeat(2, auto); gap:10px; }
 .header-actions a, .header-actions button {
-  font-family:Orbitron; font-size:14px; text-decoration:none; padding:8px 18px; border-radius:999px; border:none; cursor:pointer; transition:0.3s; margin-left:10px;
+  font-family:Orbitron; font-size:14px; text-decoration:none; padding:8px 18px; border-radius:999px; border:none; cursor:pointer; transition:0.3s;
 }
-.header-actions a { background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet)); color:#050015; }
+.header-actions a { background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050015; }
 .header-actions button { background:var(--glass); color:#fff; border:1px solid rgba(255,255,255,0.12); }
 .header-actions a:hover, .header-actions button:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
 
@@ -61,7 +62,7 @@ header {
   display:flex;
   align-items:center;
   justify-content:center;
-  animation: pulse 4s infinite alternate;
+  animation:pulse 4s infinite alternate;
   box-shadow:0 0 90px rgba(0,240,255,.3);
 }
 @keyframes pulse {
@@ -152,7 +153,7 @@ footer { text-align:center; padding:40px 20px; font-size:12px; color:rgba(255,25
   <!-- LIST YOUR DEAL -->
   <section class="list-deal">
     <h3>List Your Campus Deal</h3>
-    <a href="business.html">Become a Freelancer</a>
+    <a href="business.html">List Your Deal</a>
   </section>
 
   <!-- FOOTER -->
