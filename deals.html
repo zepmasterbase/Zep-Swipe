@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Campus Market</title>
+<style>
+  /* Basic Reset */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Poppins, sans-serif;
+    background: radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 24px;
+    background: linear-gradient(90deg, #00f0ff, #9c4dff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .deal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .deal-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .deal-card img {
+    width: 100%;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .deal-card h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+  }
+
+  .deal-card p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+  }
+
+  .distance {
+    font-weight: bold;
+    color: #00f0ff;
+  }
+
+  .btn {
+    padding: 10px 18px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    background: linear-gradient(90deg,#00f0ff,#9c4dff);
+    color: #050015;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    margin-top: 10px;
+    align-self: flex-start;
+    box-shadow: 0 0 20px rgba(0,240,255,.35);
+  }
+
+  @media (min-width: 600px) {
+    .deal-card {
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+    }
+    .deal-card img {
+      width: 150px;
+      height: 100px;
+      flex-shrink: 0;
+    }
+    .deal-info {
+      flex: 1;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>Campus Market</h1>
+
+<div class="deal-list" id="dealList">
+  <!-- Deal cards will be injected here -->
+</div>
+
+<script>
+// --- Sample stores ---
+// Add more stores here with name, description, latitude, longitude, optional image
+const stores = [
+  {
+    name: "Campus Cafe",
+    description: "20% off all coffee and snacks",
+    lat: -33.9571,
+    lng: 18.4603,
+    image: "https://via.placeholder.com/300x150?text=Campus+Cafe",
+    address: "University of Cape Town"
+  },
+  {
+    name: "Book Haven",
+    description: "Buy 2 get 1 free on textbooks",
+    lat: -29.8587,
+    lng: 31.0218,
+    image: "",
+    address: "University of KwaZulu Natal"
+  },
+  {
+    name: "Tech Supplies",
+    description: "15% off laptops and accessories",
+    lat: -33.9258,
+    lng: 18.4232,
+    image: "https://via.placeholder.com/300x150?text=Tech+Supplies",
+    address: "Cape Town CBD"
+  }
+];
+
+// --- Helper: Haversine formula for distance in km ---
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // km
+  const dLat = (lat2-lat1)*Math.PI/180;
+  const dLon = (lon2-lon1)*Math.PI/180;
+  const a = Math.sin(dLat/2)*Math.sin(dLat/2) +
+            Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*
+            Math.sin(dLon/2)*Math.sin(dLon/2);
+  const c = 2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return (R * c).toFixed(2);
+}
+
+// --- Render deals ---
+function renderDeals(userLat, userLng) {
+  const list = document.getElementById("dealList");
+  list.innerHTML = "";
+
+  stores.forEach(store => {
+    const distance = userLat && userLng ? calculateDistance(userLat, userLng, store.lat, store.lng) + " km" : "Location unknown";
+
+    const card = document.createElement("div");
+    card.className = "deal-card";
+
+    const image = store.image ? `<img src="${store.image}" alt="${store.name}">` : "";
+    const info = `
+      <div class="deal-info">
+        <h2>${store.name}</h2>
+        <p>${store.description}</p>
+        <p>Address: ${store.address}</p>
+        <p class="distance">Distance: ${distance}</p>
+        <button class="btn">View Store Details</button>
+      </div>
+    `;
+
+    card.innerHTML = image + info;
+    list.appendChild(card);
+  });
+}
+
+// --- Get user location ---
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    position => renderDeals(position.coords.latitude, position.coords.longitude),
+    err => {
+      console.warn("Location not available:", err);
+      renderDeals();
+    }
+  );
+} else {
+  console.warn("Geolocation not supported");
+  renderDeals();
+}
+</script>
+
+</body>
+</html>
