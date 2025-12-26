@@ -13,6 +13,7 @@
   --text-light: rgba(255,255,255,0.85);
 }
 
+/* Base Styles */
 body{
   margin:0;
   font-family:Poppins,sans-serif;
@@ -60,6 +61,24 @@ header .logo{
   -webkit-text-fill-color:transparent;
 }
 
+/* SEARCH BAR */
+.search-container{
+  margin-bottom:32px;
+  text-align:center;
+}
+.search-container input{
+  width:80%;
+  max-width:400px;
+  padding:12px 16px;
+  border-radius:999px;
+  border:none;
+  outline:none;
+  font-size:1rem;
+  background:var(--glass);
+  color:#fff;
+  text-align:center;
+}
+
 /* DEALS GRID SECTION */
 .deals-section{
   margin-bottom:60px;
@@ -103,13 +122,15 @@ header .logo{
   transform: rotateY(5deg) rotateX(3deg) scale(1.03);
   box-shadow:0 16px 40px rgba(156,77,255,0.35);
 }
+
+/* 3D Neon Icon */
 .deal-icon{
   width:100px;
   height:100px;
   margin-bottom:12px;
-  border-radius:12px;
-  object-fit:contain;
 }
+
+/* Text info */
 .deal-name{
   font-family:Orbitron,sans-serif;
   font-size:1.2rem;
@@ -123,6 +144,7 @@ header .logo{
   color:var(--text-light);
   margin-bottom:6px;
 }
+
 .view-btn{
   display:inline-block;
   margin-top:10px;
@@ -145,6 +167,7 @@ header .logo{
 @media(max-width:600px){
   header{flex-direction:column; gap:12px;}
   .deals-grid{grid-template-columns:1fr;}
+  .search-container input{width:100%;}
 }
 </style>
 </head>
@@ -155,32 +178,35 @@ header .logo{
   <div class="logo">Zep Swipe</div>
 </header>
 
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="Search for a store...">
+</div>
+
 <section class="deals-section">
-  <h2>Popular Campus Stores</h2>
+  <h2>Nearby Student Stores</h2>
   <div class="deals-grid" id="dealsGrid1"></div>
 </section>
 
 <section class="deals-section">
-  <h2>Student Favorites</h2>
+  <h2>Trending Student Favorites</h2>
   <div class="deals-grid" id="dealsGrid2"></div>
 </section>
 
 <script>
 // ----------------------------
-// Sample student stores data
+// Sample stores with neon 3D SVG icons
 // ----------------------------
-const deals1 = [
-  {name:"Campus Cafe",desc:"20% off coffee & pastries",lat:-33.9571,lng:18.4603,logo:"https://via.placeholder.com/100x100.png?text=Cafe"},
-  {name:"BookHub Store",desc:"10% off textbooks & free notebook",lat:-29.8587,lng:31.0218,logo:"https://via.placeholder.com/100x100.png?text=Books"},
+const stores1 = [
+  {name:"Campus Cafe",desc:"20% off coffee & pastries",lat:-33.9571,lng:18.4603,logo:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Placeholder_light_blue.svg"},
+  {name:"BookHub Store",desc:"10% off textbooks & free notebook",lat:-29.8587,lng:31.0218,logo:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Placeholder_light_blue.svg"},
+];
+const stores2 = [
+  {name:"Tech Gear",desc:"15% off student gadgets",lat:-26.2041,lng:28.0473,logo:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Placeholder_light_blue.svg"},
+  {name:"Student Fashion",desc:"Buy 1 Get 1 Free T-shirts",lat:-25.7479,lng:28.2293,logo:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Placeholder_light_blue.svg"},
 ];
 
-const deals2 = [
-  {name:"Tech Gear",desc:"15% off student gadgets",lat:-26.2041,lng:28.0473,logo:"https://via.placeholder.com/100x100.png?text=Tech"},
-  {name:"Student Fashion",desc:"Buy 1 Get 1 Free T-shirts",lat:-25.7479,lng:28.2293,logo:"https://via.placeholder.com/100x100.png?text=Fashion"},
-];
-
 // ----------------------------
-// Distance calculation
+// Calculate distance
 // ----------------------------
 function getDistance(lat1, lon1, lat2, lon2){
   const R = 6371;
@@ -192,52 +218,71 @@ function getDistance(lat1, lon1, lat2, lon2){
 }
 
 // ----------------------------
-// Render deals grid
+// Render grid
 // ----------------------------
-function renderDeals(gridId,deals,userLat,userLon){
+function renderGrid(gridId,stores,userLat,userLon){
   const container = document.getElementById(gridId);
   container.innerHTML="";
-  deals.forEach(deal=>{
-    const distance = userLat && userLon ? getDistance(userLat,userLon,deal.lat,deal.lng) : "Unavailable";
-    const card = document.createElement("div");
-    card.className="deal-card";
-    card.innerHTML=`
-      <img src="${deal.logo}" class="deal-icon" alt="${deal.name}">
-      <div class="deal-name">${deal.name}</div>
-      <div class="deal-desc">${deal.desc}</div>
-      <div class="deal-distance">Distance: ${distance}</div>
-      <a href="store.html" class="view-btn" onclick='viewStore(${JSON.stringify(deal)})'>View Store Details</a>
-    `;
-    container.appendChild(card);
+  stores.forEach(store=>{
+    // Filter by distance < 50km for example
+    const distance = userLat && userLon ? getDistance(userLat,userLon,store.lat,store.lng) : null;
+    if(distance){
+      const card = document.createElement("div");
+      card.className="deal-card";
+      card.innerHTML=`
+        <img src="${store.logo}" class="deal-icon" alt="${store.name}">
+        <div class="deal-name">${store.name}</div>
+        <div class="deal-desc">${store.desc}</div>
+        <div class="deal-distance">Distance: ${distance}</div>
+        <a href="store.html" class="view-btn" onclick='viewStore(${JSON.stringify(store)})'>View Store Details</a>
+      `;
+      container.appendChild(card);
+    }
   });
 }
 
 // ----------------------------
-// Save store to localStorage
+// Save store in localStorage
 // ----------------------------
 function viewStore(store){
   localStorage.setItem("currentStore",JSON.stringify(store));
 }
 
 // ----------------------------
-// Geolocation
+// Geolocation and filtering
 // ----------------------------
+function loadStores(position){
+  const userLat = position.coords.latitude;
+  const userLon = position.coords.longitude;
+  renderGrid("dealsGrid1",stores1,userLat,userLon);
+  renderGrid("dealsGrid2",stores2,userLat,userLon);
+}
+
 function locationError(){
-  renderDeals("dealsGrid1",deals1);
-  renderDeals("dealsGrid2",deals2);
+  console.warn("Geolocation unavailable. Showing no stores.");
+  document.getElementById("dealsGrid1").innerHTML="<p>No nearby deals available</p>";
+  document.getElementById("dealsGrid2").innerHTML="<p>No nearby deals available</p>";
 }
 
 if(navigator.geolocation){
-  navigator.geolocation.getCurrentPosition(
-    pos=>{
-      renderDeals("dealsGrid1",deals1,pos.coords.latitude,pos.coords.longitude);
-      renderDeals("dealsGrid2",deals2,pos.coords.latitude,pos.coords.longitude);
-    },
-    locationError
-  );
+  navigator.geolocation.getCurrentPosition(loadStores,locationError);
 }else{
   locationError();
 }
+
+// ----------------------------
+// Search filter
+// ----------------------------
+const searchInput = document.getElementById("searchInput");
+searchInput.addEventListener("input", function(){
+  const term = this.value.toLowerCase();
+  ["dealsGrid1","dealsGrid2"].forEach(gridId=>{
+    document.querySelectorAll(`#${gridId} .deal-card`).forEach(card=>{
+      const name = card.querySelector(".deal-name").textContent.toLowerCase();
+      card.style.display = name.includes(term) ? "block" : "none";
+    });
+  });
+});
 </script>
 </body>
 </html>
