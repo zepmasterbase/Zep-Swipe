@@ -152,6 +152,54 @@ header{
   color:#fff;
 }
 
+/* STUDENT DEALS SECTION */
+.student-deals{
+  text-align:center;
+  margin:60px auto 40px;
+}
+
+.student-deals h2{
+  font-family:Orbitron;
+  font-size:1.6rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:16px;
+}
+
+.student-deals p{
+  font-size:1rem;
+  opacity:.85;
+  margin-bottom:20px;
+}
+
+.student-deals a{
+  padding:12px 24px;
+  border-radius:999px;
+  font-family:Orbitron;
+  font-weight:700;
+  font-size:13px;
+  text-decoration:none;
+  margin:6px;
+  display:inline-block;
+  transition:.25s;
+}
+
+.student-deals a.primary{
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+
+.student-deals a.primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
+}
+
+.student-deals a.secondary{
+  border:1px solid rgba(255,255,255,.25);
+  color:#fff;
+}
+
 /* CREATOR CARDS */
 .creators{
   margin-top:80px;
@@ -263,10 +311,17 @@ footer p{
     </p>
 
     <div class="cta">
-      <!-- UPDATED LINK -->
       <a href="swipe-merchants.html" class="primary">Browse Creators</a>
       <a href="login.html" class="secondary">Join as Student</a>
     </div>
+  </section>
+
+  <!-- STUDENT DEALS SECTION -->
+  <section class="student-deals">
+    <h2>Student Deals Near You – Show Your Student ID & Save</h2>
+    <p>Discover discounts and perks at local stores and services.</p>
+    <a href="deals.html" class="primary">Browse Deals</a>
+    <a href="business.html" class="secondary">List Your Deal</a>
   </section>
 
   <!-- CREATOR CARDS -->
