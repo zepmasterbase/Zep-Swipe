@@ -4,19 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Student Creator Economy</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
-
 <style>
 :root {
-  --zep-blue: #00f0ff;
-  --zep-violet: #9c4dff;
-  --bg: radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
-  --glass: rgba(255, 255, 255, 0.06);
-  --text-light: rgba(255, 255, 255, 0.85);
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
+  --glass:rgba(255,255,255,0.08);
+  --text-light: rgba(255,255,255,0.85);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing:border-box; margin:0; padding:0; }
 
 body {
   font-family: Poppins, sans-serif;
@@ -25,18 +23,23 @@ body {
   min-height: 100vh;
 }
 
-.wrapper {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 30px 20px 80px;
-}
-
 /* HEADER */
 header {
-  display: flex;
+  display:flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
+  align-items:center;
+  padding: 18px 24px;
+  background: radial-gradient(circle at center, rgba(0,240,255,0.15), rgba(156,77,255,0.15));
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  margin: 16px;
+  animation: pulseHeader 4s infinite alternate;
+}
+
+@keyframes pulseHeader {
+  0% { box-shadow: 0 0 20px rgba(0,240,255,0.2); }
+  50% { box-shadow: 0 0 40px rgba(156,77,255,0.4); }
+  100% { box-shadow: 0 0 20px rgba(0,240,255,0.2); }
 }
 
 .brand {
@@ -47,49 +50,45 @@ header {
   -webkit-text-fill-color: transparent;
 }
 
-.header-grid {
-  display: flex;
-  gap: 12px;
-}
-
-.header-grid a, .header-grid button {
+.header-actions a, .header-actions button {
   font-family: Orbitron;
   font-size: 14px;
   text-decoration: none;
+  padding: 8px 18px;
   border-radius: 999px;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: .3s;
   border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-left: 10px;
 }
 
-.header-grid a {
+.header-actions a {
   background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
   color: #050015;
 }
 
-.header-grid button {
+.header-actions button {
   background: var(--glass);
   color: #fff;
-  border: 1px solid rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,0.12);
 }
 
-.header-grid a:hover, .header-grid button:hover {
+.header-actions a:hover, .header-actions button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 36px rgba(156,77,255,.45);
+  box-shadow: 0 0 36px rgba(156,77,255,0.45);
 }
 
-/* HERO SECTION */
+/* HERO */
 .hero {
   text-align: center;
-  padding: 120px 20px 60px;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 36px;
+  gap: 32px;
+  padding: 0 24px;
 }
 
-/* Pulsing Circle */
 .pulse-circle {
   width: 260px;
   height: 260px;
@@ -100,48 +99,45 @@ header {
   align-items: center;
   justify-content: center;
   animation: pulse 4s infinite alternate;
-  box-shadow: 0 0 90px rgba(0,240,255,.3);
+  box-shadow:0 0 90px rgba(0,240,255,.3);
 }
 
 @keyframes pulse {
-  from { transform: scale(1); box-shadow: 0 0 60px rgba(0,240,255,0.25); }
-  to { transform: scale(1.05); box-shadow: 0 0 120px rgba(156,77,255,0.45); }
+  from { transform: scale(1); box-shadow:0 0 60px rgba(0,240,255,.25);}
+  to { transform: scale(1.05); box-shadow:0 0 120px rgba(156,77,255,.45);}
 }
 
-.hero img {
+.pulse-circle svg {
   width: 140px;
   height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid rgba(255,255,255,0.2);
 }
 
 /* HERO TEXT */
 .hero-text h1 {
   font-family: Orbitron;
-  font-size: 2.4rem;
+  font-size: 2.6rem;
   line-height: 1.2;
-  margin-bottom: 16px;
-  max-width: 550px;
+  margin-bottom: 12px;
   background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .hero-text p {
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: var(--text-light);
-  max-width: 480px;
+  max-width: 500px;
   line-height: 1.5;
+  margin: 0 auto;
 }
 
-/* CTA */
+/* CTA BUTTONS */
 .cta {
-  margin-top: 28px;
   display: flex;
-  gap: 16px;
+  gap: 18px;
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .cta a {
@@ -151,7 +147,7 @@ header {
   font-weight: 600;
   font-size: 14px;
   text-decoration: none;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .cta a.primary {
@@ -159,46 +155,53 @@ header {
   color: #050015;
 }
 
-.cta a.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 36px rgba(156,77,255,.45);
+.cta a.secondary {
+  border:1px solid rgba(255,255,255,.25);
+  color:#fff;
 }
 
+.cta a.primary:hover, .cta a.secondary:hover {
+  transform: translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
+}
+
+/* FOOTER */
 footer {
-  text-align: center;
-  padding: 40px 20px 20px;
+  text-align:center;
+  padding: 40px 20px;
   font-size: 12px;
   color: rgba(255,255,255,0.5);
 }
 
 .socials {
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-  margin-bottom: 10px;
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  margin-bottom:10px;
 }
 
 .socials a {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
+  width:36px;
+  height:36px;
+  border-radius:50%;
   background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  font-size: 16px;
-  color: #fff;
+  border:1px solid rgba(255,255,255,0.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  font-size:16px;
+  color:#fff;
 }
 
 @media(max-width:600px){
-  .hero-text h1 { font-size: 1.9rem; }
-  .pulse-circle { width: 200px; height: 200px; }
-  .hero img { width: 110px; height: 110px; }
+  .hero-text h1 { font-size:2rem; }
+  .pulse-circle { width:200px; height:200px; }
+  .pulse-circle svg { width:110px; height:110px; }
 }
 </style>
 </head>
+
 <body>
 
 <div class="wrapper">
@@ -206,7 +209,7 @@ footer {
   <!-- HEADER -->
   <header>
     <div class="brand">Zep Swipe</div>
-    <div class="header-grid">
+    <div class="header-actions">
       <a href="deals.html">Deals</a>
       <button onclick="location.href='login.html'">Connect Wallet</button>
     </div>
@@ -215,14 +218,27 @@ footer {
   <!-- HERO -->
   <section class="hero">
     <div class="pulse-circle">
-      <img src="student-entrepreneur.jpg" alt="Student Entrepreneur">
+      <!-- Lightweight 3D student SVG illustration -->
+      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="32" fill="url(#grad)"/>
+        <defs>
+          <radialGradient id="grad" cx="32" cy="32" r="32">
+            <stop offset="0%" stop-color="#00f0ff"/>
+            <stop offset="100%" stop-color="#9c4dff"/>
+          </radialGradient>
+        </defs>
+        <text x="50%" y="55%" text-anchor="middle" font-size="20" fill="#050015" font-family="Orbitron">🎓</text>
+      </svg>
     </div>
+
     <div class="hero-text">
-      <h1>University Students Become Verified Freelancers in 21 Days</h1>
-      <p>Students can also browse nearby student deals from brands and restaurants using their student ID, turning skills into real income and savings.</p>
+      <h1>Become a Verified Freelancer in 21 Days</h1>
+      <p>Students can also explore nearby deals from brands and restaurants using their student ID, earning real rewards while learning.</p>
     </div>
+
     <div class="cta">
-      <a href="deals.html" class="primary">Browse Deals</a>
+      <a href="freelancer.html" class="primary">Become a Freelancer</a>
+      <a href="swipe-merchants.html" class="secondary">Browse Student Creators</a>
     </div>
   </section>
 
@@ -237,6 +253,5 @@ footer {
   </footer>
 
 </div>
-
 </body>
 </html>
