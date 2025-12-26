@@ -3,119 +3,121 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Campus Deals</title>
+<title>Zep Swipe — Student Deals</title>
 <style>
-  /* ROOT VARIABLES */
   :root {
     --zep-blue: #00f0ff;
     --zep-violet: #9c4dff;
-    --bg: radial-gradient(circle at 25% 10%, #050018 0%, #00000c 100%);
+    --bg: radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
     --glass: rgba(255,255,255,0.08);
     --text-light: rgba(255,255,255,0.85);
   }
 
-  /* GLOBAL */
-  body { 
-    margin:0; 
-    font-family: Poppins, sans-serif; 
-    background: var(--bg); 
-    color: #fff; 
-    min-height:100vh; 
-    padding: 16px;
+  body {
+    margin:0;
+    font-family: Poppins,sans-serif;
+    background: var(--bg);
+    color:#fff;
+    min-height:100vh;
+    padding:16px;
   }
 
   a { text-decoration: none; }
 
   /* HEADER */
   header {
-    display: flex;
+    display:flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 16px 24px;
-    border-radius: 16px;
+    align-items:center;
+    padding:16px 24px;
+    border-radius:16px;
     backdrop-filter: blur(14px);
-    background: radial-gradient(circle at center, rgba(0,240,255,0.2), rgba(156,77,255,0.2));
+    background: radial-gradient(circle at center, rgba(0,240,255,0.15), rgba(156,77,255,0.15));
     margin-bottom: 32px;
     animation: pulseHeader 4s infinite alternate;
   }
   @keyframes pulseHeader {
     0% { box-shadow: 0 0 20px rgba(0,240,255,0.25);}
-    50% { box-shadow: 0 0 50px rgba(156,77,255,0.45);}
+    50% { box-shadow: 0 0 50px rgba(156,77,255,0.4);}
     100% { box-shadow: 0 0 20px rgba(0,240,255,0.25);}
   }
   .brand {
     font-family: Orbitron, sans-serif;
-    font-size: 1.8rem;
+    font-size:1.8rem;
     background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
   }
   .header-actions a {
     font-family: Orbitron, sans-serif;
     padding: 8px 16px;
-    border-radius: 999px;
+    border-radius:999px;
     background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
     color: #050015;
-    transition: 0.3s;
+    transition:0.3s;
   }
-  .header-actions a:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 36px rgba(156,77,255,.45);
+  .header-actions a:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
+
+  /* DEALS GRID */
+  .deals-container {
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap:24px;
   }
 
-  /* DEAL CARDS */
   .deal-card {
     background: var(--glass);
-    border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.12);
-    padding: 16px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 20px rgba(0,240,255,0.25);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:18px;
+    padding:20px;
+    box-shadow: 0 8px 20px rgba(0,240,255,0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    perspective: 1000px;
   }
-  .deal-card img {
-    width: 100%;
-    max-height: 120px;
-    object-fit: contain;
-    border-radius: 12px;
-    margin-bottom: 12px;
+  .deal-card:hover {
+    transform: rotateY(5deg) rotateX(3deg) scale(1.03);
+    box-shadow: 0 16px 40px rgba(156,77,255,0.35);
   }
+  .deal-logo {
+    width:100%;
+    max-height:120px;
+    object-fit:contain;
+    border-radius:12px;
+    margin-bottom:12px;
+    transition: transform 0.3s;
+  }
+  .deal-card:hover .deal-logo { transform: scale(1.05) rotateZ(2deg); }
   .deal-name {
     font-family: Orbitron, sans-serif;
-    font-size: 1.2rem;
-    margin-bottom: 6px;
+    font-size:1.2rem;
+    margin-bottom:6px;
+    background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
   }
-  .deal-desc {
-    font-size: 0.95rem;
-    color: var(--text-light);
-    margin-bottom: 6px;
-  }
-  .deal-address, .deal-distance {
-    font-size: 0.85rem;
-    color: var(--text-light);
-    margin-bottom: 6px;
+  .deal-desc, .deal-address, .deal-distance {
+    font-size:0.9rem;
+    color:var(--text-light);
+    margin-bottom:6px;
   }
   .view-btn {
     display:inline-block;
-    margin-top: 8px;
-    padding: 8px 16px;
-    border-radius: 999px;
-    font-family: Orbitron, sans-serif;
-    font-weight: 600;
-    font-size: 14px;
+    margin-top:10px;
+    padding:10px 20px;
+    border-radius:999px;
+    font-family:Orbitron, sans-serif;
+    font-weight:600;
+    font-size:14px;
     background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-    color: #050015;
-    box-shadow: 0 0 20px rgba(0,240,255,.35);
-    transition: 0.25s;
+    color:#050015;
+    box-shadow:0 0 16px rgba(0,240,255,.35);
+    transition:0.25s;
   }
-  .view-btn:hover {
-    transform: translateY(-2px);
-    box-shadow:0 0 36px rgba(156,77,255,.45);
-  }
+  .view-btn:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
 
-  /* RESPONSIVE */
   @media(max-width:600px){
-    header { flex-direction: column; gap: 12px; }
-    .deal-card img { max-height: 100px; }
+    header { flex-direction: column; gap:12px; }
+    .deals-container { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -128,13 +130,11 @@
   </div>
 </header>
 
-<div id="dealsContainer">
-  <!-- Deal cards will be injected here -->
-</div>
+<div class="deals-container" id="dealsContainer"></div>
 
 <script>
 // ----------------------------
-// STORE DATA
+// DEALS DATA
 // ----------------------------
 const deals = [
   {
@@ -152,9 +152,23 @@ const deals = [
     lat: -29.8587,
     lng: 31.0218,
     logo: "https://via.placeholder.com/300x150.png?text=BookHub"
+  },
+  {
+    name: "Tech Gear",
+    description: "15% off all gadgets for students",
+    address: "67 Tech Street, Johannesburg",
+    lat: -26.2041,
+    lng: 28.0473,
+    logo: "https://via.placeholder.com/300x150.png?text=Tech+Gear"
+  },
+  {
+    name: "Student Fashion",
+    description: "Buy 1 Get 1 Free on all T-shirts",
+    address: "89 Fashion Ave, Pretoria",
+    lat: -25.7479,
+    lng: 28.2293,
+    logo: "https://via.placeholder.com/300x150.png?text=Student+Fashion"
   }
-  // Add more stores here:
-  // { name: "Store Name", description: "Deal Info", address: "Full Address", lat: 0.0000, lng: 0.0000, logo: "optional_image_url" }
 ];
 
 // ----------------------------
@@ -162,13 +176,11 @@ const deals = [
 // ----------------------------
 function getDistance(lat1, lon1, lat2, lon2) {
   const R = 6371; // km
-  const dLat = (lat2-lat1) * Math.PI/180;
-  const dLon = (lon2-lon1) * Math.PI/180;
-  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-            Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) *
-            Math.sin(dLon/2) * Math.sin(dLon/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  return R * c;
+  const dLat = (lat2-lat1)*Math.PI/180;
+  const dLon = (lon2-lon1)*Math.PI/180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+  const c = 2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  return R*c;
 }
 
 // ----------------------------
@@ -176,39 +188,48 @@ function getDistance(lat1, lon1, lat2, lon2) {
 // ----------------------------
 const container = document.getElementById("dealsContainer");
 
-function renderDeals(userLat, userLon) {
+function renderDeals(userLat, userLon){
   container.innerHTML = "";
-  deals.forEach(deal => {
-    const distance = (userLat && userLon) ? getDistance(userLat, userLon, deal.lat, deal.lng).toFixed(2) + " km" : "Unavailable";
+  deals.forEach(deal=>{
+    const distance = (userLat && userLon) ? getDistance(userLat,userLon,deal.lat,deal.lng).toFixed(2)+" km" : "Unavailable";
     const card = document.createElement("div");
     card.className = "deal-card";
     card.innerHTML = `
-      ${deal.logo ? `<img src="${deal.logo}" alt="${deal.name} Logo">` : ""}
+      ${deal.logo? `<img src="${deal.logo}" alt="${deal.name} Logo" class="deal-logo">`:""}
       <div class="deal-name">${deal.name}</div>
       <div class="deal-desc">${deal.description}</div>
       <div class="deal-address">Address: ${deal.address}</div>
       <div class="deal-distance">Distance: ${distance}</div>
-      <a href="#" class="view-btn">View Store Details</a>
+      <a href="#" class="view-btn" onclick='viewStore(${JSON.stringify(deal)})'>View Store Details</a>
     `;
     container.appendChild(card);
   });
 }
 
 // ----------------------------
-// GET GEOLOCATION
+// GEOLOCATION
 // ----------------------------
-function locationError(err) {
+function locationError(err){
   console.warn("Geolocation not available or denied. Showing deals without distance.");
   renderDeals();
 }
 
-if (navigator.geolocation) {
+if(navigator.geolocation){
   navigator.geolocation.getCurrentPosition(
-    pos => renderDeals(pos.coords.latitude, pos.coords.longitude),
+    pos => renderDeals(pos.coords.latitude,pos.coords.longitude),
     locationError
   );
-} else {
+}else{
   locationError();
+}
+
+// ----------------------------
+// LOCALSTORAGE - Save store on click
+// ----------------------------
+function viewStore(store){
+  localStorage.setItem("currentStore", JSON.stringify(store));
+  alert(`${store.name} saved to localStorage! You can redirect to a store details page later.`);
+  // Example: window.location.href = "store.html";
 }
 </script>
 
