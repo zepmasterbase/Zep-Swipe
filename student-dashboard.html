@@ -1,307 +1,335 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Student Dashboard</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
-:root{
+:root {
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at top, #020014 0%, #00000a 100%);
-  --glass:rgba(255,255,255,0.06);
+  --bg:radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
+  --glass:rgba(255,255,255,0.08);
+  --text-light: rgba(255,255,255,0.85);
 }
 
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Poppins,sans-serif;
-  background:var(--bg);
+* { box-sizing:border-box; margin:0; padding:0; font-family:Poppins,sans-serif; }
+
+body {
+  background: var(--bg);
   color:#fff;
-}
-.container{
-  max-width:980px;
-  margin:24px auto 120px;
-  padding:16px;
+  min-height:100vh;
+  padding:0;
 }
 
-/* Header */
-.header{
+/* HEADER */
+header {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:16px;
-  border-radius:18px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(18px);
-  box-shadow:0 0 30px rgba(0,240,255,.25);
-}
-.brand{
-  font-family:Orbitron;
-  font-size:1.5rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.wallet{
-  font-family:Orbitron;
-  font-size:12px;
-  opacity:.85;
-}
-
-/* Profile */
-.profile{
-  margin-top:20px;
-  padding:16px;
-  border-radius:18px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.12);
-  display:flex;
-  gap:14px;
-  align-items:center;
-}
-.avatar{
-  width:64px;height:64px;
-  border-radius:50%;
-  border:2px solid var(--zep-blue);
-  object-fit:cover;
-  background:#020617;
-}
-.profile h3{
-  margin:0;
-  font-family:Orbitron;
-}
-.profile p{
-  margin:2px 0;
-  font-size:12px;
-  opacity:.8;
-}
-.badge{
-  display:inline-block;
-  margin-top:6px;
-  padding:4px 10px;
-  border-radius:999px;
-  font-size:10px;
-  font-family:Orbitron;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-}
-
-/* Wallet card */
-.wallet-card{
-  margin-top:20px;
-  padding:18px;
-  border-radius:20px;
-  background:rgba(0,0,0,.55);
-  border:1px solid rgba(255,255,255,.12);
-}
-.balance{
-  font-family:Orbitron;
-  font-size:26px;
-}
-.sub{
-  font-size:12px;
-  opacity:.75;
-}
-
-/* Actions */
-.actions{
-  margin-top:20px;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
-}
-.action{
-  padding:16px;
+  padding:20px;
+  background: radial-gradient(circle at center, rgba(0,240,255,0.2), rgba(156,77,255,0.2));
   border-radius:16px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.12);
-  text-align:center;
-  text-decoration:none;
-  color:#fff;
-  transition:.2s;
-}
-.action:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 28px rgba(156,77,255,.35);
+  margin:16px;
+  backdrop-filter: blur(14px);
+  animation: pulseHeader 4s infinite alternate;
 }
 
-/* Marketplace */
-.market{
-  margin-top:22px;
-  padding:18px;
-  border-radius:20px;
-  background:rgba(0,0,0,.65);
-  border:1px solid rgba(0,240,255,.4);
+@keyframes pulseHeader {
+  0% { box-shadow: 0 0 20px rgba(0,240,255,0.25); }
+  50% { box-shadow: 0 0 50px rgba(156,77,255,0.45); }
+  100% { box-shadow: 0 0 20px rgba(0,240,255,0.25); }
+}
+
+.header-left {
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  text-decoration:none;
-  color:#fff;
-}
-.market.locked{
-  opacity:.5;
-}
-.market-title{
-  font-family:Orbitron;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-/* Skills */
-.skills{
-  margin-top:22px;
-  padding:18px;
-  border-radius:20px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.12);
-}
-.skills-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
   gap:12px;
 }
-.skill{
-  padding:12px;
-  border-radius:14px;
-  background:rgba(0,0,0,.65);
-  border:1px solid rgba(255,255,255,.12);
-}
-.skill h4{
-  margin:0;
-  font-family:Orbitron;
-  font-size:.9rem;
-}
-.skill p{
-  margin-top:4px;
-  font-size:11px;
-  opacity:.8;
+
+.header-left img {
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid rgba(255,255,255,0.3);
 }
 
-/* Footer */
-.footer{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  padding:14px 22px;
-  background:rgba(0,0,0,.6);
-  backdrop-filter:blur(10px);
+.header-left div {
+  display:flex;
+  flex-direction:column;
+}
+
+.header-left div span {
+  font-size:0.9rem;
+  color: var(--text-light);
+}
+
+.header-left div h2 {
+  font-family:Orbitron;
+  font-size:1.2rem;
+  margin:0;
+}
+
+.header-right {
+  font-family:Orbitron;
+  font-weight:700;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  font-size:1.2rem;
+}
+
+/* DASHBOARD SECTIONS */
+.dashboard {
+  padding:0 16px 50px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+
+.section {
+  background: var(--glass);
+  border-radius:16px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,0.12);
+  box-shadow:0 0 40px rgba(0,240,255,0.1);
+}
+
+.section h3 {
+  font-family:Orbitron;
+  font-size:1.2rem;
+  margin-bottom:12px;
+}
+
+/* TASKS */
+.task {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+  background: rgba(255,255,255,0.05);
+  padding:12px;
+  border-radius:12px;
+}
+
+.task .info {
+  display:flex;
+  flex-direction:column;
+}
+
+.task .info span {
+  font-size:0.85rem;
+  color: var(--text-light);
+}
+
+.task .progress-bar {
+  width:120px;
+  height:8px;
+  background: rgba(255,255,255,0.1);
+  border-radius:4px;
+  margin-top:6px;
+  overflow:hidden;
+}
+
+.task .progress-bar div {
+  height:100%;
+  background: var(--zep-blue);
+  width:50%; /* Example progress */
+}
+
+/* EARNINGS */
+.earnings {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.earnings div {
+  display:flex;
+  flex-direction:column;
+}
+
+.earnings div span {
+  font-size:0.85rem;
+  color:var(--text-light);
+}
+
+/* VERIFICATION */
+.verification {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.verification-bar {
+  width:100%;
+  height:12px;
+  background: rgba(255,255,255,0.1);
+  border-radius:6px;
+  overflow:hidden;
+}
+
+.verification-bar div {
+  width:40%; /* Example progress */
+  height:100%;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+}
+
+/* JOBS GRID */
+.jobs-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+}
+
+.job-card {
+  background: rgba(255,255,255,0.05);
+  padding:12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.12);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.job-card:hover {
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,0.25);
+}
+
+.job-card img {
+  width:100%;
+  height:80px;
+  object-fit:cover;
+  border-radius:8px;
+  margin-bottom:8px;
+}
+
+/* QUICK ACTIONS */
+.quick-actions {
   display:flex;
   justify-content:space-around;
+  margin-top:12px;
 }
-.fbtn{
-  width:54px;height:54px;
-  border-radius:16px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.1);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  color:#fff;
+
+.quick-actions button {
+  flex:1;
+  margin:0 4px;
+  padding:12px 0;
+  border-radius:999px;
+  border:none;
+  font-family:Orbitron;
+  font-size:0.85rem;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.quick-actions button:hover {
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
+}
+
+/* MOBILE RESPONSIVE */
+@media(max-width:480px){
+  .header-left div h2 { font-size:1rem; }
+  .header-right { font-size:1rem; }
+  .task { flex-direction:column; align-items:flex-start; gap:6px; }
+  .quick-actions { flex-direction:column; }
+  .quick-actions button { margin:4px 0; }
 }
 </style>
 </head>
-
 <body>
 
-<div class="container">
-
-  <!-- HEADER -->
-  <div class="header">
-    <div class="brand">Zep Swipe</div>
-    <div id="walletShort" class="wallet">—</div>
-  </div>
-
-  <!-- PROFILE -->
-  <div class="profile">
-    <img id="avatar" class="avatar" />
+<!-- HEADER -->
+<header>
+  <div class="header-left">
+    <img src="https://via.placeholder.com/50" alt="Profile">
     <div>
-      <h3 id="name">Student</h3>
-      <p id="uni">—</p>
-      <p id="country">—</p>
-      <span id="verifyBadge"></span>
+      <span>Welcome Back</span>
+      <h2>John Doe</h2>
+      <span>Status: Beginner Freelancer</span>
+    </div>
+  </div>
+  <div class="header-right">Zep Swipe</div>
+</header>
+
+<div class="dashboard">
+
+  <!-- Daily Tasks -->
+  <div class="section">
+    <h3>Daily Learn & Earn Tasks</h3>
+    <div class="task">
+      <div class="info">
+        <strong>Create Profile</strong>
+        <span>5 points · 5 min</span>
+        <div class="progress-bar"><div></div></div>
+      </div>
+      <button>Start</button>
+    </div>
+    <div class="task">
+      <div class="info">
+        <strong>Complete Tutorial</strong>
+        <span>10 points · 15 min</span>
+        <div class="progress-bar"><div style="width:70%"></div></div>
+      </div>
+      <button>Start</button>
     </div>
   </div>
 
-  <!-- WALLET -->
-  <div class="wallet-card">
-    <div class="balance" id="zacBal">0 ZAC</div>
-    <div class="sub">Earned from Learn & Earn</div>
-  </div>
-
-  <!-- ACTIONS -->
-  <div class="actions">
-    <a href="learn-earn.html" class="action">🎓 Learn & Earn</a>
-    <a href="wallet.html" class="action">💼 Wallet</a>
-  </div>
-
-  <!-- MARKETPLACE -->
-  <a id="marketCard" class="market" href="swipe-merchants.html">
+  <!-- Earnings / Rewards -->
+  <div class="section earnings">
     <div>
-      <div class="market-title" id="marketTitle">Browse Student Creators</div>
-      <div id="marketText" class="sub">Explore affordable services</div>
+      <strong>Total ZAC:</strong>
+      <span>125 ZAC</span>
     </div>
-    <div>→</div>
-  </a>
+    <div>
+      <strong>Pending:</strong>
+      <span>25 ZAC</span>
+    </div>
+  </div>
 
-  <!-- SKILLS -->
-  <div class="skills">
-    <div class="market-title">Skill Tracks</div>
-    <div class="skills-grid">
-      <div class="skill"><h4>AI Prompting</h4><p>Structured prompts</p></div>
-      <div class="skill"><h4>AI Content</h4><p>Posts & scripts</p></div>
-      <div class="skill"><h4>No-Code Design</h4><p>Social graphics</p></div>
-      <div class="skill"><h4>Video Editing</h4><p>Short-form clips</p></div>
-      <div class="skill"><h4>Websites</h4><p>Landing pages</p></div>
-      <div class="skill"><h4>Chatbots</h4><p>FAQ & flows</p></div>
-      <div class="skill"><h4>Research</h4><p>Lead generation</p></div>
-      <div class="skill"><h4>Automation</h4><p>Micro workflows</p></div>
+  <!-- Freelancer Verification -->
+  <div class="section verification">
+    <h3>Become a Verified Freelancer ($5)</h3>
+    <div class="verification-bar">
+      <div></div>
     </div>
+    <span>Unlock your first job by completing verification</span>
+  </div>
+
+  <!-- Job Opportunities -->
+  <div class="section">
+    <h3>Available Jobs</h3>
+    <div class="jobs-grid">
+      <div class="job-card" onclick="alert('View Job Details')">
+        <img src="https://via.placeholder.com/140x80" alt="Job">
+        <strong>Social Media Post</strong>
+        <span>5 points · Beginner</span>
+      </div>
+      <div class="job-card" onclick="alert('View Job Details')">
+        <img src="https://via.placeholder.com/140x80" alt="Job">
+        <strong>Graphic Design Flyer</strong>
+        <span>10 points · Beginner</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="section quick-actions">
+    <button onclick="alert('Go to Tasks')">Tasks</button>
+    <button onclick="alert('Go to Jobs')">Jobs</button>
+    <button onclick="alert('Go to Wallet')">Wallet / Rewards</button>
+    <button onclick="alert('Go to Profile')">Profile Settings</button>
   </div>
 
 </div>
-
-<!-- FOOTER -->
-<div class="footer">
-  <a class="fbtn" href="student-dashboard.html">🏠</a>
-  <a class="fbtn" href="learn-earn.html">🎓</a>
-  <a class="fbtn" href="profile.html">👤</a>
-</div>
-
-<script>
-function short(a){return a?`${a.slice(0,6)}...${a.slice(-4)}`:"—";}
-
-window.onload=()=>{
-  const student = JSON.parse(localStorage.getItem("zepStudent"));
-  const profile = JSON.parse(localStorage.getItem("zepProfile"));
-  const progress = JSON.parse(localStorage.getItem("zepProgress"))||{};
-
-  if(!student){location.href="login.html";return;}
-
-  document.getElementById("walletShort").textContent = short(student.wallet);
-  document.getElementById("zacBal").textContent = `${student.zacAmount||0} ZAC`;
-
-  if(profile){
-    document.getElementById("name").textContent = profile.name||"Student";
-    document.getElementById("uni").textContent = profile.university||"—";
-    document.getElementById("country").textContent = profile.country||"—";
-    document.getElementById("avatar").src =
-      profile.avatar || "https://avatars.githubusercontent.com/u/9919?v=4";
-  }
-
-  const unlocked = Object.values(progress).some(p=>(p.day||1)>=21);
-  if(unlocked){
-    document.getElementById("marketTitle").textContent="Creator Mode Unlocked";
-    document.getElementById("marketText").textContent="List services & earn USDC";
-    document.getElementById("verifyBadge").innerHTML=`<span class="badge">Verified Creator</span>`;
-  }
-};
-</script>
 
 </body>
 </html>
