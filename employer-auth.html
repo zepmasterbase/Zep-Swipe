@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Employer Sign In</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,.08);
+  --text-light:rgba(255,255,255,.85);
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{
+  background:var(--bg);
+  color:#fff;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.auth-container{
+  background:var(--glass);
+  padding:30px;
+  border-radius:16px;
+  width:100%;
+  max-width:400px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 0 36px rgba(156,77,255,.2);
+}
+.auth-container h2{
+  font-family:Orbitron;
+  margin-bottom:20px;
+}
+.auth-container input{
+  width:100%;
+  padding:12px;
+  margin-bottom:12px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+}
+.auth-container button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-family:Orbitron;
+  cursor:pointer;
+  transition:.3s;
+}
+.auth-container button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
+}
+.toggle-link{
+  margin-top:12px;
+  font-size:0.85rem;
+  color:var(--text-light);
+  cursor:pointer;
+  display:block;
+}
+</style>
+</head>
+<body>
+
+<div class="auth-container">
+  <h2 id="formTitle">Employer Sign In</h2>
+  <input type="text" id="employerName" placeholder="Full Name" style="display:none;">
+  <input type="email" id="employerEmail" placeholder="Email">
+  <input type="password" id="employerPassword" placeholder="Password">
+  <button id="authBtn">Sign In</button>
+  <span class="toggle-link" id="toggleLink">Don't have an account? Sign Up</span>
+</div>
+
+<script>
+let isSignUp = false;
+const formTitle = document.getElementById("formTitle");
+const nameInput = document.getElementById("employerName");
+const emailInput = document.getElementById("employerEmail");
+const passwordInput = document.getElementById("employerPassword");
+const authBtn = document.getElementById("authBtn");
+const toggleLink = document.getElementById("toggleLink");
+
+// Toggle Sign In / Sign Up
+toggleLink.addEventListener("click", () => {
+  isSignUp = !isSignUp;
+  formTitle.innerText = isSignUp ? "Employer Sign Up" : "Employer Sign In";
+  nameInput.style.display = isSignUp ? "block" : "none";
+  authBtn.innerText = isSignUp ? "Sign Up" : "Sign In";
+  toggleLink.innerText = isSignUp ? "Already have an account? Sign In" : "Don't have an account? Sign Up";
+});
+
+// Authenticate
+authBtn.addEventListener("click", () => {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
+
+  if(!email || !password){
+    alert("Please fill in all required fields");
+    return;
+  }
+
+  let employers = JSON.parse(localStorage.getItem("employers")) || [];
+
+  if(isSignUp){
+    const name = nameInput.value.trim();
+    if(!name){
+      alert("Please enter your full name");
+      return;
+    }
+    // Check if email exists
+    if(employers.find(e => e.email===email)){
+      alert("Email already exists, please sign in");
+      return;
+    }
+    const newEmployer = {name,email,password};
+    employers.push(newEmployer);
+    localStorage.setItem("employers", JSON.stringify(employers));
+    localStorage.setItem("currentEmployer", JSON.stringify(newEmployer));
+    alert("Sign Up successful!");
+    window.location.href = "employer-dashboard.html";
+  } else {
+    const user = employers.find(e => e.email===email && e.password===password);
+    if(user){
+      localStorage.setItem("currentEmployer", JSON.stringify(user));
+      window.location.href = "employer-dashboard.html";
+    } else {
+      alert("Invalid email or password");
+    }
+  }
+});
+</script>
+
+</body>
+</html>
