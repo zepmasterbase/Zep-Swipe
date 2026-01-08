@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Student Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -13,15 +13,8 @@
   --glass:rgba(255,255,255,0.08);
   --text-light:rgba(255,255,255,0.85);
 }
-
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-
-body{
-  background:var(--bg);
-  color:#fff;
-  min-height:100vh;
-  padding-bottom:60px;
-}
+body{background:var(--bg);color:#fff;min-height:100vh;}
 
 /* HEADER */
 header{
@@ -34,17 +27,35 @@ header{
   background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
   backdrop-filter:blur(14px);
 }
+.brand{
+  font-family:Orbitron;
+  font-size:1.5rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.logout-btn{
+  background:rgba(255,255,255,.1);
+  border:none;
+  border-radius:50%;
+  width:38px;
+  height:38px;
+  cursor:pointer;
+  color:#fff;
+  font-size:16px;
+  transition:.3s;
+}
+.logout-btn:hover{background:rgba(255,0,80,.25);}
+
+/* HEADER LEFT */
 .header-left{display:flex;align-items:center;gap:12px;}
 .header-left img{width:50px;height:50px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
-.header-left div h2{font-family:Orbitron;font-size:1.1rem;}
+.header-left div{display:flex;flex-direction:column;}
 .header-left div span{font-size:.8rem;color:var(--text-light);}
-.header-right{display:flex;align-items:center;gap:12px;}
-.brand{font-family:Orbitron;font-size:1.3rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;}
-.logout-btn:hover{background:rgba(255,0,80,.3);}
+.header-left div h2{font-family:Orbitron;font-size:1.1rem;}
 
 /* DASHBOARD */
-.dashboard{padding:0 16px;display:flex;flex-direction:column;gap:22px;}
+.dashboard{padding:0 16px 50px;display:flex;flex-direction:column;gap:22px;}
 .section{background:var(--glass);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.12);}
 .section h3{font-family:Orbitron;margin-bottom:12px;}
 
@@ -56,7 +67,9 @@ header{
 
 /* EARNINGS */
 .earnings{display:flex;justify-content:space-between;}
-.earnings strong{font-size:1.1rem;}
+.earnings div{display:flex;flex-direction:column;}
+.earnings div span{font-size:.85rem;color:var(--text-light);}
+.earnings div strong{font-size:1.1rem;}
 
 /* PROFILE COMPLETION */
 .verify-bar{height:10px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;margin-bottom:6px;}
@@ -64,25 +77,21 @@ header{
 .verify-text{font-size:.85rem;color:var(--text-light);}
 
 /* JOBS */
-.jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;}
-.job-card{background:var(--glass);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:6px;transition:.3s;}
-.job-card:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(156,77,255,.3);}
-.job-card img{width:100%;height:100px;border-radius:12px;object-fit:cover;}
-.job-card strong{font-family:Orbitron;font-size:1rem;}
-.job-card span{font-size:.8rem;color:var(--text-light);}
-.apply-btn{padding:8px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;margin-top:auto;}
-.apply-btn:disabled{background:rgba(255,255,255,.2);cursor:not-allowed;color:#aaa;}
+.jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;}
+.job{background:rgba(255,255,255,.05);border-radius:12px;padding:10px;cursor:pointer;transition:.3s;}
+.job:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(156,77,255,.3);}
+.job img{width:100%;height:80px;border-radius:8px;margin-bottom:6px;object-fit:cover;}
 
-/* ACTIONS */
-.actions{display:flex;justify-content:space-around;margin-top:10px;}
-.actions button{border:none;border-radius:999px;padding:12px 0;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:.3s;}
-.actions button:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(156,77,255,.45);}
-@media(max-width:480px){.actions{flex-direction:column;gap:8px;}}
+/* QUICK ACTIONS */
+.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.actions button{border:none;border-radius:999px;padding:12px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;}
+@media(max-width:480px){.actions{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
 <script>
+/* SESSION PROTECTION */
 const user = JSON.parse(localStorage.getItem("currentUser"));
 if(!user){window.location.href="auth.html";}
 </script>
@@ -96,10 +105,8 @@ if(!user){window.location.href="auth.html";}
       <span id="studentLevel"></span>
     </div>
   </div>
-  <div class="header-right">
-    <div class="brand">Zep Swipe</div>
-    <button class="logout-btn" onclick="logout()">⎋</button>
-  </div>
+  <div class="brand">Zep Swipe</div>
+  <button class="logout-btn" onclick="logout()">⎋</button>
 </header>
 
 <div class="dashboard">
@@ -134,20 +141,39 @@ if(!user){window.location.href="auth.html";}
   <!-- PROFILE COMPLETION -->
   <div class="section">
     <h3>Profile Completion</h3>
-    <div class="verify-bar">
-      <div id="completionBar"></div>
-    </div>
+    <div class="verify-bar"><div id="completionBar"></div></div>
     <div class="verify-text" id="completionText"></div>
   </div>
 
   <!-- AVAILABLE JOBS -->
   <div class="section">
     <h3>Available Jobs</h3>
-    <div class="jobs" id="jobsGrid"></div>
+    <div class="jobs">
+      <div class="job" onclick="location.href='swipe-merchants.html'">
+        <img src="https://images.unsplash.com/photo-1612832021343-4d5f2c267fbf?auto=format&fit=crop&w=400&q=60" alt="Job">
+        <strong>Social Media Post</strong>
+        <span>Beginner</span>
+      </div>
+      <div class="job" onclick="location.href='swipe-merchants.html'">
+        <img src="https://images.unsplash.com/photo-1612831455544-6f2dc2d8912c?auto=format&fit=crop&w=400&q=60" alt="Job">
+        <strong>Flyer Design</strong>
+        <span>Beginner</span>
+      </div>
+      <div class="job" onclick="location.href='swipe-merchants.html'">
+        <img src="https://images.unsplash.com/photo-1593642634367-d91a135587b5?auto=format&fit=crop&w=400&q=60" alt="Job">
+        <strong>Content Writing</strong>
+        <span>Verified</span>
+      </div>
+      <div class="job" onclick="location.href='swipe-merchants.html'">
+        <img src="https://images.unsplash.com/photo-1612831666228-0ef7d3a7f6d5?auto=format&fit=crop&w=400&q=60" alt="Job">
+        <strong>Web Design</strong>
+        <span>Verified</span>
+      </div>
+    </div>
   </div>
 
-  <!-- ACTION BUTTONS -->
-  <div class="actions">
+  <!-- QUICK ACTIONS -->
+  <div class="section actions">
     <button onclick="location.href='learn-earn.html'">Tasks</button>
     <button onclick="location.href='swipe-merchants.html'">Jobs</button>
     <button onclick="location.href='wallet.html'">Wallet</button>
@@ -157,55 +183,20 @@ if(!user){window.location.href="auth.html";}
 </div>
 
 <script>
-// Populate user data
+/* Populate user data */
 document.getElementById("studentName").innerText = user.name || "Student";
 document.getElementById("studentLevel").innerText = user.level || "Beginner Freelancer";
 document.getElementById("zacBalance").innerText = user.ZAC || 0;
 document.getElementById("usdBalance").innerText = user.USD || 0;
-document.getElementById("profileImg").src = user.profileImage || "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=80&q=60";
+document.getElementById("profileImg").src = user.profileImage || "https://via.placeholder.com/50";
 
-// Profile completion
+/* PROFILE COMPLETENESS */
 const completion = user.profileCompletion || 0;
 document.getElementById("completionBar").style.width = completion + "%";
-document.getElementById("completionText").innerText = completion<60 ? "Complete your profile to unlock more jobs" : "Profile complete — jobs unlocked 🎉";
+document.getElementById("completionText").innerText =
+  completion < 60 ? "Complete your profile to unlock more jobs" : "Profile complete — jobs unlocked 🎉";
 
-// Jobs mockup
-const jobs = [
-  {title:"Campus Tour Guide", level:"Beginner", pay:8, img:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=60"},
-  {title:"Research Participant", level:"Beginner", pay:10, img:"https://images.unsplash.com/photo-1534751516642-a1af1ef0e55e?auto=format&fit=crop&w=400&q=60"},
-  {title:"Lab Assistant", level:"Beginner", pay:12, img:"https://images.unsplash.com/photo-1581091870622-9f1be1d5cd3a?auto=format&fit=crop&w=400&q=60"},
-  {title:"Online Tutoring", level:"Verified Freelancer", pay:20, img:"https://images.unsplash.com/photo-1596495577886-d920f1fb3a38?auto=format&fit=crop&w=400&q=60"},
-  {title:"Website Development", level:"Verified Freelancer", pay:25, img:"https://images.unsplash.com/photo-1581091012184-8dfc4cf7d5ff?auto=format&fit=crop&w=400&q=60"},
-  {title:"Graphic Design", level:"Verified Freelancer", pay:30, img:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=60"}
-];
-
-// Render jobs
-const jobsGrid = document.getElementById("jobsGrid");
-jobs.forEach(job=>{
-  const card = document.createElement("div");
-  card.className="job-card";
-  card.innerHTML=`
-    <img src="${job.img}" alt="${job.title}">
-    <strong>${job.title}</strong>
-    <span>${job.level} · $${job.pay}/hr</span>
-    <button class="apply-btn"></button>
-  `;
-  const btn = card.querySelector("button");
-  if(job.level==="Beginner" && user.level==="Beginner" && (!user.tasksCompleted || user.tasksCompleted<1)){
-    btn.disabled=true;
-    btn.innerText="Complete Tasks";
-  } else if(job.level==="Verified Freelancer" && user.level!=="Verified Freelancer"){
-    btn.disabled=true;
-    btn.innerText="Verified Only";
-  } else {
-    btn.disabled=false;
-    btn.innerText="Apply";
-    btn.onclick=()=>alert(`Applied to ${job.title}`);
-  }
-  jobsGrid.appendChild(card);
-});
-
-// Logout
+/* LOGOUT */
 function logout(){
   localStorage.removeItem("currentUser");
   window.location.href="auth.html";
