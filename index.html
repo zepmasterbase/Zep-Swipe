@@ -5,18 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Homepage</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
-
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,0.08);
   --text-light:rgba(255,255,255,.85);
+  --glass:rgba(255,255,255,0.08);
 }
 
 /* RESET */
-*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
 body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden;}
 
 /* HEADER */
@@ -25,8 +24,8 @@ header{
   justify-content:space-between;
   align-items:center;
   padding:20px 40px;
-  margin:16px auto;
   max-width:1200px;
+  margin:auto;
 }
 .brand{
   font-family:Orbitron;
@@ -58,9 +57,9 @@ header{
   align-items:center;
   text-align:center;
   padding:80px 20px 40px;
+  border-radius:20px;
   background:url('https://images.unsplash.com/photo-1593642634367-d91a135587b5?auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover;
   position:relative;
-  border-radius:20px;
 }
 .hero::after{
   content:'';
@@ -120,25 +119,29 @@ footer{
   margin-bottom:10px;
 }
 .socials a{
-  width:36px;
-  height:36px;
+  width:40px;
+  height:40px;
   display:flex;
   align-items:center;
   justify-content:center;
   border-radius:12px;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  font-size:18px;
-  font-weight:bold;
   transition:.3s;
 }
 .socials a:hover{
   transform:scale(1.1) translateY(-2px);
   box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
 }
+
+/* SVG ICON COLORS */
+.socials svg{fill:#050015;width:22px;height:22px;}
+
+/* FOOTER TEXT */
 footer span{
   font-size:.85rem;
   color:var(--text-light);
+  display:block;
+  margin-top:5px;
 }
 
 /* RESPONSIVE */
@@ -171,10 +174,22 @@ footer span{
 
 <footer>
   <div class="socials">
-    <a href="https://www.linkedin.com/company/zep-swipe/" target="_blank">in</a>
-    <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank">📷</a>
-    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank">X</a>
-    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank">f</a>
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/company/zep-swipe/" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M100.28 448H7.4V148.9h92.88zm-46.44-341a53.68 53.68 0 1 1 53.7-53.7 53.7 53.7 0 0 1-53.7 53.7zM447.9 448h-92.68V302.4c0-34.7-12.44-58.4-43.56-58.4-23.76 0-37.88 16-44.12 31.4-2.28 5.5-2.84 13.2-2.84 20.9V448h-92.76s1.24-236.1 0-260.1h92.68v36.9c12.3-19 34.34-46 83.44-46 60.84 0 106.6 39.7 106.6 125.2z"/></svg>
+    </a>
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-115 51.4-115 115s51.4 115 115 115 115-51.4 115-115-51.4-115-115-115zm0 190c-41.6 0-75-33.4-75-75s33.4-75 75-75 75 33.4 75 75-33.4 75-75 75zm146.4-194.3c0 14.9-12 26.9-26.9 26.9s-26.9-12-26.9-26.9 12-26.9 26.9-26.9 26.9 12 26.9 26.9zm76.1 27.2c-1.7-35.7-9.9-67.3-36.1-93.5s-57.8-34.4-93.5-36.1c-36.9-2.1-147.7-2.1-184.6 0-35.7 1.7-67.3 9.9-93.5 36.1s-34.4 57.8-36.1 93.5c-2.1 36.9-2.1 147.7 0 184.6 1.7 35.7 9.9 67.3 36.1 93.5s57.8 34.4 93.5 36.1c36.9 2.1 147.7 2.1 184.6 0 35.7-1.7 67.3-9.9 93.5-36.1s34.4-57.8 36.1-93.5c2.1-36.9 2.1-147.6 0-184.5zm-48.1 224c-7.8 19.6-23.1 35-42.6 42.6-29.5 11.7-99.6 9-132.9 9s-103.4 2.6-132.9-9c-19.6-7.8-35-23.1-42.6-42.6-11.7-29.5-9-99.6-9-132.9s-2.6-103.4 9-132.9c7.8-19.6 23.1-35 42.6-42.6 29.5-11.7 99.6-9 132.9-9s103.4-2.6 132.9 9c19.6 7.8 35 23.1 42.6 42.6 11.7 29.5 9 99.6 9 132.9s2.7 103.3-9 132.9z"/></svg>
+    </a>
+    <!-- X / Twitter -->
+    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.4 151.7c.32 4.54.32 9.1.32 13.7 0 138.7-105.6 298.7-298.7 298.7-59.5 0-114.9-17.2-161.3-46.7 8.4 1 16.8 1.3 25.5 1.3 49.2 0 94.5-16.8 130.5-45-46-1-84.8-31.2-98-72.7 6.5 1 13.1 1.6 19.8 1.6 9.6 0 18.9-1.3 27.7-3.7-48-9.7-84-52-84-103v-1.3c14.1 7.8 30.1 12.5 47.1 13.1-27.9-18.7-46.1-50.5-46.1-86.6 0-19.1 5.1-36.9 14.1-52.2 51.6 63.3 129 104.9 216.2 109.2-1.7-7.5-2.6-15.3-2.6-23.3 0-56.3 45.7-102 102-102 29.5 0 56.2 12.5 74.9 32.9 23.3-4.5 45.2-13 64.8-24.7-7.7 24.2-24.2 44.5-46 57.3 20.7-2.4 40.4-7.9 58.7-15.9-13.8 20.4-31.3 38.3-51.5 52.7z"/></svg>
+    </a>
+    <!-- Facebook -->
+    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M279.14 288l14.22-92.66h-88.91V127.06c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.69 0 225.36 0c-73.06 0-121 44.38-121 124.72V195.3H22.89V288h81.47v224h100.2V288z"/></svg>
+    </a>
   </div>
   <span>&copy; 2026 Zep Swipe. All Rights Reserved.</span>
 </footer>
