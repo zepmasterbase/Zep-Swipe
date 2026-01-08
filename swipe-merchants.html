@@ -17,183 +17,110 @@
 body{background:var(--bg);color:#fff;min-height:100vh;}
 header{
   display:flex;justify-content:space-between;align-items:center;
-  padding:18px;margin:16px;border-radius:16px;
+  padding:16px;margin:16px;border-radius:16px;
   background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
   backdrop-filter:blur(14px);
 }
-.brand{
-  font-family:Orbitron;
-  font-size:1.5rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.logout-btn{
-  background:rgba(255,255,255,.1);border:none;border-radius:50%;
-  width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;transition:.3s;
-}
+.brand{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;transition:.3s;}
 .logout-btn:hover{background:rgba(255,0,80,.25);}
-.header-left{display:flex;align-items:center;gap:12px;}
-.header-left img{
-  width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.3);
-}
-.header-left div{display:flex;flex-direction:column;}
-.header-left div span{font-size:0.85rem;color:var(--text-light);}
-.header-left div h2{font-family:Orbitron;font-size:1.1rem;}
-
-/* FILTER */
-.filter{display:flex;gap:12px;margin-bottom:16px;}
-.filter button{
-  padding:8px 12px;border:none;border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
-}
-.filter button.active{box-shadow:0 0 20px rgba(156,77,255,.5);}
-
-/* JOBS */
-.jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
-.job{
-  background:rgba(255,255,255,.05);border-radius:16px;padding:12px;
-  cursor:pointer;transition:.3s;position:relative;
-}
-.job:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.25);}
-.job img{width:100%;height:140px;object-fit:cover;border-radius:12px;margin-bottom:6px;}
-.job strong{font-family:Orbitron;}
-.job span{font-size:.85rem;color:var(--text-light);}
-.applied-badge{
-  position:absolute;top:10px;right:10px;background:#00ff00;color:#050015;
-  padding:2px 8px;font-size:0.8rem;border-radius:999px;font-weight:bold;
-}
-
-/* APPLY MODAL */
-.modal{
-  position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);
-  display:none;justify-content:center;align-items:center;z-index:1000;
-}
-.modal-content{
-  background:var(--glass);padding:24px;border-radius:16px;width:90%;max-width:400px;
-  display:flex;flex-direction:column;gap:12px;position:relative;
-}
-.modal-content h3{font-family:Orbitron;}
-.modal-content textarea{width:100%;padding:12px;border-radius:12px;border:none;outline:none;}
-.modal-content button{padding:12px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;cursor:pointer;}
-.modal-content .close{position:absolute;top:12px;right:12px;cursor:pointer;font-size:20px;}
-
-@media(max-width:480px){.jobs{grid-template-columns:1fr;}}
+.actions{display:flex;gap:10px;margin:16px 16px 0;}
+.actions button{flex:1;border:none;border-radius:999px;padding:12px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;}
+.actions button:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(156,77,255,.3);}
+.jobs-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;padding:16px;}
+.job-card{background:var(--glass);border-radius:16px;padding:12px;cursor:pointer;transition:.3s;border:1px solid rgba(255,255,255,.12);}
+.job-card:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(156,77,255,.3);}
+.job-card img{width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:8px;}
+.job-card strong{display:block;margin-bottom:4px;}
+.job-card span{font-size:.85rem;color:var(--text-light);}
+.applied{opacity:0.7;position:relative;}
+.applied::after{content:"Applied ✅";position:absolute;top:8px;right:8px;background:var(--zep-blue);color:#050015;padding:2px 6px;border-radius:6px;font-size:0.7rem;}
+.filter-container{display:flex;gap:12px;margin:16px;}
 </style>
 </head>
 <body>
 
 <script>
-let user=JSON.parse(localStorage.getItem("currentUser"));
-if(!user){window.location.href="index.html";}
+/* SESSION PROTECTION */
+const user = JSON.parse(localStorage.getItem("currentUser"));
+if(!user) window.location.href="auth.html";
+</script>
 
-// Mock jobs
-let jobs=[
-  {id:1,title:"Campus Tour Guide",level:"Beginner",price:8,image:"https://images.unsplash.com/photo-1596496059362-94df7d42b5de?auto=format&fit=crop&w=400&q=60"},
-  {id:2,title:"Research Participant",level:"Beginner",price:10,image:"https://images.unsplash.com/photo-1601758123927-3df5245f9b63?auto=format&fit=crop&w=400&q=60"},
-  {id:3,title:"Online Tutoring",level:"Verified",price:20,image:"https://images.unsplash.com/photo-1612831665635-c2ef1e416d05?auto=format&fit=crop&w=400&q=60"},
-  {id:4,title:"Graphic Design",level:"Verified",price:30,image:"https://images.unsplash.com/photo-1612832020436-9a7596f9d9d3?auto=format&fit=crop&w=400&q=60"},
+<header>
+  <div class="brand">Zep Swipe Jobs</div>
+  <button class="logout-btn" onclick="logout()">⎋</button>
+</header>
+
+<div class="actions">
+  <button onclick="location.href='employer-auth.html'">List a Job</button>
+  <button onclick="filterJobs('All')">All Jobs</button>
+  <button onclick="filterJobs('Beginner')">Beginner</button>
+  <button onclick="filterJobs('Verified')">Verified</button>
+</div>
+
+<div class="jobs-container" id="jobsContainer">
+  <!-- Jobs dynamically populated here -->
+</div>
+
+<script>
+const jobs = [
+  {id:1,title:"Campus Tour Guide",level:"Beginner",img:"https://images.unsplash.com/photo-1581091012184-6e89b7a4e360?auto=format&fit=crop&w=400&q=80",price:"$8/hr"},
+  {id:2,title:"Research Participant / Lab Assistant",level:"Beginner",img:"https://images.unsplash.com/photo-1581091012184-6e89b7a4e360?auto=format&fit=crop&w=400&q=80",price:"$12/hr"},
+  {id:3,title:"Online Tutoring",level:"Verified",img:"https://images.unsplash.com/photo-1596495577886-d920f0a25d4c?auto=format&fit=crop&w=400&q=80",price:"$20/hr"},
+  {id:4,title:"Website Development",level:"Verified",img:"https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=400&q=80",price:"$25/hr"},
+  {id:5,title:"Graphic Design",level:"Verified",img:"https://images.unsplash.com/photo-1603039499387-1e0c7fa8d8d3?auto=format&fit=crop&w=400&q=80",price:"$30/hr"},
+  {id:6,title:"Content Writing",level:"Verified",img:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80",price:"$18/hr"}
 ];
 
-// Load applied jobs from localStorage
-let appliedJobs=JSON.parse(localStorage.getItem("appliedJobs") || "[]");
+// Track applied jobs
+let appliedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || [];
 
-// RENDER JOBS
-function renderJobs(filter=null){
-  const container=document.getElementById("jobsContainer");
-  container.innerHTML="";
+// Determine if beginner jobs are unlocked
+const tasksCompletion = user.profileCompletion || 0;
+const canApplyBeginner = tasksCompletion >= 50; // example threshold
+
+function renderJobs(filter="All"){
+  const container = document.getElementById("jobsContainer");
+  container.innerHTML = "";
   jobs.forEach(job=>{
-    if(filter && job.level!==filter) return;
-    const card=document.createElement("div");
-    card.className="job";
-    card.innerHTML=`
-      <img src="${job.image}" alt="${job.title}">
+    // Unlock rules
+    if(job.level==="Beginner" && !canApplyBeginner) return;
+    if(filter!=="All" && job.level!==filter) return;
+    
+    const card = document.createElement("div");
+    card.className = "job-card";
+    if(appliedJobs.includes(job.id)) card.classList.add("applied");
+    
+    card.innerHTML = `
+      <img src="${job.img}" alt="${job.title}">
       <strong>${job.title}</strong>
-      <span>${job.level} · $${job.price}/hr</span>
-      ${appliedJobs.includes(job.id)?'<div class="applied-badge">Applied ✅</div>':''}
+      <span>${job.level} · ${job.price}</span>
     `;
-    card.onclick=()=>openApplyModal(job);
+    card.onclick = ()=>{
+      if(appliedJobs.includes(job.id)){
+        alert("You already applied to this job ✅");
+      } else {
+        const bio = prompt("Write a short bio for your application:");
+        if(bio){
+          appliedJobs.push(job.id);
+          localStorage.setItem("appliedJobs", JSON.stringify(appliedJobs));
+          alert("Application sent!");
+          renderJobs(filter); // refresh to show applied
+        }
+      }
+    }
     container.appendChild(card);
   });
 }
 
-// FILTER BUTTONS
-document.getElementById("filterAll").onclick=()=>{renderJobs();setActiveFilter("All");};
-document.getElementById("filterBeginner").onclick=()=>{renderJobs("Beginner");setActiveFilter("Beginner");};
-document.getElementById("filterVerified").onclick=()=>{renderJobs("Verified");setActiveFilter("Verified");};
-function setActiveFilter(level){
-  document.querySelectorAll(".filter button").forEach(b=>b.classList.remove("active"));
-  if(level==="All") document.getElementById("filterAll").classList.add("active");
-  if(level==="Beginner") document.getElementById("filterBeginner").classList.add("active");
-  if(level==="Verified") document.getElementById("filterVerified").classList.add("active");
+function filterJobs(level){
+  renderJobs(level);
 }
-
-// APPLY MODAL
-const modal=document.getElementById("applyModal");
-const modalTitle=document.getElementById("modalJobTitle");
-const modalBio=document.getElementById("modalBio");
-
-function openApplyModal(job){
-  modal.style.display="flex";
-  modalTitle.innerText=job.title;
-  modal.dataset.jobId=job.id;
-}
-document.getElementById("closeModal").onclick=()=>{modal.style.display="none";};
-document.getElementById("submitApply").onclick=()=>{
-  const bio=modalBio.value.trim();
-  if(!bio){alert("Please write a short bio");return;}
-  const jobId=parseInt(modal.dataset.jobId);
-  if(!appliedJobs.includes(jobId)) appliedJobs.push(jobId);
-  localStorage.setItem("appliedJobs",JSON.stringify(appliedJobs));
-  modal.style.display="none";
-  modalBio.value="";
-  renderJobs();
-  alert("Applied successfully! ✅");
-};
-
-// Populate header
-document.getElementById("studentName").innerText=user.name||"Student";
-document.getElementById("profileImg").src=user.profileImage||"https://images.unsplash.com/photo-1596496059362-94df7d42b5de?auto=format&fit=crop&w=400&q=60";
 
 function logout(){localStorage.removeItem("currentUser");window.location.href="index.html";}
 
+// Initial render
 renderJobs();
-setActiveFilter("All");
 </script>
-
-<header>
-  <div class="header-left">
-    <img id="profileImg" src="" alt="Profile">
-    <div>
-      <span>Welcome back</span>
-      <h2 id="studentName"></h2>
-    </div>
-  </div>
-  <div class="brand">Zep Swipe</div>
-  <button class="logout-btn" onclick="logout()">⎋</button>
-</header>
-
-<div class="dashboard" style="padding:16px;">
-
-  <div class="filter">
-    <button id="filterAll" class="active">All Jobs</button>
-    <button id="filterBeginner">Beginner</button>
-    <button id="filterVerified">Verified</button>
-  </div>
-
-  <div class="jobs" id="jobsContainer"></div>
-
-</div>
-
-<!-- APPLY MODAL -->
-<div class="modal" id="applyModal">
-  <div class="modal-content">
-    <span class="close" id="closeModal">×</span>
-    <h3 id="modalJobTitle">Job Title</h3>
-    <textarea id="modalBio" rows="4" placeholder="Write a short bio about yourself..."></textarea>
-    <button id="submitApply">Apply</button>
-  </div>
-</div>
-
 </body>
 </html>
