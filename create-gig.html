@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Create Gig</title>
+<title>Create Gig — Zep Swipe</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -14,132 +14,121 @@
   --text-light:rgba(255,255,255,0.85);
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
-body{background:var(--bg);color:#fff;min-height:100vh;padding-bottom:50px}
-
-/* HEADER */
-header{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:18px;margin:16px;border-radius:16px;
-  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
-  backdrop-filter:blur(14px);
-}
-.header-left h2{font-family:Orbitron;font-size:1.2rem;}
-.header-right .brand{
-  font-family:Orbitron;font-size:1.2rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-
-/* FORM CARD */
-.form-card{
-  background:var(--glass);border-radius:16px;padding:24px;margin:16px;border:1px solid rgba(255,255,255,.12);box-shadow:0 0 36px rgba(156,77,255,.15);
-}
-.form-card h3{font-family:Orbitron;margin-bottom:16px;}
-.form-card label{display:block;margin-top:12px;font-size:.9rem;color:var(--text-light);}
-.form-card input, .form-card select, .form-card textarea{
-  width:100%;padding:10px;margin-top:6px;border:none;border-radius:12px;outline:none;background:rgba(255,255,255,.05);color:#fff;font-size:.9rem;
-}
-textarea{resize:none;height:80px;}
-.submit-btn{
-  margin-top:16px;width:100%;padding:12px;border:none;border-radius:999px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-weight:700;cursor:pointer;transition:.3s;
-}
-.submit-btn:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
-
-/* JOBS PREVIEW */
-.jobs-preview{padding:0 16px;margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
-.job-card{
-  background:rgba(255,255,255,.05);border-radius:12px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;transition:.3s;
-}
-.job-card:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.25);}
-.job-card img{width:100%;height:120px;border-radius:8px;object-fit:cover;margin-bottom:8px;}
-.job-card strong{font-family:Orbitron;margin-bottom:4px;}
-.job-card span{font-size:.8rem;color:var(--text-light);}
-
-/* RESPONSIVE */
-@media(max-width:480px){.jobs-preview{grid-template-columns:1fr}}
+body{background:var(--bg);color:#fff;min-height:100vh;padding:0 16px;}
+header{display:flex;align-items:center;justify-content:space-between;padding:16px;margin:16px;border-radius:16px;background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));backdrop-filter:blur(14px);}
+.brand{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;}
+.logout-btn:hover{background:rgba(255,0,80,.25);}
+.form-container{max-width:500px;margin:20px auto;background:var(--glass);border-radius:16px;padding:20px;border:1px solid rgba(255,255,255,.12);box-shadow:0 0 36px rgba(156,77,255,.2);}
+.form-container h2{text-align:center;font-family:Orbitron;margin-bottom:16px;}
+.form-container input, .form-container select, .form-container textarea{width:100%;padding:12px;margin-bottom:12px;border-radius:12px;border:none;outline:none;background:rgba(255,255,255,.05);color:#fff;}
+.form-container textarea{resize:none;height:100px;}
+.form-container button{width:100%;padding:12px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;font-weight:600;cursor:pointer;transition:.3s;}
+.form-container button:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
+.payment-section{background:rgba(255,255,255,.05);padding:12px;border-radius:12px;margin-bottom:12px;border:1px solid rgba(255,255,255,.12);}
+.payment-section button{width:100%;margin-top:8px;}
+.success-message{color:limegreen;font-weight:600;text-align:center;margin-bottom:12px;}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="header-left"><h2>Create a New Gig</h2></div>
-  <div class="header-right"><div class="brand">Zep Swipe</div></div>
+  <div class="brand">Zep Swipe</div>
+  <button class="logout-btn" onclick="logout()">⎋</button>
 </header>
 
-<div class="form-card">
-  <h3>Gig Details</h3>
-  <label for="title">Job Title</label>
-  <input type="text" id="title" placeholder="Enter job title">
-
-  <label for="level">Level</label>
-  <select id="level">
-    <option value="Beginner">Beginner</option>
-    <option value="Verified Freelancer">Verified Freelancer</option>
+<div class="form-container">
+  <h2>Create Job / Gig</h2>
+  
+  <input type="text" id="jobTitle" placeholder="Job Title (e.g., Graphic Design Flyer)">
+  <textarea id="jobDesc" placeholder="Job Description"></textarea>
+  
+  <select id="jobCategory">
+    <option value="">Select Category</option>
+    <option value="Beginner">Beginner Job</option>
+    <option value="Verified">Verified Freelancer Job</option>
   </select>
+  
+  <input type="number" id="jobPrice" placeholder="Price per Hour (USD)">
+  
+  <!-- Payment Verification -->
+  <div class="payment-section" id="paymentSection">
+    <strong>Pay $10 to verify listing (non-refundable)</strong>
+    <button id="payButton">Pay & Verify</button>
+    <span id="paymentStatus"></span>
+  </div>
 
-  <label for="pay">Hourly Rate ($)</label>
-  <input type="number" id="pay" placeholder="Enter hourly pay">
-
-  <label for="img">Job Image URL</label>
-  <input type="text" id="img" placeholder="Enter image URL">
-
-  <label for="description">Description</label>
-  <textarea id="description" placeholder="Enter job description"></textarea>
-
-  <button class="submit-btn" onclick="createGig()">Create Gig</button>
+  <!-- List Job -->
+  <button id="listJob" disabled>List Job</button>
 </div>
 
-<h3 style="padding-left:16px;">Your Created Jobs</h3>
-<div class="jobs-preview" id="jobsPreview"></div>
-
 <script>
+/* SESSION PROTECTION */
 const user = JSON.parse(localStorage.getItem("currentUser"));
-if(!user){window.location.href="auth.html";}
-
-// Populate jobs preview from localStorage
-function renderJobs(){
-  const preview = document.getElementById("jobsPreview");
-  preview.innerHTML = "";
-  let gigs = JSON.parse(localStorage.getItem("gigs")) || [];
-  gigs.forEach(job => {
-    const card = document.createElement("div");
-    card.className = "job-card";
-    card.innerHTML = `
-      <img src="${job.img || 'https://images.unsplash.com/photo-1564866657317-44612e0aa29b?auto=format&fit=crop&w=400&q=60'}" alt="${job.title}">
-      <strong>${job.title}</strong>
-      <span>${job.level} · $${job.pay}/hr</span>
-      <span>${job.description}</span>
-    `;
-    preview.appendChild(card);
-  });
+if(!user){
+  window.location.href="auth.html";
 }
 
-// Create gig and store in localStorage
-function createGig(){
-  const title = document.getElementById("title").value.trim();
-  const level = document.getElementById("level").value;
-  const pay = document.getElementById("pay").value;
-  const img = document.getElementById("img").value.trim();
-  const description = document.getElementById("description").value.trim();
-
-  if(!title || !pay){alert("Title and Pay are required"); return;}
-
-  let gigs = JSON.parse(localStorage.getItem("gigs")) || [];
-  gigs.push({title, level, pay, img, description});
-  localStorage.setItem("gigs", JSON.stringify(gigs));
-  alert("Gig created successfully!");
-  renderJobs();
-
-  // Clear form
-  document.getElementById("title").value="";
-  document.getElementById("level").value="Beginner";
-  document.getElementById("pay").value="";
-  document.getElementById("img").value="";
-  document.getElementById("description").value="";
+// Logout
+function logout(){
+  localStorage.removeItem("currentUser");
+  window.location.href="auth.html";
 }
 
-// Initialize
-renderJobs();
+/* Payment Simulation */
+const payButton = document.getElementById("payButton");
+const paymentStatus = document.getElementById("paymentStatus");
+let paymentVerified = false;
+
+payButton.addEventListener("click", ()=>{
+  // Simulate Flutterwave Payment here
+  // In production: integrate Flutterwave inline payment
+  paymentVerified = true;
+  paymentStatus.innerHTML = "✅ Payment Verified!";
+  document.getElementById("listJob").disabled = false;
+});
+
+/* List Job */
+const listJobBtn = document.getElementById("listJob");
+listJobBtn.addEventListener("click", ()=>{
+  const title = document.getElementById("jobTitle").value.trim();
+  const desc = document.getElementById("jobDesc").value.trim();
+  const category = document.getElementById("jobCategory").value;
+  const price = parseFloat(document.getElementById("jobPrice").value);
+
+  if(!title || !desc || !category || !price){
+    alert("Fill all fields before listing job.");
+    return;
+  }
+  if(!paymentVerified){
+    alert("Please verify payment first.");
+    return;
+  }
+
+  // Save job in localStorage
+  let jobs = JSON.parse(localStorage.getItem("jobs")) || [];
+  const job = {
+    id: Date.now(),
+    title,
+    desc,
+    category,
+    price,
+    employer: user.name,
+    verified: category==="Verified"
+  };
+  jobs.push(job);
+  localStorage.setItem("jobs", JSON.stringify(jobs));
+  alert("Job listed successfully!");
+  // Reset form
+  document.getElementById("jobTitle").value="";
+  document.getElementById("jobDesc").value="";
+  document.getElementById("jobCategory").value="";
+  document.getElementById("jobPrice").value="";
+  paymentVerified=false;
+  paymentStatus.innerHTML="";
+  document.getElementById("listJob").disabled=true;
+});
 </script>
+
 </body>
 </html>
