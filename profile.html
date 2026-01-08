@@ -1,265 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Student Profile</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --glass:rgba(255,255,255,0.06);
-  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,0.08);
+  --text-light:rgba(255,255,255,0.85);
 }
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Poppins,sans-serif;
-  background:var(--bg);
-  color:#fff;
-}
-.container{
-  max-width:880px;
-  margin:26px auto 120px;
-  padding:16px;
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;min-height:100vh;padding-bottom:50px;}
 
-/* Header */
-.header{
+/* HEADER */
+header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:16px;
-  border-radius:18px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(16px);
-  box-shadow:0 0 34px rgba(0,240,255,.25);
+  padding:18px;
+  margin:16px;
+  border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
+  animation:pulse 4s infinite alternate;
 }
+@keyframes pulse{
+  0%{box-shadow:0 0 20px rgba(0,240,255,.25)}
+  100%{box-shadow:0 0 40px rgba(156,77,255,.45)}
+}
+.header-left{display:flex;align-items:center;gap:12px;}
+.header-left h2{font-family:Orbitron;font-size:1.1rem;}
+.header-left span{font-size:.8rem;color:var(--text-light);}
+.header-right{display:flex;align-items:center;gap:14px;}
 .brand{
   font-family:Orbitron;
-  font-size:1.4rem;
+  font-size:1.2rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.btn{
-  font-family:Orbitron;
-  font-size:12px;
-  padding:8px 16px;
-  border-radius:999px;
+.logout-btn{
+  background:rgba(255,255,255,.1);
   border:none;
-  cursor:pointer;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-}
-
-/* Profile Card */
-.profile-card{
-  margin-top:22px;
-  padding:20px;
-  border-radius:22px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.12);
-  display:flex;
-  gap:18px;
-  align-items:center;
-}
-.avatar{
-  width:92px;height:92px;
   border-radius:50%;
-  border:3px solid var(--zep-blue);
-  object-fit:cover;
-  background:#020617;
+  width:38px;
+  height:38px;
+  cursor:pointer;
+  color:#fff;
+  font-size:16px;
 }
-.profile-info h2{
-  margin:0;
-  font-family:Orbitron;
+.logout-btn:hover{background:rgba(255,0,80,.3);}
+
+/* PROFILE CARDS */
+.container{
+  padding:0 16px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
 }
-.profile-info p{
-  margin:4px 0;
-  font-size:13px;
-  opacity:.85;
+.card{
+  background:var(--glass);
+  border-radius:16px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 0 40px rgba(0,240,255,.1);
 }
-.badge{
-  display:inline-block;
-  margin-top:6px;
-  padding:5px 14px;
+.card h3{font-family:Orbitron;margin-bottom:12px;}
+.input-group{display:flex;flex-direction:column;margin-bottom:12px;}
+.input-group label{font-size:.85rem;color:var(--text-light);margin-bottom:4px;}
+.input-group input{padding:10px;border-radius:12px;border:none;outline:none;background:rgba(255,255,255,.05);color:#fff;}
+.input-group input::placeholder{color:rgba(255,255,255,.5);}
+button.update-btn{
+  width:100%;
+  padding:12px;
+  border:none;
   border-radius:999px;
-  font-size:11px;
   font-family:Orbitron;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
+  cursor:pointer;
+  margin-top:8px;
 }
+button.update-btn:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
 
-/* Sections */
-.section{
-  margin-top:24px;
-  padding:18px;
-  border-radius:20px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.12);
-}
-.section-title{
-  font-family:Orbitron;
-  font-size:1.1rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+/* AVATAR */
+.avatar-container{
+  display:flex;
+  justify-content:center;
   margin-bottom:12px;
 }
-
-/* Form */
-input{
-  width:100%;
-  padding:12px;
-  margin-top:8px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.2);
-  background:#020617;
-  color:#fff;
-}
-.save-btn{
-  margin-top:14px;
-  width:100%;
-  padding:12px;
-  border-radius:999px;
-  border:none;
+.avatar-container img{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.3);
+  object-fit:cover;
   cursor:pointer;
-  font-family:Orbitron;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
 }
 
-/* Proof */
-.proof{
-  font-size:12px;
-  opacity:.85;
+/* PROFILE COMPLETION */
+.verify-bar{
+  height:10px;
+  background:rgba(255,255,255,.1);
+  border-radius:6px;
+  overflow:hidden;
   margin-bottom:6px;
 }
-
-/* Footer */
-.footer{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  padding:14px 22px;
-  background:rgba(0,0,0,.55);
-  backdrop-filter:blur(10px);
-  display:flex;
-  justify-content:space-around;
+.verify-bar div{
+  height:100%;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
 }
-.fbtn{
-  width:56px;height:56px;
-  border-radius:18px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.08);
-  display:flex;align-items:center;justify-content:center;
-  text-decoration:none;
-  color:#fff;
+.verify-text{font-size:.85rem;color:var(--text-light);text-align:center;}
+
+/* MOBILE */
+@media(max-width:480px){
+  .avatar-container img{width:80px;height:80px;}
 }
 </style>
 </head>
-
 <body>
+
+<script>
+/* SESSION PROTECTION */
+const user = JSON.parse(localStorage.getItem("currentUser"));
+if(!user){window.location.href="auth.html";}
+</script>
+
+<header>
+  <div class="header-left">
+    <h2>Profile</h2>
+    <span id="studentLevel"></span>
+  </div>
+  <div class="header-right">
+    <div class="brand">Zep Swipe</div>
+    <button class="logout-btn" onclick="logout()">⎋</button>
+  </div>
+</header>
 
 <div class="container">
 
-  <!-- Header -->
-  <div class="header">
-    <div class="brand">Zep Swipe · Profile</div>
-    <button class="btn" onclick="location.href='student-dashboard.html'">Home</button>
+  <!-- AVATAR -->
+  <div class="card avatar-container">
+    <img id="profileImg" src="" alt="Profile" title="Click to change avatar">
   </div>
 
-  <!-- Profile -->
-  <div class="profile-card">
-    <img id="avatarImg" class="avatar"/>
-    <div class="profile-info">
-      <h2 id="name">Student</h2>
-      <p id="uni">—</p>
-      <p id="country">—</p>
-      <div id="badge"></div>
+  <!-- PROFILE INFO -->
+  <div class="card">
+    <h3>Student Info</h3>
+    <div class="input-group">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" placeholder="Enter your name">
     </div>
+    <div class="input-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter your email">
+    </div>
+    <div class="input-group">
+      <label for="level">Level / Status</label>
+      <input type="text" id="level" placeholder="Beginner Freelancer">
+    </div>
+    <button class="update-btn" onclick="updateProfile()">Update Profile</button>
   </div>
 
-  <!-- Edit -->
-  <div class="section">
-    <div class="section-title">Edit Profile</div>
-    <input id="nameInput" placeholder="Full name"/>
-    <input id="uniInput" placeholder="University"/>
-    <input id="countryInput" placeholder="Country"/>
-    <input id="avatarInput" placeholder="Avatar image URL"/>
-    <button class="save-btn" onclick="saveProfile()">Save Profile</button>
+  <!-- PROFILE COMPLETENESS -->
+  <div class="card">
+    <h3>Profile Completion</h3>
+    <div class="verify-bar">
+      <div id="completionBar"></div>
+    </div>
+    <div class="verify-text" id="completionText"></div>
   </div>
 
-  <!-- Proof -->
-  <div class="section">
-    <div class="section-title">Public Proof (Zora)</div>
-    <div id="proofList"></div>
-  </div>
-
-</div>
-
-<!-- Footer -->
-<div class="footer">
-  <a class="fbtn" href="wallet.html">💼</a>
-  <a class="fbtn" href="learn-earn.html">🎓</a>
-  <a class="fbtn" href="student-dashboard.html">🏠</a>
 </div>
 
 <script>
-const student = JSON.parse(localStorage.getItem("zepStudent"));
-if(!student){location.href="login.html";}
+/* Populate user info */
+document.getElementById("name").value = user.name || "";
+document.getElementById("email").value = user.email || "";
+document.getElementById("level").value = user.level || "Beginner Freelancer";
+document.getElementById("studentLevel").innerText = user.level || "Beginner Freelancer";
+document.getElementById("profileImg").src = user.avatar || "https://via.placeholder.com/100";
 
-const profileKey="zepProfile";
-let profile = JSON.parse(localStorage.getItem(profileKey)) || {};
-
-const avatarFallback =
-  "https://avatars.githubusercontent.com/u/9919?v=4";
-
-/* Render */
-function render(){
-  document.getElementById("name").textContent = profile.name || "Student";
-  document.getElementById("uni").textContent = profile.university || "—";
-  document.getElementById("country").textContent = profile.country || "—";
-
-  const img = document.getElementById("avatarImg");
-  img.src = profile.avatar || avatarFallback;
-  img.onerror = ()=>img.src=avatarFallback;
-
-  document.getElementById("badge").innerHTML =
-    student.verified ? `<span class="badge">Verified Creator</span>` : "";
-
-  // Proof
-  const proofs = JSON.parse(localStorage.getItem("zepProgress"))||{};
-  const box=document.getElementById("proofList");
-  box.innerHTML="";
-  Object.values(proofs).forEach(p=>{
-    if(p.proof){
-      const d=document.createElement("div");
-      d.className="proof";
-      d.innerHTML=`🔗 <a href="${p.proof}" target="_blank">${p.proof}</a>`;
-      box.appendChild(d);
-    }
-  });
+/* Profile Completeness Logic */
+function calculateCompletion(u){
+  let count=0;
+  if(u.name) count+=30;
+  if(u.email) count+=30;
+  if(u.avatar) count+=20;
+  if(u.level) count+=20;
+  return Math.min(count,100);
 }
 
-/* Save */
-function saveProfile(){
-  profile={
-    name:nameInput.value.trim(),
-    university:uniInput.value.trim(),
-    country:countryInput.value.trim(),
-    avatar:avatarInput.value.trim()
-  };
-  localStorage.setItem(profileKey,JSON.stringify(profile));
-  alert("Profile updated");
-  render();
+function updateCompletion(){
+  const updated = JSON.parse(localStorage.getItem("currentUser"));
+  const comp = calculateCompletion(updated);
+  document.getElementById("completionBar").style.width = comp + "%";
+  document.getElementById("completionText").innerText = comp<60 ? 
+    "Complete your profile to unlock more jobs" :
+    "Profile complete — jobs unlocked 🎉";
 }
 
-render();
+/* Update Profile */
+function updateProfile(){
+  user.name = document.getElementById("name").value.trim();
+  user.email = document.getElementById("email").value.trim();
+  user.level = document.getElementById("level").value.trim();
+  localStorage.setItem("currentUser", JSON.stringify(user));
+  alert("Profile updated!");
+  updateCompletion();
+  document.getElementById("studentLevel").innerText = user.level;
+}
+
+/* Avatar Change */
+document.getElementById("profileImg").addEventListener("click",()=>{
+  const url = prompt("Enter avatar image URL:");
+  if(url){user.avatar=url;localStorage.setItem("currentUser",JSON.stringify(user));document.getElementById("profileImg").src=url;updateCompletion();}
+});
+
+/* Initialize completion */
+updateCompletion();
+
+/* Logout */
+function logout(){localStorage.removeItem("currentUser");window.location.href="auth.html";}
 </script>
 
 </body>
