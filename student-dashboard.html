@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Student Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -14,316 +15,157 @@
   --text-light:rgba(255,255,255,0.85);
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
-body{
-  background:var(--bg);
-  color:#fff;
-  min-height:100vh;
-}
+body{background:var(--bg);color:#fff;min-height:100vh;}
+
 /* HEADER */
 header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px;
-  margin:16px;
-  border-radius:16px;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px;margin:16px;border-radius:16px;
   background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
   backdrop-filter:blur(14px);
 }
-.brand{
-  font-family:Orbitron;
-  font-size:1.5rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.logout-btn{
-  background:rgba(255,255,255,.1);
-  border:none;
-  border-radius:50%;
-  width:38px;
-  height:38px;
-  cursor:pointer;
-  color:#fff;
-  font-size:16px;
-  transition:.3s;
-}
+.brand{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;transition:.3s;}
 .logout-btn:hover{background:rgba(255,0,80,.25);}
-.header-left{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.header-left img{
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  object-fit:cover;
-  border:2px solid rgba(255,255,255,.3);
-}
-.header-left div{
-  display:flex;
-  flex-direction:column;
-}
-.header-left div span{
-  font-size:0.85rem;
-  color:var(--text-light);
-}
-.header-left div h2{
-  font-family:Orbitron;
-  font-size:1.1rem;
-}
-/* DASHBOARD SECTIONS */
-.dashboard{
-  padding:0 16px 60px;
-  display:flex;
-  flex-direction:column;
-  gap:22px;
-}
-.section{
-  background:var(--glass);
-  border-radius:16px;
-  padding:16px;
-  border:1px solid rgba(255,255,255,.12);
-}
-.section h3{
-  font-family:Orbitron;
-  margin-bottom:12px;
-}
+
+/* DASHBOARD */
+.dashboard{padding:0 16px 50px;display:flex;flex-direction:column;gap:22px;max-width:1200px;margin:auto;}
+.header-left{display:flex;align-items:center;gap:12px;}
+.header-left img{width:60px;height:60px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
+.header-left h2{font-family:Orbitron;font-size:1.2rem;}
+.header-left span{font-size:.85rem;color:var(--text-light);}
+.card{background:var(--glass);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.12);}
+.card h3{font-family:Orbitron;margin-bottom:12px;}
+
 /* TASKS */
-.task{
-  background:rgba(255,255,255,.05);
-  border-radius:12px;
-  padding:12px;
-  margin-bottom:10px;
-  cursor:pointer;
-}
-.task span{
-  font-size:.8rem;
-  color:var(--text-light);
-}
-.progress{
-  height:6px;
-  background:rgba(255,255,255,.1);
-  border-radius:6px;
-  overflow:hidden;
-  margin-top:6px;
-}
-.progress div{
-  height:100%;
-  background:var(--zep-blue);
-}
-/* EARNINGS */
-.earnings{
-  display:flex;
-  justify-content:space-between;
-}
-.earnings strong{font-size:1.1rem}
-/* PROFILE COMPLETION */
-.verify-bar{
-  height:10px;
-  background:rgba(255,255,255,.1);
-  border-radius:6px;
-  overflow:hidden;
-  margin-bottom:6px;
-}
-.verify-bar div{
-  height:100%;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-}
-.verify-text{
-  font-size:.85rem;
-  color:var(--text-light);
-}
+.task{background:rgba(255,255,255,.05);border-radius:12px;padding:12px;margin-bottom:10px;cursor:pointer;transition:.3s;}
+.task:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(156,77,255,.3);}
+.progress{height:6px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;margin-top:6px;}
+.progress div{height:100%;background:var(--zep-blue);}
+
+/* EARNINGS CHART */
+.earnings-chart{width:100%;max-width:600px;margin:auto;}
+
 /* JOBS */
-.jobs{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:16px;
-}
-.job{
-  background:rgba(255,255,255,.05);
-  border-radius:16px;
-  padding:12px;
-  cursor:pointer;
-  transition:.3s;
-}
-.job:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 36px rgba(156,77,255,.25);
-}
-.job img{
-  width:100%;
-  height:140px;
-  object-fit:cover;
-  border-radius:12px;
-  margin-bottom:6px;
-}
-.job strong{
-  font-family:Orbitron;
-}
-.job span{
-  font-size:.85rem;
-  color:var(--text-light);
-}
-/* ACTION BUTTONS */
-.actions{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-.actions button{
-  border:none;
-  border-radius:999px;
-  padding:12px;
-  font-family:Orbitron;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  cursor:pointer;
-}
-@media(max-width:480px){
-  .actions{grid-template-columns:1fr;}
-}
+.jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
+.job{background:rgba(255,255,255,.05);border-radius:12px;padding:10px;cursor:pointer;transition:.3s;}
+.job:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(156,77,255,.3);}
+.job img{width:100%;height:120px;border-radius:8px;margin-bottom:6px;object-fit:cover;}
+.job span{font-size:.8rem;color:var(--text-light);}
+.job strong{display:block;margin-bottom:4px;}
+
+/* ACTIONS */
+.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.actions button{border:none;border-radius:999px;padding:12px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;}
+@media(max-width:480px){.actions{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <script>
-let user = JSON.parse(localStorage.getItem("currentUser"));
-if(!user){ window.location.href="auth.html"; }
-
-// Mock first-day tasks
-let tasks=[
-  {id:1,title:"Create / Update Profile",points:5,duration:5,completed:false},
-  {id:2,title:"Complete Skill Tutorial",points:10,duration:15,completed:false},
-];
-
-// Profile completion
-if(!user.profileCompletion) user.profileCompletion=0;
-localStorage.setItem("currentUser",JSON.stringify(user));
-
-// Mock 2 jobs
-let jobs=[
-  {id:1,title:"Campus Tour Guide",level:"Beginner",price:8,image:"https://images.unsplash.com/photo-1596496059362-94df7d42b5de?auto=format&fit=crop&w=400&q=60"},
-  {id:2,title:"Research Participant",level:"Beginner",price:10,image:"https://images.unsplash.com/photo-1601758123927-3df5245f9b63?auto=format&fit=crop&w=400&q=60"}
-];
-
-// Render tasks
-function renderTasks(){
-  const container=document.getElementById("tasksContainer");
-  container.innerHTML="";
-  tasks.forEach(task=>{
-    const div=document.createElement("div");
-    div.className="task";
-    div.innerHTML=`<strong>${task.title}</strong><span>+${task.points} ZAC · ${task.duration} mins</span><div class="progress"><div style="width:${task.completed?100:50}%"></div></div>`;
-    div.onclick=()=>{
-      task.completed=true;
-      user.profileCompletion=calculateCompletion();
-      localStorage.setItem("currentUser",JSON.stringify(user));
-      renderTasks();
-      renderProfileCompletion();
-    };
-    container.appendChild(div);
-  });
-}
-
-function calculateCompletion(){
-  let completedTasks=tasks.filter(t=>t.completed).length;
-  return Math.round((completedTasks/tasks.length)*100);
-}
-
-function renderProfileCompletion(){
-  document.getElementById("completionBar").style.width=user.profileCompletion+"%";
-  document.getElementById("completionText").innerText=
-    user.profileCompletion<60?"Complete first-day tasks to unlock jobs":"Beginner jobs unlocked! 🎉";
-}
-
-// Render jobs
-function renderJobs(){
-  const container=document.getElementById("jobsContainer");
-  container.innerHTML="";
-  jobs.forEach(job=>{
-    const card=document.createElement("div");
-    card.className="job";
-    card.onclick=()=>{ window.location.href="swipe-merchants.html"; };
-    card.innerHTML=`
-      <img src="${job.image}" alt="${job.title}">
-      <strong>${job.title}</strong>
-      <span>${job.level} · $${job.price}/hr</span>
-    `;
-    container.appendChild(card);
-  });
-}
-
-// Populate dashboard
-document.getElementById("studentName").innerText=user.name||"Student";
-document.getElementById("profileImg").src=user.profileImage||"https://images.unsplash.com/photo-1596496059362-94df7d42b5de?auto=format&fit=crop&w=400&q=60";
-document.getElementById("zacBalance").innerText=user.ZAC||0;
-document.getElementById("usdBalance").innerText=user.USD||0;
-
-renderTasks();
-renderProfileCompletion();
-renderJobs();
-
-function logout(){
-  localStorage.removeItem("currentUser");
-  window.location.href="auth.html";
-}
+const user = JSON.parse(localStorage.getItem("currentUser"));
+if(!user) window.location.href="auth.html";
 </script>
 
 <header>
   <div class="header-left">
-    <img src="" id="profileImg" alt="Profile">
+    <img id="profileImg" src="" alt="Profile">
     <div>
       <span>Welcome back</span>
       <h2 id="studentName"></h2>
+      <span id="studentLevel"></span>
     </div>
   </div>
-  <div class="brand">Zep Swipe</div>
-  <button class="logout-btn" onclick="logout()">⎋</button>
+  <div class="header-right">
+    <div class="brand">Zep Swipe</div>
+    <button class="logout-btn" onclick="logout()">⎋</button>
+  </div>
 </header>
 
 <div class="dashboard">
 
-  <!-- Daily Tasks -->
-  <div class="section">
-    <h3>Daily Learn & Earn</h3>
-    <div id="tasksContainer"></div>
-  </div>
-
-  <!-- Wallet -->
-  <div class="section earnings">
-    <div>
-      <span>Total ZAC</span>
-      <strong id="zacBalance">0</strong>
+  <!-- TASKS & PROGRESS -->
+  <div class="card">
+    <h3>Daily Tasks</h3>
+    <div class="task" onclick="location.href='learn-earn.html'">
+      <strong>Create / Update Profile</strong>
+      <span>+5 ZAC · 5 mins</span>
+      <div class="progress"><div style="width:60%"></div></div>
     </div>
-    <div>
-      <span>USD Balance</span>
-      <strong>$<span id="usdBalance">0</span></strong>
+    <div class="task" onclick="location.href='learn-earn.html'">
+      <strong>Complete Tutorial</strong>
+      <span>+10 ZAC · 15 mins</span>
+      <div class="progress"><div style="width:30%"></div></div>
     </div>
   </div>
 
-  <!-- Profile Completion -->
-  <div class="section">
-    <h3>Profile Completion</h3>
-    <div class="verify-bar"><div id="completionBar"></div></div>
-    <div class="verify-text" id="completionText"></div>
+  <!-- EARNINGS -->
+  <div class="card">
+    <h3>Earnings</h3>
+    <canvas id="earningsChart" class="earnings-chart"></canvas>
   </div>
 
-  <!-- Available Jobs -->
-  <div class="section">
+  <!-- AVAILABLE JOBS -->
+  <div class="card">
     <h3>Available Jobs</h3>
-    <div class="jobs" id="jobsContainer"></div>
+    <div class="jobs">
+      <div class="job" onclick="location.href='swipe-merchants.html'">
+        <img src="https://images.unsplash.com/photo-1601933470030-35f5d52e4324?auto=format&fit=crop&w=400&q=80">
+        <strong>Social Media Post</strong>
+        <span>Beginner</span>
+      </div>
+      <div class="job" onclick="location.href='swipe-merchants.html'">
+        <img src="https://images.unsplash.com/photo-1612831455540-9a6230b76868?auto=format&fit=crop&w=400&q=80">
+        <strong>Flyer Design</strong>
+        <span>Beginner</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Action Buttons -->
-  <div class="section actions">
+  <!-- ACTIONS -->
+  <div class="actions">
     <button onclick="location.href='learn-earn.html'">Tasks</button>
     <button onclick="location.href='swipe-merchants.html'">Jobs</button>
     <button onclick="location.href='wallet.html'">Wallet</button>
     <button onclick="location.href='profile.html'">Profile</button>
   </div>
-
 </div>
+
+<script>
+document.getElementById("studentName").innerText = user.name || "Student";
+document.getElementById("studentLevel").innerText = user.level || "Beginner Freelancer";
+document.getElementById("profileImg").src = user.profileImage || "https://via.placeholder.com/120";
+
+function logout(){localStorage.removeItem("currentUser");window.location.href="auth.html";}
+
+// Earnings chart
+const ctx = document.getElementById('earningsChart').getContext('2d');
+const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+        datasets: [
+          {
+            label: 'ZAC',
+            data: [user.ZAC || 0, 5, 15, 10],
+            backgroundColor: 'rgba(0, 240, 255,0.7)'
+          },
+          {
+            label: 'USD',
+            data: [user.USD || 0, 10, 18, 12],
+            backgroundColor: 'rgba(156,77,255,0.7)'
+          }
+        ]
+    },
+    options: {
+        responsive:true,
+        plugins:{legend:{labels:{color:'#fff'}}},
+        scales:{
+          x:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.1)'}},
+          y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.1)'}}
+        }
+    }
+});
+</script>
 </body>
 </html>
