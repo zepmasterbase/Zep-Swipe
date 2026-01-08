@@ -6,185 +6,218 @@
 <title>Zep Swipe — Student Wallet</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
-:root {
+:root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,0.08);
-  --text-light: rgba(255,255,255,0.85);
+  --text-light:rgba(255,255,255,0.85);
 }
-* { box-sizing:border-box; margin:0; padding:0; }
-body { font-family:Poppins,sans-serif; background:var(--bg); color:#fff; min-height:100vh; }
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
+body{background:var(--bg);color:#fff;min-height:100vh;padding-bottom:50px;}
 
 /* HEADER */
-header {
+header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:16px 24px;
-  background: radial-gradient(circle at center, rgba(0,240,255,0.2), rgba(156,77,255,0.2));
-  border-radius:12px;
-  margin:12px;
-  backdrop-filter: blur(12px);
-  animation: pulseHeader 4s infinite alternate;
+  padding:18px;
+  margin:16px;
+  border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
+  animation:pulse 4s infinite alternate;
 }
-@keyframes pulseHeader {
-  0% { box-shadow: 0 0 20px rgba(0,240,255,0.25); }
-  50% { box-shadow: 0 0 50px rgba(156,77,255,0.45); }
-  100% { box-shadow: 0 0 20px rgba(0,240,255,0.25); }
+@keyframes pulse{
+  0%{box-shadow:0 0 20px rgba(0,240,255,.25)}
+  100%{box-shadow:0 0 40px rgba(156,77,255,.45)}
 }
-header .title { font-family:Orbitron; font-size:1.5rem; }
-header .list-deals { font-family:Orbitron; font-size:14px; padding:8px 16px; border-radius:999px; background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet)); color:#050015; text-decoration:none; }
+.header-left{display:flex;align-items:center;gap:12px;}
+.header-left img{
+  width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;
+}
+.header-left h2{font-family:Orbitron;font-size:1.1rem;}
+.header-left span{font-size:.8rem;color:var(--text-light);}
+.header-right{
+  display:flex;align-items:center;gap:14px;
+}
+.brand{
+  font-family:Orbitron;font-size:1.2rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.logout-btn{
+  background:rgba(255,255,255,.1);
+  border:none;border-radius:50%;
+  width:38px;height:38px;
+  cursor:pointer;color:#fff;font-size:16px;
+}
+.logout-btn:hover{background:rgba(255,0,80,.3);}
 
-/* BALANCES */
-.wallet-container { padding:20px; display:flex; flex-direction:column; gap:20px; max-width:500px; margin:0 auto; }
-.balance-card { background:var(--glass); border:1px solid rgba(255,255,255,0.12); border-radius:16px; padding:16px; box-shadow:0 0 30px rgba(156,77,255,0.3); }
-.balance-card h2 { font-family:Orbitron; font-size:1.3rem; margin-bottom:8px; }
-.balance-card p { font-size:1rem; color:var(--text-light); margin-bottom:6px; }
-.balance-card .amount { font-family:Orbitron; font-size:1.5rem; margin-top:4px; }
+/* WALLET */
+.container{padding:0 16px;display:flex;flex-direction:column;gap:22px;}
+.card{
+  background:var(--glass);
+  border-radius:16px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 0 40px rgba(0,240,255,.1);
+}
+.card h3{font-family:Orbitron;margin-bottom:12px;}
+.balance{
+  display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;
+}
+.balance div span{font-size:.8rem;color:var(--text-light);}
+.balance div strong{font-size:1.2rem;}
+button.action-btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:999px;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  cursor:pointer;
+  margin-top:8px;
+}
+button.action-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
+}
 
 /* ACTIVITY */
-.activity-card { background:var(--glass); border-radius:16px; padding:16px; box-shadow:0 0 30px rgba(0,240,255,0.25); }
-.activity-card h3 { font-family:Orbitron; font-size:1.2rem; margin-bottom:10px; }
-.activity-list { list-style:none; display:flex; flex-direction:column; gap:8px; max-height:300px; overflow-y:auto; }
-.activity-list li { display:flex; justify-content:space-between; font-size:0.95rem; border-bottom:1px solid rgba(255,255,255,0.12); padding-bottom:4px; }
-
-/* BUTTONS */
-.button { display:inline-block; margin-top:8px; padding:10px 20px; border-radius:999px; font-family:Orbitron; font-weight:600; font-size:14px; text-decoration:none; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050015; cursor:pointer; transition:0.3s; text-align:center; }
-.button:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
-
-input { padding:8px 12px; border-radius:8px; border:none; outline:none; width:100%; margin-top:6px; }
+.activity{max-height:200px;overflow-y:auto;margin-top:12px;}
+.activity-item{
+  display:flex;justify-content:space-between;
+  padding:10px;border-radius:12px;margin-bottom:6px;
+  background:rgba(255,255,255,.05);
+  font-size:.85rem;
+}
 
 /* MOBILE */
-@media(max-width:500px){
-  .wallet-container { padding:12px; }
-  header .title { font-size:1.2rem; }
+@media(max-width:480px){
+  .balance{flex-direction:column;align-items:flex-start;gap:6px;}
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
+<script>
+/* SESSION PROTECTION */
+const user = JSON.parse(localStorage.getItem("currentUser"));
+if(!user){window.location.href="auth.html";}
+</script>
+
 <header>
-  <a href="business.html" class="list-deals">List Deals</a>
-  <div class="title">Zep Swipe Wallet</div>
+  <div class="header-left">
+    <img id="profileImg" src="https://via.placeholder.com/80" alt="Profile">
+    <div>
+      <h2 id="studentName"></h2>
+      <span id="studentLevel"></span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="brand">Zep Swipe</div>
+    <button class="logout-btn" onclick="logout()">⎋</button>
+  </div>
 </header>
 
-<div class="wallet-container">
+<div class="container">
 
   <!-- TOTAL BALANCE -->
-  <div class="balance-card">
-    <h2>Total Balance</h2>
-    <p>USD + ZAC</p>
-    <div class="amount" id="totalBalance">$0 / 0 ZAC</div>
+  <div class="card">
+    <h3>Total Balance</h3>
+    <div class="balance">
+      <div>
+        <span>ZAC Tokens</span>
+        <strong id="zacBalance">0</strong>
+      </div>
+      <div>
+        <span>USD</span>
+        <strong>$<span id="usdBalance">0</span></strong>
+      </div>
+    </div>
   </div>
 
-  <!-- CASH BALANCE -->
-  <div class="balance-card">
-    <h2>Cash Balance (USD)</h2>
-    <div class="amount" id="cashBalance">$0</div>
-    <input type="number" id="withdrawAmount" placeholder="Enter amount to withdraw">
-    <button class="button" onclick="withdrawUSD()">Withdraw to Bank/PayPal</button>
-  </div>
-
-  <!-- ZAC BALANCE -->
-  <div class="balance-card">
-    <h2>ZAC Balance</h2>
-    <div class="amount" id="zacBalance">0 ZAC (~$0)</div>
-    <input type="number" id="sendZACAmount" placeholder="Enter ZAC to send">
-    <input type="text" id="sendZACTo" placeholder="Send to student email">
-    <button class="button" onclick="sendZAC()">Send ZAC</button>
-  </div>
-
-  <!-- TASK EARNING -->
-  <div class="balance-card">
-    <h2>Earn ZAC from Tasks</h2>
-    <p>Complete a task to earn 10–50 ZAC</p>
-    <button class="button" onclick="completeTask()">Complete Task → Earn ZAC</button>
+  <!-- QUICK ACTIONS -->
+  <div class="card">
+    <h3>Actions</h3>
+    <button class="action-btn" onclick="withdrawUSD()">Withdraw USD</button>
+    <button class="action-btn" onclick="earnZAC()">Complete Task → Earn ZAC</button>
   </div>
 
   <!-- RECENT ACTIVITY -->
-  <div class="activity-card">
+  <div class="card">
     <h3>Recent Activity</h3>
-    <ul class="activity-list" id="activityList"></ul>
+    <div class="activity" id="activityList"></div>
   </div>
+
 </div>
 
 <script>
-// Initialize wallet if not in LocalStorage
-if(!localStorage.getItem('studentWallet')){
-  const initialWallet = {
-    cashUSD: 50,
-    ZAC: 100,
-    activity: []
-  };
-  localStorage.setItem('studentWallet', JSON.stringify(initialWallet));
+/* Populate user data */
+document.getElementById("studentName").innerText = user.name;
+document.getElementById("studentLevel").innerText = user.level;
+document.getElementById("profileImg").src = user.avatar || "https://via.placeholder.com/80";
+document.getElementById("zacBalance").innerText = user.ZAC || 0;
+document.getElementById("usdBalance").innerText = user.USD || 0;
+
+function logout(){
+  localStorage.removeItem("currentUser");
+  window.location.href="auth.html";
 }
 
-// Load wallet data
-function loadWallet(){
-  const wallet = JSON.parse(localStorage.getItem('studentWallet'));
-  document.getElementById('cashBalance').innerText = `$${wallet.cashUSD.toFixed(2)}`;
-  document.getElementById('zacBalance').innerText = `${wallet.ZAC} ZAC (~$${(wallet.ZAC*0.1).toFixed(2)})`;
-  document.getElementById('totalBalance').innerText = `$${wallet.cashUSD.toFixed(2)} / ${wallet.ZAC} ZAC`;
+/* Withdraw USD */
+function withdrawUSD(){
+  let amount = prompt("Enter USD amount to withdraw:");
+  amount = parseFloat(amount);
+  if(!amount || amount<=0){alert("Invalid amount"); return;}
+  if(amount > (user.USD || 0)){alert("Insufficient USD balance"); return;}
+  user.USD -= amount;
+  addActivity(`Withdrew $${amount} to bank/PayPal`);
+  updateWallet();
+}
+
+/* Earn ZAC from Task */
+function earnZAC(){
+  let earned = Math.floor(Math.random()*15)+5; // 5-20 ZAC
+  user.ZAC = (user.ZAC||0)+earned;
+  addActivity(`Completed task → Earned ${earned} ZAC`);
+  updateWallet();
+}
+
+/* Update wallet balances */
+function updateWallet(){
+  localStorage.setItem("currentUser",JSON.stringify(user));
+  document.getElementById("zacBalance").innerText = user.ZAC;
+  document.getElementById("usdBalance").innerText = user.USD;
   renderActivity();
 }
 
-// Render recent activity
+/* Activity log */
+function addActivity(text){
+  if(!user.activity) user.activity=[];
+  user.activity.unshift({text,date:new Date().toLocaleString()});
+  if(user.activity.length>20) user.activity.pop();
+  localStorage.setItem("currentUser",JSON.stringify(user));
+  renderActivity();
+}
+
 function renderActivity(){
-  const wallet = JSON.parse(localStorage.getItem('studentWallet'));
-  const list = document.getElementById('activityList');
-  list.innerHTML = '';
-  wallet.activity.slice().reverse().forEach(act=>{
-    const li = document.createElement('li');
-    li.innerHTML = `<span>${act.desc}</span><span>${act.amount}${act.type==='ZAC'?' ZAC':' $'}</span>`;
-    list.appendChild(li);
-  });
+  const container = document.getElementById("activityList");
+  container.innerHTML="";
+  if(user.activity){
+    user.activity.forEach(a=>{
+      const div = document.createElement("div");
+      div.className="activity-item";
+      div.innerHTML=`<span>${a.text}</span><span>${a.date}</span>`;
+      container.appendChild(div);
+    });
+  }
 }
 
-// Withdraw USD
-function withdrawUSD(){
-  const amount = parseFloat(document.getElementById('withdrawAmount').value);
-  if(isNaN(amount) || amount<=0){ alert('Enter valid amount'); return; }
-  const wallet = JSON.parse(localStorage.getItem('studentWallet'));
-  if(amount>wallet.cashUSD){ alert('Insufficient balance'); return; }
-  wallet.cashUSD -= amount;
-  wallet.activity.push({type:'USD',amount,desc:'Withdraw to Bank/PayPal'});
-  localStorage.setItem('studentWallet',JSON.stringify(wallet));
-  document.getElementById('withdrawAmount').value = '';
-  loadWallet();
-  alert(`$${amount} withdrawn!`);
-}
-
-// Send ZAC to another student (simulated)
-function sendZAC(){
-  const amount = parseFloat(document.getElementById('sendZACAmount').value);
-  const toStudent = document.getElementById('sendZACTo').value.trim();
-  if(isNaN(amount)||amount<=0||!toStudent){ alert('Enter valid ZAC and student email'); return; }
-  const wallet = JSON.parse(localStorage.getItem('studentWallet'));
-  if(amount>wallet.ZAC){ alert('Insufficient ZAC'); return; }
-  wallet.ZAC -= amount;
-  wallet.activity.push({type:'ZAC',amount,desc:`Sent ZAC to ${toStudent}`});
-  localStorage.setItem('studentWallet',JSON.stringify(wallet));
-  document.getElementById('sendZACAmount').value = '';
-  document.getElementById('sendZACTo').value = '';
-  loadWallet();
-  alert(`${amount} ZAC sent to ${toStudent}!`);
-}
-
-// Simulate completing a task to earn ZAC
-function completeTask(){
-  const earnedZAC = Math.floor(Math.random()*41)+10; // 10–50 ZAC
-  const wallet = JSON.parse(localStorage.getItem('studentWallet'));
-  wallet.ZAC += earnedZAC;
-  wallet.activity.push({type:'ZAC',amount:earnedZAC,desc:'Earned ZAC from Task'});
-  localStorage.setItem('studentWallet',JSON.stringify(wallet));
-  loadWallet();
-  alert(`You earned ${earnedZAC} ZAC!`);
-}
-
-// Load wallet on page load
-loadWallet();
+/* Initialize activity */
+renderActivity();
 </script>
 
 </body>
