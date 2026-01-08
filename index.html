@@ -13,19 +13,13 @@
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,0.08);
   --text-light:rgba(255,255,255,.85);
-  --shadow-glow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
 }
 
+/* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
+body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden;}
 
-body{
-  background:var(--bg);
-  color:#fff;
-  min-height:100vh;
-  overflow-x:hidden;
-}
-
-/* HEADER 3D PLACEHOLDER */
+/* HEADER */
 header{
   display:flex;
   justify-content:space-between;
@@ -33,22 +27,6 @@ header{
   padding:20px 40px;
   margin:16px auto;
   max-width:1200px;
-  border-radius:24px;
-  background:linear-gradient(145deg,#050018,#00000c);
-  box-shadow:0 8px 20px rgba(0,0,0,0.8),0 0 30px var(--zep-blue),0 0 50px var(--zep-violet);
-  backdrop-filter:blur(12px);
-  position:relative;
-  z-index:10;
-}
-header::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  border-radius:24px;
-  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  opacity:0.15;
-  filter:blur(12px);
-  z-index:-1;
 }
 .brand{
   font-family:Orbitron;
@@ -58,7 +36,7 @@ header::before{
   -webkit-text-fill-color:transparent;
 }
 
-/* Pulsing login icon */
+/* LOGIN ICON */
 .login-icon{
   width:60px;
   height:60px;
@@ -69,20 +47,11 @@ header::before{
   justify-content:center;
   cursor:pointer;
   font-size:24px;
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
-  animation:pulse 2s infinite;
   transition:transform 0.3s;
 }
-.login-icon:hover{
-  transform:scale(1.1);
-}
-@keyframes pulse{
-  0%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
-  50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}
-  100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
-}
+.login-icon:hover{transform:scale(1.1);}
 
-/* HERO SECTION */
+/* HERO */
 .hero{
   display:flex;
   flex-direction:column;
@@ -98,13 +67,8 @@ header::before{
   position:absolute;
   inset:0;
   background:rgba(0,0,0,0.5);
-  border-radius:20px;
 }
-.hero-content{
-  position:relative;
-  z-index:1;
-  max-width:900px;
-}
+.hero-content{position:relative; z-index:1; max-width:900px;}
 .hero h1{
   font-family:Orbitron;
   font-size:2.8rem;
@@ -138,39 +102,39 @@ header::before{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
 }
 .hero-buttons button:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 30px var(--zep-blue),0 0 50px var(--zep-violet);
+  transform:translateY(-2px);
+  box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
 }
 
-/* FOOTER SLEEK 3D */
+/* FOOTER */
 footer{
   margin-top:60px;
   text-align:center;
   padding:15px 10px;
+  border-top:1px solid rgba(255,255,255,.1);
 }
 .socials{
   display:flex;
   justify-content:center;
-  gap:16px;
-  margin-bottom:8px;
+  gap:15px;
+  margin-bottom:10px;
 }
 .socials a{
-  width:45px;
-  height:45px;
+  width:36px;
+  height:36px;
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius:50%;
-  background:linear-gradient(145deg,var(--zep-blue),var(--zep-violet));
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
-  font-size:20px;
+  font-size:18px;
   font-weight:bold;
-  box-shadow:0 4px 12px rgba(0,0,0,0.6),0 0 15px var(--zep-blue),0 0 25px var(--zep-violet);
   transition:.3s;
 }
 .socials a:hover{
-  transform:translateY(-3px) scale(1.1);
-  box-shadow:0 0 25px var(--zep-blue),0 0 40px var(--zep-violet);
+  transform:scale(1.1) translateY(-2px);
+  box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
 }
 footer span{
   font-size:.85rem;
@@ -181,6 +145,7 @@ footer span{
 @media(max-width:768px){
   .hero h1{font-size:2.2rem;}
   .hero-buttons{flex-direction:column;}
+  header{flex-direction:column; gap:16px;}
 }
 </style>
 </head>
