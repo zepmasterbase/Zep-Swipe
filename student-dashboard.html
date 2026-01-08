@@ -154,7 +154,7 @@ header{
 }
 .job img{
   width:100%;
-  height:120px;
+  height:140px;
   object-fit:cover;
   border-radius:12px;
   margin-bottom:6px;
@@ -189,38 +189,26 @@ header{
 <body>
 
 <script>
-/* SESSION PROTECTION */
 let user = JSON.parse(localStorage.getItem("currentUser"));
-if(!user){ window.location.href="index.html"; }
+if(!user){ window.location.href="auth.html"; }
 
-/* Mock wallet data if not present */
-if(!user.ZAC) user.ZAC=0;
-if(!user.USD) user.USD=0;
-if(!user.profileCompletion) user.profileCompletion=0;
-localStorage.setItem("currentUser", JSON.stringify(user));
-
-/* Mock tasks for first-day completion */
-let tasks = [
+// Mock first-day tasks
+let tasks=[
   {id:1,title:"Create / Update Profile",points:5,duration:5,completed:false},
   {id:2,title:"Complete Skill Tutorial",points:10,duration:15,completed:false},
 ];
 
-/* Mock available jobs */
-let jobs=[
-  {id:1,title:"Campus Tour Guide",level:"Beginner",price:8,image:"https://images.unsplash.com/photo-1596496059362-94df7d42b5de?auto=format&fit=crop&w=400&q=60"},
-  {id:2,title:"Research Participant",level:"Beginner",price:10,image:"https://images.unsplash.com/photo-1601758123927-3df5245f9b63?auto=format&fit=crop&w=400&q=60"},
-  {id:3,title:"Lab Assistant",level:"Beginner",price:12,image:"https://images.unsplash.com/photo-1581092334903-7f8511fa7769?auto=format&fit=crop&w=400&q=60"},
-  {id:4,title:"Online Tutoring",level:"Verified",price:20,image:"https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=400&q=60"},
-  {id:5,title:"Website Development",level:"Verified",price:30,image:"https://images.unsplash.com/photo-1593642532973-d31b6557fa68?auto=format&fit=crop&w=400&q=60"},
-  {id:6,title:"Graphic Design",level:"Verified",price:25,image:"https://images.unsplash.com/photo-1507238691740-7f0e9e7b213f?auto=format&fit=crop&w=400&q=60"},
-  {id:7,title:"Content Creation",level:"Verified",price:18,image:"https://images.unsplash.com/photo-1531497865148-ef5d7aa5d4e7?auto=format&fit=crop&w=400&q=60"}
-];
-
-/* Track applied jobs */
-if(!user.appliedJobs) user.appliedJobs=[];
+// Profile completion
+if(!user.profileCompletion) user.profileCompletion=0;
 localStorage.setItem("currentUser",JSON.stringify(user));
 
-/* First day task completion tracking and profile completion */
+// Mock 2 jobs
+let jobs=[
+  {id:1,title:"Campus Tour Guide",level:"Beginner",price:8,image:"https://images.unsplash.com/photo-1596496059362-94df7d42b5de?auto=format&fit=crop&w=400&q=60"},
+  {id:2,title:"Research Participant",level:"Beginner",price:10,image:"https://images.unsplash.com/photo-1601758123927-3df5245f9b63?auto=format&fit=crop&w=400&q=60"}
+];
+
+// Render tasks
 function renderTasks(){
   const container=document.getElementById("tasksContainer");
   container.innerHTML="";
@@ -247,41 +235,27 @@ function calculateCompletion(){
 function renderProfileCompletion(){
   document.getElementById("completionBar").style.width=user.profileCompletion+"%";
   document.getElementById("completionText").innerText=
-    user.profileCompletion<60?"Complete first-day tasks to unlock Beginner jobs":"Beginner jobs unlocked! 🎉";
+    user.profileCompletion<60?"Complete first-day tasks to unlock jobs":"Beginner jobs unlocked! 🎉";
 }
 
-/* Render Jobs */
+// Render jobs
 function renderJobs(){
   const container=document.getElementById("jobsContainer");
   container.innerHTML="";
   jobs.forEach(job=>{
     const card=document.createElement("div");
     card.className="job";
-    const applied=user.appliedJobs.includes(job.id);
-    const disabled=(job.level==="Beginner" && user.profileCompletion<60);
+    card.onclick=()=>{ window.location.href="swipe-merchants.html"; };
     card.innerHTML=`
       <img src="${job.image}" alt="${job.title}">
       <strong>${job.title}</strong>
       <span>${job.level} · $${job.price}/hr</span>
-      <button ${applied||disabled?"disabled":""} onclick="applyJob(${job.id})">
-        ${applied?"Applied ✅":"Apply"}
-      </button>
     `;
     container.appendChild(card);
   });
 }
 
-/* Apply Job */
-function applyJob(jobId){
-  if(!user.appliedJobs.includes(jobId)){
-    user.appliedJobs.push(jobId);
-    localStorage.setItem("currentUser",JSON.stringify(user));
-    renderJobs();
-    alert("Job applied successfully!");
-  }
-}
-
-/* Populate dashboard */
+// Populate dashboard
 document.getElementById("studentName").innerText=user.name||"Student";
 document.getElementById("profileImg").src=user.profileImage||"https://images.unsplash.com/photo-1596496059362-94df7d42b5de?auto=format&fit=crop&w=400&q=60";
 document.getElementById("zacBalance").innerText=user.ZAC||0;
@@ -293,7 +267,7 @@ renderJobs();
 
 function logout(){
   localStorage.removeItem("currentUser");
-  window.location.href="index.html";
+  window.location.href="auth.html";
 }
 </script>
 
