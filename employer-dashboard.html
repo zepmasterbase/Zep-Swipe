@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Employer Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,.08);
+  --text-light:rgba(255,255,255,.85);
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
+body{background:var(--bg); color:#fff; min-height:100vh; padding-bottom:50px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px;margin:16px;border-radius:16px;background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));backdrop-filter:blur(14px);}
+.brand{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;transition:.3s;}
+.logout-btn:hover{background:rgba(255,0,80,.25);}
+.dashboard{padding:0 16px;}
+.section{background:var(--glass);border-radius:16px;padding:16px;margin-bottom:16px;border:1px solid rgba(255,255,255,.12);}
+.section h3{font-family:Orbitron;margin-bottom:12px;}
+.job-card{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.05);padding:12px;border-radius:12px;margin-bottom:10px;}
+.job-info{display:flex;flex-direction:column;}
+.job-info span{font-size:0.85rem;color:var(--text-light);}
+.applicants{margin-top:10px;padding-left:12px;}
+.applicant-card{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.08);padding:8px;border-radius:8px;margin-bottom:6px;}
+button{border:none;border-radius:999px;padding:8px 12px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:.3s;}
+button:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
+.filter-section{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+</style>
+</head>
+<body>
+
+<script>
+/* Employer session */
+let employer = JSON.parse(localStorage.getItem("currentEmployer"));
+if(!employer){ window.location.href = "employer-auth.html"; }
+
+/* Load jobs or init */
+let jobs = JSON.parse(localStorage.getItem("jobs")) || [];
+</script>
+
+<header>
+  <div class="brand">Zep Swipe — Employer</div>
+  <button class="logout-btn" onclick="logout()">⎋</button>
+</header>
+
+<div class="dashboard">
+  <div class="section">
+    <h3>Post a New Job</h3>
+    <button onclick="location.href='create-gig.html'">➕ Create Job</button>
+  </div>
+
+  <div class="section">
+    <h3>Filter Jobs</h3>
+    <div class="filter-section">
+      <button onclick="filterJobs('all')">All</button>
+      <button onclick="filterJobs('Beginner')">Beginner</button>
+      <button onclick="filterJobs('Verified')">Verified</button>
+      <button onclick="filterJobs('Unpaid')">Unpaid</button>
+    </div>
+  </div>
+
+  <div id="jobsContainer"></div>
+</div>
+
+<script>
+function logout(){
+  localStorage.removeItem("currentEmployer");
+  window.location.href = "employer-auth.html";
+}
+
+function renderJobs(filter='all'){
+  const container = document.getElementById("jobsContainer");
+  container.innerHTML = "";
+  jobs.forEach((job, idx)=>{
+    if(filter==='all' || job.type===filter || (filter==='Unpaid' && !job.paid)) {
+      const jobCard = document.createElement("div");
+      jobCard.className = "job-card";
+      
+      const jobInfo = document.createElement("div");
+      jobInfo.className = "job-info";
+      jobInfo.innerHTML = `<strong>${job.title}</strong><span>Type: ${job.type} | $${job.rate}/hr | Paid: ${job.paid?'✅':'❌'}</span>`;
+      
+      jobCard.appendChild(jobInfo);
+      
+      // Applicants container
+      const applicantsDiv = document.createElement("div");
+      applicantsDiv.className = "applicants";
+      if(job.applicants && job.applicants.length>0){
+        job.applicants.forEach((app, aidx)=>{
+          const card = document.createElement("div");
+          card.className="applicant-card";
+          card.innerHTML = `<span>${app.name} (${app.level})</span>
+            <button onclick="approveApplicant(${idx},${aidx})">Approve</button>`;
+          applicantsDiv.appendChild(card);
+        });
+      } else {
+        const noApp = document.createElement("span");
+        noApp.style.color="#aaa";
+        noApp.innerText = "No applicants yet.";
+        applicantsDiv.appendChild(noApp);
+      }
+      
+      jobCard.appendChild(applicantsDiv);
+      container.appendChild(jobCard);
+    }
+  });
+}
+
+function approveApplicant(jobIdx, applicantIdx){
+  const job = jobs[jobIdx];
+  const applicant = job.applicants[applicantIdx];
+  alert(`Approved ${applicant.name} for ${job.title}`);
+  // You can mark job as filled or store approval in job object
+  if(!job.approvedApplicants) job.approvedApplicants=[];
+  job.approvedApplicants.push(applicant);
+  localStorage.setItem("jobs", JSON.stringify(jobs));
+  renderJobs();
+}
+
+/* Filter jobs */
+function filterJobs(type){
+  renderJobs(type);
+}
+
+/* Initial render */
+renderJobs();
+</script>
+
+</body>
+</html>
