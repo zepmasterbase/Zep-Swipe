@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Swipe Merchants — Zep Swipe</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500,600&display=swap" rel="stylesheet">
+<title>Zep Swipe — Job Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -14,141 +14,313 @@
   --text-light:rgba(255,255,255,0.85);
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
-body{background:var(--bg);color:#fff;min-height:100vh;}
-header{
-  display:flex;align-items:center;justify-content:space-between;padding:16px;margin:16px;border-radius:16px;background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));backdrop-filter:blur(14px);
+body{
+  background:var(--bg);
+  color:#fff;
+  min-height:100vh;
 }
-.brand{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;}
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px;
+  margin:16px;
+  border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
+}
+.brand{
+  font-family:Orbitron;
+  font-size:1.5rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.logout-btn{
+  background:rgba(255,255,255,.1);
+  border:none;
+  border-radius:50%;
+  width:38px;
+  height:38px;
+  cursor:pointer;
+  color:#fff;
+  font-size:16px;
+  transition:.3s;
+}
 .logout-btn:hover{background:rgba(255,0,80,.25);}
-.filter-section{display:flex;justify-content:flex-start;gap:10px;margin:16px;}
-.filter-section button{padding:8px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));cursor:pointer;color:#050015;font-family:Orbitron;font-weight:600;transition:.3s;}
-.filter-section button.active{box-shadow:0 0 36px rgba(156,77,255,.45);}
-.filter-section button:hover{transform:translateY(-2px);}
-.jobs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:16px;}
-.job-card{background:var(--glass);border-radius:16px;padding:12px;border:1px solid rgba(255,255,255,.12);cursor:pointer;transition:.3s;display:flex;flex-direction:column;justify-content:space-between;}
-.job-card:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.25);}
-.job-card img{width:100%;height:120px;border-radius:12px;object-fit:cover;margin-bottom:8px;}
-.job-card strong{font-family:Orbitron;margin-bottom:4px;}
-.job-card span{font-size:0.85rem;color:var(--text-light);}
-.apply-btn{padding:8px 0;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;font-weight:600;cursor:pointer;transition:.3s;margin-top:8px;}
-.apply-btn.applied{background:rgba(0,255,128,.8);color:#050015;cursor:default;}
-.apply-btn:hover:not(.applied){transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
-@media(max-width:480px){.jobs-grid{grid-template-columns:1fr;}}
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.header-left img{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid rgba(255,255,255,.3);
+}
+.header-left div{
+  display:flex;
+  flex-direction:column;
+}
+.header-left div span{
+  font-size:0.85rem;
+  color:var(--text-light);
+}
+.header-left div h2{
+  font-family:Orbitron;
+  font-size:1.1rem;
+}
+
+/* FILTERS */
+.filters{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin:16px;
+}
+.filters button{
+  padding:10px 16px;
+  border-radius:999px;
+  border:none;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-family:Orbitron;
+  cursor:pointer;
+  transition:.3s;
+}
+.filters button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
+}
+.filters button.active{
+  box-shadow:0 0 36px rgba(0,240,255,.7);
+}
+
+/* JOBS GRID */
+.jobs{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+  padding:0 16px 60px;
+}
+.job-card{
+  background:var(--glass);
+  border-radius:16px;
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  transition:.3s;
+  border:1px solid rgba(255,255,255,.12);
+}
+.job-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.25);
+}
+.job-card img{
+  width:100%;
+  height:120px;
+  border-radius:12px;
+  object-fit:cover;
+}
+.job-card strong{
+  font-family:Orbitron;
+  font-size:1rem;
+}
+.job-card span{
+  font-size:0.85rem;
+  color:var(--text-light);
+}
+.job-card button{
+  margin-top:auto;
+  padding:10px;
+  border:none;
+  border-radius:999px;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  cursor:pointer;
+  transition:.3s;
+}
+.job-card button:disabled{
+  background:rgba(255,255,255,.1);
+  cursor:not-allowed;
+  color:var(--text-light);
+}
+.job-card button:hover:not(:disabled){
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
+}
+
+/* APPLY MODAL */
+.modal{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,.6);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  display:none;
+  z-index:100;
+}
+.modal-content{
+  background:var(--glass);
+  padding:24px;
+  border-radius:16px;
+  width:90%;
+  max-width:400px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.modal-content h3{
+  font-family:Orbitron;
+  text-align:center;
+}
+.modal-content textarea{
+  width:100%;
+  resize:none;
+  padding:10px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+}
+.modal-content button{
+  padding:12px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-family:Orbitron;
+  cursor:pointer;
+}
+
+/* RESPONSIVE */
+@media(max-width:480px){
+  .filters{flex-direction:column;gap:8px;}
+}
 </style>
 </head>
 <body>
 
+<script>
+const user = JSON.parse(localStorage.getItem("currentUser"));
+if(!user){ window.location.href="index.html"; }
+
+// Sample jobs
+let jobs = [
+  {id:1,title:"Campus Tour Guide",desc:"Beginner",price:8,category:"Beginner",image:"https://images.unsplash.com/photo-1596496059362-94df7d42b5de?auto=format&fit=crop&w=400&q=60"},
+  {id:2,title:"Research Participant",desc:"Beginner",price:10,category:"Beginner",image:"https://images.unsplash.com/photo-1601758123927-3df5245f9b63?auto=format&fit=crop&w=400&q=60"},
+  {id:3,title:"Lab Assistant",desc:"Beginner",price:12,category:"Beginner",image:"https://images.unsplash.com/photo-1581092334903-7f8511fa7769?auto=format&fit=crop&w=400&q=60"},
+  {id:4,title:"Online Tutoring",desc:"Verified",price:20,category:"Verified",image:"https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=400&q=60"},
+  {id:5,title:"Website Development",desc:"Verified",price:30,category:"Verified",image:"https://images.unsplash.com/photo-1593642532973-d31b6557fa68?auto=format&fit=crop&w=400&q=60"},
+  {id:6,title:"Graphic Design",desc:"Verified",price:25,category:"Verified",image:"https://images.unsplash.com/photo-1507238691740-7f0e9e7b213f?auto=format&fit=crop&w=400&q=60"},
+  {id:7,title:"Content Creation",desc:"Verified",price:18,category:"Verified",image:"https://images.unsplash.com/photo-1531497865148-ef5d7aa5d4e7?auto=format&fit=crop&w=400&q=60"},
+];
+
+// Applied jobs
+let appliedJobs = user.appliedJobs || [];
+
+// Apply Modal
+let currentJobId = null;
+function openModal(jobId){
+  currentJobId = jobId;
+  document.getElementById("modal").style.display="flex";
+}
+function closeModal(){
+  currentJobId=null;
+  document.getElementById("modal").style.display="none";
+}
+function applyJob(){
+  const bio = document.getElementById("bio").value.trim();
+  if(!bio){ alert("Please add a short bio"); return;}
+  const job = jobs.find(j=>j.id===currentJobId);
+  appliedJobs.push(job.id);
+  user.appliedJobs = appliedJobs;
+  localStorage.setItem("currentUser", JSON.stringify(user));
+  renderJobs();
+  closeModal();
+  alert(`You applied to ${job.title}!`);
+}
+
+// Filter jobs
+let filter = "All";
+function setFilter(f){
+  filter=f;
+  document.querySelectorAll(".filters button").forEach(btn=>btn.classList.remove("active"));
+  document.getElementById(f+"Btn").classList.add("active");
+  renderJobs();
+}
+
+function renderJobs(){
+  const container = document.getElementById("jobsContainer");
+  container.innerHTML="";
+  jobs.filter(job=>{
+    if(filter==="All") return true;
+    return job.category===filter;
+  }).forEach(job=>{
+    const card=document.createElement("div");
+    card.className="job-card";
+    const applied = appliedJobs.includes(job.id);
+    const disabled = (job.category==="Beginner" && user.profileCompletion<60);
+    card.innerHTML=`
+      <img src="${job.image}">
+      <strong>${job.title}</strong>
+      <span>${job.desc} · $${job.price}/hr</span>
+      <button ${applied || disabled ? "disabled" : ""} onclick="openModal(${job.id})">
+        ${applied ? "Applied ✅" : "Apply"}
+      </button>
+    `;
+    container.appendChild(card);
+  });
+}
+</script>
+
 <header>
+  <div class="header-left">
+    <img src="" id="profileImg" alt="Profile">
+    <div>
+      <span>Welcome Back</span>
+      <h2 id="studentName"></h2>
+    </div>
+  </div>
   <div class="brand">Zep Swipe</div>
   <button class="logout-btn" onclick="logout()">⎋</button>
 </header>
 
-<!-- Job Filter -->
-<div class="filter-section">
-  <button class="active" onclick="filterJobs('All', this)">All</button>
-  <button onclick="filterJobs('Beginner', this)">Beginner</button>
-  <button onclick="filterJobs('Verified', this)">Verified</button>
+<div class="filters">
+  <button id="AllBtn" class="active" onclick="setFilter('All')">All</button>
+  <button id="BeginnerBtn" onclick="setFilter('Beginner')">Beginner</button>
+  <button id="VerifiedBtn" onclick="setFilter('Verified')">Verified</button>
+  <button onclick="location.href='create-gig.html'">+ List Job</button>
 </div>
 
-<!-- Jobs -->
-<div class="jobs-grid" id="jobsGrid">
-  <!-- Job cards will be inserted here dynamically -->
+<div class="jobs" id="jobsContainer"></div>
+
+<!-- APPLY MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>Apply for Job</h3>
+    <textarea id="bio" placeholder="Add a short bio about yourself..."></textarea>
+    <button onclick="applyJob()">Submit Application</button>
+    <button onclick="closeModal()">Cancel</button>
+  </div>
 </div>
 
 <script>
-/* SESSION PROTECTION */
-const user = JSON.parse(localStorage.getItem("currentUser"));
-if(!user){ window.location.href="index.html"; }
+document.getElementById("studentName").innerText = user.name || "Student";
+document.getElementById("profileImg").src = user.profileImage || "https://images.unsplash.com/photo-1596496059362-94df7d42b5de?auto=format&fit=crop&w=400&q=60";
 
-/* Logout */
+renderJobs();
+
 function logout(){
   localStorage.removeItem("currentUser");
   window.location.href="index.html";
 }
-
-/* Sample 3D images for jobs (Unsplash stable links) */
-const placeholderImages = [
-  "https://images.unsplash.com/photo-1612831455549-8310b7cc9a3a?auto=format&fit=crop&w=400&q=80",
-  "https://images.unsplash.com/photo-1590608897129-79a8b71fc2cc?auto=format&fit=crop&w=400&q=80",
-  "https://images.unsplash.com/photo-1601758123927-7e05d6e35e25?auto=format&fit=crop&w=400&q=80",
-  "https://images.unsplash.com/photo-1612832020201-60b0832f8e77?auto=format&fit=crop&w=400&q=80"
-];
-
-/* Load Jobs */
-function loadJobs(){
-  let jobs = JSON.parse(localStorage.getItem("jobs")) || [];
-
-  // Mockup jobs if none
-  if(jobs.length===0){
-    jobs = [
-      {id:1,title:"Campus Tour Guide",desc:"Guide students for campus tours",category:"Beginner",price:10,image:placeholderImages[0]},
-      {id:2,title:"Research Participant",desc:"Assist lab research",category:"Beginner",price:12,image:placeholderImages[1]},
-      {id:3,title:"Online Tutoring",desc:"Teach Math/Science",category:"Verified",price:25,image:placeholderImages[2]},
-      {id:4,title:"Graphic Design",desc:"Create flyers/posters",category:"Verified",price:30,image:placeholderImages[3]},
-    ];
-    localStorage.setItem("jobs",JSON.stringify(jobs));
-  }
-  return jobs;
-}
-
-/* Render Jobs */
-function renderJobs(filter="All"){
-  const jobs = loadJobs();
-  const appliedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || [];
-  const grid = document.getElementById("jobsGrid");
-  grid.innerHTML = "";
-
-  jobs.forEach(job=>{
-    if(filter!=="All" && job.category!==filter) return;
-
-    const card = document.createElement("div");
-    card.classList.add("job-card");
-
-    const img = document.createElement("img");
-    img.src = job.image || placeholderImages[0];
-    img.alt = job.title;
-    card.appendChild(img);
-
-    const title = document.createElement("strong");
-    title.textContent = job.title;
-    card.appendChild(title);
-
-    const desc = document.createElement("span");
-    desc.textContent = job.desc + " · $" + job.price+"/hr";
-    card.appendChild(desc);
-
-    const btn = document.createElement("button");
-    btn.classList.add("apply-btn");
-
-    if(appliedJobs.includes(job.id)){
-      btn.textContent = "Applied ✅";
-      btn.classList.add("applied");
-    } else {
-      btn.textContent = "Apply";
-      btn.addEventListener("click", ()=>{
-        appliedJobs.push(job.id);
-        localStorage.setItem("appliedJobs", JSON.stringify(appliedJobs));
-        btn.textContent = "Applied ✅";
-        btn.classList.add("applied");
-        alert("You applied to "+job.title);
-      });
-    }
-
-    card.appendChild(btn);
-    grid.appendChild(card);
-  });
-}
-
-/* Filtering */
-function filterJobs(category, button){
-  document.querySelectorAll(".filter-section button").forEach(b=>b.classList.remove("active"));
-  button.classList.add("active");
-  renderJobs(category);
-}
-
-/* Initial Render */
-renderJobs();
 </script>
 
 </body>
