@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Messages</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,0.08);
+  --text-light:rgba(255,255,255,0.85);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
+
+body{
+  background:var(--bg);
+  color:#fff;
+  min-height:100vh;
+}
+
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px;
+  margin:16px;
+  border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+}
+
+.brand{
+  font-family:Orbitron;
+  font-size:1.4rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.back-btn{
+  background:rgba(255,255,255,.12);
+  border:none;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:999px;
+  cursor:pointer;
+}
+
+/* LAYOUT */
+.wrapper{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:16px;
+  padding:0 16px 20px;
+  max-width:1200px;
+  margin:auto;
+}
+
+/* SIDEBAR */
+.sidebar{
+  background:var(--glass);
+  border-radius:16px;
+  padding:14px;
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.chat-item{
+  padding:10px;
+  border-radius:12px;
+  cursor:pointer;
+  margin-bottom:8px;
+  transition:.3s;
+  background:rgba(255,255,255,.05);
+}
+
+.chat-item:hover,
+.chat-item.active{
+  background:rgba(156,77,255,.25);
+}
+
+.chat-item strong{
+  display:block;
+  font-size:.9rem;
+}
+
+.chat-item span{
+  font-size:.75rem;
+  color:var(--text-light);
+}
+
+/* CHAT WINDOW */
+.chat{
+  background:var(--glass);
+  border-radius:16px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,.12);
+  display:flex;
+  flex-direction:column;
+}
+
+.chat-header{
+  border-bottom:1px solid rgba(255,255,255,.1);
+  padding-bottom:10px;
+  margin-bottom:10px;
+}
+
+.chat-header h3{
+  font-family:Orbitron;
+  font-size:1rem;
+}
+
+.messages{
+  flex:1;
+  overflow-y:auto;
+  padding-right:6px;
+}
+
+.msg{
+  max-width:70%;
+  margin-bottom:10px;
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:.85rem;
+}
+
+.me{
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  margin-left:auto;
+}
+
+.them{
+  background:rgba(255,255,255,.12);
+}
+
+.time{
+  font-size:.65rem;
+  color:var(--text-light);
+  margin-top:4px;
+}
+
+/* INPUT */
+.input-box{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.input-box input{
+  flex:1;
+  padding:10px 14px;
+  border-radius:999px;
+  border:none;
+  outline:none;
+}
+
+.input-box button{
+  border:none;
+  padding:10px 18px;
+  border-radius:999px;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  cursor:pointer;
+}
+
+/* MOBILE */
+@media(max-width:800px){
+  .wrapper{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<script>
+const user = JSON.parse(localStorage.getItem("currentUser"));
+if(!user){
+  location.href="auth.html";
+}
+</script>
+
+<header>
+  <div class="brand">Messages</div>
+  <button class="back-btn" onclick="history.back()">← Back</button>
+</header>
+
+<div class="wrapper">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="chatList"></div>
+
+  <!-- CHAT -->
+  <div class="chat">
+    <div class="chat-header">
+      <h3 id="chatTitle">Select a conversation</h3>
+    </div>
+
+    <div class="messages" id="messages"></div>
+
+    <div class="input-box">
+      <input type="text" id="msgInput" placeholder="Type your message...">
+      <button onclick="sendMsg()">Send</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* MOCK CONVERSATIONS */
+let conversations = JSON.parse(localStorage.getItem("conversations")) || [
+  {
+    id:1,
+    job:"Website Development",
+    with:"Acme Corp",
+    messages:[
+      {from:"them",text:"Hi! We reviewed your application.",time:"09:20"},
+      {from:"me",text:"Thanks! Happy to discuss next steps.",time:"09:22"}
+    ]
+  }
+];
+
+localStorage.setItem("conversations", JSON.stringify(conversations));
+
+let activeChat = null;
+
+/* ELEMENTS */
+const chatList = document.getElementById("chatList");
+const messagesEl = document.getElementById("messages");
+const chatTitle = document.getElementById("chatTitle");
+const msgInput = document.getElementById("msgInput");
+
+/* RENDER CHAT LIST */
+function renderChats(){
+  chatList.innerHTML="";
+  conversations.forEach(c=>{
+    const div=document.createElement("div");
+    div.className="chat-item";
+    div.innerHTML=`<strong>${c.with}</strong><span>${c.job}</span>`;
+    div.onclick=()=>openChat(c.id);
+    chatList.appendChild(div);
+  });
+}
+
+renderChats();
+
+/* OPEN CHAT */
+function openChat(id){
+  activeChat = conversations.find(c=>c.id===id);
+  chatTitle.innerText = activeChat.with+" — "+activeChat.job;
+  renderMessages();
+}
+
+/* RENDER MESSAGES */
+function renderMessages(){
+  messagesEl.innerHTML="";
+  activeChat.messages.forEach(m=>{
+    const div=document.createElement("div");
+    div.className="msg "+(m.from==="me"?"me":"them");
+    div.innerHTML=`${m.text}<div class="time">${m.time}</div>`;
+    messagesEl.appendChild(div);
+  });
+  messagesEl.scrollTop=messagesEl.scrollHeight;
+}
+
+/* SEND MESSAGE */
+function sendMsg(){
+  if(!activeChat || !msgInput.value.trim()) return;
+
+  activeChat.messages.push({
+    from:"me",
+    text:msgInput.value,
+    time:new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
+  });
+
+  localStorage.setItem("conversations", JSON.stringify(conversations));
+  msgInput.value="";
+  renderMessages();
+}
+</script>
+
+</body>
+</html>
