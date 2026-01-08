@@ -3,77 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Login</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+<title>Zep Swipe — Access</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins&display=swap" rel="stylesheet">
+
 <style>
-:root {
-  --zep-blue:#00f0ff;
-  --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
+:root{
+  --blue:#00f0ff;
+  --violet:#9c4dff;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,0.08);
 }
-* { box-sizing:border-box; margin:0; padding:0; }
-body { font-family:Poppins,sans-serif; background:var(--bg); color:#fff; min-height:100vh; display:flex; justify-content:center; align-items:center; }
-
-.container { width:100%; max-width:400px; background:var(--glass); padding:24px; border-radius:16px; box-shadow:0 0 30px rgba(156,77,255,0.3); }
-h1 { font-family:Orbitron; text-align:center; margin-bottom:24px; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-input { width:100%; padding:12px; margin-bottom:16px; border:none; border-radius:12px; outline:none; }
-.button { width:100%; padding:12px; border-radius:999px; border:none; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050015; font-family:Orbitron; font-weight:600; cursor:pointer; transition:0.3s; }
-.button:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
-.google-btn { background:#fff;color:#050015; margin-bottom:16px; display:flex; justify-content:center; align-items:center; gap:8px; }
-a { color:var(--zep-blue); text-decoration:none; font-size:0.9rem; display:block; text-align:center; margin-top:8px; }
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:var(--bg);
+  font-family:Poppins;
+  color:#fff;
+}
+.card{
+  width:100%;
+  max-width:420px;
+  background:var(--glass);
+  padding:28px;
+  border-radius:18px;
+  box-shadow:0 0 30px rgba(0,240,255,.25);
+}
+h1{
+  font-family:Orbitron;
+  text-align:center;
+  margin-bottom:20px;
+  background:linear-gradient(90deg,var(--blue),var(--violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+input{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  margin-bottom:14px;
+}
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:999px;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--blue),var(--violet));
+  color:#050015;
+  cursor:pointer;
+}
+.switch{
+  text-align:center;
+  margin-top:12px;
+  font-size:14px;
+  cursor:pointer;
+  color:var(--blue);
+}
 </style>
 </head>
+
 <body>
 
-<div class="container">
-  <h1>Login</h1>
+<div class="card">
+  <h1 id="title">Login</h1>
 
-  <!-- Google Sign-In Button -->
-  <button class="button google-btn" onclick="googleSignIn()">Sign in with Google</button>
+  <input type="text" id="name" placeholder="Full Name" style="display:none">
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
 
-  <p style="text-align:center;">or</p>
+  <button onclick="handleAuth()">Continue</button>
 
-  <input type="email" id="email" placeholder="Email" required>
-  <input type="password" id="password" placeholder="Password" required>
-  <button class="button" onclick="login()">Login</button>
-  <a href="signup.html">Don't have an account? Sign up</a>
+  <div class="switch" onclick="toggleMode()">
+    Don’t have an account? Sign up
+  </div>
 </div>
 
 <script>
-function login(){
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
+let mode = "login";
 
-  if(!email || !password){ alert('Fill all fields'); return; }
+function toggleMode(){
+  mode = mode === "login" ? "signup" : "login";
+  document.getElementById("title").innerText =
+    mode === "login" ? "Login" : "Sign Up";
 
-  let users = JSON.parse(localStorage.getItem('users')) || [];
-  const user = users.find(u=>u.email===email && u.password===password);
-  if(!user){ alert('Invalid credentials'); return; }
+  document.getElementById("name").style.display =
+    mode === "signup" ? "block" : "none";
 
-  localStorage.setItem('currentUser', JSON.stringify(user));
-  alert('Login successful!');
-  window.location.href = 'student-dashboard.html';
+  document.querySelector(".switch").innerText =
+    mode === "login"
+      ? "Don’t have an account? Sign up"
+      : "Already have an account? Login";
 }
 
-// Simulated Google Sign-In
-function googleSignIn(){
-  const googleUser = {
-    name: "Google User",
-    email: "googleuser@example.com",
-    ZAC:0,
-    USD:0
-  };
+function generateUserCode(){
+  return "ZEP-" + Math.random().toString(36).substring(2,8).toUpperCase();
+}
 
-  let users = JSON.parse(localStorage.getItem('users')) || [];
-  if(!users.find(u=>u.email===googleUser.email)){
-    users.push(googleUser);
-    localStorage.setItem('users', JSON.stringify(users));
+function handleAuth(){
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if(!email || !password || (mode==="signup" && !name)){
+    alert("Please fill all fields");
+    return;
   }
 
-  localStorage.setItem('currentUser', JSON.stringify(googleUser));
-  alert('Signed in with Google!');
-  window.location.href = 'student-dashboard.html';
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+
+  if(mode === "signup"){
+    if(users.find(u=>u.email===email)){
+      alert("Account already exists");
+      return;
+    }
+
+    const newUser = {
+      id: generateUserCode(),
+      name,
+      email,
+      password,
+      ZAC: 0,
+      USD: 0,
+      level: "Beginner Freelancer",
+      joined: new Date().toISOString()
+    };
+
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("currentUser", JSON.stringify(newUser));
+
+  } else {
+    const user = users.find(
+      u=>u.email===email && u.password===password
+    );
+    if(!user){
+      alert("Invalid credentials");
+      return;
+    }
+    localStorage.setItem("currentUser", JSON.stringify(user));
+  }
+
+  window.location.href = "student-dashboard.html";
 }
 </script>
 
