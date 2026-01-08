@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Escrow Protection</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<title>Zep Swipe — Escrow Payment</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -14,18 +12,13 @@
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,0.08);
   --text-light:rgba(255,255,255,0.85);
-  --success:#00ff9d;
 }
-
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
-
 body{
   background:var(--bg);
   color:#fff;
   min-height:100vh;
 }
-
-/* HEADER */
 header{
   display:flex;
   justify-content:space-between;
@@ -36,7 +29,6 @@ header{
   background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
   backdrop-filter:blur(14px);
 }
-
 .brand{
   font-family:Orbitron;
   font-size:1.4rem;
@@ -44,223 +36,143 @@ header{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-
-.back-btn{
-  background:rgba(255,255,255,.12);
+.logout-btn{
+  background:rgba(255,255,255,.1);
   border:none;
-  color:#fff;
-  padding:8px 14px;
-  border-radius:999px;
+  border-radius:50%;
+  width:38px;
+  height:38px;
   cursor:pointer;
+  color:#fff;
+  font-size:16px;
+  transition:.3s;
 }
-
-/* CONTAINER */
+.logout-btn:hover{
+  background:rgba(255,0,80,.25);
+}
 .container{
-  max-width:560px;
+  max-width:600px;
   margin:30px auto;
-  padding:20px;
-}
-
-/* CARD */
-.card{
   background:var(--glass);
-  border-radius:18px;
   padding:20px;
+  border-radius:16px;
   border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 0 40px rgba(156,77,255,.25);
 }
-
-h2{
+h2{font-family:Orbitron;margin-bottom:20px;text-align:center;}
+input, select, button{
+  width:100%;
+  padding:12px;
+  margin-bottom:14px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+}
+button{
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
   font-family:Orbitron;
-  margin-bottom:10px;
+  cursor:pointer;
+  transition:.3s;
 }
-
-.sub{
-  font-size:.85rem;
-  color:var(--text-light);
-  margin-bottom:20px;
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
 }
-
-/* DETAILS */
-.detail{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:10px;
-  font-size:.9rem;
-}
-
-.amount{
-  font-size:1.4rem;
-  font-family:Orbitron;
-}
-
-/* STATUS */
-.status{
-  margin:18px 0;
+.success-msg{
+  background:rgba(0,255,150,.15);
+  color:#00ff9d;
   padding:12px;
   border-radius:12px;
   text-align:center;
-  font-size:.9rem;
-  background:rgba(255,255,255,.08);
-}
-
-.status.funded{
-  background:rgba(0,255,150,.15);
-  color:var(--success);
-}
-
-/* ACTIONS */
-.actions{
-  display:flex;
-  gap:10px;
-  margin-top:20px;
-}
-
-.actions button{
-  flex:1;
-  border:none;
-  padding:12px;
-  border-radius:999px;
-  font-family:Orbitron;
-  cursor:pointer;
-}
-
-.fund{
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-}
-
-.release{
-  background:rgba(0,255,150,.18);
-  color:var(--success);
-  border:1px solid rgba(0,255,150,.4);
-}
-
-.disabled{
-  opacity:.5;
-  cursor:not-allowed;
-}
-
-/* FOOTNOTE */
-.note{
-  margin-top:14px;
-  font-size:.75rem;
-  color:var(--text-light);
-  text-align:center;
+  margin-top:10px;
 }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">Zep Swipe Escrow</div>
-  <button class="back-btn" onclick="history.back()">← Back</button>
+  <div class="brand">Zep Swipe</div>
+  <button class="logout-btn" onclick="logout()">⎋</button>
 </header>
 
 <div class="container">
-  <div class="card">
-
-    <h2>Escrow Protection</h2>
-    <p class="sub">Funds are securely held until work is completed and approved.</p>
-
-    <div class="detail">
-      <span>Job</span>
-      <strong id="jobTitle">—</strong>
-    </div>
-
-    <div class="detail">
-      <span>Student</span>
-      <strong id="studentName">—</strong>
-    </div>
-
-    <div class="detail">
-      <span>Payment</span>
-      <strong class="amount">$<span id="amount">0</span></strong>
-    </div>
-
-    <div id="statusBox" class="status">
-      Escrow not funded
-    </div>
-
-    <div class="actions">
-      <button id="fundBtn" class="fund">Fund Escrow</button>
-      <button id="releaseBtn" class="release disabled">Release Payment</button>
-    </div>
-
-    <div class="note">
-      🔒 Escrow is simulated for MVP. Funds are safely protected.
-    </div>
-
-  </div>
+  <h2>Escrow Payment</h2>
+  <form id="escrowForm">
+    <input type="text" id="jobTitle" placeholder="Job Title" required>
+    <input type="number" id="amountUSD" placeholder="Job Amount (USD)" required min="1">
+    <input type="text" id="employerName" placeholder="Employer Name" required>
+    <input type="text" id="studentName" placeholder="Student Name" required>
+    <input type="text" id="cardNumber" placeholder="Debit Card Number" required>
+    <input type="text" id="expiry" placeholder="Expiry MM/YY" required>
+    <input type="text" id="cvv" placeholder="CVV" required>
+    <button type="submit">Deposit to Escrow & Create Job</button>
+  </form>
+  <div id="successMsg" class="success-msg" style="display:none;"></div>
 </div>
 
 <script>
-/* MOCK DATA (would come from job + applicant) */
-const escrow = JSON.parse(localStorage.getItem("escrow")) || {
-  jobId: 1,
-  jobTitle: "Website Development",
-  student: "Alex Johnson",
-  amount: 350,
-  status: "pending" // pending | funded | released
-};
-
-const wallet = JSON.parse(localStorage.getItem("wallet")) || {
-  USD: 0,
-  ZAC: 0
-};
-
-/* ELEMENTS */
-const statusBox = document.getElementById("statusBox");
-const fundBtn = document.getElementById("fundBtn");
-const releaseBtn = document.getElementById("releaseBtn");
-
-/* RENDER */
-document.getElementById("jobTitle").innerText = escrow.jobTitle;
-document.getElementById("studentName").innerText = escrow.student;
-document.getElementById("amount").innerText = escrow.amount;
-
-function updateUI(){
-  if(escrow.status === "funded"){
-    statusBox.innerText = "Escrow Funded — Work in Progress";
-    statusBox.classList.add("funded");
-    fundBtn.classList.add("disabled");
-    releaseBtn.classList.remove("disabled");
-  }
-
-  if(escrow.status === "released"){
-    statusBox.innerText = "Payment Released ✔";
-    statusBox.classList.add("funded");
-    fundBtn.classList.add("disabled");
-    releaseBtn.classList.add("disabled");
-  }
+/* SESSION PROTECTION */
+const user = JSON.parse(localStorage.getItem("currentUser"));
+if(!user){
+  alert("Login required to access escrow.");
+  window.location.href="auth.html";
 }
 
-updateUI();
+/* LOGOUT */
+function logout(){
+  localStorage.removeItem("currentUser");
+  window.location.href="auth.html";
+}
 
-/* FUND ESCROW */
-fundBtn.onclick = ()=>{
-  if(escrow.status !== "pending") return;
+/* ESCROW FORM LOGIC */
+const form = document.getElementById("escrowForm");
+const successMsg = document.getElementById("successMsg");
 
-  escrow.status = "funded";
-  localStorage.setItem("escrow", JSON.stringify(escrow));
-  updateUI();
-  alert("Escrow funded successfully.");
-};
+form.addEventListener("submit",(e)=>{
+  e.preventDefault();
+  
+  const jobTitle = document.getElementById("jobTitle").value;
+  const amountUSD = parseFloat(document.getElementById("amountUSD").value);
+  const employerName = document.getElementById("employerName").value;
+  const studentName = document.getElementById("studentName").value;
+  
+  if(!jobTitle || !amountUSD || !employerName || !studentName){
+    alert("Please fill all fields");
+    return;
+  }
 
-/* RELEASE PAYMENT */
-releaseBtn.onclick = ()=>{
-  if(escrow.status !== "funded") return;
+  // Simulate USD payment (real API integration can be added later)
+  const job = {
+    id:Date.now(),
+    title:jobTitle,
+    amountUSD,
+    employer:employerName,
+    student:studentName,
+    status:"Pending Approval",
+    timestamp:new Date().toLocaleString()
+  };
+  
+  let escrowJobs = JSON.parse(localStorage.getItem("escrowJobs")) || [];
+  escrowJobs.push(job);
+  localStorage.setItem("escrowJobs", JSON.stringify(escrowJobs));
 
-  escrow.status = "released";
-  wallet.USD += escrow.amount;
-  wallet.ZAC += Math.round(escrow.amount / 10);
+  // Simulate ZAC reward for employer & student
+  let allUsers = JSON.parse(localStorage.getItem("users")) || [];
+  [employerName, studentName].forEach(name=>{
+    let u = allUsers.find(u=>u.name===name);
+    if(u){
+      u.ZAC = (u.ZAC || 0) + 25;
+    } else {
+      allUsers.push({name:name,ZAC:25});
+    }
+  });
+  localStorage.setItem("users", JSON.stringify(allUsers));
 
-  localStorage.setItem("escrow", JSON.stringify(escrow));
-  localStorage.setItem("wallet", JSON.stringify(wallet));
+  successMsg.style.display="block";
+  successMsg.innerHTML=`Escrow deposited $${amountUSD} successfully!<br>25 ZAC credited to Employer & Student`;
 
-  updateUI();
-  alert("Payment released to student.");
-};
+  form.reset();
+});
 </script>
 
 </body>
