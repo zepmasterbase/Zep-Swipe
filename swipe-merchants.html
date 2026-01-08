@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Job Marketplace</title>
+<title>Zep Swipe — Student Profile</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
-
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -13,16 +12,14 @@
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,0.08);
   --text-light:rgba(255,255,255,0.85);
-  --card-hover:rgba(156,77,255,0.3);
 }
 
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
 
 body{
-  background: var(--bg);
+  background:var(--bg);
   color:#fff;
   min-height:100vh;
-  padding-bottom:50px;
 }
 
 /* HEADER */
@@ -43,210 +40,154 @@ header{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.search-bar{
-  flex:1;
-  margin:0 16px;
-}
-.search-bar input{
-  width:100%;
-  padding:10px 12px;
-  border-radius:999px;
+.logout-btn{
+  background:rgba(255,255,255,.1);
   border:none;
-  outline:none;
-  font-size:0.9rem;
-}
-
-/* FILTERS */
-.filters{
-  display:flex;
-  justify-content:flex-start;
-  gap:10px;
-  flex-wrap:wrap;
-  padding:0 16px;
-  margin-bottom:12px;
-}
-.filters select{
-  padding:8px 12px;
-  border-radius:999px;
-  border:none;
-  outline:none;
-  background:rgba(255,255,255,0.1);
+  border-radius:50%;
+  width:38px;
+  height:38px;
+  cursor:pointer;
   color:#fff;
+  font-size:16px;
+  transition:.3s;
+}
+.logout-btn:hover{
+  background:rgba(255,0,80,.25);
 }
 
-/* JOB GRID */
-.jobs-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:16px;
-  padding:0 16px;
-  margin-top:16px;
-}
-.job-card{
+/* PROFILE CONTAINER */
+.profile-container{
+  max-width:400px;
+  margin:20px auto;
   background:var(--glass);
   border-radius:16px;
-  padding:12px;
+  padding:20px;
   border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 0 20px rgba(0,240,255,.1);
-  transition:0.3s;
+  box-shadow:0 0 36px rgba(156,77,255,.2);
   display:flex;
   flex-direction:column;
-  justify-content:space-between;
+  gap:16px;
 }
-.job-card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 36px var(--card-hover);
-}
-.job-card img{
-  width:100%;
-  height:100px;
-  border-radius:12px;
+
+/* PROFILE IMAGE */
+.profile-image{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.3);
+  margin:0 auto;
   object-fit:cover;
-  margin-bottom:8px;
 }
-.job-card h4{
-  font-family:Orbitron;
-  font-size:1rem;
-  margin-bottom:4px;
+
+/* INPUTS */
+.profile-container input[type="text"],
+.profile-container input[type="email"],
+.profile-container input[type="file"]{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+  margin-bottom:12px;
 }
-.job-card span{
-  font-size:0.8rem;
-  color: var(--text-light);
-}
-.job-card .verified{
-  margin-top:6px;
-  font-size:0.75rem;
-  font-weight:600;
-  color: #0f0;
-}
-.job-card button{
-  margin-top:8px;
-  padding:8px;
+
+/* SAVE BUTTON */
+.profile-container button{
+  width:100%;
+  padding:12px;
   border:none;
   border-radius:999px;
-  font-family:Orbitron;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
+  font-family:Orbitron;
   cursor:pointer;
   transition:.3s;
 }
-.job-card button:disabled{
-  background:rgba(255,255,255,.1);
-  cursor:not-allowed;
+.profile-container button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
+}
+
+span{
+  font-size:0.85rem;
   color:var(--text-light);
-}
-
-/* EMPLOYER BUTTON */
-.employer-btn{
-  display:block;
-  width:calc(100% - 32px);
-  margin:16px;
-  padding:12px;
-  font-family:Orbitron;
-  font-size:1rem;
-  border:none;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  cursor:pointer;
-}
-
-/* MOBILE */
-@media(max-width:480px){
-  .jobs-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
 
+<script>
+/* SESSION PROTECTION */
+const user = JSON.parse(localStorage.getItem("currentUser"));
+if(!user){
+  window.location.href = "auth.html";
+}
+</script>
+
 <header>
   <div class="brand">Zep Swipe</div>
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search jobs or skills...">
-  </div>
+  <button class="logout-btn" onclick="logout()" title="Logout">⎋</button>
 </header>
 
-<div class="filters">
-  <select id="filterLevel">
-    <option value="all">All Levels</option>
-    <option value="Beginner">Beginner</option>
-    <option value="Verified">Verified</option>
-  </select>
-  <select id="filterPrice">
-    <option value="all">All Rates</option>
-    <option value="8-15">8-15 $/hr</option>
-    <option value="18-35">18-35 $/hr</option>
-  </select>
+<div class="profile-container">
+  <img src="" alt="Profile Image" class="profile-image" id="profileImg">
+  
+  <label for="imgUpload" style="text-align:center; display:block; cursor:pointer;">📷 Upload Profile Image</label>
+  <input type="file" id="imgUpload" accept="image/*">
+
+  <input type="text" id="name" placeholder="Full Name" value="">
+  <input type="email" id="email" placeholder="Email" value="">
+  <input type="text" id="level" placeholder="Level (e.g., Beginner Freelancer)" value="">
+  
+  <button onclick="saveProfile()">Save Profile</button>
+  <span>Profile completeness will sync across dashboard and wallet.</span>
 </div>
 
-<div class="jobs-grid" id="jobsContainer"></div>
-
-<button class="employer-btn" onclick="alert('Redirect to List Job Page')">List Job (Employers)</button>
-
 <script>
-const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+// Load current user data
+const profileImg = document.getElementById("profileImg");
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const levelInput = document.getElementById("level");
+const imgUpload = document.getElementById("imgUpload");
 
-// Mock jobs with 3D-safe placeholder URLs
-const jobs = [
-  {title:"Campus Tour Guide", points:8, level:"Beginner", rate:"$8/hr", verifiedOnly:false, img:"https://images.unsplash.com/photo-1598327108873-4d0ecb44a3e7?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
-  {title:"Research Participant / Lab Assistant", points:10, level:"Beginner", rate:"$10/hr", verifiedOnly:false, img:"https://images.unsplash.com/photo-1581092334444-c2f312b44b34?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
-  {title:"Online Tutoring", points:20, level:"Verified", rate:"$20/hr", verifiedOnly:true, img:"https://images.unsplash.com/photo-1590608897129-79a9b5f5eaa0?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
-  {title:"Website Development", points:25, level:"Verified", rate:"$25/hr", verifiedOnly:true, img:"https://images.unsplash.com/photo-1505685296765-3a2736de412f?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
-  {title:"Graphic Design", points:18, level:"Verified", rate:"$18/hr", verifiedOnly:true, img:"https://images.unsplash.com/photo-1505692794400-6b097f2a70aa?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
-  {title:"Content Creation / Writing", points:22, level:"Verified", rate:"$22/hr", verifiedOnly:true, img:"https://images.unsplash.com/photo-1503676260728-1c00da094a0b?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
-  {title:"Flyer Design", points:12, level:"Beginner", rate:"$12/hr", verifiedOnly:false, img:"https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
-  {title:"Video Editing", points:15, level:"Verified", rate:"$30/hr", verifiedOnly:true, img:"https://images.unsplash.com/photo-1581091870629-f2d8d7f1c0a3?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
-  {title:"Campus Event Assistant", points:10, level:"Beginner", rate:"$10/hr", verifiedOnly:false, img:"https://images.unsplash.com/photo-1519389950473-47ba0277781c?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
-  {title:"Blog Writing", points:12, level:"Verified", rate:"$18/hr", verifiedOnly:true, img:"https://images.unsplash.com/photo-1505685296765-3a2736de412f?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"}
-];
+function loadUser(){
+  if(user){
+    nameInput.value = user.name || '';
+    emailInput.value = user.email || '';
+    levelInput.value = user.level || 'Beginner Freelancer';
+    profileImg.src = user.profileImage || 'https://via.placeholder.com/120';
+  }
+}
 
-const jobsContainer = document.getElementById('jobsContainer');
-const searchInput = document.getElementById('searchInput');
-const filterLevel = document.getElementById('filterLevel');
-const filterPrice = document.getElementById('filterPrice');
-
-function renderJobs(){
-  const searchVal = searchInput.value.toLowerCase();
-  const levelVal = filterLevel.value;
-  const priceVal = filterPrice.value;
-
-  jobsContainer.innerHTML = '';
-
-  jobs.filter(job=>{
-    const matchSearch = job.title.toLowerCase().includes(searchVal);
-    const matchLevel = levelVal==='all' || (levelVal==='Verified' ? job.verifiedOnly : !job.verifiedOnly);
-    const matchPrice = priceVal==='all' || 
-      (priceVal==='8-15' && parseInt(job.rate.replace(/\$|\/hr/g,''))>=8 && parseInt(job.rate.replace(/\$|\/hr/g,''))<=15) ||
-      (priceVal==='18-35' && parseInt(job.rate.replace(/\$|\/hr/g,''))>=18 && parseInt(job.rate.replace(/\$|\/hr/g,''))<=35);
-    return matchSearch && matchLevel && matchPrice;
-  }).forEach(job=>{
-    const card = document.createElement('div');
-    card.className = 'job-card';
-    let disabled = false;
-    if(job.verifiedOnly && (!currentUser || !currentUser.verified)){
-      disabled = true;
+imgUpload.addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(file){
+    const reader = new FileReader();
+    reader.onload = function(event){
+      profileImg.src = event.target.result;
+      user.profileImage = event.target.result;
+      localStorage.setItem("currentUser", JSON.stringify(user));
     }
+    reader.readAsDataURL(file);
+  }
+});
 
-    card.innerHTML = `
-      <img src="${job.img}" alt="${job.title}">
-      <h4>${job.title}</h4>
-      <span>${job.level} · ${job.rate}</span>
-      ${job.verifiedOnly ? '<span class="verified">Verified Only</span>' : ''}
-      <button ${disabled ? 'disabled' : ''} onclick="applyJob('${job.title}')">Apply</button>
-    `;
-    jobsContainer.appendChild(card);
-  });
+function saveProfile(){
+  user.name = nameInput.value.trim() || user.name;
+  user.email = emailInput.value.trim() || user.email;
+  user.level = levelInput.value.trim() || user.level;
+  localStorage.setItem("currentUser", JSON.stringify(user));
+  alert("Profile saved successfully!");
 }
 
-function applyJob(jobTitle){
-  alert(`You applied for ${jobTitle}!`);
+// Logout
+function logout(){
+  localStorage.removeItem("currentUser");
+  window.location.href = "auth.html";
 }
 
-searchInput.addEventListener('input', renderJobs);
-filterLevel.addEventListener('change', renderJobs);
-filterPrice.addEventListener('change', renderJobs);
-
-renderJobs();
+loadUser();
 </script>
 </body>
 </html>
