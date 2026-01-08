@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Homepage</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -13,8 +13,6 @@
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,0.08);
   --text-light:rgba(255,255,255,.85);
-  --neon-pink:#ff00f0;
-  --neon-green:#00ff9d;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
@@ -32,39 +30,37 @@ header{
   justify-content:space-between;
   align-items:center;
   padding:20px 40px;
-  position:relative;
 }
 .brand{
   font-family:Orbitron;
-  font-size:2rem;
-  color:#fff;
-  text-shadow:0 0 10px var(--zep-blue), 0 0 20px var(--zep-violet), 0 0 30px var(--zep-violet);
-  letter-spacing:1px;
+  font-size:1.8rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
-/* Pulsing Login Icon */
+/* Pulsing login icon */
 .login-icon{
-  width:65px;
-  height:65px;
+  width:60px;
+  height:60px;
   border-radius:50%;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  font-size:26px;
-  box-shadow:0 0 25px var(--zep-blue),0 0 50px var(--zep-violet),inset 0 0 12px rgba(255,255,255,.2);
+  font-size:24px;
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
   animation:pulse 2s infinite;
-  transition:transform 0.3s, box-shadow 0.3s;
+  transition:transform 0.3s;
 }
 .login-icon:hover{
-  transform:scale(1.15);
-  box-shadow:0 0 40px var(--zep-blue),0 0 80px var(--zep-violet),inset 0 0 20px rgba(255,255,255,.3);
+  transform:scale(1.1);
 }
 @keyframes pulse{
-  0%{box-shadow:0 0 25px var(--zep-blue),0 0 50px var(--zep-violet),inset 0 0 12px rgba(255,255,255,.2);}
-  50%{box-shadow:0 0 40px var(--zep-blue),0 0 70px var(--zep-violet),inset 0 0 20px rgba(255,255,255,.3);}
-  100%{box-shadow:0 0 25px var(--zep-blue),0 0 50px var(--zep-violet),inset 0 0 12px rgba(255,255,255,.2);}
+  0%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+  50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}
+  100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
 }
 
 /* HERO SECTION */
@@ -81,7 +77,7 @@ header{
   content:'';
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,0.55);
+  background:rgba(0,0,0,0.5);
 }
 .hero-content{
   position:relative;
@@ -95,7 +91,6 @@ header{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  text-shadow:0 0 10px var(--zep-blue),0 0 20px var(--zep-violet);
 }
 .hero p{
   font-size:1.1rem;
@@ -120,7 +115,6 @@ header{
   transition:.3s;
   color:#050015;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  box-shadow:0 0 12px var(--zep-blue),0 0 24px var(--zep-violet);
 }
 .hero-buttons button:hover{
   transform:translateY(-3px);
@@ -141,22 +135,21 @@ footer{
   margin-bottom:10px;
 }
 .socials a{
-  width:50px;
-  height:50px;
+  width:40px;
+  height:40px;
   display:flex;
   align-items:center;
   justify-content:center;
   border-radius:50%;
-  font-size:20px;
-  color:#fff;
-  text-decoration:none;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet),0 0 15px rgba(255,255,255,0.2) inset;
+  text-decoration:none;
+  color:#050015;
+  font-size:20px;
   transition:.3s;
 }
 .socials a:hover{
-  transform:scale(1.2) rotate(10deg);
-  box-shadow:0 0 40px var(--zep-blue),0 0 60px var(--zep-violet),0 0 20px rgba(255,255,255,.4) inset;
+  transform:scale(1.1);
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
 }
 
 /* RESPONSIVE */
