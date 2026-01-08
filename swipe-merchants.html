@@ -13,41 +13,32 @@
   --glass:rgba(255,255,255,0.08);
   --text-light:rgba(255,255,255,0.85);
 }
-*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
-body{background:var(--bg);color:#fff;min-height:100vh;}
-
-/* HEADER */
-header{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:18px;margin:16px;border-radius:16px;
-  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
-  backdrop-filter:blur(14px);
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;min-height:100vh;padding-bottom:60px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px;margin:16px;border-radius:16px;background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));backdrop-filter:blur(14px);animation:pulse 4s infinite alternate;}
+@keyframes pulse{0%{box-shadow:0 0 20px rgba(0,240,255,.25)}100%{box-shadow:0 0 40px rgba(156,77,255,.45)}}
 .header-left{display:flex;align-items:center;gap:12px;}
 .header-left img{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
-.header-left h2{font-family:Orbitron;font-size:1.1rem;}
-.header-left span{font-size:.8rem;color:var(--text-light);}
-.header-right{display:flex;align-items:center;gap:14px;}
+.header-left div h2{font-family:Orbitron;font-size:1.1rem;}
+.header-left div span{font-size:.8rem;color:var(--text-light);}
+.header-right{display:flex;align-items:center;gap:12px;}
 .brand{font-family:Orbitron;font-size:1.2rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;}
 .logout-btn:hover{background:rgba(255,0,80,.3);}
-.list-job-btn{background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));border:none;border-radius:999px;padding:10px 16px;color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;}
-.list-job-btn:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
-
-/* JOB MARKETPLACE */
-.jobs-container{padding:0 16px 50px;display:flex;flex-direction:column;gap:22px;}
-.jobs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-.jobs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
-.job-card{background:rgba(255,255,255,.05);border-radius:12px;padding:12px;cursor:pointer;transition:.3s;display:flex;flex-direction:column;justify-content:space-between;}
-.job-card:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.25);}
-.job-card img{width:100%;height:120px;border-radius:8px;object-fit:cover;margin-bottom:8px;}
-.job-card strong{font-family:Orbitron;margin-bottom:4px;}
+.list-job{background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));border:none;padding:10px 16px;border-radius:999px;color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;}
+.list-job:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(156,77,255,.45);}
+.filters{display:flex;gap:10px;margin:10px 16px;}
+.filters button{flex:1;border:none;border-radius:999px;padding:8px;background:rgba(255,255,255,.1);color:#fff;font-family:Orbitron;cursor:pointer;transition:.3s;}
+.filters button.active, .filters button:hover{background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;}
+.jobs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;padding:0 16px;}
+.job-card{background:var(--glass);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:6px;transition:.3s;}
+.job-card:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(156,77,255,.3);}
+.job-card img{width:100%;height:100px;border-radius:12px;object-fit:cover;}
+.job-card strong{font-family:Orbitron;font-size:1rem;}
 .job-card span{font-size:.8rem;color:var(--text-light);}
-.apply-btn{background:var(--zep-blue);color:#050015;border:none;border-radius:999px;padding:8px 12px;font-family:Orbitron;cursor:pointer;margin-top:6px;transition:.3s;}
-.apply-btn:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(0,240,255,.45);}
-
-/* RESPONSIVE */
-@media(max-width:480px){.jobs-grid{grid-template-columns:1fr}}
+.apply-btn{padding:8px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;margin-top:auto;}
+.apply-btn:disabled{background:rgba(255,255,255,.2);cursor:not-allowed;color:#aaa;}
+@media(max-width:480px){.jobs-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -55,7 +46,9 @@ header{
 <script>
 /* SESSION PROTECTION */
 const user = JSON.parse(localStorage.getItem("currentUser"));
-if(!user){window.location.href="auth.html";}
+if(!user){
+  window.location.href="auth.html";
+}
 </script>
 
 <header>
@@ -73,21 +66,25 @@ if(!user){window.location.href="auth.html";}
   </div>
 </header>
 
-<div class="jobs-container">
-  <div class="jobs-header">
-    <h3>Job Marketplace</h3>
-    <button class="list-job-btn" onclick="location.href='create.gig.html'">List a Job</button>
-  </div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin:16px;">
+  <h3>Job Marketplace</h3>
+  <button class="list-job" onclick="location.href='create-gig.html'">List Job</button>
+</div>
 
-  <div class="jobs-grid" id="jobsGrid">
-    <!-- Jobs dynamically inserted here -->
-  </div>
+<div class="filters">
+  <button class="filter-btn active" onclick="filterJobs('all')">All</button>
+  <button class="filter-btn" onclick="filterJobs('Beginner')">Beginner</button>
+  <button class="filter-btn" onclick="filterJobs('Verified Freelancer')">Verified</button>
+</div>
+
+<div class="jobs-grid" id="jobsGrid">
+  <!-- Jobs loaded dynamically -->
 </div>
 
 <script>
-// Populate user data
-document.getElementById("studentName").innerText = user.name || "Student";
-document.getElementById("studentLevel").innerText = user.level || "Beginner Freelancer";
+// Populate user
+document.getElementById("studentName").innerText = user.name;
+document.getElementById("studentLevel").innerText = user.level || "Beginner";
 document.getElementById("profileImg").src = user.avatar || "https://via.placeholder.com/80";
 
 // Logout
@@ -96,58 +93,65 @@ function logout(){
   window.location.href="auth.html";
 }
 
-// MOCK JOBS
-const jobs = [
-  {title:"Campus Tour Guide", level:"Beginner", img:"https://images.unsplash.com/photo-1564866657317-44612e0aa29b?auto=format&fit=crop&w=400&q=60", pay:"$8/hr", verifiedOnly:false},
-  {title:"Research Participant / Lab Assistant", level:"Beginner", img:"https://images.unsplash.com/photo-1581091215367-0f17e7fae0ff?auto=format&fit=crop&w=400&q=60", pay:"$10/hr", verifiedOnly:false},
-  {title:"Online Tutoring", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1596495577886-2f08e50f6c2f?auto=format&fit=crop&w=400&q=60", pay:"$18/hr", verifiedOnly:true},
-  {title:"Website Development", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1616627981415-2f87f9f2f3b4?auto=format&fit=crop&w=400&q=60", pay:"$25/hr", verifiedOnly:true},
-  {title:"Graphic Design", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1612831669116-1b33c1f616f8?auto=format&fit=crop&w=400&q=60", pay:"$20/hr", verifiedOnly:true},
-  {title:"Content Creation / Writing", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=400&q=60", pay:"$22/hr", verifiedOnly:true},
-  {title:"Social Media Post", level:"Beginner", img:"https://images.unsplash.com/photo-1581276879432-15a8025b50d1?auto=format&fit=crop&w=400&q=60", pay:"$12/hr", verifiedOnly:false},
-  {title:"Flyer Design", level:"Beginner", img:"https://images.unsplash.com/photo-1557682224-5b8590cd9ec5?auto=format&fit=crop&w=400&q=60", pay:"$15/hr", verifiedOnly:false},
-  {title:"Data Entry", level:"Beginner", img:"https://images.unsplash.com/photo-1555949963-aa79dcee9815?auto=format&fit=crop&w=400&q=60", pay:"$10/hr", verifiedOnly:false},
-  {title:"Video Editing", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1581092580497-fce6f91de1c1?auto=format&fit=crop&w=400&q=60", pay:"$30/hr", verifiedOnly:true},
-  {title:"Marketing Strategy", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1554774853-54e4b7b1f98f?auto=format&fit=crop&w=400&q=60", pay:"$35/hr", verifiedOnly:true},
-  {title:"Blog Writing", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=400&q=60", pay:"$18/hr", verifiedOnly:true},
-  {title:"UX/UI Design", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=60", pay:"$28/hr", verifiedOnly:true},
-  {title:"Presentation Design", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1605902711622-cfb43c443467?auto=format&fit=crop&w=400&q=60", pay:"$20/hr", verifiedOnly:true},
-  {title:"Logo Design", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1587614382346-acb2f38b949d?auto=format&fit=crop&w=400&q=60", pay:"$22/hr", verifiedOnly:true},
-  {title:"Campus Ambassador", level:"Beginner", img:"https://images.unsplash.com/photo-1534751516642-a1af1ef0e7e0?auto=format&fit=crop&w=400&q=60", pay:"$12/hr", verifiedOnly:false},
-  {title:"Event Photography", level:"Beginner", img:"https://images.unsplash.com/photo-1553456558-aff63285bddf?auto=format&fit=crop&w=400&q=60", pay:"$15/hr", verifiedOnly:false},
-  {title:"Survey Data Collection", level:"Beginner", img:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=60", pay:"$10/hr", verifiedOnly:false},
-  {title:"Social Media Management", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1590608897129-79c6b982b52c?auto=format&fit=crop&w=400&q=60", pay:"$25/hr", verifiedOnly:true},
-  {title:"Freelance Coding Task", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1590608897129-3b1a5e982b52?auto=format&fit=crop&w=400&q=60", pay:"$30/hr", verifiedOnly:true},
+// Mock jobs
+const gigs = [
+  {title:"Campus Tour Guide", level:"Beginner", pay:8, img:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=60"},
+  {title:"Research Participant", level:"Beginner", pay:10, img:"https://images.unsplash.com/photo-1534751516642-a1af1ef0e55e?auto=format&fit=crop&w=400&q=60"},
+  {title:"Lab Assistant", level:"Beginner", pay:12, img:"https://images.unsplash.com/photo-1581091870622-9f1be1d5cd3a?auto=format&fit=crop&w=400&q=60"},
+  {title:"Online Tutoring", level:"Verified Freelancer", pay:20, img:"https://images.unsplash.com/photo-1596495577886-d920f1fb3a38?auto=format&fit=crop&w=400&q=60"},
+  {title:"Website Development", level:"Verified Freelancer", pay:25, img:"https://images.unsplash.com/photo-1581091012184-8dfc4cf7d5ff?auto=format&fit=crop&w=400&q=60"},
+  {title:"Graphic Design", level:"Verified Freelancer", pay:30, img:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=60"},
+  {title:"Content Writing", level:"Verified Freelancer", pay:18, img:"https://images.unsplash.com/photo-1556155092-8707de31f9c4?auto=format&fit=crop&w=400&q=60"},
+  {title:"Social Media Management", level:"Verified Freelancer", pay:22, img:"https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=400&q=60"},
+  {title:"Video Editing", level:"Verified Freelancer", pay:28, img:"https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=400&q=60"},
+  {title:"Photography", level:"Verified Freelancer", pay:35, img:"https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=400&q=60"}
 ];
 
 // Render jobs
-const jobsGrid = document.getElementById("jobsGrid");
-jobs.forEach(job => {
-  const card = document.createElement("div");
-  card.classList.add("job-card");
-  card.innerHTML = `
-    <img src="${job.img}" alt="${job.title}">
-    <strong>${job.title}</strong>
-    <span>${job.level} · ${job.pay}</span>
-  `;
-  
-  const applyBtn = document.createElement("button");
-  applyBtn.className = "apply-btn";
-  applyBtn.innerText = "Apply";
-  
-  // Apply button logic
-  if(job.verifiedOnly && !user.verified){
-    applyBtn.disabled = true;
-    applyBtn.innerText = "Verified Only";
-    applyBtn.style.background="rgba(200,200,200,0.3)";
-    applyBtn.style.cursor="not-allowed";
-  } else {
-    applyBtn.onclick = () => alert(`Applied to ${job.title} successfully!`);
-  }
-  
-  card.appendChild(applyBtn);
-  jobsGrid.appendChild(card);
-});
+function renderJobs(filter="all"){
+  const grid = document.getElementById("jobsGrid");
+  grid.innerHTML = "";
+  gigs.forEach(job => {
+    if(filter !== "all" && job.level !== filter) return;
+
+    const card = document.createElement("div");
+    card.className="job-card";
+    card.innerHTML = `
+      <img src="${job.img}" alt="${job.title}">
+      <strong>${job.title}</strong>
+      <span>${job.level} · $${job.pay}/hr</span>
+      <button class="apply-btn"></button>
+    `;
+    const btn = card.querySelector("button");
+    // Button logic
+    if(user.level === "Beginner" && job.level==="Beginner" && user.tasksCompleted<1){
+      btn.disabled=true;
+      btn.innerText="Complete Tasks";
+    } else if(job.level==="Verified Freelancer" && user.level!=="Verified Freelancer"){
+      btn.disabled=true;
+      btn.innerText="Verified Only";
+    } else {
+      btn.disabled=false;
+      btn.innerText="Apply";
+      btn.onclick = ()=>alert(`Applied to ${job.title}`);
+    }
+
+    grid.appendChild(card);
+  });
+}
+
+// Filters
+function filterJobs(level){
+  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+  if(level==="all") document.querySelector(".filter-btn:nth-child(1)").classList.add("active");
+  else if(level==="Beginner") document.querySelector(".filter-btn:nth-child(2)").classList.add("active");
+  else document.querySelector(".filter-btn:nth-child(3)").classList.add("active");
+  renderJobs(level);
+}
+
+// Initial render
+renderJobs();
 </script>
+
 </body>
 </html>
