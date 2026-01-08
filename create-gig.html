@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Create Gig — Zep Swipe</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+<title>Zep Swipe — Create Job</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -13,120 +15,218 @@
   --glass:rgba(255,255,255,0.08);
   --text-light:rgba(255,255,255,0.85);
 }
+
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
-body{background:var(--bg);color:#fff;min-height:100vh;padding:0 16px;}
-header{display:flex;align-items:center;justify-content:space-between;padding:16px;margin:16px;border-radius:16px;background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));backdrop-filter:blur(14px);}
-.brand{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;}
-.logout-btn:hover{background:rgba(255,0,80,.25);}
-.form-container{max-width:500px;margin:20px auto;background:var(--glass);border-radius:16px;padding:20px;border:1px solid rgba(255,255,255,.12);box-shadow:0 0 36px rgba(156,77,255,.2);}
-.form-container h2{text-align:center;font-family:Orbitron;margin-bottom:16px;}
-.form-container input, .form-container select, .form-container textarea{width:100%;padding:12px;margin-bottom:12px;border-radius:12px;border:none;outline:none;background:rgba(255,255,255,.05);color:#fff;}
-.form-container textarea{resize:none;height:100px;}
-.form-container button{width:100%;padding:12px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;font-weight:600;cursor:pointer;transition:.3s;}
-.form-container button:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
-.payment-section{background:rgba(255,255,255,.05);padding:12px;border-radius:12px;margin-bottom:12px;border:1px solid rgba(255,255,255,.12);}
-.payment-section button{width:100%;margin-top:8px;}
-.success-message{color:limegreen;font-weight:600;text-align:center;margin-bottom:12px;}
+
+body{
+  background:var(--bg);
+  color:#fff;
+  min-height:100vh;
+}
+
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px;
+  margin:16px;
+  border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
+}
+
+.brand{
+  font-family:Orbitron;
+  font-size:1.4rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.back-btn{
+  background:rgba(255,255,255,.1);
+  border:none;
+  padding:8px 16px;
+  border-radius:999px;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* CONTAINER */
+.container{
+  max-width:520px;
+  margin:30px auto;
+  background:var(--glass);
+  border-radius:18px;
+  padding:22px;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 0 40px rgba(156,77,255,.25);
+}
+
+/* PAYMENT CARD */
+.payment-card{
+  padding:18px;
+  border-radius:14px;
+  background:rgba(255,255,255,.05);
+  margin-bottom:20px;
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.payment-card h3{
+  font-family:Orbitron;
+  margin-bottom:6px;
+}
+
+.payment-card p{
+  font-size:.85rem;
+  color:var(--text-light);
+}
+
+.pay-btn{
+  margin-top:14px;
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-family:Orbitron;
+  cursor:pointer;
+}
+
+/* FORM */
+form{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+input, textarea, select{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+}
+
+textarea{resize:none}
+
+.submit-btn{
+  margin-top:8px;
+  padding:14px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-family:Orbitron;
+  cursor:pointer;
+}
+
+.locked{
+  opacity:.4;
+  pointer-events:none;
+}
+
+.notice{
+  font-size:.8rem;
+  color:var(--text-light);
+  text-align:center;
+}
 </style>
 </head>
 <body>
 
+<script>
+/* AUTH CHECK */
+const employer = JSON.parse(localStorage.getItem("employerUser"));
+if(!employer){
+  window.location.href = "employer-auth.html";
+}
+</script>
+
 <header>
   <div class="brand">Zep Swipe</div>
-  <button class="logout-btn" onclick="logout()">⎋</button>
+  <button class="back-btn" onclick="location.href='swipe-merchants.html'">← Back</button>
 </header>
 
-<div class="form-container">
-  <h2>Create Job / Gig</h2>
-  
-  <input type="text" id="jobTitle" placeholder="Job Title (e.g., Graphic Design Flyer)">
-  <textarea id="jobDesc" placeholder="Job Description"></textarea>
-  
-  <select id="jobCategory">
-    <option value="">Select Category</option>
-    <option value="Beginner">Beginner Job</option>
-    <option value="Verified">Verified Freelancer Job</option>
-  </select>
-  
-  <input type="number" id="jobPrice" placeholder="Price per Hour (USD)">
-  
-  <!-- Payment Verification -->
-  <div class="payment-section" id="paymentSection">
-    <strong>Pay $10 to verify listing (non-refundable)</strong>
-    <button id="payButton">Pay & Verify</button>
-    <span id="paymentStatus"></span>
+<div class="container">
+
+  <!-- PAYMENT VERIFICATION -->
+  <div class="payment-card" id="paymentCard">
+    <h3>Employer Verification</h3>
+    <p>$25 one-time yearly payment to list unlimited jobs.</p>
+    <button class="pay-btn" onclick="verifyPayment()">Verify & Pay $25</button>
   </div>
 
-  <!-- List Job -->
-  <button id="listJob" disabled>List Job</button>
+  <!-- JOB FORM -->
+  <form id="jobForm" class="locked">
+    <h3 style="font-family:Orbitron">Create Job</h3>
+
+    <input type="text" id="title" placeholder="Job Title" required>
+    
+    <textarea id="description" rows="4" placeholder="Job Description" required></textarea>
+
+    <select id="level">
+      <option value="Beginner">Beginner (Students)</option>
+      <option value="Verified">Verified Freelancer</option>
+    </select>
+
+    <input type="number" id="rate" placeholder="Hourly Rate ($)" required>
+
+    <button type="submit" class="submit-btn">Publish Job</button>
+  </form>
+
+  <p class="notice">Verification renews automatically every year.</p>
 </div>
 
 <script>
-/* SESSION PROTECTION */
-const user = JSON.parse(localStorage.getItem("currentUser"));
-if(!user){
-  window.location.href="auth.html";
+const verification = JSON.parse(localStorage.getItem("employerVerification"));
+const jobForm = document.getElementById("jobForm");
+const paymentCard = document.getElementById("paymentCard");
+
+/* CHECK VERIFICATION */
+if(verification && verification.expiresAt > Date.now()){
+  unlockForm();
 }
 
-// Logout
-function logout(){
-  localStorage.removeItem("currentUser");
-  window.location.href="auth.html";
+/* SIMULATED FLUTTERWAVE PAYMENT */
+function verifyPayment(){
+  const expiresAt = Date.now() + (365 * 24 * 60 * 60 * 1000);
+
+  localStorage.setItem("employerVerification", JSON.stringify({
+    paid:true,
+    expiresAt
+  }));
+
+  alert("Payment successful! Verification valid for 1 year.");
+  unlockForm();
 }
 
-/* Payment Simulation */
-const payButton = document.getElementById("payButton");
-const paymentStatus = document.getElementById("paymentStatus");
-let paymentVerified = false;
+function unlockForm(){
+  paymentCard.style.display = "none";
+  jobForm.classList.remove("locked");
+}
 
-payButton.addEventListener("click", ()=>{
-  // Simulate Flutterwave Payment here
-  // In production: integrate Flutterwave inline payment
-  paymentVerified = true;
-  paymentStatus.innerHTML = "✅ Payment Verified!";
-  document.getElementById("listJob").disabled = false;
-});
+/* CREATE JOB */
+jobForm.addEventListener("submit", e=>{
+  e.preventDefault();
 
-/* List Job */
-const listJobBtn = document.getElementById("listJob");
-listJobBtn.addEventListener("click", ()=>{
-  const title = document.getElementById("jobTitle").value.trim();
-  const desc = document.getElementById("jobDesc").value.trim();
-  const category = document.getElementById("jobCategory").value;
-  const price = parseFloat(document.getElementById("jobPrice").value);
+  const jobs = JSON.parse(localStorage.getItem("jobs")) || [];
 
-  if(!title || !desc || !category || !price){
-    alert("Fill all fields before listing job.");
-    return;
-  }
-  if(!paymentVerified){
-    alert("Please verify payment first.");
-    return;
-  }
-
-  // Save job in localStorage
-  let jobs = JSON.parse(localStorage.getItem("jobs")) || [];
-  const job = {
+  jobs.push({
     id: Date.now(),
-    title,
-    desc,
-    category,
-    price,
-    employer: user.name,
-    verified: category==="Verified"
-  };
-  jobs.push(job);
+    title: title.value,
+    description: description.value,
+    level: level.value,
+    rate: rate.value,
+    employer: employer.email,
+    postedAt: new Date().toISOString()
+  });
+
   localStorage.setItem("jobs", JSON.stringify(jobs));
-  alert("Job listed successfully!");
-  // Reset form
-  document.getElementById("jobTitle").value="";
-  document.getElementById("jobDesc").value="";
-  document.getElementById("jobCategory").value="";
-  document.getElementById("jobPrice").value="";
-  paymentVerified=false;
-  paymentStatus.innerHTML="";
-  document.getElementById("listJob").disabled=true;
+  alert("Job published successfully!");
+  location.href = "swipe-merchants.html";
 });
 </script>
 
