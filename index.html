@@ -3,186 +3,191 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Campus Deals & Student Freelancers</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+<title>Zep Swipe — Homepage</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
-:root {
+:root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,0.08);
-  --text-light: rgba(255,255,255,0.85);
+  --text-light:rgba(255,255,255,.85);
 }
-* { box-sizing:border-box; margin:0; padding:0; }
-body { font-family:Poppins,sans-serif; background:var(--bg); color:#fff; min-height:100vh; }
+
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
+
+body{
+  background:var(--bg);
+  color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
 /* HEADER */
-header {
+header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:18px 24px;
-  border-radius:16px;
-  margin:16px;
-  backdrop-filter:blur(16px);
-  background: radial-gradient(circle at center, rgba(0,240,255,0.25), rgba(156,77,255,0.25));
-  animation:pulseHeader 4s infinite alternate;
+  padding:20px 40px;
 }
-@keyframes pulseHeader {
-  0% { box-shadow:0 0 20px rgba(0,240,255,0.25); }
-  50% { box-shadow:0 0 50px rgba(156,77,255,0.45); }
-  100% { box-shadow:0 0 20px rgba(0,240,255,0.25); }
+.brand{
+  font-family:Orbitron;
+  font-size:1.8rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-.brand { font-family:Orbitron; font-size:1.8rem; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.header-actions { display:flex; gap:12px; }
-.header-actions a, .header-actions button {
-  font-family:Orbitron; font-size:14px; text-decoration:none; padding:8px 18px; border-radius:999px; border:none; cursor:pointer; transition:0.3s;
-}
-.header-actions a { background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050015; }
-.header-actions button { background:var(--glass); color:#fff; border:1px solid rgba(255,255,255,0.12); }
-.header-actions a:hover, .header-actions button:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
 
-/* HERO */
-.hero { text-align:center; margin-top:60px; padding:0 24px; display:flex; flex-direction:column; align-items:center; gap:28px; }
-.hero h1 { font-family:Orbitron; font-size:2.6rem; line-height:1.2; margin-bottom:12px; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.hero p { font-size:1.05rem; color:var(--text-light); max-width:550px; margin:0 auto; line-height:1.5; }
-.cta { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:20px; }
-.cta a { padding:14px 28px; border-radius:999px; font-family:Orbitron; font-weight:600; font-size:14px; text-decoration:none; transition:0.3s; }
-.cta a.primary { background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050015; }
-.cta a.secondary { border:1px solid rgba(255,255,255,.25); color:#fff; }
-.cta a.primary:hover, .cta a.secondary:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
-
-/* 3D Neon Student Circle */
-.student-circle {
-  width:260px;
-  height:260px;
+/* Pulsing login icon */
+.login-icon{
+  width:60px;
+  height:60px;
   border-radius:50%;
-  background: radial-gradient(circle at 30% 30%, rgba(0,240,255,0.25), transparent 60%),
-              radial-gradient(circle at 70% 70%, rgba(156,77,255,0.25), transparent 60%);
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   display:flex;
   align-items:center;
   justify-content:center;
-  animation:pulse 4s infinite alternate;
-  box-shadow:0 0 90px rgba(0,240,255,.3);
+  cursor:pointer;
+  font-size:24px;
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  animation:pulse 2s infinite;
+  transition:transform 0.3s;
 }
-@keyframes pulse {
-  from { transform: scale(1); box-shadow:0 0 60px rgba(0,240,255,.25);}
-  to { transform: scale(1.05); box-shadow:0 0 120px rgba(156,77,255,.45);}
+.login-icon:hover{
+  transform:scale(1.1);
 }
-.student-circle svg { width:160px; height:160px; }
+@keyframes pulse{
+  0%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+  50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}
+  100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+}
 
-/* DEALS GRID */
-.deals { margin:60px auto; max-width:1000px; padding:0 20px; }
-.deals h2 { font-family:Orbitron; text-align:center; margin-bottom:28px; font-size:1.8rem; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.deals-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:20px; justify-items:center; }
-.deal-card { width:140px; height:140px; border-radius:16px; background:var(--glass); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px; border:1px solid rgba(255,255,255,0.12); transition:0.3s; }
-.deal-card svg { width:60px; height:60px; margin-bottom:8px; }
-.deal-card:hover { transform:translateY(-4px); box-shadow:0 0 30px rgba(156,77,255,.45); }
-.deal-card span { font-size:0.85rem; }
+/* HERO SECTION */
+.hero{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  padding:80px 20px 40px;
+  background:url('https://images.unsplash.com/photo-1593642634367-d91a135587b5?auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover;
+  position:relative;
+}
+.hero::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+}
+.hero-content{
+  position:relative;
+  z-index:1;
+  max-width:900px;
+}
+.hero h1{
+  font-family:Orbitron;
+  font-size:2.8rem;
+  margin-bottom:20px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.hero p{
+  font-size:1.1rem;
+  margin-bottom:40px;
+  color:var(--text-light);
+}
 
-/* LIST YOUR DEAL */
-.list-deal { margin:60px auto; text-align:center; }
-.list-deal h3 { font-family:Orbitron; font-size:1.8rem; margin-bottom:16px; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.list-deal a { display:inline-block; margin-top:12px; padding:14px 28px; border-radius:999px; font-family:Orbitron; font-weight:600; font-size:14px; text-decoration:none; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050015; transition:0.3s; }
-.list-deal a:hover { transform:translateY(-2px); box-shadow:0 0 36px rgba(156,77,255,.45); }
+/* HERO BUTTONS */
+.hero-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+  justify-content:center;
+}
+.hero-buttons button{
+  padding:16px 28px;
+  font-family:Orbitron;
+  font-size:1rem;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  transition:.3s;
+  color:#050015;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+}
+.hero-buttons button:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 30px var(--zep-blue),0 0 50px var(--zep-violet);
+}
 
 /* FOOTER */
-footer { text-align:center; padding:40px 20px; font-size:12px; color:rgba(255,255,255,0.5); }
-.socials { display:flex; justify-content:center; gap:18px; margin-bottom:10px; }
-.socials a { width:36px; height:36px; border-radius:50%; background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:16px; color:#fff; }
+footer{
+  margin-top:80px;
+  text-align:center;
+  padding:30px 20px;
+  border-top:1px solid rgba(255,255,255,.1);
+}
+.socials{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin-bottom:10px;
+}
+.socials a{
+  width:40px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  text-decoration:none;
+  color:#050015;
+  font-size:20px;
+  transition:.3s;
+}
+.socials a:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+}
 
-@media(max-width:600px){
-  .hero h1 { font-size:2rem; }
-  .deals-grid { grid-template-columns:repeat(auto-fit,minmax(100px,1fr)); gap:12px; }
-  .deal-card { width:100px; height:100px; }
-  .student-circle { width:200px; height:200px; }
-  .student-circle svg { width:120px; height:120px; }
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero h1{font-size:2.2rem;}
+  .hero-buttons{flex-direction:column;}
 }
 </style>
 </head>
 <body>
-<div class="wrapper">
 
-  <!-- HEADER -->
-  <header>
-    <div class="brand">Zep Swipe</div>
-    <div class="header-actions">
-      <a href="deals.html">Campus Marketplace</a>
-      <button onclick="location.href='login.html'">Connect Wallet</button>
+<header>
+  <div class="brand">Zep Swipe</div>
+  <div class="login-icon" onclick="location.href='login.html'" title="Login">⎋</div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Become a Verified Freelancer in 21 Days</h1>
+    <p>While you hunt for beginner jobs, earn ZAC rewards, and grow your skills in our futuristic freelancer marketplace.</p>
+    <div class="hero-buttons">
+      <button onclick="location.href='swipe-merchants.html'">Find Jobs</button>
+      <button onclick="location.href='login.html'">Become a Freelancer</button>
+      <button onclick="location.href='deals.html'">Browse Student Deals</button>
+      <button onclick="location.href='employer-auth.html'">List a Job</button>
     </div>
-  </header>
+  </div>
+</section>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="student-circle">
-      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="32" cy="32" r="32" fill="url(#grad)"/>
-        <defs>
-          <radialGradient id="grad" cx="32" cy="32" r="32">
-            <stop offset="0%" stop-color="#00f0ff"/>
-            <stop offset="100%" stop-color="#9c4dff"/>
-          </radialGradient>
-        </defs>
-        <text x="50%" y="55%" text-anchor="middle" font-size="20" fill="#050015" font-family="Orbitron">🎓</text>
-      </svg>
-    </div>
-    <h1>Students Become Verified Freelancers in 21 Days</h1>
-    <p>Explore student deals and gigs from top brands & restaurants while learning and earning rewards.</p>
-    <div class="cta">
-      <a href="login.html" class="primary">Become a Freelancer</a>
-      <a href="deals.html" class="secondary">Browse Campus Deals</a>
-      <a href="swipe-merchants.html" class="secondary">Browse Student Creators</a>
-    </div>
-  </section>
+<footer>
+  <div class="socials">
+    <a href="https://www.linkedin.com/company/zep-swipe/" target="_blank">in</a>
+    <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank">📷</a>
+    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank">X</a>
+    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank">f</a>
+  </div>
+  <span>&copy; 2026 Zep Swipe. All Rights Reserved.</span>
+</footer>
 
-  <!-- DEALS GRID -->
-  <section class="deals">
-    <h2>Popular Student Deals</h2>
-    <div class="deals-grid">
-      <!-- 3D Neon-style brand icons -->
-      <a href="deals.html" class="deal-card">
-        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke="#00f0ff" stroke-width="4" fill="none"/><text x="50%" y="55%" text-anchor="middle" fill="#00f0ff" font-family="Orbitron" font-size="18">W</text></svg>
-        <span>Woolworths</span>
-      </a>
-      <a href="deals.html" class="deal-card">
-        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke="#9c4dff" stroke-width="4" fill="none"/><text x="50%" y="55%" text-anchor="middle" fill="#9c4dff" font-family="Orbitron" font-size="18">K</text></svg>
-        <span>KFC</span>
-      </a>
-      <a href="deals.html" class="deal-card">
-        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke="#00f0ff" stroke-width="4" fill="none"/><text x="50%" y="55%" text-anchor="middle" fill="#00f0ff" font-family="Orbitron" font-size="18">N</text></svg>
-        <span>Nando's</span>
-      </a>
-      <a href="deals.html" class="deal-card">
-        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke="#9c4dff" stroke-width="4" fill="none"/><text x="50%" y="55%" text-anchor="middle" fill="#9c4dff" font-family="Orbitron" font-size="18">M</text></svg>
-        <span>McDonald's</span>
-      </a>
-      <a href="deals.html" class="deal-card">
-        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke="#00f0ff" stroke-width="4" fill="none"/><text x="50%" y="55%" text-anchor="middle" fill="#00f0ff" font-family="Orbitron" font-size="18">Z</text></svg>
-        <span>Zara</span>
-      </a>
-      <a href="deals.html" class="deal-card">
-        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke="#9c4dff" stroke-width="4" fill="none"/><text x="50%" y="55%" text-anchor="middle" fill="#9c4dff" font-family="Orbitron" font-size="18">P</text></svg>
-        <span>Puma</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- LIST YOUR DEAL -->
-  <section class="list-deal">
-    <h3>List Your Campus Deal</h3>
-    <a href="business.html">List Your Deal</a>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="socials">
-      <a href="https://x.com/ZepSwipe" target="_blank">𝕏</a>
-      <a href="https://www.linkedin.com/company/zep-swipe/" target="_blank">in</a>
-      <a href="https://www.instagram.com/zepswipe" target="_blank">◎</a>
-    </div>
-    <p>© 2025 Zep Swipe — Student Creator Economy</p>
-  </footer>
-
-</div>
 </body>
 </html>
