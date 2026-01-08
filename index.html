@@ -23,34 +23,48 @@ header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:20px 40px;
+  padding:12px 24px;
   max-width:1200px;
   margin:auto;
-  background:rgba(0,0,0,0.2);
   border-radius:16px;
+  background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));
+  animation:pulseHeader 2.5s infinite;
+  backdrop-filter: blur(12px);
 }
+@keyframes pulseHeader {
+  0%, 100% { box-shadow: 0 0 15px rgba(0,240,255,0.3), 0 0 25px rgba(156,77,255,0.3); }
+  50% { box-shadow: 0 0 25px rgba(0,240,255,0.5), 0 0 40px rgba(156,77,255,0.5); }
+}
+
 .brand{
   font-family:Orbitron;
-  font-size:1.8rem;
+  font-size:1.6rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
+
 .login-icon{
-  width:60px;
-  height:60px;
+  width:50px;
+  height:50px;
   border-radius:50%;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  font-size:24px;
+  font-size:22px;
   transition:transform 0.3s, box-shadow 0.3s;
+  box-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet);
+  animation:pulseLogin 2s infinite;
 }
 .login-icon:hover{
   transform:scale(1.1);
-  box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
+  box-shadow:0 0 25px var(--zep-blue),0 0 40px var(--zep-violet);
+}
+@keyframes pulseLogin {
+  0%, 100% { box-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet); }
+  50% { box-shadow:0 0 25px var(--zep-blue),0 0 45px var(--zep-violet); }
 }
 
 /* HERO */
@@ -144,7 +158,7 @@ footer span{font-size:.85rem;color:var(--text-light);display:block;margin-top:4p
 @media(max-width:768px){
   .hero h1{font-size:2.2rem;}
   .hero-buttons{flex-direction:column;}
-  header{flex-direction:column; gap:16px;}
+  header{flex-direction:row; justify-content:space-between; padding:12px 20px;}
 }
 </style>
 </head>
