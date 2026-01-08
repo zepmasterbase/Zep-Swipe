@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Job Marketplace</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -13,24 +13,45 @@
   --glass:rgba(255,255,255,0.08);
   --text-light:rgba(255,255,255,0.85);
 }
+
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;padding-bottom:60px;}
-header{display:flex;justify-content:space-between;align-items:center;padding:18px;margin:16px;border-radius:16px;background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));backdrop-filter:blur(14px);animation:pulse 4s infinite alternate;}
-@keyframes pulse{0%{box-shadow:0 0 20px rgba(0,240,255,.25)}100%{box-shadow:0 0 40px rgba(156,77,255,.45)}}
+
+body{
+  background:var(--bg);
+  color:#fff;
+  min-height:100vh;
+  padding-bottom:60px;
+}
+
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px;
+  margin:16px;
+  border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
+}
 .header-left{display:flex;align-items:center;gap:12px;}
-.header-left img{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
+.header-left img{width:50px;height:50px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
 .header-left div h2{font-family:Orbitron;font-size:1.1rem;}
 .header-left div span{font-size:.8rem;color:var(--text-light);}
 .header-right{display:flex;align-items:center;gap:12px;}
-.brand{font-family:Orbitron;font-size:1.2rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.brand{font-family:Orbitron;font-size:1.3rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;}
 .logout-btn:hover{background:rgba(255,0,80,.3);}
-.list-job{background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));border:none;padding:10px 16px;border-radius:999px;color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;}
-.list-job:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(156,77,255,.45);}
-.filters{display:flex;gap:10px;margin:10px 16px;}
-.filters button{flex:1;border:none;border-radius:999px;padding:8px;background:rgba(255,255,255,.1);color:#fff;font-family:Orbitron;cursor:pointer;transition:.3s;}
-.filters button.active, .filters button:hover{background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;}
-.jobs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;padding:0 16px;}
+.list-job-btn{padding:8px 12px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;margin-left:10px;}
+.list-job-btn:hover{box-shadow:0 0 30px rgba(156,77,255,.4);}
+
+/* FILTERS */
+.filters{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
+.filters button{padding:8px 12px;border:none;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;transition:.3s;}
+.filters button.active, .filters button:hover{background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));}
+
+/* JOBS GRID */
+.jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;}
 .job-card{background:var(--glass);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:6px;transition:.3s;}
 .job-card:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(156,77,255,.3);}
 .job-card img{width:100%;height:100px;border-radius:12px;object-fit:cover;}
@@ -38,17 +59,15 @@ header{display:flex;justify-content:space-between;align-items:center;padding:18p
 .job-card span{font-size:.8rem;color:var(--text-light);}
 .apply-btn{padding:8px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;margin-top:auto;}
 .apply-btn:disabled{background:rgba(255,255,255,.2);cursor:not-allowed;color:#aaa;}
-@media(max-width:480px){.jobs-grid{grid-template-columns:1fr;}}
+@media(max-width:480px){.jobs{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
 <script>
-/* SESSION PROTECTION */
+// SESSION PROTECTION
 const user = JSON.parse(localStorage.getItem("currentUser"));
-if(!user){
-  window.location.href="auth.html";
-}
+if(!user){window.location.href="auth.html";}
 </script>
 
 <header>
@@ -63,68 +82,53 @@ if(!user){
   <div class="header-right">
     <div class="brand">Zep Swipe</div>
     <button class="logout-btn" onclick="logout()">⎋</button>
+    <button class="list-job-btn" onclick="location.href='create-gig.html'">List Job</button>
   </div>
 </header>
 
-<div style="display:flex;justify-content:space-between;align-items:center;margin:16px;">
-  <h3>Job Marketplace</h3>
-  <button class="list-job" onclick="location.href='create-gig.html'">List Job</button>
-</div>
+<div class="dashboard">
+  <div class="filters">
+    <button class="active" data-filter="all">All</button>
+    <button data-filter="Beginner">Beginner</button>
+    <button data-filter="Verified Freelancer">Verified</button>
+  </div>
 
-<div class="filters">
-  <button class="filter-btn active" onclick="filterJobs('all')">All</button>
-  <button class="filter-btn" onclick="filterJobs('Beginner')">Beginner</button>
-  <button class="filter-btn" onclick="filterJobs('Verified Freelancer')">Verified</button>
-</div>
-
-<div class="jobs-grid" id="jobsGrid">
-  <!-- Jobs loaded dynamically -->
+  <div class="jobs" id="jobsGrid"></div>
 </div>
 
 <script>
-// Populate user
-document.getElementById("studentName").innerText = user.name;
-document.getElementById("studentLevel").innerText = user.level || "Beginner";
-document.getElementById("profileImg").src = user.avatar || "https://via.placeholder.com/80";
+// Populate header data
+document.getElementById("studentName").innerText = user.name || "Student";
+document.getElementById("studentLevel").innerText = user.level || "Beginner Freelancer";
+document.getElementById("profileImg").src = user.profileImage || "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=80&q=60";
 
-// Logout
-function logout(){
-  localStorage.removeItem("currentUser");
-  window.location.href="auth.html";
-}
-
-// Mock jobs
-const gigs = [
-  {title:"Campus Tour Guide", level:"Beginner", pay:8, img:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=60"},
-  {title:"Research Participant", level:"Beginner", pay:10, img:"https://images.unsplash.com/photo-1534751516642-a1af1ef0e55e?auto=format&fit=crop&w=400&q=60"},
-  {title:"Lab Assistant", level:"Beginner", pay:12, img:"https://images.unsplash.com/photo-1581091870622-9f1be1d5cd3a?auto=format&fit=crop&w=400&q=60"},
+// MOCK JOBS
+const jobs = [
+  {title:"Campus Tour Guide", level:"Beginner", pay:8, img:"https://images.unsplash.com/photo-1596495577886-d920f1fb3a38?auto=format&fit=crop&w=400&q=60"},
+  {title:"Research Participant", level:"Beginner", pay:10, img:"https://images.unsplash.com/photo-1581091012184-8dfc4cf7d5ff?auto=format&fit=crop&w=400&q=60"},
+  {title:"Lab Assistant", level:"Beginner", pay:12, img:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=60"},
   {title:"Online Tutoring", level:"Verified Freelancer", pay:20, img:"https://images.unsplash.com/photo-1596495577886-d920f1fb3a38?auto=format&fit=crop&w=400&q=60"},
-  {title:"Website Development", level:"Verified Freelancer", pay:25, img:"https://images.unsplash.com/photo-1581091012184-8dfc4cf7d5ff?auto=format&fit=crop&w=400&q=60"},
-  {title:"Graphic Design", level:"Verified Freelancer", pay:30, img:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=60"},
-  {title:"Content Writing", level:"Verified Freelancer", pay:18, img:"https://images.unsplash.com/photo-1556155092-8707de31f9c4?auto=format&fit=crop&w=400&q=60"},
-  {title:"Social Media Management", level:"Verified Freelancer", pay:22, img:"https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=400&q=60"},
-  {title:"Video Editing", level:"Verified Freelancer", pay:28, img:"https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=400&q=60"},
-  {title:"Photography", level:"Verified Freelancer", pay:35, img:"https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=400&q=60"}
+  {title:"Website Development", level:"Verified Freelancer", pay:25, img:"https://images.unsplash.com/photo-1581091870622-9f1be1d5cd3a?auto=format&fit=crop&w=400&q=60"},
+  {title:"Graphic Design", level:"Verified Freelancer", pay:30, img:"https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=400&q=60"},
 ];
 
 // Render jobs
+const jobsGrid = document.getElementById("jobsGrid");
 function renderJobs(filter="all"){
-  const grid = document.getElementById("jobsGrid");
-  grid.innerHTML = "";
-  gigs.forEach(job => {
-    if(filter !== "all" && job.level !== filter) return;
-
+  jobsGrid.innerHTML="";
+  jobs.filter(job => filter==="all" || job.level===filter).forEach(job=>{
     const card = document.createElement("div");
     card.className="job-card";
-    card.innerHTML = `
+    card.innerHTML=`
       <img src="${job.img}" alt="${job.title}">
       <strong>${job.title}</strong>
       <span>${job.level} · $${job.pay}/hr</span>
       <button class="apply-btn"></button>
     `;
     const btn = card.querySelector("button");
-    // Button logic
-    if(user.level === "Beginner" && job.level==="Beginner" && user.tasksCompleted<1){
+
+    // Logic for enabling/disabling apply
+    if(job.level==="Beginner" && (!user.tasksCompleted || user.tasksCompleted<1)){
       btn.disabled=true;
       btn.innerText="Complete Tasks";
     } else if(job.level==="Verified Freelancer" && user.level!=="Verified Freelancer"){
@@ -133,24 +137,25 @@ function renderJobs(filter="all"){
     } else {
       btn.disabled=false;
       btn.innerText="Apply";
-      btn.onclick = ()=>alert(`Applied to ${job.title}`);
+      btn.onclick=()=>{ alert(`Applied to ${job.title}`); }
     }
 
-    grid.appendChild(card);
+    jobsGrid.appendChild(card);
   });
 }
-
-// Filters
-function filterJobs(level){
-  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
-  if(level==="all") document.querySelector(".filter-btn:nth-child(1)").classList.add("active");
-  else if(level==="Beginner") document.querySelector(".filter-btn:nth-child(2)").classList.add("active");
-  else document.querySelector(".filter-btn:nth-child(3)").classList.add("active");
-  renderJobs(level);
-}
-
-// Initial render
 renderJobs();
+
+// Filter buttons
+document.querySelectorAll(".filters button").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    renderJobs(btn.dataset.filter);
+  });
+});
+
+// Logout
+function logout(){localStorage.removeItem("currentUser");window.location.href="auth.html";}
 </script>
 
 </body>
