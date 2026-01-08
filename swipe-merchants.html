@@ -170,15 +170,12 @@ header{
   <select id="filterLevel">
     <option value="all">All Levels</option>
     <option value="Beginner">Beginner</option>
-    <option value="Intermediate">Intermediate</option>
-    <option value="Advanced">Advanced</option>
+    <option value="Verified">Verified</option>
   </select>
-  <select id="filterPoints">
-    <option value="all">All Rewards</option>
-    <option value="5">5 ZAC+</option>
-    <option value="10">10 ZAC+</option>
-    <option value="15">15 ZAC+</option>
-    <option value="20">20 ZAC+</option>
+  <select id="filterPrice">
+    <option value="all">All Rates</option>
+    <option value="8-15">8-15 $/hr</option>
+    <option value="18-35">18-35 $/hr</option>
   </select>
 </div>
 
@@ -187,50 +184,41 @@ header{
 <button class="employer-btn" onclick="alert('Redirect to List Job Page')">List Job (Employers)</button>
 
 <script>
-/* SESSION & VERIFICATION */
 const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
 
-// Mock jobs
+// Mock jobs with 3D-safe placeholder URLs
 const jobs = [
-  {title:"Social Media Post", points:5, level:"Beginner", img:"https://via.placeholder.com/160x100?text=Social+Media", verifiedOnly:true},
-  {title:"Flyer Design", points:10, level:"Beginner", img:"https://via.placeholder.com/160x100?text=Flyer", verifiedOnly:true},
-  {title:"Video Editing", points:20, level:"Intermediate", img:"https://via.placeholder.com/160x100?text=Video", verifiedOnly:true},
-  {title:"Campus Photography", points:15, level:"Beginner", img:"https://via.placeholder.com/160x100?text=Photo", verifiedOnly:false},
-  {title:"Blog Writing", points:8, level:"Beginner", img:"https://via.placeholder.com/160x100?text=Blog", verifiedOnly:false},
-  {title:"UX/UI Design", points:18, level:"Intermediate", img:"https://via.placeholder.com/160x100?text=UX/UI", verifiedOnly:true},
-  {title:"Voice Over", points:12, level:"Beginner", img:"https://via.placeholder.com/160x100?text=Voice", verifiedOnly:true},
-  {title:"Podcast Editing", points:14, level:"Intermediate", img:"https://via.placeholder.com/160x100?text=Podcast", verifiedOnly:true},
-  {title:"Infographic Design", points:9, level:"Beginner", img:"https://via.placeholder.com/160x100?text=Infographic", verifiedOnly:true},
-  {title:"Presentation Slides", points:11, level:"Intermediate", img:"https://via.placeholder.com/160x100?text=Slides", verifiedOnly:true},
-  {title:"Short Video Ads", points:15, level:"Intermediate", img:"https://via.placeholder.com/160x100?text=Video+Ads", verifiedOnly:true},
-  {title:"Content Translation", points:8, level:"Beginner", img:"https://via.placeholder.com/160x100?text=Translation", verifiedOnly:false},
-  {title:"Logo Design", points:10, level:"Beginner", img:"https://via.placeholder.com/160x100?text=Logo", verifiedOnly:true},
-  {title:"TikTok Video", points:12, level:"Intermediate", img:"https://via.placeholder.com/160x100?text=TikTok", verifiedOnly:true},
-  {title:"SEO Optimization", points:18, level:"Advanced", img:"https://via.placeholder.com/160x100?text=SEO", verifiedOnly:true},
-  {title:"Marketing Strategy", points:20, level:"Advanced", img:"https://via.placeholder.com/160x100?text=Marketing", verifiedOnly:true},
-  {title:"Email Campaign", points:14, level:"Intermediate", img:"https://via.placeholder.com/160x100?text=Email", verifiedOnly:true},
-  {title:"Photography Editing", points:15, level:"Intermediate", img:"https://via.placeholder.com/160x100?text=Editing", verifiedOnly:false},
-  {title:"3D Model Design", points:20, level:"Advanced", img:"https://via.placeholder.com/160x100?text=3D+Model", verifiedOnly:true},
-  {title:"Animation Clip", points:20, level:"Advanced", img:"https://via.placeholder.com/160x100?text=Animation", verifiedOnly:true}
+  {title:"Campus Tour Guide", points:8, level:"Beginner", rate:"$8/hr", verifiedOnly:false, img:"https://images.unsplash.com/photo-1598327108873-4d0ecb44a3e7?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
+  {title:"Research Participant / Lab Assistant", points:10, level:"Beginner", rate:"$10/hr", verifiedOnly:false, img:"https://images.unsplash.com/photo-1581092334444-c2f312b44b34?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
+  {title:"Online Tutoring", points:20, level:"Verified", rate:"$20/hr", verifiedOnly:true, img:"https://images.unsplash.com/photo-1590608897129-79a9b5f5eaa0?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
+  {title:"Website Development", points:25, level:"Verified", rate:"$25/hr", verifiedOnly:true, img:"https://images.unsplash.com/photo-1505685296765-3a2736de412f?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
+  {title:"Graphic Design", points:18, level:"Verified", rate:"$18/hr", verifiedOnly:true, img:"https://images.unsplash.com/photo-1505692794400-6b097f2a70aa?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
+  {title:"Content Creation / Writing", points:22, level:"Verified", rate:"$22/hr", verifiedOnly:true, img:"https://images.unsplash.com/photo-1503676260728-1c00da094a0b?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
+  {title:"Flyer Design", points:12, level:"Beginner", rate:"$12/hr", verifiedOnly:false, img:"https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
+  {title:"Video Editing", points:15, level:"Verified", rate:"$30/hr", verifiedOnly:true, img:"https://images.unsplash.com/photo-1581091870629-f2d8d7f1c0a3?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
+  {title:"Campus Event Assistant", points:10, level:"Beginner", rate:"$10/hr", verifiedOnly:false, img:"https://images.unsplash.com/photo-1519389950473-47ba0277781c?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"},
+  {title:"Blog Writing", points:12, level:"Verified", rate:"$18/hr", verifiedOnly:true, img:"https://images.unsplash.com/photo-1505685296765-3a2736de412f?crop=entropy&cs=tinysrgb&fit=max&h=100&w=160"}
 ];
 
 const jobsContainer = document.getElementById('jobsContainer');
 const searchInput = document.getElementById('searchInput');
 const filterLevel = document.getElementById('filterLevel');
-const filterPoints = document.getElementById('filterPoints');
+const filterPrice = document.getElementById('filterPrice');
 
 function renderJobs(){
   const searchVal = searchInput.value.toLowerCase();
   const levelVal = filterLevel.value;
-  const pointsVal = filterPoints.value;
+  const priceVal = filterPrice.value;
 
   jobsContainer.innerHTML = '';
 
   jobs.filter(job=>{
     const matchSearch = job.title.toLowerCase().includes(searchVal);
-    const matchLevel = levelVal==='all' || job.level===levelVal;
-    const matchPoints = pointsVal==='all' || job.points>=parseInt(pointsVal);
-    return matchSearch && matchLevel && matchPoints;
+    const matchLevel = levelVal==='all' || (levelVal==='Verified' ? job.verifiedOnly : !job.verifiedOnly);
+    const matchPrice = priceVal==='all' || 
+      (priceVal==='8-15' && parseInt(job.rate.replace(/\$|\/hr/g,''))>=8 && parseInt(job.rate.replace(/\$|\/hr/g,''))<=15) ||
+      (priceVal==='18-35' && parseInt(job.rate.replace(/\$|\/hr/g,''))>=18 && parseInt(job.rate.replace(/\$|\/hr/g,''))<=35);
+    return matchSearch && matchLevel && matchPrice;
   }).forEach(job=>{
     const card = document.createElement('div');
     card.className = 'job-card';
@@ -242,7 +230,7 @@ function renderJobs(){
     card.innerHTML = `
       <img src="${job.img}" alt="${job.title}">
       <h4>${job.title}</h4>
-      <span>${job.level} · ${job.points} ZAC</span>
+      <span>${job.level} · ${job.rate}</span>
       ${job.verifiedOnly ? '<span class="verified">Verified Only</span>' : ''}
       <button ${disabled ? 'disabled' : ''} onclick="applyJob('${job.title}')">Apply</button>
     `;
@@ -256,10 +244,9 @@ function applyJob(jobTitle){
 
 searchInput.addEventListener('input', renderJobs);
 filterLevel.addEventListener('change', renderJobs);
-filterPoints.addEventListener('change', renderJobs);
+filterPrice.addEventListener('change', renderJobs);
 
 renderJobs();
 </script>
-
 </body>
 </html>
