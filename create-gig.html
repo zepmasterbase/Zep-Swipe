@@ -1,269 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Create Service — Zep Swipe</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Create Gig</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at top, #030016 0%, #000010 100%);
-  --glass:rgba(255,255,255,0.06);
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,0.08);
+  --text-light:rgba(255,255,255,0.85);
 }
-
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Poppins,sans-serif;
-  background:var(--bg);
-  color:#fff;
-}
-
-.container{
-  max-width:720px;
-  margin:26px auto 120px;
-  padding:16px;
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
+body{background:var(--bg);color:#fff;min-height:100vh;padding-bottom:50px}
 
 /* HEADER */
-.header{
-  padding:16px;
-  border-radius:18px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(16px);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px;margin:16px;border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
 }
-.brand{
-  font-family:Orbitron;
-  font-size:1.3rem;
+.header-left h2{font-family:Orbitron;font-size:1.2rem;}
+.header-right .brand{
+  font-family:Orbitron;font-size:1.2rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.btn{
-  font-family:Orbitron;
-  font-size:12px;
-  padding:8px 16px;
-  border-radius:999px;
-  border:none;
-  cursor:pointer;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 
-/* LOCK */
-.lock-box{
-  margin-top:24px;
-  padding:22px;
-  border-radius:20px;
-  background:rgba(0,0,0,.65);
-  border:1px dashed rgba(0,240,255,.45);
-  text-align:center;
+/* FORM CARD */
+.form-card{
+  background:var(--glass);border-radius:16px;padding:24px;margin:16px;border:1px solid rgba(255,255,255,.12);box-shadow:0 0 36px rgba(156,77,255,.15);
 }
-.lock-box h2{
-  font-family:Orbitron;
-  margin-bottom:8px;
+.form-card h3{font-family:Orbitron;margin-bottom:16px;}
+.form-card label{display:block;margin-top:12px;font-size:.9rem;color:var(--text-light);}
+.form-card input, .form-card select, .form-card textarea{
+  width:100%;padding:10px;margin-top:6px;border:none;border-radius:12px;outline:none;background:rgba(255,255,255,.05);color:#fff;font-size:.9rem;
 }
-.lock-box p{
-  font-size:13px;
-  opacity:.85;
+textarea{resize:none;height:80px;}
+.submit-btn{
+  margin-top:16px;width:100%;padding:12px;border:none;border-radius:999px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-weight:700;cursor:pointer;transition:.3s;
 }
-.lock-icon{
-  font-size:48px;
-  margin-bottom:10px;
-}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
 
-/* FORM */
-.form{
-  margin-top:22px;
-  padding:22px;
-  border-radius:20px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.12);
-  display:none;
+/* JOBS PREVIEW */
+.jobs-preview{padding:0 16px;margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
+.job-card{
+  background:rgba(255,255,255,.05);border-radius:12px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;transition:.3s;
 }
-label{
-  display:block;
-  margin-top:14px;
-  font-size:12px;
-  opacity:.8;
-}
-input,textarea,select{
-  width:100%;
-  margin-top:6px;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.2);
-  background:#020617;
-  color:#fff;
-}
-textarea{resize:none}
-.submit{
-  margin-top:20px;
-  width:100%;
-  padding:14px;
-  border-radius:999px;
-  border:none;
-  cursor:pointer;
-  font-family:Orbitron;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-}
+.job-card:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.25);}
+.job-card img{width:100%;height:120px;border-radius:8px;object-fit:cover;margin-bottom:8px;}
+.job-card strong{font-family:Orbitron;margin-bottom:4px;}
+.job-card span{font-size:.8rem;color:var(--text-light);}
 
-/* FOOTER */
-.footer{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  padding:14px 22px;
-  background:rgba(0,0,0,.6);
-  backdrop-filter:blur(12px);
-  display:flex;
-  justify-content:space-around;
-}
-.fbtn{
-  width:56px;height:56px;
-  border-radius:18px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.1);
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;
-  text-decoration:none;
-  color:#fff;
-  box-shadow:0 0 22px rgba(0,240,255,.25);
-}
+/* RESPONSIVE */
+@media(max-width:480px){.jobs-preview{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<header>
+  <div class="header-left"><h2>Create a New Gig</h2></div>
+  <div class="header-right"><div class="brand">Zep Swipe</div></div>
+</header>
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="brand">Create Service</div>
-    <button class="btn" onclick="location.href='student-dashboard.html'">Home</button>
-  </div>
+<div class="form-card">
+  <h3>Gig Details</h3>
+  <label for="title">Job Title</label>
+  <input type="text" id="title" placeholder="Enter job title">
 
-  <!-- LOCK -->
-  <div class="lock-box" id="lockBox">
-    <div class="lock-icon">🔒</div>
-    <h2>Seller Access Locked</h2>
-    <p>
-      Complete <strong>21 days</strong> of real tasks in at least
-      <strong>one skill track</strong> to unlock service creation.
-    </p>
-    <p>
-      This keeps Swipe Merchants trusted, fair, and student-verified.
-    </p>
-    <br>
-    <button class="btn" onclick="location.href='learn-earn.html'">
-      Go to Learn & Earn
-    </button>
-  </div>
+  <label for="level">Level</label>
+  <select id="level">
+    <option value="Beginner">Beginner</option>
+    <option value="Verified Freelancer">Verified Freelancer</option>
+  </select>
 
-  <!-- FORM -->
-  <div class="form" id="gigForm">
-    <h3 style="font-family:Orbitron">New Service</h3>
+  <label for="pay">Hourly Rate ($)</label>
+  <input type="number" id="pay" placeholder="Enter hourly pay">
 
-    <label>Service Title</label>
-    <input id="title" placeholder="I will write high-converting AI content" />
+  <label for="img">Job Image URL</label>
+  <input type="text" id="img" placeholder="Enter image URL">
 
-    <label>Category</label>
-    <select id="category">
-      <option>AI & Writing</option>
-      <option>Design</option>
-      <option>Video Editing</option>
-      <option>No-Code Websites</option>
-      <option>Research</option>
-      <option>Automation</option>
-    </select>
+  <label for="description">Description</label>
+  <textarea id="description" placeholder="Enter job description"></textarea>
 
-    <label>Description</label>
-    <textarea id="desc" rows="4"
-      placeholder="Explain what the buyer will receive, delivery time, and format."></textarea>
-
-    <label>Price (USDC)</label>
-    <input id="price" type="number" min="5" placeholder="25" />
-
-    <label>Delivery Time (days)</label>
-    <input id="delivery" type="number" min="1" placeholder="3" />
-
-    <button class="submit" onclick="publishGig()">Publish Service</button>
-  </div>
-
+  <button class="submit-btn" onclick="createGig()">Create Gig</button>
 </div>
 
-<!-- FOOTER -->
-<div class="footer">
-  <a class="fbtn" href="student-dashboard.html">🏠</a>
-  <a class="fbtn" href="learn-earn.html">🎓</a>
-  <a class="fbtn" href="profile.html">👤</a>
-</div>
+<h3 style="padding-left:16px;">Your Created Jobs</h3>
+<div class="jobs-preview" id="jobsPreview"></div>
 
 <script>
-/* -------------------------
-   UNLOCK LOGIC
-------------------------- */
-const progress = JSON.parse(localStorage.getItem("zepProgress")||"{}");
+const user = JSON.parse(localStorage.getItem("currentUser"));
+if(!user){window.location.href="auth.html";}
 
-let unlocked=false;
-Object.values(progress).forEach(p=>{
-  if((p.day||1) >= 22) unlocked=true;
-});
-
-if(unlocked){
-  document.getElementById("lockBox").style.display="none";
-  document.getElementById("gigForm").style.display="block";
-}
-
-/* -------------------------
-   PUBLISH GIG
-------------------------- */
-function publishGig(){
-  const title = document.getElementById("title").value.trim();
-  const desc  = document.getElementById("desc").value.trim();
-  const price = document.getElementById("price").value;
-  const cat   = document.getElementById("category").value;
-  const del   = document.getElementById("delivery").value;
-
-  if(!title || !desc || !price) {
-    alert("Please complete all required fields.");
-    return;
-  }
-
-  const student = JSON.parse(localStorage.getItem("zepStudent")||"{}");
-  const profile = JSON.parse(localStorage.getItem("zepProfile")||"{}");
-
-  const gigs = JSON.parse(localStorage.getItem("zepGigs")||"[]");
-
-  gigs.push({
-    id:Date.now(),
-    title,
-    desc,
-    category:cat,
-    price,
-    delivery:del,
-    seller:{
-      wallet:student.wallet,
-      name:profile.name || "Verified Student",
-      university:profile.university || "",
-      avatar:profile.avatar || ""
-    }
+// Populate jobs preview from localStorage
+function renderJobs(){
+  const preview = document.getElementById("jobsPreview");
+  preview.innerHTML = "";
+  let gigs = JSON.parse(localStorage.getItem("gigs")) || [];
+  gigs.forEach(job => {
+    const card = document.createElement("div");
+    card.className = "job-card";
+    card.innerHTML = `
+      <img src="${job.img || 'https://images.unsplash.com/photo-1564866657317-44612e0aa29b?auto=format&fit=crop&w=400&q=60'}" alt="${job.title}">
+      <strong>${job.title}</strong>
+      <span>${job.level} · $${job.pay}/hr</span>
+      <span>${job.description}</span>
+    `;
+    preview.appendChild(card);
   });
-
-  localStorage.setItem("zepGigs",JSON.stringify(gigs));
-
-  alert("✅ Service published successfully!");
-  location.href="swipe-merchants.html";
 }
-</script>
 
+// Create gig and store in localStorage
+function createGig(){
+  const title = document.getElementById("title").value.trim();
+  const level = document.getElementById("level").value;
+  const pay = document.getElementById("pay").value;
+  const img = document.getElementById("img").value.trim();
+  const description = document.getElementById("description").value.trim();
+
+  if(!title || !pay){alert("Title and Pay are required"); return;}
+
+  let gigs = JSON.parse(localStorage.getItem("gigs")) || [];
+  gigs.push({title, level, pay, img, description});
+  localStorage.setItem("gigs", JSON.stringify(gigs));
+  alert("Gig created successfully!");
+  renderJobs();
+
+  // Clear form
+  document.getElementById("title").value="";
+  document.getElementById("level").value="Beginner";
+  document.getElementById("pay").value="";
+  document.getElementById("img").value="";
+  document.getElementById("description").value="";
+}
+
+// Initialize
+renderJobs();
+</script>
 </body>
 </html>
