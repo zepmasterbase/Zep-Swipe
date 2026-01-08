@@ -4,332 +4,290 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Student Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
-:root {
+:root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,0.08);
-  --text-light: rgba(255,255,255,0.85);
+  --text-light:rgba(255,255,255,0.85);
 }
-
-* { box-sizing:border-box; margin:0; padding:0; font-family:Poppins,sans-serif; }
-
-body {
-  background: var(--bg);
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
+body{
+  background:var(--bg);
   color:#fff;
   min-height:100vh;
-  padding:0;
 }
 
 /* HEADER */
-header {
+header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:20px;
-  background: radial-gradient(circle at center, rgba(0,240,255,0.2), rgba(156,77,255,0.2));
-  border-radius:16px;
+  padding:18px;
   margin:16px;
-  backdrop-filter: blur(14px);
-  animation: pulseHeader 4s infinite alternate;
+  border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
+  animation:pulse 4s infinite alternate;
 }
-
-@keyframes pulseHeader {
-  0% { box-shadow: 0 0 20px rgba(0,240,255,0.25); }
-  50% { box-shadow: 0 0 50px rgba(156,77,255,0.45); }
-  100% { box-shadow: 0 0 20px rgba(0,240,255,0.25); }
+@keyframes pulse{
+  0%{box-shadow:0 0 20px rgba(0,240,255,.25)}
+  100%{box-shadow:0 0 40px rgba(156,77,255,.45)}
 }
-
-.header-left {
+.header-left{
   display:flex;
   align-items:center;
   gap:12px;
 }
-
-.header-left img {
-  width:50px;
-  height:50px;
+.header-left img{
+  width:48px;
+  height:48px;
   border-radius:50%;
-  object-fit:cover;
-  border:2px solid rgba(255,255,255,0.3);
+  border:2px solid rgba(255,255,255,.3);
 }
-
-.header-left div {
+.header-left h2{
+  font-family:Orbitron;
+  font-size:1.1rem;
+}
+.header-left span{
+  font-size:.8rem;
+  color:var(--text-light);
+}
+.header-right{
   display:flex;
-  flex-direction:column;
+  align-items:center;
+  gap:14px;
 }
-
-.header-left div span {
-  font-size:0.9rem;
-  color: var(--text-light);
-}
-
-.header-left div h2 {
+.brand{
   font-family:Orbitron;
   font-size:1.2rem;
-  margin:0;
-}
-
-.header-right {
-  font-family:Orbitron;
-  font-weight:700;
-  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  font-size:1.2rem;
+}
+.logout-btn{
+  background:rgba(255,255,255,.1);
+  border:none;
+  border-radius:50%;
+  width:38px;
+  height:38px;
+  cursor:pointer;
+  color:#fff;
+  font-size:16px;
+  transition:.3s;
+}
+.logout-btn:hover{
+  background:rgba(255,0,80,.25);
 }
 
-/* DASHBOARD SECTIONS */
-.dashboard {
-  padding:0 16px 50px 16px;
+/* DASHBOARD */
+.dashboard{
+  padding:0 16px 50px;
   display:flex;
   flex-direction:column;
-  gap:24px;
+  gap:22px;
 }
-
-.section {
-  background: var(--glass);
+.section{
+  background:var(--glass);
   border-radius:16px;
   padding:16px;
-  border:1px solid rgba(255,255,255,0.12);
-  box-shadow:0 0 40px rgba(0,240,255,0.1);
+  border:1px solid rgba(255,255,255,.12);
 }
-
-.section h3 {
+.section h3{
   font-family:Orbitron;
-  font-size:1.2rem;
   margin-bottom:12px;
 }
 
 /* TASKS */
-.task {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:12px;
-  background: rgba(255,255,255,0.05);
-  padding:12px;
+.task{
+  background:rgba(255,255,255,.05);
   border-radius:12px;
+  padding:12px;
+  margin-bottom:10px;
 }
-
-.task .info {
-  display:flex;
-  flex-direction:column;
+.task span{
+  font-size:.8rem;
+  color:var(--text-light);
 }
-
-.task .info span {
-  font-size:0.85rem;
-  color: var(--text-light);
-}
-
-.task .progress-bar {
-  width:120px;
-  height:8px;
-  background: rgba(255,255,255,0.1);
-  border-radius:4px;
-  margin-top:6px;
+.progress{
+  height:6px;
+  background:rgba(255,255,255,.1);
+  border-radius:6px;
   overflow:hidden;
+  margin-top:6px;
 }
-
-.task .progress-bar div {
+.progress div{
   height:100%;
-  background: var(--zep-blue);
-  width:50%; /* Example progress */
+  width:50%;
+  background:var(--zep-blue);
 }
 
 /* EARNINGS */
-.earnings {
+.earnings{
   display:flex;
   justify-content:space-between;
-  align-items:center;
 }
-
-.earnings div {
-  display:flex;
-  flex-direction:column;
-}
-
-.earnings div span {
-  font-size:0.85rem;
-  color:var(--text-light);
-}
+.earnings strong{font-size:1.1rem}
 
 /* VERIFICATION */
-.verification {
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.verification-bar {
-  width:100%;
-  height:12px;
-  background: rgba(255,255,255,0.1);
+.verify-bar{
+  height:10px;
+  background:rgba(255,255,255,.1);
   border-radius:6px;
   overflow:hidden;
 }
-
-.verification-bar div {
-  width:40%; /* Example progress */
+.verify-bar div{
+  width:40%;
   height:100%;
-  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
 }
 
-/* JOBS GRID */
-.jobs-grid {
+/* JOBS */
+.jobs{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
   gap:12px;
 }
-
-.job-card {
-  background: rgba(255,255,255,0.05);
-  padding:12px;
+.job{
+  background:rgba(255,255,255,.05);
   border-radius:12px;
-  border:1px solid rgba(255,255,255,0.12);
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
+  padding:10px;
   cursor:pointer;
-  transition:0.3s;
+  transition:.3s;
 }
-
-.job-card:hover {
+.job:hover{
   transform:translateY(-2px);
-  box-shadow:0 0 36px rgba(156,77,255,0.25);
+  box-shadow:0 0 20px rgba(156,77,255,.3);
 }
-
-.job-card img {
+.job img{
   width:100%;
   height:80px;
-  object-fit:cover;
   border-radius:8px;
-  margin-bottom:8px;
+  margin-bottom:6px;
+  object-fit:cover;
 }
 
-/* QUICK ACTIONS */
-.quick-actions {
-  display:flex;
-  justify-content:space-around;
-  margin-top:12px;
+/* ACTIONS */
+.actions{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
 }
-
-.quick-actions button {
-  flex:1;
-  margin:0 4px;
-  padding:12px 0;
-  border-radius:999px;
+.actions button{
   border:none;
+  border-radius:999px;
+  padding:12px;
   font-family:Orbitron;
-  font-size:0.85rem;
-  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
   cursor:pointer;
-  transition:0.3s;
 }
-
-.quick-actions button:hover {
-  transform:translateY(-2px);
-  box-shadow:0 0 36px rgba(156,77,255,.45);
-}
-
-/* MOBILE RESPONSIVE */
 @media(max-width:480px){
-  .header-left div h2 { font-size:1rem; }
-  .header-right { font-size:1rem; }
-  .task { flex-direction:column; align-items:flex-start; gap:6px; }
-  .quick-actions { flex-direction:column; }
-  .quick-actions button { margin:4px 0; }
+  .actions{grid-template-columns:1fr}
 }
 </style>
 </head>
+
 <body>
 
-<!-- HEADER -->
+<script>
+/* SESSION PROTECTION */
+const user = JSON.parse(localStorage.getItem("currentUser"));
+if(!user){
+  window.location.href = "auth.html";
+}
+</script>
+
 <header>
   <div class="header-left">
-    <img src="https://via.placeholder.com/50" alt="Profile">
+    <img src="https://via.placeholder.com/80" alt="Profile">
     <div>
-      <span>Welcome Back</span>
-      <h2>John Doe</h2>
-      <span>Status: Beginner Freelancer</span>
+      <span>Welcome back</span>
+      <h2 id="studentName"></h2>
+      <span id="studentLevel"></span>
     </div>
   </div>
-  <div class="header-right">Zep Swipe</div>
+
+  <div class="header-right">
+    <div class="brand">Zep Swipe</div>
+    <button class="logout-btn" onclick="logout()" title="Logout">⎋</button>
+  </div>
 </header>
 
 <div class="dashboard">
 
-  <!-- Daily Tasks -->
   <div class="section">
-    <h3>Daily Learn & Earn Tasks</h3>
+    <h3>Daily Learn & Earn</h3>
     <div class="task">
-      <div class="info">
-        <strong>Create Profile</strong>
-        <span>5 points · 5 min</span>
-        <div class="progress-bar"><div></div></div>
-      </div>
-      <button>Start</button>
+      <strong>Create Profile</strong>
+      <span>+5 ZAC · 5 mins</span>
+      <div class="progress"><div></div></div>
     </div>
     <div class="task">
-      <div class="info">
-        <strong>Complete Tutorial</strong>
-        <span>10 points · 15 min</span>
-        <div class="progress-bar"><div style="width:70%"></div></div>
-      </div>
-      <button>Start</button>
+      <strong>Complete Tutorial</strong>
+      <span>+10 ZAC · 15 mins</span>
+      <div class="progress"><div style="width:70%"></div></div>
     </div>
   </div>
 
-  <!-- Earnings / Rewards -->
   <div class="section earnings">
     <div>
-      <strong>Total ZAC:</strong>
-      <span>125 ZAC</span>
+      <span>Total ZAC</span>
+      <strong id="zacBalance">0</strong>
     </div>
     <div>
-      <strong>Pending:</strong>
-      <span>25 ZAC</span>
+      <span>USD Balance</span>
+      <strong>$<span id="usdBalance">0</span></strong>
     </div>
   </div>
 
-  <!-- Freelancer Verification -->
-  <div class="section verification">
-    <h3>Become a Verified Freelancer ($5)</h3>
-    <div class="verification-bar">
-      <div></div>
-    </div>
-    <span>Unlock your first job by completing verification</span>
+  <div class="section">
+    <h3>Freelancer Verification ($5)</h3>
+    <div class="verify-bar"><div></div></div>
+    <span>Unlock your first job</span>
   </div>
 
-  <!-- Job Opportunities -->
   <div class="section">
     <h3>Available Jobs</h3>
-    <div class="jobs-grid">
-      <div class="job-card" onclick="alert('View Job Details')">
-        <img src="https://via.placeholder.com/140x80" alt="Job">
+    <div class="jobs">
+      <div class="job">
+        <img src="https://via.placeholder.com/150x80">
         <strong>Social Media Post</strong>
-        <span>5 points · Beginner</span>
+        <span>Beginner</span>
       </div>
-      <div class="job-card" onclick="alert('View Job Details')">
-        <img src="https://via.placeholder.com/140x80" alt="Job">
-        <strong>Graphic Design Flyer</strong>
-        <span>10 points · Beginner</span>
+      <div class="job">
+        <img src="https://via.placeholder.com/150x80">
+        <strong>Flyer Design</strong>
+        <span>Beginner</span>
       </div>
     </div>
   </div>
 
-  <!-- Quick Actions -->
-  <div class="section quick-actions">
-    <button onclick="alert('Go to Tasks')">Tasks</button>
-    <button onclick="alert('Go to Jobs')">Jobs</button>
-    <button onclick="alert('Go to Wallet')">Wallet / Rewards</button>
-    <button onclick="alert('Go to Profile')">Profile Settings</button>
+  <div class="section actions">
+    <button onclick="alert('Tasks')">Tasks</button>
+    <button onclick="alert('Jobs')">Jobs</button>
+    <button onclick="location.href='student-wallet.html'">Wallet</button>
+    <button onclick="alert('Profile')">Profile</button>
   </div>
 
 </div>
+
+<script>
+/* Populate user data */
+document.getElementById("studentName").innerText = user.name;
+document.getElementById("studentLevel").innerText = user.level;
+document.getElementById("zacBalance").innerText = user.ZAC || 0;
+document.getElementById("usdBalance").innerText = user.USD || 0;
+
+function logout(){
+  localStorage.removeItem("currentUser");
+  window.location.href = "auth.html";
+}
+</script>
 
 </body>
 </html>
