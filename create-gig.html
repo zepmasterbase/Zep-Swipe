@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Create Job</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<title>Zep Swipe — Create Gig</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -35,85 +33,61 @@ header{
   background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
   backdrop-filter:blur(14px);
 }
-
 .brand{
   font-family:Orbitron;
-  font-size:1.4rem;
+  font-size:1.5rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-
-.back-btn{
+.logout-btn{
   background:rgba(255,255,255,.1);
   border:none;
-  padding:8px 16px;
-  border-radius:999px;
-  color:#fff;
+  border-radius:50%;
+  width:38px;
+  height:38px;
   cursor:pointer;
+  color:#fff;
+  font-size:16px;
+  transition:.3s;
+}
+.logout-btn:hover{
+  background:rgba(255,0,80,.25);
 }
 
-/* CONTAINER */
+/* FORM CONTAINER */
 .container{
-  max-width:520px;
+  max-width:600px;
   margin:30px auto;
   background:var(--glass);
-  border-radius:18px;
-  padding:22px;
+  border-radius:16px;
+  padding:20px;
   border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 0 40px rgba(156,77,255,.25);
-}
-
-/* PAYMENT CARD */
-.payment-card{
-  padding:18px;
-  border-radius:14px;
-  background:rgba(255,255,255,.05);
-  margin-bottom:20px;
-  border:1px solid rgba(255,255,255,.12);
-}
-
-.payment-card h3{
-  font-family:Orbitron;
-  margin-bottom:6px;
-}
-
-.payment-card p{
-  font-size:.85rem;
-  color:var(--text-light);
-}
-
-.pay-btn{
-  margin-top:14px;
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  font-family:Orbitron;
-  cursor:pointer;
-}
-
-/* FORM */
-form{
+  box-shadow:0 0 36px rgba(156,77,255,.2);
   display:flex;
   flex-direction:column;
-  gap:14px;
+  gap:16px;
 }
 
-input, textarea, select{
+/* INPUTS */
+.container input[type="text"],
+.container input[type="number"],
+.container textarea{
   width:100%;
   padding:12px;
   border-radius:12px;
   border:none;
   outline:none;
+  background:rgba(255,255,255,.05);
+  color:#fff;
+}
+.container textarea{
+  resize:none;
+  height:100px;
 }
 
-textarea{resize:none}
-
-.submit-btn{
-  margin-top:8px;
+/* BUTTON */
+.container button{
   padding:14px;
   border:none;
   border-radius:999px;
@@ -121,114 +95,124 @@ textarea{resize:none}
   color:#050015;
   font-family:Orbitron;
   cursor:pointer;
+  font-size:1rem;
+  transition:.3s;
+}
+.container button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
 }
 
-.locked{
-  opacity:.4;
-  pointer-events:none;
+/* TOTAL AMOUNT CARD */
+.total-card{
+  background:rgba(255,255,255,.05);
+  padding:12px 16px;
+  border-radius:12px;
+  display:flex;
+  justify-content:space-between;
+  font-weight:500;
 }
 
-.notice{
-  font-size:.8rem;
+label{
+  font-size:0.85rem;
   color:var(--text-light);
-  text-align:center;
 }
 </style>
 </head>
 <body>
 
-<script>
-/* AUTH CHECK */
-const employer = JSON.parse(localStorage.getItem("employerUser"));
-if(!employer){
-  window.location.href = "employer-auth.html";
-}
-</script>
-
 <header>
   <div class="brand">Zep Swipe</div>
-  <button class="back-btn" onclick="location.href='swipe-merchants.html'">← Back</button>
+  <button class="logout-btn" onclick="logout()">⎋</button>
 </header>
 
 <div class="container">
+  <h2>Create a New Gig</h2>
+  <label for="title">Job Title</label>
+  <input type="text" id="title" placeholder="E.g., Social Media Manager">
 
-  <!-- PAYMENT VERIFICATION -->
-  <div class="payment-card" id="paymentCard">
-    <h3>Employer Verification</h3>
-    <p>$25 one-time yearly payment to list unlimited jobs.</p>
-    <button class="pay-btn" onclick="verifyPayment()">Verify & Pay $25</button>
+  <label for="desc">Job Description</label>
+  <textarea id="desc" placeholder="Describe the job in detail..."></textarea>
+
+  <label for="rate">Rate per Hour (USD)</label>
+  <input type="number" id="rate" placeholder="E.g., 25" min="1">
+
+  <label for="duration">Duration (Hours)</label>
+  <input type="number" id="duration" placeholder="E.g., 5" min="1">
+
+  <div class="total-card">
+    <span>Total Job Amount + $25 Listing Fee:</span>
+    <span id="totalAmount">$0</span>
   </div>
 
-  <!-- JOB FORM -->
-  <form id="jobForm" class="locked">
-    <h3 style="font-family:Orbitron">Create Job</h3>
-
-    <input type="text" id="title" placeholder="Job Title" required>
-    
-    <textarea id="description" rows="4" placeholder="Job Description" required></textarea>
-
-    <select id="level">
-      <option value="Beginner">Beginner (Students)</option>
-      <option value="Verified">Verified Freelancer</option>
-    </select>
-
-    <input type="number" id="rate" placeholder="Hourly Rate ($)" required>
-
-    <button type="submit" class="submit-btn">Publish Job</button>
-  </form>
-
-  <p class="notice">Verification renews automatically every year.</p>
+  <button onclick="createGig()">Create Gig & Pay $25</button>
 </div>
 
 <script>
-const verification = JSON.parse(localStorage.getItem("employerVerification"));
-const jobForm = document.getElementById("jobForm");
-const paymentCard = document.getElementById("paymentCard");
-
-/* CHECK VERIFICATION */
-if(verification && verification.expiresAt > Date.now()){
-  unlockForm();
+/* SESSION CHECK */
+const employer = JSON.parse(localStorage.getItem("currentEmployer"));
+if(!employer){
+  alert("Please login to create a gig.");
+  location.href = "employer-auth.html";
 }
 
-/* SIMULATED FLUTTERWAVE PAYMENT */
-function verifyPayment(){
-  const expiresAt = Date.now() + (365 * 24 * 60 * 60 * 1000);
+/* CALCULATE TOTAL AMOUNT */
+const rateInput = document.getElementById("rate");
+const durationInput = document.getElementById("duration");
+const totalEl = document.getElementById("totalAmount");
 
-  localStorage.setItem("employerVerification", JSON.stringify({
-    paid:true,
-    expiresAt
-  }));
-
-  alert("Payment successful! Verification valid for 1 year.");
-  unlockForm();
+function updateTotal(){
+  const rate = parseFloat(rateInput.value) || 0;
+  const duration = parseFloat(durationInput.value) || 0;
+  const total = rate * duration + 25;
+  totalEl.innerText = `$${total.toFixed(2)}`;
 }
 
-function unlockForm(){
-  paymentCard.style.display = "none";
-  jobForm.classList.remove("locked");
-}
+rateInput.addEventListener("input", updateTotal);
+durationInput.addEventListener("input", updateTotal);
 
-/* CREATE JOB */
-jobForm.addEventListener("submit", e=>{
-  e.preventDefault();
+/* CREATE GIG FUNCTION */
+function createGig(){
+  const title = document.getElementById("title").value.trim();
+  const desc = document.getElementById("desc").value.trim();
+  const rate = parseFloat(rateInput.value);
+  const duration = parseFloat(durationInput.value);
 
-  const jobs = JSON.parse(localStorage.getItem("jobs")) || [];
+  if(!title || !desc || !rate || !duration){
+    alert("Please fill all fields correctly.");
+    return;
+  }
 
-  jobs.push({
+  const gig = {
     id: Date.now(),
-    title: title.value,
-    description: description.value,
-    level: level.value,
-    rate: rate.value,
-    employer: employer.email,
-    postedAt: new Date().toISOString()
-  });
+    employerId: employer.id,
+    title,
+    desc,
+    rate,
+    duration,
+    totalAmount: rate*duration + 25,
+    listingFee:25,
+    escrow:{
+      paid:true,
+      released:false
+    },
+    applicants:[],
+    createdAt: new Date().toISOString()
+  };
 
-  localStorage.setItem("jobs", JSON.stringify(jobs));
-  alert("Job published successfully!");
-  location.href = "swipe-merchants.html";
-});
+  const gigs = JSON.parse(localStorage.getItem("gigs")) || [];
+  gigs.push(gig);
+  localStorage.setItem("gigs", JSON.stringify(gigs));
+
+  alert(`Gig created! Total $${gig.totalAmount} is in escrow.`);
+  location.href = "employer-dashboard.html";
+}
+
+/* LOGOUT */
+function logout(){
+  localStorage.removeItem("currentEmployer");
+  location.href = "index.html";
+}
 </script>
-
 </body>
 </html>
