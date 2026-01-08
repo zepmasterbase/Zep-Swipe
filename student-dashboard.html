@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Student Dashboard</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -16,193 +14,58 @@
   --text-light:rgba(255,255,255,0.85);
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
-body{
-  background:var(--bg);
-  color:#fff;
-  min-height:100vh;
-}
+body{background:var(--bg);color:#fff;min-height:100vh;}
 
 /* HEADER */
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px;
-  margin:16px;
-  border-radius:16px;
-  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
-  backdrop-filter:blur(14px);
-  animation:pulse 4s infinite alternate;
-}
-@keyframes pulse{
-  0%{box-shadow:0 0 20px rgba(0,240,255,.25)}
-  100%{box-shadow:0 0 40px rgba(156,77,255,.45)}
-}
-.header-left{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.header-left img{
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  border:2px solid rgba(255,255,255,.3);
-  object-fit:cover;
-}
-.header-left h2{
-  font-family:Orbitron;
-  font-size:1.1rem;
-}
-.header-left span{
-  font-size:.8rem;
-  color:var(--text-light);
-}
-.header-right{
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
-.brand{
-  font-family:Orbitron;
-  font-size:1.2rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.logout-btn{
-  background:rgba(255,255,255,.1);
-  border:none;
-  border-radius:50%;
-  width:38px;
-  height:38px;
-  cursor:pointer;
-  color:#fff;
-  font-size:16px;
-}
-.logout-btn:hover{
-  background:rgba(255,0,80,.3);
-}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px;margin:16px;border-radius:16px;background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));backdrop-filter:blur(14px);animation:pulse 4s infinite alternate;}
+@keyframes pulse{0%{box-shadow:0 0 20px rgba(0,240,255,.25)}100%{box-shadow:0 0 40px rgba(156,77,255,.45)}}
+.header-left{display:flex;align-items:center;gap:12px;}
+.header-left img{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
+.header-left h2{font-family:Orbitron;font-size:1.1rem;}
+.header-left span{font-size:.8rem;color:var(--text-light);}
+.header-right{display:flex;align-items:center;gap:14px;}
+.brand{font-family:Orbitron;font-size:1.2rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;}
+.logout-btn:hover{background:rgba(255,0,80,.3);}
 
 /* DASHBOARD */
-.dashboard{
-  padding:0 16px 60px;
-  display:flex;
-  flex-direction:column;
-  gap:22px;
-}
-.section{
-  background:var(--glass);
-  border-radius:16px;
-  padding:16px;
-  border:1px solid rgba(255,255,255,.12);
-}
-.section h3{
-  font-family:Orbitron;
-  margin-bottom:12px;
-}
+.dashboard{padding:0 16px 60px;display:flex;flex-direction:column;gap:22px;}
+.section{background:var(--glass);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.12);}
+.section h3{font-family:Orbitron;margin-bottom:12px;}
 
 /* TASKS */
-.task{
-  background:rgba(255,255,255,.05);
-  border-radius:12px;
-  padding:12px;
-  margin-bottom:10px;
-}
-.task span{
-  font-size:.8rem;
-  color:var(--text-light);
-}
-.progress{
-  height:6px;
-  background:rgba(255,255,255,.1);
-  border-radius:6px;
-  overflow:hidden;
-  margin-top:6px;
-}
-.progress div{
-  height:100%;
-  background:var(--zep-blue);
-}
+.task{background:rgba(255,255,255,.05);border-radius:12px;padding:12px;margin-bottom:10px;cursor:pointer;}
+.task span{font-size:.8rem;color:var(--text-light);}
+.progress{height:6px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;margin-top:6px;}
+.progress div{height:100%;background:var(--zep-blue);}
 
 /* EARNINGS */
-.earnings{
-  display:flex;
-  justify-content:space-between;
-}
+.earnings{display:flex;justify-content:space-between;}
 .earnings strong{font-size:1.1rem}
 
 /* PROFILE COMPLETION */
-.verify-bar{
-  height:10px;
-  background:rgba(255,255,255,.1);
-  border-radius:6px;
-  overflow:hidden;
-  margin-bottom:6px;
-}
-.verify-bar div{
-  height:100%;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-}
-.verify-text{
-  font-size:.85rem;
-  color:var(--text-light);
-}
+.verify-bar{height:10px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;margin-bottom:6px;}
+.verify-bar div{height:100%;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));}
+.verify-text{font-size:.85rem;color:var(--text-light);}
 
 /* JOBS */
-.jobs{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:12px;
-}
-.job{
-  background:rgba(255,255,255,.05);
-  border-radius:12px;
-  padding:10px;
-  cursor:pointer;
-  transition:.3s;
-}
-.job:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 20px rgba(156,77,255,.3);
-}
-.job img{
-  width:100%;
-  height:80px;
-  border-radius:8px;
-  margin-bottom:6px;
-  object-fit:cover;
-}
+.jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;}
+.job{background:rgba(255,255,255,.05);border-radius:12px;padding:10px;cursor:pointer;transition:.3s;}
+.job:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(156,77,255,.3);}
+.job img{width:100%;height:80px;border-radius:8px;margin-bottom:6px;object-fit:cover;}
 
 /* ACTIONS */
-.actions{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-.actions button{
-  border:none;
-  border-radius:999px;
-  padding:12px;
-  font-family:Orbitron;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  cursor:pointer;
-}
-@media(max-width:480px){
-  .actions{grid-template-columns:1fr}
-}
+.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.actions button{border:none;border-radius:999px;padding:12px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;}
+@media(max-width:480px){.actions{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
 
 <script>
 /* SESSION PROTECTION */
 const user = JSON.parse(localStorage.getItem("currentUser"));
-if(!user){
-  window.location.href = "auth.html";
-}
+if(!user){window.location.href="auth.html";}
 </script>
 
 <header>
@@ -264,14 +127,19 @@ if(!user){
     <h3>Available Jobs</h3>
     <div class="jobs">
       <div class="job" onclick="location.href='swipe-merchants.html'">
-        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=60">
+        <img src="https://images.unsplash.com/photo-1581091870627-d11d243a5282?auto=format&fit=crop&w=400&q=60">
         <strong>Social Media Post</strong>
         <span>Beginner</span>
       </div>
       <div class="job" onclick="location.href='swipe-merchants.html'">
-        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=400&q=60">
+        <img src="https://images.unsplash.com/photo-1593642532871-8b12e02d091c?auto=format&fit=crop&w=400&q=60">
         <strong>Flyer Design</strong>
         <span>Beginner</span>
+      </div>
+      <div class="job" onclick="location.href='swipe-merchants.html'">
+        <img src="https://images.unsplash.com/photo-1581091870627-d11d243a5282?auto=format&fit=crop&w=400&q=60">
+        <strong>Content Writing</strong>
+        <span>Intermediate</span>
       </div>
     </div>
   </div>
@@ -280,37 +148,35 @@ if(!user){
   <div class="section actions">
     <button onclick="location.href='learn-earn.html'">Tasks</button>
     <button onclick="location.href='swipe-merchants.html'">Jobs</button>
-    <button onclick="location.href='student-wallet.html'">Wallet</button>
+    <button onclick="location.href='wallet.html'">Wallet</button>
     <button onclick="location.href='profile.html'">Profile</button>
   </div>
 
 </div>
 
 <script>
-/* Populate user data */
+// Populate user data dynamically
 document.getElementById("studentName").innerText = user.name || "Student";
 document.getElementById("studentLevel").innerText = user.level || "Beginner Freelancer";
 document.getElementById("zacBalance").innerText = user.ZAC || 0;
 document.getElementById("usdBalance").innerText = user.USD || 0;
 
-document.getElementById("profileImg").src =
-  user.avatar || "https://via.placeholder.com/80";
+// Fetch profile image
+document.getElementById("profileImg").src = user.avatar || "https://via.placeholder.com/80";
 
-/* PROFILE COMPLETENESS */
+// Profile completeness
 const completion = user.profileCompletion || 0;
 document.getElementById("completionBar").style.width = completion + "%";
-
 document.getElementById("completionText").innerText =
   completion < 60
   ? "Complete your profile to unlock more jobs"
   : "Profile complete — jobs unlocked 🎉";
 
-/* LOGOUT */
+// Logout
 function logout(){
   localStorage.removeItem("currentUser");
-  window.location.href = "auth.html";
+  window.location.href="auth.html";
 }
 </script>
-
 </body>
 </html>
