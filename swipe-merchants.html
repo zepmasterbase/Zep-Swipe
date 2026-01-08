@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Student Profile</title>
+<title>Zep Swipe — Job Marketplace</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -13,105 +13,41 @@
   --glass:rgba(255,255,255,0.08);
   --text-light:rgba(255,255,255,0.85);
 }
-
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
-
-body{
-  background:var(--bg);
-  color:#fff;
-  min-height:100vh;
-}
+body{background:var(--bg);color:#fff;min-height:100vh;}
 
 /* HEADER */
 header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px;
-  margin:16px;
-  border-radius:16px;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px;margin:16px;border-radius:16px;
   background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
   backdrop-filter:blur(14px);
 }
-.brand{
-  font-family:Orbitron;
-  font-size:1.5rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.logout-btn{
-  background:rgba(255,255,255,.1);
-  border:none;
-  border-radius:50%;
-  width:38px;
-  height:38px;
-  cursor:pointer;
-  color:#fff;
-  font-size:16px;
-  transition:.3s;
-}
-.logout-btn:hover{
-  background:rgba(255,0,80,.25);
-}
+.header-left{display:flex;align-items:center;gap:12px;}
+.header-left img{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
+.header-left h2{font-family:Orbitron;font-size:1.1rem;}
+.header-left span{font-size:.8rem;color:var(--text-light);}
+.header-right{display:flex;align-items:center;gap:14px;}
+.brand{font-family:Orbitron;font-size:1.2rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;}
+.logout-btn:hover{background:rgba(255,0,80,.3);}
+.list-job-btn{background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));border:none;border-radius:999px;padding:10px 16px;color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;}
+.list-job-btn:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
 
-/* PROFILE CONTAINER */
-.profile-container{
-  max-width:400px;
-  margin:20px auto;
-  background:var(--glass);
-  border-radius:16px;
-  padding:20px;
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 0 36px rgba(156,77,255,.2);
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-}
+/* JOB MARKETPLACE */
+.jobs-container{padding:0 16px 50px;display:flex;flex-direction:column;gap:22px;}
+.jobs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.jobs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
+.job-card{background:rgba(255,255,255,.05);border-radius:12px;padding:12px;cursor:pointer;transition:.3s;display:flex;flex-direction:column;justify-content:space-between;}
+.job-card:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.25);}
+.job-card img{width:100%;height:120px;border-radius:8px;object-fit:cover;margin-bottom:8px;}
+.job-card strong{font-family:Orbitron;margin-bottom:4px;}
+.job-card span{font-size:.8rem;color:var(--text-light);}
+.apply-btn{background:var(--zep-blue);color:#050015;border:none;border-radius:999px;padding:8px 12px;font-family:Orbitron;cursor:pointer;margin-top:6px;transition:.3s;}
+.apply-btn:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(0,240,255,.45);}
 
-/* PROFILE IMAGE */
-.profile-image{
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  border:2px solid rgba(255,255,255,.3);
-  margin:0 auto;
-  object-fit:cover;
-}
-
-/* INPUTS */
-.profile-container input[type="text"],
-.profile-container input[type="email"],
-.profile-container input[type="file"]{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-  outline:none;
-  margin-bottom:12px;
-}
-
-/* SAVE BUTTON */
-.profile-container button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  font-family:Orbitron;
-  cursor:pointer;
-  transition:.3s;
-}
-.profile-container button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 36px rgba(156,77,255,.45);
-}
-
-span{
-  font-size:0.85rem;
-  color:var(--text-light);
-}
+/* RESPONSIVE */
+@media(max-width:480px){.jobs-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -119,75 +55,99 @@ span{
 <script>
 /* SESSION PROTECTION */
 const user = JSON.parse(localStorage.getItem("currentUser"));
-if(!user){
-  window.location.href = "auth.html";
-}
+if(!user){window.location.href="auth.html";}
 </script>
 
 <header>
-  <div class="brand">Zep Swipe</div>
-  <button class="logout-btn" onclick="logout()" title="Logout">⎋</button>
+  <div class="header-left">
+    <img id="profileImg" src="" alt="Profile">
+    <div>
+      <span>Welcome back</span>
+      <h2 id="studentName"></h2>
+      <span id="studentLevel"></span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="brand">Zep Swipe</div>
+    <button class="logout-btn" onclick="logout()">⎋</button>
+  </div>
 </header>
 
-<div class="profile-container">
-  <img src="" alt="Profile Image" class="profile-image" id="profileImg">
-  
-  <label for="imgUpload" style="text-align:center; display:block; cursor:pointer;">📷 Upload Profile Image</label>
-  <input type="file" id="imgUpload" accept="image/*">
+<div class="jobs-container">
+  <div class="jobs-header">
+    <h3>Job Marketplace</h3>
+    <button class="list-job-btn" onclick="location.href='create.gig.html'">List a Job</button>
+  </div>
 
-  <input type="text" id="name" placeholder="Full Name" value="">
-  <input type="email" id="email" placeholder="Email" value="">
-  <input type="text" id="level" placeholder="Level (e.g., Beginner Freelancer)" value="">
-  
-  <button onclick="saveProfile()">Save Profile</button>
-  <span>Profile completeness will sync across dashboard and wallet.</span>
+  <div class="jobs-grid" id="jobsGrid">
+    <!-- Jobs dynamically inserted here -->
+  </div>
 </div>
 
 <script>
-// Load current user data
-const profileImg = document.getElementById("profileImg");
-const nameInput = document.getElementById("name");
-const emailInput = document.getElementById("email");
-const levelInput = document.getElementById("level");
-const imgUpload = document.getElementById("imgUpload");
-
-function loadUser(){
-  if(user){
-    nameInput.value = user.name || '';
-    emailInput.value = user.email || '';
-    levelInput.value = user.level || 'Beginner Freelancer';
-    profileImg.src = user.profileImage || 'https://via.placeholder.com/120';
-  }
-}
-
-imgUpload.addEventListener('change', (e)=>{
-  const file = e.target.files[0];
-  if(file){
-    const reader = new FileReader();
-    reader.onload = function(event){
-      profileImg.src = event.target.result;
-      user.profileImage = event.target.result;
-      localStorage.setItem("currentUser", JSON.stringify(user));
-    }
-    reader.readAsDataURL(file);
-  }
-});
-
-function saveProfile(){
-  user.name = nameInput.value.trim() || user.name;
-  user.email = emailInput.value.trim() || user.email;
-  user.level = levelInput.value.trim() || user.level;
-  localStorage.setItem("currentUser", JSON.stringify(user));
-  alert("Profile saved successfully!");
-}
+// Populate user data
+document.getElementById("studentName").innerText = user.name || "Student";
+document.getElementById("studentLevel").innerText = user.level || "Beginner Freelancer";
+document.getElementById("profileImg").src = user.avatar || "https://via.placeholder.com/80";
 
 // Logout
 function logout(){
   localStorage.removeItem("currentUser");
-  window.location.href = "auth.html";
+  window.location.href="auth.html";
 }
 
-loadUser();
+// MOCK JOBS
+const jobs = [
+  {title:"Campus Tour Guide", level:"Beginner", img:"https://images.unsplash.com/photo-1564866657317-44612e0aa29b?auto=format&fit=crop&w=400&q=60", pay:"$8/hr", verifiedOnly:false},
+  {title:"Research Participant / Lab Assistant", level:"Beginner", img:"https://images.unsplash.com/photo-1581091215367-0f17e7fae0ff?auto=format&fit=crop&w=400&q=60", pay:"$10/hr", verifiedOnly:false},
+  {title:"Online Tutoring", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1596495577886-2f08e50f6c2f?auto=format&fit=crop&w=400&q=60", pay:"$18/hr", verifiedOnly:true},
+  {title:"Website Development", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1616627981415-2f87f9f2f3b4?auto=format&fit=crop&w=400&q=60", pay:"$25/hr", verifiedOnly:true},
+  {title:"Graphic Design", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1612831669116-1b33c1f616f8?auto=format&fit=crop&w=400&q=60", pay:"$20/hr", verifiedOnly:true},
+  {title:"Content Creation / Writing", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=400&q=60", pay:"$22/hr", verifiedOnly:true},
+  {title:"Social Media Post", level:"Beginner", img:"https://images.unsplash.com/photo-1581276879432-15a8025b50d1?auto=format&fit=crop&w=400&q=60", pay:"$12/hr", verifiedOnly:false},
+  {title:"Flyer Design", level:"Beginner", img:"https://images.unsplash.com/photo-1557682224-5b8590cd9ec5?auto=format&fit=crop&w=400&q=60", pay:"$15/hr", verifiedOnly:false},
+  {title:"Data Entry", level:"Beginner", img:"https://images.unsplash.com/photo-1555949963-aa79dcee9815?auto=format&fit=crop&w=400&q=60", pay:"$10/hr", verifiedOnly:false},
+  {title:"Video Editing", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1581092580497-fce6f91de1c1?auto=format&fit=crop&w=400&q=60", pay:"$30/hr", verifiedOnly:true},
+  {title:"Marketing Strategy", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1554774853-54e4b7b1f98f?auto=format&fit=crop&w=400&q=60", pay:"$35/hr", verifiedOnly:true},
+  {title:"Blog Writing", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=400&q=60", pay:"$18/hr", verifiedOnly:true},
+  {title:"UX/UI Design", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=60", pay:"$28/hr", verifiedOnly:true},
+  {title:"Presentation Design", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1605902711622-cfb43c443467?auto=format&fit=crop&w=400&q=60", pay:"$20/hr", verifiedOnly:true},
+  {title:"Logo Design", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1587614382346-acb2f38b949d?auto=format&fit=crop&w=400&q=60", pay:"$22/hr", verifiedOnly:true},
+  {title:"Campus Ambassador", level:"Beginner", img:"https://images.unsplash.com/photo-1534751516642-a1af1ef0e7e0?auto=format&fit=crop&w=400&q=60", pay:"$12/hr", verifiedOnly:false},
+  {title:"Event Photography", level:"Beginner", img:"https://images.unsplash.com/photo-1553456558-aff63285bddf?auto=format&fit=crop&w=400&q=60", pay:"$15/hr", verifiedOnly:false},
+  {title:"Survey Data Collection", level:"Beginner", img:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=60", pay:"$10/hr", verifiedOnly:false},
+  {title:"Social Media Management", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1590608897129-79c6b982b52c?auto=format&fit=crop&w=400&q=60", pay:"$25/hr", verifiedOnly:true},
+  {title:"Freelance Coding Task", level:"Verified Freelancer", img:"https://images.unsplash.com/photo-1590608897129-3b1a5e982b52?auto=format&fit=crop&w=400&q=60", pay:"$30/hr", verifiedOnly:true},
+];
+
+// Render jobs
+const jobsGrid = document.getElementById("jobsGrid");
+jobs.forEach(job => {
+  const card = document.createElement("div");
+  card.classList.add("job-card");
+  card.innerHTML = `
+    <img src="${job.img}" alt="${job.title}">
+    <strong>${job.title}</strong>
+    <span>${job.level} · ${job.pay}</span>
+  `;
+  
+  const applyBtn = document.createElement("button");
+  applyBtn.className = "apply-btn";
+  applyBtn.innerText = "Apply";
+  
+  // Apply button logic
+  if(job.verifiedOnly && !user.verified){
+    applyBtn.disabled = true;
+    applyBtn.innerText = "Verified Only";
+    applyBtn.style.background="rgba(200,200,200,0.3)";
+    applyBtn.style.cursor="not-allowed";
+  } else {
+    applyBtn.onclick = () => alert(`Applied to ${job.title} successfully!`);
+  }
+  
+  card.appendChild(applyBtn);
+  jobsGrid.appendChild(card);
+});
 </script>
 </body>
 </html>
