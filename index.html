@@ -13,6 +13,8 @@
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,0.08);
   --text-light:rgba(255,255,255,.85);
+  --neon-pink:#ff00f0;
+  --neon-green:#00ff9d;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
@@ -30,83 +32,86 @@ header{
   justify-content:space-between;
   align-items:center;
   padding:20px 40px;
+  margin-bottom:40px;
 }
 .brand{
   font-family:Orbitron;
-  font-size:1.8rem;
+  font-size:2rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
+  text-shadow:0 0 8px var(--zep-blue),0 0 12px var(--zep-violet);
 }
-
-/* Pulsing login icon */
 .login-icon{
-  width:60px;
-  height:60px;
+  width:70px;
+  height:70px;
   border-radius:50%;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  font-size:24px;
+  font-size:26px;
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
   animation:pulse 2s infinite;
   transition:transform 0.3s;
 }
 .login-icon:hover{
-  transform:scale(1.1);
+  transform:scale(1.15);
 }
 @keyframes pulse{
   0%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
-  50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}
+  50%{box-shadow:0 0 35px var(--zep-blue),0 0 60px var(--zep-violet);}
   100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
 }
 
 /* HERO SECTION */
 .hero{
+  position:relative;
   display:flex;
   flex-direction:column;
   align-items:center;
   text-align:center;
-  padding:80px 20px 40px;
-  background:url('https://images.unsplash.com/photo-1593642634367-d91a135587b5?auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover;
-  position:relative;
+  padding:100px 20px 60px;
+  background:url('https://images.unsplash.com/photo-1600195077078-fb1caa8c4a5e?auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover;
 }
 .hero::after{
   content:'';
   position:absolute;
   inset:0;
   background:rgba(0,0,0,0.5);
+  z-index:0;
 }
 .hero-content{
   position:relative;
   z-index:1;
   max-width:900px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
 }
 .hero h1{
   font-family:Orbitron;
-  font-size:2.8rem;
-  margin-bottom:20px;
+  font-size:3rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
+  text-shadow:0 0 8px var(--zep-blue),0 0 16px var(--zep-violet);
 }
 .hero p{
   font-size:1.1rem;
-  margin-bottom:40px;
   color:var(--text-light);
+  max-width:600px;
 }
-
-/* HERO BUTTONS */
 .hero-buttons{
   display:flex;
   flex-wrap:wrap;
-  gap:16px;
+  gap:18px;
   justify-content:center;
 }
 .hero-buttons button{
-  padding:16px 28px;
+  padding:16px 32px;
   font-family:Orbitron;
   font-size:1rem;
   border:none;
@@ -115,10 +120,27 @@ header{
   transition:.3s;
   color:#050015;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  box-shadow:0 0 12px var(--zep-blue),0 0 24px var(--zep-violet);
 }
 .hero-buttons button:hover{
-  transform:translateY(-3px);
+  transform:translateY(-4px);
   box-shadow:0 0 30px var(--zep-blue),0 0 50px var(--zep-violet);
+}
+
+/* FLOATING ZAC ICONS */
+.floating{
+  position:absolute;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:linear-gradient(45deg,var(--neon-pink),var(--neon-green));
+  animation:floaty 6s infinite;
+  z-index:1;
+}
+@keyframes floaty{
+  0%{transform:translateY(0) rotate(0deg);}
+  50%{transform:translateY(-20px) rotate(180deg);}
+  100%{transform:translateY(0) rotate(360deg);}
 }
 
 /* FOOTER */
@@ -135,21 +157,22 @@ footer{
   margin-bottom:10px;
 }
 .socials a{
-  width:40px;
-  height:40px;
+  width:50px;
+  height:50px;
   display:flex;
   align-items:center;
   justify-content:center;
   border-radius:50%;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  color:#fff;
   text-decoration:none;
-  color:#050015;
-  font-size:20px;
+  font-size:22px;
+  box-shadow:0 0 12px var(--zep-blue),0 0 24px var(--zep-violet);
   transition:.3s;
 }
 .socials a:hover{
-  transform:scale(1.1);
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  transform:scale(1.15);
+  box-shadow:0 0 28px var(--zep-blue),0 0 48px var(--zep-violet);
 }
 
 /* RESPONSIVE */
@@ -169,7 +192,7 @@ footer{
 <section class="hero">
   <div class="hero-content">
     <h1>Become a Verified Freelancer in 21 Days</h1>
-    <p>While you hunt for beginner jobs, earn ZAC rewards, and grow your skills in our futuristic freelancer marketplace.</p>
+    <p>Hunt beginner jobs, earn ZAC rewards, and grow your skills in our futuristic freelancer marketplace.</p>
     <div class="hero-buttons">
       <button onclick="location.href='swipe-merchants.html'">Find Jobs</button>
       <button onclick="location.href='login.html'">Become a Freelancer</button>
@@ -177,6 +200,11 @@ footer{
       <button onclick="location.href='employer-auth.html'">List a Job</button>
     </div>
   </div>
+  <!-- Floating ZAC coins -->
+  <div class="floating" style="top:20%;left:10%"></div>
+  <div class="floating" style="top:40%;left:80%;animation-delay:1.5s"></div>
+  <div class="floating" style="top:60%;left:30%;animation-delay:3s"></div>
+  <div class="floating" style="top:75%;left:60%;animation-delay:2s"></div>
 </section>
 
 <footer>
