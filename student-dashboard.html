@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Student Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -27,35 +27,17 @@ header{
   background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
   backdrop-filter:blur(14px);
 }
-.brand{
-  font-family:Orbitron;
-  font-size:1.5rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.logout-btn{
-  background:rgba(255,255,255,.1);
-  border:none;
-  border-radius:50%;
-  width:38px;
-  height:38px;
-  cursor:pointer;
-  color:#fff;
-  font-size:16px;
-  transition:.3s;
-}
-.logout-btn:hover{background:rgba(255,0,80,.25);}
-
-/* HEADER LEFT */
 .header-left{display:flex;align-items:center;gap:12px;}
 .header-left img{width:50px;height:50px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
 .header-left div{display:flex;flex-direction:column;}
 .header-left div span{font-size:.8rem;color:var(--text-light);}
 .header-left div h2{font-family:Orbitron;font-size:1.1rem;}
+.brand{font-family:Orbitron;font-size:1.2rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;transition:.3s;}
+.logout-btn:hover{background:rgba(255,0,80,.25);}
 
 /* DASHBOARD */
-.dashboard{padding:0 16px 50px;display:flex;flex-direction:column;gap:22px;}
+.dashboard{padding:0 16px 60px;display:flex;flex-direction:column;gap:22px;}
 .section{background:var(--glass);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.12);}
 .section h3{font-family:Orbitron;margin-bottom:12px;}
 
@@ -67,9 +49,7 @@ header{
 
 /* EARNINGS */
 .earnings{display:flex;justify-content:space-between;}
-.earnings div{display:flex;flex-direction:column;}
-.earnings div span{font-size:.85rem;color:var(--text-light);}
-.earnings div strong{font-size:1.1rem;}
+.earnings strong{font-size:1.1rem}
 
 /* PROFILE COMPLETION */
 .verify-bar{height:10px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;margin-bottom:6px;}
@@ -77,15 +57,17 @@ header{
 .verify-text{font-size:.85rem;color:var(--text-light);}
 
 /* JOBS */
-.jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;}
-.job{background:rgba(255,255,255,.05);border-radius:12px;padding:10px;cursor:pointer;transition:.3s;}
-.job:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(156,77,255,.3);}
-.job img{width:100%;height:80px;border-radius:8px;margin-bottom:6px;object-fit:cover;}
+.jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;padding-top:16px;}
+.job{background:rgba(255,255,255,.05);border-radius:16px;padding:12px;border:1px solid rgba(255,255,255,.12);cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;transition:.3s;}
+.job img{width:100%;height:100px;border-radius:12px;object-fit:cover;margin-bottom:8px;}
+.job strong{font-family:Orbitron;font-size:1rem;margin-bottom:4px;}
+.job span{font-size:.8rem;color:var(--text-light);}
 
-/* QUICK ACTIONS */
+/* ACTIONS */
 .actions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
 .actions button{border:none;border-radius:999px;padding:12px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;}
-@media(max-width:480px){.actions{grid-template-columns:1fr;}}
+.actions button:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
+@media(max-width:480px){.actions{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -94,6 +76,11 @@ header{
 /* SESSION PROTECTION */
 const user = JSON.parse(localStorage.getItem("currentUser"));
 if(!user){window.location.href="auth.html";}
+
+// For testing: add firstDayCompleted & verified flags if not exist
+user.firstDayCompleted = user.firstDayCompleted || false;
+user.verified = user.verified || false;
+localStorage.setItem("currentUser", JSON.stringify(user));
 </script>
 
 <header>
@@ -114,15 +101,15 @@ if(!user){window.location.href="auth.html";}
   <!-- DAILY TASKS -->
   <div class="section">
     <h3>Daily Learn & Earn</h3>
-    <div class="task" onclick="location.href='learn-earn.html'">
+    <div class="task" onclick="completeTask('createProfile')">
       <strong>Create / Update Profile</strong>
       <span>+5 ZAC · 5 mins</span>
-      <div class="progress"><div style="width:60%"></div></div>
+      <div class="progress"><div style="width:50%" id="task1Progress"></div></div>
     </div>
-    <div class="task" onclick="location.href='learn-earn.html'">
+    <div class="task" onclick="completeTask('completeTutorial')">
       <strong>Complete Skill Tutorial</strong>
       <span>+10 ZAC · 15 mins</span>
-      <div class="progress"><div style="width:30%"></div></div>
+      <div class="progress"><div style="width:30%" id="task2Progress"></div></div>
     </div>
   </div>
 
@@ -145,34 +132,15 @@ if(!user){window.location.href="auth.html";}
     <div class="verify-text" id="completionText"></div>
   </div>
 
-  <!-- AVAILABLE JOBS -->
+  <!-- JOBS PREVIEW -->
   <div class="section">
-    <h3>Available Jobs</h3>
-    <div class="jobs">
-      <div class="job" onclick="location.href='swipe-merchants.html'">
-        <img src="https://images.unsplash.com/photo-1612832021343-4d5f2c267fbf?auto=format&fit=crop&w=400&q=60" alt="Job">
-        <strong>Social Media Post</strong>
-        <span>Beginner</span>
-      </div>
-      <div class="job" onclick="location.href='swipe-merchants.html'">
-        <img src="https://images.unsplash.com/photo-1612831455544-6f2dc2d8912c?auto=format&fit=crop&w=400&q=60" alt="Job">
-        <strong>Flyer Design</strong>
-        <span>Beginner</span>
-      </div>
-      <div class="job" onclick="location.href='swipe-merchants.html'">
-        <img src="https://images.unsplash.com/photo-1593642634367-d91a135587b5?auto=format&fit=crop&w=400&q=60" alt="Job">
-        <strong>Content Writing</strong>
-        <span>Verified</span>
-      </div>
-      <div class="job" onclick="location.href='swipe-merchants.html'">
-        <img src="https://images.unsplash.com/photo-1612831666228-0ef7d3a7f6d5?auto=format&fit=crop&w=400&q=60" alt="Job">
-        <strong>Web Design</strong>
-        <span>Verified</span>
-      </div>
+    <h3>Available Jobs Preview</h3>
+    <div class="jobs" id="jobsContainer">
+      <!-- Jobs will render dynamically -->
     </div>
   </div>
 
-  <!-- QUICK ACTIONS -->
+  <!-- ACTIONS -->
   <div class="section actions">
     <button onclick="location.href='learn-earn.html'">Tasks</button>
     <button onclick="location.href='swipe-merchants.html'">Jobs</button>
@@ -183,24 +151,87 @@ if(!user){window.location.href="auth.html";}
 </div>
 
 <script>
-/* Populate user data */
+/* HEADER */
 document.getElementById("studentName").innerText = user.name || "Student";
 document.getElementById("studentLevel").innerText = user.level || "Beginner Freelancer";
+document.getElementById("profileImg").src = user.profileImage || "https://images.unsplash.com/photo-1603415526960-f8f22c9ec315?auto=format&fit=crop&w=400&q=60";
+
+/* WALLET */
 document.getElementById("zacBalance").innerText = user.ZAC || 0;
 document.getElementById("usdBalance").innerText = user.USD || 0;
-document.getElementById("profileImg").src = user.profileImage || "https://via.placeholder.com/50";
 
-/* PROFILE COMPLETENESS */
+/* PROFILE COMPLETION */
 const completion = user.profileCompletion || 0;
-document.getElementById("completionBar").style.width = completion + "%";
+document.getElementById("completionBar").style.width = completion+"%";
 document.getElementById("completionText").innerText =
-  completion < 60 ? "Complete your profile to unlock more jobs" : "Profile complete — jobs unlocked 🎉";
+  completion<60 ? "Complete your profile to unlock jobs" : "Profile complete — jobs unlocked 🎉";
+
+/* TASK LOGIC TO UNLOCK BEGINNER JOBS */
+function completeTask(task){
+  if(task==="createProfile") document.getElementById("task1Progress").style.width="100%";
+  if(task==="completeTutorial") document.getElementById("task2Progress").style.width="100%";
+
+  // If both tasks done, mark firstDayCompleted
+  if(!user.firstDayCompleted){
+    user.firstDayCompleted = true;
+    localStorage.setItem("currentUser", JSON.stringify(user));
+    alert("First day tasks complete! Beginner jobs unlocked.");
+  }
+}
+
+/* JOBS PREVIEW (MOCKUP) */
+const jobs = [
+  {id:1,title:"Campus Tour Guide",type:"beginner",price:8,img:"https://images.unsplash.com/photo-1612831455544-6f2dc2d8912c?auto=format&fit=crop&w=400&q=60"},
+  {id:2,title:"Research Participant",type:"beginner",price:10,img:"https://images.unsplash.com/photo-1612832021343-4d5f2c267fbf?auto=format&fit=crop&w=400&q=60"},
+  {id:3,title:"Lab Assistant",type:"beginner",price:12,img:"https://images.unsplash.com/photo-1612831748790-fc72e3c7a5f4?auto=format&fit=crop&w=400&q=60"},
+  {id:4,title:"Online Tutoring",type:"verified",price:20,img:"https://images.unsplash.com/photo-1593642634367-d91a135587b5?auto=format&fit=crop&w=400&q=60"},
+  {id:5,title:"Website Development",type:"verified",price:25,img:"https://images.unsplash.com/photo-1612831666228-0ef7d3a7f6d5?auto=format&fit=crop&w=400&q=60"}
+];
+
+/* Applied Jobs from localStorage */
+let appliedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || [];
+const jobsContainer = document.getElementById("jobsContainer");
+
+function renderJobs(){
+  jobsContainer.innerHTML = "";
+  jobs.forEach(job=>{
+    const jobDiv = document.createElement("div");
+    jobDiv.classList.add("job");
+
+    let eligible = false;
+    if(job.type==="beginner" && user.firstDayCompleted) eligible=true;
+    if(job.type==="verified" && user.verified) eligible=true;
+
+    let btnText = appliedJobs.includes(job.id) ? "Applied ✅" : eligible ? "Apply" : "Locked 🔒";
+    let btnClass = appliedJobs.includes(job.id) ? "applied" : eligible ? "eligible" : "locked";
+
+    jobDiv.innerHTML = `
+      <img src="${job.img}" alt="${job.title}">
+      <strong>${job.title}</strong>
+      <span>${job.type.charAt(0).toUpperCase()+job.type.slice(1)} · $${job.price}/hr</span>
+      <button class="apply-btn ${btnClass}" data-id="${job.id}">${btnText}</button>
+    `;
+
+    jobsContainer.appendChild(jobDiv);
+  });
+
+  document.querySelectorAll(".apply-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      if(btn.classList.contains("locked") || btn.classList.contains("applied")) return;
+      const jobId = parseInt(btn.dataset.id);
+      appliedJobs.push(jobId);
+      localStorage.setItem("appliedJobs", JSON.stringify(appliedJobs));
+      btn.textContent="Applied ✅";
+      btn.classList.add("applied");
+      alert("You applied successfully!");
+    });
+  });
+}
+
+renderJobs();
 
 /* LOGOUT */
-function logout(){
-  localStorage.removeItem("currentUser");
-  window.location.href="auth.html";
-}
+function logout(){localStorage.removeItem("currentUser");window.location.href="auth.html";}
 </script>
 
 </body>
