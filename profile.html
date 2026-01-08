@@ -13,8 +13,14 @@
   --glass:rgba(255,255,255,0.08);
   --text-light:rgba(255,255,255,0.85);
 }
-*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;padding-bottom:50px;}
+
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
+
+body{
+  background:var(--bg);
+  color:#fff;
+  min-height:100vh;
+}
 
 /* HEADER */
 header{
@@ -26,19 +32,10 @@ header{
   border-radius:16px;
   background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
   backdrop-filter:blur(14px);
-  animation:pulse 4s infinite alternate;
 }
-@keyframes pulse{
-  0%{box-shadow:0 0 20px rgba(0,240,255,.25)}
-  100%{box-shadow:0 0 40px rgba(156,77,255,.45)}
-}
-.header-left{display:flex;align-items:center;gap:12px;}
-.header-left h2{font-family:Orbitron;font-size:1.1rem;}
-.header-left span{font-size:.8rem;color:var(--text-light);}
-.header-right{display:flex;align-items:center;gap:14px;}
 .brand{
   font-family:Orbitron;
-  font-size:1.2rem;
+  font-size:1.5rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -52,73 +49,68 @@ header{
   cursor:pointer;
   color:#fff;
   font-size:16px;
+  transition:.3s;
 }
-.logout-btn:hover{background:rgba(255,0,80,.3);}
+.logout-btn:hover{
+  background:rgba(255,0,80,.25);
+}
 
-/* PROFILE CARDS */
-.container{
-  padding:0 16px;
-  display:flex;
-  flex-direction:column;
-  gap:20px;
-}
-.card{
+/* PROFILE CONTAINER */
+.profile-container{
+  max-width:400px;
+  margin:20px auto;
   background:var(--glass);
   border-radius:16px;
-  padding:16px;
+  padding:20px;
   border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 0 40px rgba(0,240,255,.1);
+  box-shadow:0 0 36px rgba(156,77,255,.2);
+  display:flex;
+  flex-direction:column;
+  gap:16px;
 }
-.card h3{font-family:Orbitron;margin-bottom:12px;}
-.input-group{display:flex;flex-direction:column;margin-bottom:12px;}
-.input-group label{font-size:.85rem;color:var(--text-light);margin-bottom:4px;}
-.input-group input{padding:10px;border-radius:12px;border:none;outline:none;background:rgba(255,255,255,.05);color:#fff;}
-.input-group input::placeholder{color:rgba(255,255,255,.5);}
-button.update-btn{
+
+/* PROFILE IMAGE */
+.profile-image{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.3);
+  margin:0 auto;
+  object-fit:cover;
+}
+
+/* INPUTS */
+.profile-container input[type="text"],
+.profile-container input[type="email"],
+.profile-container input[type="file"]{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+  margin-bottom:12px;
+}
+
+/* SAVE BUTTON */
+.profile-container button{
   width:100%;
   padding:12px;
   border:none;
   border-radius:999px;
-  font-family:Orbitron;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
+  font-family:Orbitron;
   cursor:pointer;
-  margin-top:8px;
+  transition:.3s;
 }
-button.update-btn:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
-
-/* AVATAR */
-.avatar-container{
-  display:flex;
-  justify-content:center;
-  margin-bottom:12px;
-}
-.avatar-container img{
-  width:100px;
-  height:100px;
-  border-radius:50%;
-  border:2px solid rgba(255,255,255,.3);
-  object-fit:cover;
-  cursor:pointer;
+.profile-container button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 36px rgba(156,77,255,.45);
 }
 
-/* PROFILE COMPLETION */
-.verify-bar{
-  height:10px;
-  background:rgba(255,255,255,.1);
-  border-radius:6px;
-  overflow:hidden;
-  margin-bottom:6px;
-}
-.verify-bar div{
-  height:100%;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-}
-.verify-text{font-size:.85rem;color:var(--text-light);text-align:center;}
-
-/* MOBILE */
-@media(max-width:480px){
-  .avatar-container img{width:80px;height:80px;}
+span{
+  font-size:0.85rem;
+  color:var(--text-light);
 }
 </style>
 </head>
@@ -127,106 +119,75 @@ button.update-btn:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,
 <script>
 /* SESSION PROTECTION */
 const user = JSON.parse(localStorage.getItem("currentUser"));
-if(!user){window.location.href="auth.html";}
+if(!user){
+  window.location.href = "auth.html";
+}
 </script>
 
 <header>
-  <div class="header-left">
-    <h2>Profile</h2>
-    <span id="studentLevel"></span>
-  </div>
-  <div class="header-right">
-    <div class="brand">Zep Swipe</div>
-    <button class="logout-btn" onclick="logout()">⎋</button>
-  </div>
+  <div class="brand">Zep Swipe</div>
+  <button class="logout-btn" onclick="logout()" title="Logout">⎋</button>
 </header>
 
-<div class="container">
+<div class="profile-container">
+  <img src="" alt="Profile Image" class="profile-image" id="profileImg">
+  
+  <label for="imgUpload" style="text-align:center; display:block; cursor:pointer;">📷 Upload Profile Image</label>
+  <input type="file" id="imgUpload" accept="image/*">
 
-  <!-- AVATAR -->
-  <div class="card avatar-container">
-    <img id="profileImg" src="" alt="Profile" title="Click to change avatar">
-  </div>
-
-  <!-- PROFILE INFO -->
-  <div class="card">
-    <h3>Student Info</h3>
-    <div class="input-group">
-      <label for="name">Full Name</label>
-      <input type="text" id="name" placeholder="Enter your name">
-    </div>
-    <div class="input-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Enter your email">
-    </div>
-    <div class="input-group">
-      <label for="level">Level / Status</label>
-      <input type="text" id="level" placeholder="Beginner Freelancer">
-    </div>
-    <button class="update-btn" onclick="updateProfile()">Update Profile</button>
-  </div>
-
-  <!-- PROFILE COMPLETENESS -->
-  <div class="card">
-    <h3>Profile Completion</h3>
-    <div class="verify-bar">
-      <div id="completionBar"></div>
-    </div>
-    <div class="verify-text" id="completionText"></div>
-  </div>
-
+  <input type="text" id="name" placeholder="Full Name" value="">
+  <input type="email" id="email" placeholder="Email" value="">
+  <input type="text" id="level" placeholder="Level (e.g., Beginner Freelancer)" value="">
+  
+  <button onclick="saveProfile()">Save Profile</button>
+  <span>Profile completeness will sync across dashboard and wallet.</span>
 </div>
 
 <script>
-/* Populate user info */
-document.getElementById("name").value = user.name || "";
-document.getElementById("email").value = user.email || "";
-document.getElementById("level").value = user.level || "Beginner Freelancer";
-document.getElementById("studentLevel").innerText = user.level || "Beginner Freelancer";
-document.getElementById("profileImg").src = user.avatar || "https://via.placeholder.com/100";
+// Load current user data
+const profileImg = document.getElementById("profileImg");
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const levelInput = document.getElementById("level");
+const imgUpload = document.getElementById("imgUpload");
 
-/* Profile Completeness Logic */
-function calculateCompletion(u){
-  let count=0;
-  if(u.name) count+=30;
-  if(u.email) count+=30;
-  if(u.avatar) count+=20;
-  if(u.level) count+=20;
-  return Math.min(count,100);
+function loadUser(){
+  if(user){
+    nameInput.value = user.name || '';
+    emailInput.value = user.email || '';
+    levelInput.value = user.level || 'Beginner Freelancer';
+    profileImg.src = user.profileImage || 'https://via.placeholder.com/120';
+  }
 }
 
-function updateCompletion(){
-  const updated = JSON.parse(localStorage.getItem("currentUser"));
-  const comp = calculateCompletion(updated);
-  document.getElementById("completionBar").style.width = comp + "%";
-  document.getElementById("completionText").innerText = comp<60 ? 
-    "Complete your profile to unlock more jobs" :
-    "Profile complete — jobs unlocked 🎉";
-}
-
-/* Update Profile */
-function updateProfile(){
-  user.name = document.getElementById("name").value.trim();
-  user.email = document.getElementById("email").value.trim();
-  user.level = document.getElementById("level").value.trim();
-  localStorage.setItem("currentUser", JSON.stringify(user));
-  alert("Profile updated!");
-  updateCompletion();
-  document.getElementById("studentLevel").innerText = user.level;
-}
-
-/* Avatar Change */
-document.getElementById("profileImg").addEventListener("click",()=>{
-  const url = prompt("Enter avatar image URL:");
-  if(url){user.avatar=url;localStorage.setItem("currentUser",JSON.stringify(user));document.getElementById("profileImg").src=url;updateCompletion();}
+imgUpload.addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(file){
+    const reader = new FileReader();
+    reader.onload = function(event){
+      profileImg.src = event.target.result;
+      user.profileImage = event.target.result;
+      localStorage.setItem("currentUser", JSON.stringify(user));
+    }
+    reader.readAsDataURL(file);
+  }
 });
 
-/* Initialize completion */
-updateCompletion();
+function saveProfile(){
+  user.name = nameInput.value.trim() || user.name;
+  user.email = emailInput.value.trim() || user.email;
+  user.level = levelInput.value.trim() || user.level;
+  localStorage.setItem("currentUser", JSON.stringify(user));
+  alert("Profile saved successfully!");
+}
 
-/* Logout */
-function logout(){localStorage.removeItem("currentUser");window.location.href="auth.html";}
+// Logout
+function logout(){
+  localStorage.removeItem("currentUser");
+  window.location.href = "auth.html";
+}
+
+loadUser();
 </script>
-
 </body>
 </html>
