@@ -3,254 +3,182 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Campus Deals</title>
+<title>Zep Swipe — Student Deals</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 25% 10%, #050018 0%, #00000c 100%);
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,0.08);
-  --text-light: rgba(255,255,255,0.85);
+  --text-light:rgba(255,255,255,.85);
+  --badge-green:#00ff9d;
+  --badge-gray:#aaa;
 }
 
-/* Base styles */
-body{
-  margin:0;
-  font-family:Poppins,sans-serif;
-  background: var(--bg);
-  color:#fff;
-  min-height:100vh;
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
+body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.4;}
 
-/* HEADER */
 header{
-  width:100%;
   display:flex;
-  justify-content: space-between;
+  justify-content:space-between;
   align-items:center;
-  padding:16px 24px;
-  border-radius:0 0 16px 16px;
-  backdrop-filter: blur(16px);
-  background: radial-gradient(circle at center, rgba(0,240,255,0.2), rgba(156,77,255,0.2));
-  animation: pulseHeader 4s infinite alternate;
-  position:sticky;
-  top:0;
-  z-index:1000;
+  padding:16px 20px;
+  max-width:1200px;
+  margin:auto;
+  background:rgba(0,0,0,.2);
+  border-radius:12px;
 }
-@keyframes pulseHeader{
-  0%{box-shadow:0 0 20px rgba(0,240,255,0.25);}
-  50%{box-shadow:0 0 50px rgba(156,77,255,0.4);}
-  100%{box-shadow:0 0 20px rgba(0,240,255,0.25);}
+.brand{font-family:Orbitron;font-size:1.6rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.login-icon{
+  width:50px;height:50px;border-radius:50%;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:22px;transition:transform .3s,box-shadow .3s;
 }
-header .logo{
-  font-family:Orbitron,sans-serif;
-  font-size:1.6rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-header .list-deals{
-  font-family:Orbitron,sans-serif;
-  padding:8px 16px;
-  border-radius:999px;
-  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  text-decoration:none;
-  transition:0.3s;
-}
-header .list-deals:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 36px rgba(156,77,255,.45);
-}
+.login-icon:hover{transform:scale(1.1);box-shadow:0 0 12px var(--zep-blue),0 0 25px var(--zep-violet);}
 
-/* SEARCH BAR */
-.search-container{
-  margin:16px auto;
-  text-align:center;
-}
-.search-container input{
-  width:90%;
-  max-width:400px;
-  padding:12px 16px;
-  border-radius:999px;
-  border:none;
-  outline:none;
-  font-size:1rem;
-  background:var(--glass);
-  color:#fff;
-}
+.container{padding:20px;max-width:1200px;margin:auto;}
+h2{font-family:Orbitron;margin-bottom:16px;text-align:center;}
 
-/* DEAL GRID SECTION */
-.deals-section{
-  margin:32px 16px;
-}
-.deals-section h2{
-  font-family:Orbitron,sans-serif;
-  font-size:1.5rem;
-  margin-bottom:16px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
+.deals-list{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:600px){.deals-list{grid-template-columns:1fr 1fr;}}
 
-/* GRID */
-.deals-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:16px;
-}
-
-/* DEAL CARD */
 .deal-card{
-  background: var(--glass);
-  border-radius:16px;
-  padding:16px;
-  text-align:center;
-  border:1px solid rgba(255,255,255,0.12);
-  box-shadow:0 8px 20px rgba(0,240,255,0.15);
-  transition:transform 0.3s, box-shadow 0.3s;
-  cursor:pointer;
+  background:var(--glass);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.12);
+  display:flex;flex-direction:column;gap:8px;transition:.3s;
 }
-.deal-card:hover{
-  transform: scale(1.05);
-  box-shadow:0 16px 40px rgba(156,77,255,0.3);
-}
-.deal-icon{
-  width:80px;
-  height:80px;
-  margin-bottom:8px;
-}
-.deal-name{
-  font-family:Orbitron,sans-serif;
-  font-size:1.1rem;
-  margin-bottom:4px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.deal-desc,.deal-distance{
-  font-size:0.85rem;
-  color:var(--text-light);
-  margin-bottom:4px;
-}
-.view-btn{
-  display:inline-block;
-  margin-top:6px;
-  padding:8px 16px;
-  border-radius:999px;
-  font-family:Orbitron,sans-serif;
-  font-weight:600;
-  font-size:13px;
-  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  text-decoration:none;
-  box-shadow:0 0 16px rgba(0,240,255,.25);
-}
-.view-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 36px rgba(156,77,255,.45);
-}
+.deal-card:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(156,77,255,.3);}
 
-@media(max-width:480px){
-  header{flex-direction:column; gap:8px; padding:12px;}
-  .search-container input{width:95%;}
-  .deal-card{padding:12px;}
+.deal-card h3{font-size:1.1rem;margin-bottom:4px;}
+.deal-card p{font-size:.9rem;color:var(--text-light);}
+.deal-card .meta{font-size:.8rem;color:var(--text-light);display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
+.badge{
+  padding:4px 8px;border-radius:999px;font-size:.75rem;font-weight:600;
+  text-transform:uppercase;
 }
+.badge.active{background:var(--badge-green);color:#050015;}
+.badge.locked{background:var(--badge-gray);color:#050015;}
+
+.locked-message{
+  text-align:center;
+  margin:20px 0;
+  font-size:0.95rem;
+  color:var(--text-light);
+}
+.locked-message button{
+  margin-top:10px;
+  padding:10px 16px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-family:Orbitron;
+  cursor:pointer;
+  transition:.3s;
+}
+.locked-message button:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+
+.footer-link{
+  text-align:center;
+  margin:30px 0;
+  font-size:.9rem;
+}
+.footer-link a{
+  color:var(--zep-blue);
+  text-decoration:none;
+  font-weight:600;
+}
+.footer-link a:hover{text-decoration:underline;}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">Zep Swipe</div>
-  <a href="business.html" class="list-deals">List Deals</a>
+  <div class="brand">Zep Swipe</div>
+  <div class="login-icon" onclick="location.href='login.html'" title="Login">⎋</div>
 </header>
 
-<div class="search-container">
-  <input type="text" id="searchInput" placeholder="Search for a store...">
+<div class="container">
+  <h2>Student Deals Marketplace</h2>
+  <div id="dealsContainer" class="deals-list"></div>
+
+  <div class="footer-link">
+    Are you a merchant? <a href="merchant-deals.html">List your student deal →</a>
+  </div>
 </div>
 
-<section class="deals-section">
-  <h2>Nearby Student Stores</h2>
-  <div class="deals-grid" id="dealsGrid1"></div>
-</section>
-
-<section class="deals-section">
-  <h2>Trending Student Favorites</h2>
-  <div class="deals-grid" id="dealsGrid2"></div>
-</section>
-
 <script>
-// Sample stores with lightweight 3D neon placeholders
-const stores1=[
-  {name:"Campus Cafe",desc:"20% off coffee & pastries",lat:-33.9571,lng:18.4603,logo:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Placeholder_light_blue.svg"},
-  {name:"BookHub Store",desc:"10% off textbooks & free notebook",lat:-29.8587,lng:31.0218,logo:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Placeholder_light_blue.svg"},
-];
-const stores2=[
-  {name:"Tech Gear",desc:"15% off student gadgets",lat:-26.2041,lng:28.0473,logo:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Placeholder_light_blue.svg"},
-  {name:"Student Fashion",desc:"Buy 1 Get 1 Free T-shirts",lat:-25.7479,lng:28.2293,logo:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Placeholder_light_blue.svg"},
+// Mock current user
+const currentUser = JSON.parse(localStorage.getItem("currentUser")) || {tasksCompleted:2}; // change tasksCompleted to test
+
+// Mock deals
+const studentDeals = [
+  {id:1,business:"Cafe Mocha",desc:"Free coffee with any snack",day:"Mon",location:"In-store",expiryMinutes:180},
+  {id:2,business:"Tech Store",desc:"10% off student laptops",day:"Tue",location:"Online",expiryMinutes:240},
+  {id:3,business:"BookWorld",desc:"Buy 1 Get 1 free textbook",day:"Wed",location:"In-store",expiryMinutes:120},
+  {id:4,business:"CinemaX",desc:"Student tickets $5",day:"Thu",location:"In-store",expiryMinutes:360},
+  {id:5,business:"GymPlus",desc:"Free 1-week trial",day:"Fri",location:"Online",expiryMinutes:300},
 ];
 
-// Distance calculation
-function getDistance(lat1, lon1, lat2, lon2){
-  const R=6371;
-  const dLat=(lat2-lat1)*Math.PI/180;
-  const dLon=(lon2-lon1)*Math.PI/180;
-  const a=Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
-  const c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
-  return (R*c).toFixed(2)+" km";
-}
+// Render deals
+const container = document.getElementById("dealsContainer");
+const today = new Date().getDay(); // 0=Sun, 1=Mon ...
 
-// Render grid
-function renderGrid(gridId,stores,userLat,userLon){
-  const container=document.getElementById(gridId);
-  container.innerHTML="";
-  stores.forEach(store=>{
-    const distance=userLat&&userLon?getDistance(userLat,userLon,store.lat,store.lng):"Unavailable";
-    const card=document.createElement("div");
-    card.className="deal-card";
-    card.innerHTML=`
-      <img src="${store.logo}" class="deal-icon" alt="${store.name}">
-      <div class="deal-name">${store.name}</div>
-      <div class="deal-desc">${store.desc}</div>
-      <div class="deal-distance">Distance: ${distance}</div>
-      <a href="store.html" class="view-btn" onclick='viewStore(${JSON.stringify(store)})'>View Store</a>
+studentDeals.forEach(deal=>{
+  const card = document.createElement("div");
+  card.className="deal-card";
+
+  // Locked check: needs 3 tasks
+  if(currentUser.tasksCompleted < 3){
+    card.innerHTML = `
+      <h3>${deal.business}</h3>
+      <p>${deal.desc}</p>
+      <div class="meta">
+        <span>${deal.day} · ${deal.location}</span>
+        <span class="badge locked">Locked</span>
+      </div>
     `;
     container.appendChild(card);
-  });
-}
+  } else {
+    const countdownId = "countdown"+deal.id;
+    card.innerHTML = `
+      <h3>${deal.business}</h3>
+      <p>${deal.desc}</p>
+      <div class="meta">
+        <span>${deal.day} · ${deal.location}</span>
+        <span class="badge active">Active Today</span>
+      </div>
+      <div style="margin-top:6px;font-size:.8rem;" id="${countdownId}">Expires in: --:--:--</div>
+    `;
+    container.appendChild(card);
 
-// Save store to localStorage
-function viewStore(store){
-  localStorage.setItem("currentStore",JSON.stringify(store));
-}
-
-// Geolocation
-function loadStores(position){
-  const userLat=position.coords.latitude;
-  const userLon=position.coords.longitude;
-  renderGrid("dealsGrid1",stores1,userLat,userLon);
-  renderGrid("dealsGrid2",stores2,userLat,userLon);
-}
-function locationError(){
-  renderGrid("dealsGrid1",stores1,null,null);
-  renderGrid("dealsGrid2",stores2,null,null);
-}
-if(navigator.geolocation){
-  navigator.geolocation.getCurrentPosition(loadStores,locationError);
-}else{
-  locationError();
-}
-
-// Search functionality
-document.getElementById("searchInput").addEventListener("input", function(){
-  const term=this.value.toLowerCase();
-  ["dealsGrid1","dealsGrid2"].forEach(gridId=>{
-    document.querySelectorAll(`#${gridId} .deal-card`).forEach(card=>{
-      const name=card.querySelector(".deal-name").textContent.toLowerCase();
-      card.style.display=name.includes(term)?"block":"none";
-    });
-  });
+    // Countdown timer
+    const expiryTime = new Date().getTime() + deal.expiryMinutes*60000;
+    const countdownEl = document.getElementById(countdownId);
+    setInterval(()=>{
+      const now = new Date().getTime();
+      let diff = expiryTime - now;
+      if(diff<0){countdownEl.innerText="Deal expired"; return;}
+      const h = Math.floor(diff/3600000);
+      const m = Math.floor((diff%3600000)/60000);
+      const s = Math.floor((diff%60000)/1000);
+      countdownEl.innerText=`Expires in: ${h}h ${m}m ${s}s`;
+    },1000);
+  }
 });
+
+// Show locked message if less than 3 tasks
+if(currentUser.tasksCompleted<3){
+  const lockedMsg = document.createElement("div");
+  lockedMsg.className="locked-message";
+  lockedMsg.innerHTML = `
+    Complete 3 tasks on <strong>Learn & Earn</strong> to unlock today's deals
+    <br><button onclick="location.href='learn-earn.html'">Go to Learn & Earn</button>
+  `;
+  container.prepend(lockedMsg);
+}
 </script>
+
 </body>
 </html>
