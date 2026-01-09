@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Submit Student Deal</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,0.08);
+  --text-light:rgba(255,255,255,.85);
+  --card-bg:rgba(255,255,255,.05);
+}
+
+/* RESET */
+* { box-sizing:border-box; margin:0; padding:0; font-family:Poppins,sans-serif; }
+body { background:var(--bg); color:#fff; min-height:100vh; overflow-x:hidden; }
+
+/* HEADER */
+header {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:16px 20px; max-width:1200px; margin:auto;
+}
+.brand {
+  font-family:Orbitron; font-size:1.6rem;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.header-login {
+  width:50px; height:50px; border-radius:50%;
+  background: linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-size:22px;
+  transition:transform 0.3s, box-shadow 0.3s;
+}
+.header-login:hover { transform: scale(1.1); box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet); }
+
+/* FORM CONTAINER */
+.form-container {
+  max-width:600px; margin:40px auto; padding:20px; border-radius:16px; background:var(--card-bg);
+}
+.form-container h1 {
+  font-family:Orbitron; font-size:1.8rem; margin-bottom:16px; text-align:center;
+}
+.form-group { margin-bottom:16px; display:flex; flex-direction:column; }
+.form-group label { margin-bottom:6px; font-weight:500; }
+.form-group input, .form-group select, .form-group textarea {
+  padding:12px; border-radius:12px; border:none; background:rgba(255,255,255,0.1); color:#fff;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline:none; box-shadow:0 0 10px var(--zep-blue);
+}
+input[type="file"] { padding:6px; background:rgba(255,255,255,0.1); }
+
+/* SUBMIT BUTTON */
+.submit-btn {
+  width:100%; padding:14px; font-family:Orbitron; font-size:1rem;
+  border:none; border-radius:999px; cursor:pointer;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050015;
+  transition:.3s;
+}
+.submit-btn:hover { transform:translateY(-2px); box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet); }
+
+/* ERROR MESSAGE */
+.error-msg { color:#ff4d4d; font-size:0.85rem; margin-top:4px; }
+
+/* MODAL */
+.modal {
+  position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+  background:rgba(0,0,0,0.7); z-index:1000;
+}
+.modal-content {
+  background:var(--card-bg); padding:24px; border-radius:16px; text-align:center;
+  max-width:400px; animation:fadeIn 0.4s ease;
+}
+.modal-content h2 {
+  font-family:Orbitron; margin-bottom:12px; font-size:1.5rem;
+}
+.modal-content p { margin-bottom:20px; color:var(--text-light); font-size:0.95rem; }
+.modal-content button {
+  padding:12px 24px; border:none; border-radius:999px;
+  font-family:Orbitron; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050015;
+  cursor:pointer; transition:.3s;
+}
+.modal-content button:hover { transform:translateY(-2px); box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet); }
+
+/* ANIMATION */
+@keyframes fadeIn { from {opacity:0; transform:scale(0.95);} to {opacity:1; transform:scale(1);} }
+
+/* FOOTER */
+footer { text-align:center; padding:20px 10px; margin-top:40px; border-top:1px solid rgba(255,255,255,0.1); color:var(--text-light); font-size:0.85rem; }
+
+/* MOBILE FIRST RESPONSIVE */
+@media(min-width:600px){ .form-container { padding:32px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Zep Swipe</div>
+  <div class="header-login" onclick="location.href='login.html'" title="Login">⎋</div>
+</header>
+
+<section class="form-container">
+  <h1>Submit Student Deal</h1>
+  <form id="dealForm">
+    <div class="form-group">
+      <label for="businessName">Business Name *</label>
+      <input type="text" id="businessName" required>
+      <span class="error-msg" id="error-business"></span>
+    </div>
+    <div class="form-group">
+      <label for="dealDescription">Deal Description *</label>
+      <textarea id="dealDescription" rows="3" required></textarea>
+      <span class="error-msg" id="error-desc"></span>
+    </div>
+    <div class="form-group">
+      <label for="dealDay">Deal Day *</label>
+      <select id="dealDay" required>
+        <option value="">Select a Day</option>
+        <option>Monday</option>
+        <option>Tuesday</option>
+        <option>Wednesday</option>
+        <option>Thursday</option>
+        <option>Friday</option>
+      </select>
+      <span class="error-msg" id="error-day"></span>
+    </div>
+    <div class="form-group">
+      <label for="dealType">Deal Type *</label>
+      <select id="dealType" required>
+        <option value="">Select Type</option>
+        <option>Discount %</option>
+        <option>Free Item</option>
+        <option>Bundle</option>
+      </select>
+      <span class="error-msg" id="error-type"></span>
+    </div>
+    <div class="form-group">
+      <label for="dealLocation">Location *</label>
+      <select id="dealLocation" required>
+        <option value="">Select Location</option>
+        <option>In-store</option>
+        <option>Online</option>
+      </select>
+      <span class="error-msg" id="error-location"></span>
+    </div>
+    <div class="form-group">
+      <label for="contactInfo">Contact Info (Email / Phone) *</label>
+      <input type="text" id="contactInfo" required>
+      <span class="error-msg" id="error-contact"></span>
+    </div>
+    <div class="form-group">
+      <label for="dealLogo">Upload Logo / Image *</label>
+      <input type="file" id="dealLogo" accept="image/*" required>
+      <span class="error-msg" id="error-logo"></span>
+    </div>
+    <button type="submit" class="submit-btn">Submit Deal</button>
+  </form>
+</section>
+
+<!-- CONFIRMATION MODAL -->
+<div class="modal" id="confirmationModal">
+  <div class="modal-content">
+    <h2>Your deal is under review / live</h2>
+    <p>We’ll notify you once your deal is active. Thank you for joining Zep Swipe Student Deals!</p>
+    <button onclick="closeModal()">Return to Dashboard</button>
+  </div>
+</div>
+
+<footer>
+  &copy; 2026 Zep Swipe Student Deals. All Rights Reserved.
+</footer>
+
+<script>
+// FORM SUBMISSION & LOCALSTORAGE
+const form = document.getElementById('dealForm');
+const modal = document.getElementById('confirmationModal');
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // RESET ERROR MESSAGES
+  document.querySelectorAll('.error-msg').forEach(span => span.innerText = '');
+
+  // VALIDATION
+  let valid = true;
+  const businessName = document.getElementById('businessName');
+  const dealDescription = document.getElementById('dealDescription');
+  const dealDay = document.getElementById('dealDay');
+  const dealType = document.getElementById('dealType');
+  const dealLocation = document.getElementById('dealLocation');
+  const contactInfo = document.getElementById('contactInfo');
+  const dealLogo = document.getElementById('dealLogo');
+
+  if(!businessName.value.trim()){ document.getElementById('error-business').innerText='Required'; valid=false; }
+  if(!dealDescription.value.trim()){ document.getElementById('error-desc').innerText='Required'; valid=false; }
+  if(!dealDay.value){ document.getElementById('error-day').innerText='Required'; valid=false; }
+  if(!dealType.value){ document.getElementById('error-type').innerText='Required'; valid=false; }
+  if(!dealLocation.value){ document.getElementById('error-location').innerText='Required'; valid=false; }
+  if(!contactInfo.value.trim()){ document.getElementById('error-contact').innerText='Required'; valid=false; }
+  if(!dealLogo.files[0]){ document.getElementById('error-logo').innerText='Required'; valid=false; }
+
+  if(!valid) return;
+
+  // READ FILE AS DATA URL
+  const reader = new FileReader();
+  reader.onload = function(){
+    const dealData = {
+      businessName: businessName.value,
+      dealDescription: dealDescription.value,
+      dealDay: dealDay.value,
+      dealType: dealType.value,
+      dealLocation: dealLocation.value,
+      contactInfo: contactInfo.value,
+      logo: reader.result
+    };
+
+    let deals = JSON.parse(localStorage.getItem('studentDeals')) || [];
+    deals.push(dealData);
+    localStorage.setItem('studentDeals', JSON.stringify(deals));
+
+    // SHOW MODAL
+    modal.style.display = 'flex';
+  }
+  reader.readAsDataURL(dealLogo.files[0]);
+});
+
+function closeModal(){
+  modal.style.display = 'none';
+  window.location.href = 'merchant-landing.html';
+}
+</script>
+
+</body>
+</html>
