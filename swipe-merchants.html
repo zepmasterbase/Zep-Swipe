@@ -106,7 +106,7 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
 <div class="locked-overlay" id="lockedModal">
   <h2>Unlock Jobs by Becoming a Verified Freelancer</h2>
   <p>Complete your verification to access all freelance opportunities.</p>
-  <button onclick="location.href='verification.html'">Get Verified</button>
+  <button onclick="location.href='login.html'">Get Verified</button>
 </div>
 
 <footer>
@@ -136,7 +136,7 @@ jobs.forEach(job=>{
     <p>${job.company}</p>
     <div class="meta">${job.skill} · ${job.payout}</div>
     <div class="tags">${job.tags.map(t=>`<span>${t}</span>`).join('')}</div>
-    ${!currentUser.verified?`<div class="locked-overlay"><h2>Unlock Jobs</h2><p>Become verified to access this job.</p><button onclick="location.href='verification.html'">Get Verified</button></div>`:''}
+    ${!currentUser.verified?`<div class="locked-overlay"><h2>Unlock Jobs</h2><p>Become verified to access this job.</p><button onclick="location.href='login.html'">Get Verified</button></div>`:''}
   `;
   container.appendChild(card);
 });
