@@ -16,9 +16,11 @@
   --badge-gray:#aaa;
 }
 
-*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
 body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.4;}
 
+/* HEADER */
 header{
   display:flex;
   justify-content:space-between;
@@ -26,10 +28,23 @@ header{
   padding:16px 20px;
   max-width:1200px;
   margin:auto;
-  background:rgba(0,0,0,.2);
   border-radius:12px;
+  background:rgba(0,0,0,0.15);
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  animation:pulse 2s infinite;
 }
-.brand{font-family:Orbitron;font-size:1.6rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+@keyframes pulse{
+  0%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+  50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}
+  100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+}
+.brand{
+  font-family:Orbitron;
+  font-size:1.6rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 .login-icon{
   width:50px;height:50px;border-radius:50%;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
@@ -104,7 +119,7 @@ h2{font-family:Orbitron;margin-bottom:16px;text-align:center;}
   <div id="dealsContainer" class="deals-list"></div>
 
   <div class="footer-link">
-    Are you a merchant? <a href="merchant-deals.html">List your student deal →</a>
+    Are you a merchant? <a href="merchant-landing.html">List your student deal →</a>
   </div>
 </div>
 
