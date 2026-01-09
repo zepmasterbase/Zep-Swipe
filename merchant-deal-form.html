@@ -23,6 +23,15 @@ body { background:var(--bg); color:#fff; min-height:100vh; overflow-x:hidden; }
 header {
   display:flex; justify-content:space-between; align-items:center;
   padding:16px 20px; max-width:1200px; margin:auto;
+  border-radius:12px;
+  background:rgba(0,0,0,0.15);
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+  50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}
+  100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
 }
 .brand {
   font-family:Orbitron; font-size:1.6rem;
@@ -30,13 +39,11 @@ header {
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
 .header-login {
-  width:50px; height:50px; border-radius:50%;
-  background: linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; font-size:22px;
-  transition:transform 0.3s, box-shadow 0.3s;
+  padding:10px 20px; border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  font-family:Orbitron; cursor:pointer; transition:.3s;
 }
-.header-login:hover { transform: scale(1.1); box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet); }
+.header-login:hover { transform:translateY(-2px); box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet); }
 
 /* FORM CONTAINER */
 .form-container {
@@ -101,7 +108,7 @@ footer { text-align:center; padding:20px 10px; margin-top:40px; border-top:1px s
 
 <header>
   <div class="brand">Zep Swipe</div>
-  <div class="header-login" onclick="location.href='login.html'" title="Login">⎋</div>
+  <div class="header-login" onclick="location.href='employer-auth.html'">List a Job</div>
 </header>
 
 <section class="form-container">
@@ -111,6 +118,11 @@ footer { text-align:center; padding:20px 10px; margin-top:40px; border-top:1px s
       <label for="businessName">Business Name *</label>
       <input type="text" id="businessName" required>
       <span class="error-msg" id="error-business"></span>
+    </div>
+    <div class="form-group">
+      <label for="businessAddress">Business Address *</label>
+      <input type="text" id="businessAddress" required>
+      <span class="error-msg" id="error-address"></span>
     </div>
     <div class="form-group">
       <label for="dealDescription">Deal Description *</label>
@@ -139,6 +151,11 @@ footer { text-align:center; padding:20px 10px; margin-top:40px; border-top:1px s
       </select>
       <span class="error-msg" id="error-type"></span>
     </div>
+    <div class="form-group" id="discountGroup" style="display:none;">
+      <label for="discountAmount">Discount Amount (%) *</label>
+      <input type="number" id="discountAmount" min="1" max="100">
+      <span class="error-msg" id="error-discount"></span>
+    </div>
     <div class="form-group">
       <label for="dealLocation">Location *</label>
       <select id="dealLocation" required>
@@ -147,6 +164,16 @@ footer { text-align:center; padding:20px 10px; margin-top:40px; border-top:1px s
         <option>Online</option>
       </select>
       <span class="error-msg" id="error-location"></span>
+    </div>
+    <div class="form-group" id="storeAddressGroup" style="display:none;">
+      <label for="storeAddress">Store Address *</label>
+      <input type="text" id="storeAddress">
+      <span class="error-msg" id="error-store"></span>
+    </div>
+    <div class="form-group" id="onlineUrlGroup" style="display:none;">
+      <label for="onlineUrl">Online Store URL *</label>
+      <input type="url" id="onlineUrl">
+      <span class="error-msg" id="error-url"></span>
     </div>
     <div class="form-group">
       <label for="contactInfo">Contact Info (Email / Phone) *</label>
@@ -176,6 +203,27 @@ footer { text-align:center; padding:20px 10px; margin-top:40px; border-top:1px s
 </footer>
 
 <script>
+// SHOW/HIDE FIELDS BASED ON SELECTION
+const dealType = document.getElementById('dealType');
+const discountGroup = document.getElementById('discountGroup');
+dealType.addEventListener('change', ()=>{ discountGroup.style.display = dealType.value==='Discount %'?'block':'none'; });
+
+const dealLocation = document.getElementById('dealLocation');
+const storeAddressGroup = document.getElementById('storeAddressGroup');
+const onlineUrlGroup = document.getElementById('onlineUrlGroup');
+dealLocation.addEventListener('change', ()=>{
+  if(dealLocation.value==='In-store'){
+    storeAddressGroup.style.display='block';
+    onlineUrlGroup.style.display='none';
+  } else if(dealLocation.value==='Online'){
+    storeAddressGroup.style.display='none';
+    onlineUrlGroup.style.display='block';
+  } else {
+    storeAddressGroup.style.display='none';
+    onlineUrlGroup.style.display='none';
+  }
+});
+
 // FORM SUBMISSION & LOCALSTORAGE
 const form = document.getElementById('dealForm');
 const modal = document.getElementById('confirmationModal');
@@ -183,38 +231,47 @@ const modal = document.getElementById('confirmationModal');
 form.addEventListener('submit', function(e) {
   e.preventDefault();
 
-  // RESET ERROR MESSAGES
-  document.querySelectorAll('.error-msg').forEach(span => span.innerText = '');
-
-  // VALIDATION
+  document.querySelectorAll('.error-msg').forEach(span => span.innerText='');
   let valid = true;
+
   const businessName = document.getElementById('businessName');
+  const businessAddress = document.getElementById('businessAddress');
   const dealDescription = document.getElementById('dealDescription');
   const dealDay = document.getElementById('dealDay');
-  const dealType = document.getElementById('dealType');
-  const dealLocation = document.getElementById('dealLocation');
+  const dealTypeVal = dealType.value;
+  const discountAmount = document.getElementById('discountAmount');
+  const dealLocationVal = dealLocation.value;
+  const storeAddress = document.getElementById('storeAddress');
+  const onlineUrl = document.getElementById('onlineUrl');
   const contactInfo = document.getElementById('contactInfo');
   const dealLogo = document.getElementById('dealLogo');
 
   if(!businessName.value.trim()){ document.getElementById('error-business').innerText='Required'; valid=false; }
+  if(!businessAddress.value.trim()){ document.getElementById('error-address').innerText='Required'; valid=false; }
   if(!dealDescription.value.trim()){ document.getElementById('error-desc').innerText='Required'; valid=false; }
   if(!dealDay.value){ document.getElementById('error-day').innerText='Required'; valid=false; }
-  if(!dealType.value){ document.getElementById('error-type').innerText='Required'; valid=false; }
-  if(!dealLocation.value){ document.getElementById('error-location').innerText='Required'; valid=false; }
+  if(!dealTypeVal){ document.getElementById('error-type').innerText='Required'; valid=false; }
+  if(dealTypeVal==='Discount %' && !discountAmount.value){ document.getElementById('error-discount').innerText='Required'; valid=false; }
+  if(!dealLocationVal){ document.getElementById('error-location').innerText='Required'; valid=false; }
+  if(dealLocationVal==='In-store' && !storeAddress.value){ document.getElementById('error-store').innerText='Required'; valid=false; }
+  if(dealLocationVal==='Online' && !onlineUrl.value){ document.getElementById('error-url').innerText='Required'; valid=false; }
   if(!contactInfo.value.trim()){ document.getElementById('error-contact').innerText='Required'; valid=false; }
   if(!dealLogo.files[0]){ document.getElementById('error-logo').innerText='Required'; valid=false; }
 
   if(!valid) return;
 
-  // READ FILE AS DATA URL
   const reader = new FileReader();
   reader.onload = function(){
     const dealData = {
       businessName: businessName.value,
+      businessAddress: businessAddress.value,
       dealDescription: dealDescription.value,
       dealDay: dealDay.value,
-      dealType: dealType.value,
-      dealLocation: dealLocation.value,
+      dealType: dealTypeVal,
+      discountAmount: discountAmount.value,
+      dealLocation: dealLocationVal,
+      storeAddress: storeAddress.value,
+      onlineUrl: onlineUrl.value,
       contactInfo: contactInfo.value,
       logo: reader.result
     };
@@ -223,16 +280,12 @@ form.addEventListener('submit', function(e) {
     deals.push(dealData);
     localStorage.setItem('studentDeals', JSON.stringify(deals));
 
-    // SHOW MODAL
-    modal.style.display = 'flex';
+    modal.style.display='flex';
   }
   reader.readAsDataURL(dealLogo.files[0]);
 });
 
-function closeModal(){
-  modal.style.display = 'none';
-  window.location.href = 'merchant-landing.html';
-}
+function closeModal(){ modal.style.display='none'; window.location.href='merchant-landing.html'; }
 </script>
 
 </body>
