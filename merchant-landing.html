@@ -24,20 +24,45 @@ body { background: var(--bg); color:#fff; min-height:100vh; line-height:1.5; }
 header {
   display:flex; justify-content:space-between; align-items:center;
   padding:16px 20px; max-width:1200px; margin:auto;
+  border-radius:12px;
+  background:rgba(0,0,0,0.15);
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  animation:pulse 2s infinite;
+  position:relative;
+  z-index:10;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+  50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}
+  100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
 }
 .brand {
   font-family:Orbitron; font-size:1.6rem;
   background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
-.header-login {
-  width:50px; height:50px; border-radius:50%;
-  background: linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; font-size:22px;
-  transition:transform 0.3s, box-shadow 0.3s;
+
+/* MENU */
+.menu { display:flex; gap:16px; }
+.menu button {
+  padding:8px 14px; border:none; border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015; font-family:Orbitron; cursor:pointer;
+  transition:.3s;
 }
-.header-login:hover { transform: scale(1.1); box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet); }
+.menu button:hover { transform:translateY(-2px); box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet); }
+
+/* MODAL */
+.modal-bg {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.75); backdrop-filter:blur(4px);
+  justify-content:center; align-items:center; z-index:1000;
+}
+.modal { background:var(--glass); padding:20px; border-radius:16px; max-width:400px; width:90%; text-align:center; }
+.modal h3 { margin-bottom:12px; font-family:Orbitron; font-size:1.3rem; }
+.modal p { font-size:0.95rem; color:var(--text-light); margin-bottom:16px; }
+.modal button { padding:10px 20px; border:none; border-radius:999px; background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050015; cursor:pointer; font-family:Orbitron; transition:.3s; }
+.modal button:hover { transform:translateY(-2px); box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet); }
 
 /* HERO */
 .hero {
@@ -81,11 +106,7 @@ header {
 /* FOOTER */
 footer { margin-top:60px; padding:20px 10px; border-top:1px solid rgba(255,255,255,.1); text-align:center; }
 .socials { display:flex; justify-content:center; gap:16px; margin-bottom:8px; }
-.socials a {
-  width:40px; height:40px; display:flex; align-items:center; justify-content:center;
-  border-radius:12px; background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  transition:.3s;
-}
+.socials a { width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:12px; background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet)); transition:.3s; }
 .socials a:hover { transform:scale(1.1); box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet); }
 .socials svg { width:20px; height:20px; fill:#050015; }
 footer span { font-size:0.85rem; color:var(--text-light); }
@@ -99,8 +120,20 @@ footer span { font-size:0.85rem; color:var(--text-light); }
 
 <header>
   <div class="brand">Zep Swipe</div>
-  <div class="header-login" onclick="location.href='login.html'" title="Login">⎋</div>
+  <div class="menu">
+    <button onclick="openModal()">About</button>
+    <button onclick="location.href='merchant-deal-form.html'">List a Deal</button>
+  </div>
 </header>
+
+<!-- ABOUT MODAL -->
+<div class="modal-bg" id="aboutModal">
+  <div class="modal">
+    <h3>About Zep Swipe Student Deals</h3>
+    <p>Zep Swipe allows merchants to reach verified students with special deals for each weekday. Increase foot traffic, sales, and engagement in a modern, student-friendly marketplace.</p>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
 
 <section class="hero">
   <h1>Reach Students with Zep Swipe Student Deals</h1>
@@ -169,6 +202,11 @@ footer span { font-size:0.85rem; color:var(--text-light); }
   </div>
   <span>Contact: support@zepswipe.com | &copy; 2026 Zep Swipe. All Rights Reserved.</span>
 </footer>
+
+<script>
+function openModal() { document.getElementById('aboutModal').style.display='flex'; }
+function closeModal() { document.getElementById('aboutModal').style.display='none'; }
+</script>
 
 </body>
 </html>
