@@ -11,7 +11,7 @@
   --zep-violet:#9c4dff;
   --accent:#00ff9d;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,0.05);
+  --glass:rgba(255,255,255,.05);
   --text-light:rgba(255,255,255,.85);
   --card-bg:rgba(255,255,255,.08);
   --highlight:#ffea00;
@@ -117,12 +117,11 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
   position:relative;
 }
 .modal-content h3{margin-bottom:12px;}
-.modal-content input{
+.modal-content input, .modal-content select{
   width:100%;padding:10px;border-radius:12px;border:none;margin-bottom:12px;background:rgba(255,255,255,0.1);color:#fff;outline:none;
 }
 .modal-content button{
-  width:100%;padding:12px;border-radius:50%;background:var(--zep-blue);color:#050015;font-weight:700;transition:.3s;
-  position:relative;
+  width:100%;padding:12px;border-radius:50%;background:var(--zep-blue);color:#050015;font-weight:700;transition:.3s;position:relative;
 }
 .modal-content button.confirming::after{
   content:"";
@@ -172,12 +171,12 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
   <div class="wallet-card">
     <h3>ZAC Balance</h3>
     <p><span id="zacBalance">0</span> ZAC</p>
-    <button disabled>Withdraw ZAC</button>
+    <button disabled>ZAC Locked</button>
   </div>
   <div class="wallet-card">
     <h3>USD Balance</h3>
     <p><span id="usdBalance">0</span> USD</p>
-    <button id="withdrawBtn">Withdraw to Bank</button>
+    <button id="withdrawBtn">Withdraw to MoMo</button>
   </div>
 </div>
 
@@ -190,47 +189,48 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
 <!-- MODAL -->
 <div class="modal" id="withdrawModal">
   <div class="modal-content">
-    <h3>Withdraw USD</h3>
-    <input type="text" id="bankAccount" placeholder="Enter Bank Account">
+    <h3>Withdraw USD via MTN MoMo</h3>
+    <input type="text" id="fullName" placeholder="Full Name">
+    <select id="country">
+      <option value="">Select Country</option>
+      <option value="Ghana">Ghana</option>
+      <option value="Uganda">Uganda</option>
+      <option value="Nigeria">Nigeria</option>
+    </select>
+    <input type="text" id="momoNumber" placeholder="MTN MoMo Number">
     <button id="confirmWithdrawBtn">→</button>
   </div>
 </div>
 
 <script>
 // ========================
-// FETCH STUDENT FROM profile.html localStorage
+// STUDENT DATA
 // ========================
 let studentData = JSON.parse(localStorage.getItem('studentData')) || {
-  name: "Test Student",
-  university: "Test University",
-  program: "Virtual Assistant",
-  walletZAC: 0,
-  walletUSD: 0,
-  verified:true,
-  loggedIn:true,
-  transactions:[]
+  name:"Test Student", university:"Test Uni", program:"VA",
+  walletZAC:100, walletUSD:50, verified:true, loggedIn:true, transactions:[]
 };
 
-// REFLECT DATA
+// UPDATE UI
 function updateWalletUI(){
-  document.getElementById('studentName').innerText = studentData.name;
-  document.getElementById('studentUni').innerText = studentData.university;
-  document.getElementById('studentProgram').querySelector('strong').innerText = studentData.program;
-  document.getElementById('verifiedStatus').innerText = studentData.verified?"Verified Freelancer":"Unverified";
-  document.getElementById('zacBalance').innerText = studentData.walletZAC;
-  document.getElementById('usdBalance').innerText = studentData.walletUSD;
-  document.getElementById('totalPortfolio').innerText = (studentData.walletUSD + studentData.walletZAC*0.1).toFixed(2);
+  document.getElementById('studentName').innerText=studentData.name;
+  document.getElementById('studentUni').innerText=studentData.university;
+  document.getElementById('studentProgram').querySelector('strong').innerText=studentData.program;
+  document.getElementById('verifiedStatus').innerText=studentData.verified?"Verified Freelancer":"Unverified";
+  document.getElementById('zacBalance').innerText=studentData.walletZAC;
+  document.getElementById('usdBalance').innerText=studentData.walletUSD;
+  document.getElementById('totalPortfolio').innerText=(studentData.walletUSD + studentData.walletZAC*0.1).toFixed(2);
   renderTransactions();
 }
 
 // ========================
-// TRANSACTION HISTORY
+// TRANSACTIONS
 // ========================
 function renderTransactions(){
-  const historyDiv = document.getElementById('transactionHistory');
+  const historyDiv=document.getElementById('transactionHistory');
   historyDiv.innerHTML='';
   studentData.transactions.slice().reverse().forEach(tx=>{
-    const card = document.createElement('div');
+    const card=document.createElement('div');
     card.className='transaction-card';
     card.innerHTML=`<span>${tx.date}</span><span>${tx.type} +${tx.amount}</span>`;
     historyDiv.appendChild(card);
@@ -238,39 +238,45 @@ function renderTransactions(){
 }
 
 // ========================
-// MODAL WITH CONFIRM CIRCLE
+// MODAL
 // ========================
-const withdrawBtn = document.getElementById('withdrawBtn');
-const modal = document.getElementById('withdrawModal');
-const confirmBtn = document.getElementById('confirmWithdrawBtn');
+const withdrawBtn=document.getElementById('withdrawBtn');
+const modal=document.getElementById('withdrawModal');
+const confirmBtn=document.getElementById('confirmWithdrawBtn');
 
-withdrawBtn.onclick = ()=> modal.style.display='flex';
-window.onclick = e=>{if(e.target===modal) modal.style.display='none';}
+withdrawBtn.onclick=()=>modal.style.display='flex';
+window.onclick=e=>{if(e.target===modal) modal.style.display='none';}
 
-confirmBtn.onclick = ()=>{
-  const account = document.getElementById('bankAccount').value.trim();
-  if(!account || studentData.walletUSD<=0){alert("Enter account or no USD available"); return;}
+confirmBtn.onclick=()=>{
+  const name=document.getElementById('fullName').value.trim();
+  const country=document.getElementById('country').value;
+  const momo=document.getElementById('momoNumber').value.trim();
+  if(!name || !country || !momo || studentData.walletUSD<=0){alert("Fill all fields and have USD"); return;}
   
   confirmBtn.classList.add('confirming');
+  
+  // MOCK API CALL (replace with MTN MoMo or Flutterwave API)
   setTimeout(()=>{
-    // Add transaction
-    studentData.transactions.push({date:new Date().toLocaleString(), type:"USD Withdrawal", amount:studentData.walletUSD});
+    studentData.transactions.push({date:new Date().toLocaleString(),type:`MoMo Withdrawal (${country})`,amount:studentData.walletUSD});
     studentData.walletUSD=0;
     updateWalletUI();
-    localStorage.setItem('studentData', JSON.stringify(studentData));
+    localStorage.setItem('studentData',JSON.stringify(studentData));
     confirmBtn.classList.remove('confirming');
     modal.style.display='none';
-    document.getElementById('bankAccount').value='';
+    document.getElementById('fullName').value='';
+    document.getElementById('country').value='';
+    document.getElementById('momoNumber').value='';
+    alert("Withdrawal request sent successfully!");
   },1500);
 }
 
 // ========================
-// INTEGRATE LEARN & EARN ZAC LIVE
+// LIVE ZAC UPDATE FROM Learn & Earn
 // ========================
-window.addEventListener('storage', e=>{
+window.addEventListener('storage',e=>{
   if(e.key==='studentData'){
-    const updated = JSON.parse(e.newValue);
-    studentData.walletZAC = updated.walletZAC;
+    const updated=JSON.parse(e.newValue);
+    studentData.walletZAC=updated.walletZAC;
     updateWalletUI();
   }
 });
@@ -279,13 +285,13 @@ window.addEventListener('storage', e=>{
 updateWalletUI();
 
 // 3D Portfolio Hover Effect
-const portfolio3D = document.getElementById('portfolio3D');
-portfolio3D.addEventListener('mousemove', (e)=>{
-  const x = (e.clientX/window.innerWidth -0.5)*30;
-  const y = (e.clientY/window.innerHeight -0.5)*15;
-  portfolio3D.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+const portfolio3D=document.getElementById('portfolio3D');
+portfolio3D.addEventListener('mousemove',(e)=>{
+  const x=(e.clientX/window.innerWidth-0.5)*30;
+  const y=(e.clientY/window.innerHeight-0.5)*15;
+  portfolio3D.style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
 });
-portfolio3D.addEventListener('mouseleave', ()=>portfolio3D.style.transform='rotateY(0deg) rotateX(0deg)');
+portfolio3D.addEventListener('mouseleave',()=>portfolio3D.style.transform='rotateY(0deg) rotateX(0deg)');
 </script>
 </body>
 </html>
