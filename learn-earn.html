@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Learn & Earn</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600,700&family=Poppins:wght@300,400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -28,10 +28,24 @@ header{
   display:flex;justify-content:space-between;align-items:center;
   padding:16px 20px;max-width:1200px;margin:auto;margin-top:10px;
   border-radius:12px;background:rgba(0,0,0,0.15);backdrop-filter:blur(6px);
+  position:relative; overflow:hidden;
 }
-.brand{font-family:Orbitron;font-size:1.6rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.brand{
+  font-family:Orbitron;
+  font-size:1.6rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  position:relative;
+  animation: pulseGlow 2s infinite;
+}
 .home-btn{background:var(--zep-blue);color:#050015;padding:6px 12px;border-radius:12px;font-weight:700;transition:.3s;}
 .home-btn:hover{transform:scale(1.05);}
+@keyframes pulseGlow{
+  0% { text-shadow: 0 0 5px var(--zep-blue),0 0 10px var(--zep-violet); transform: scale(1);}
+  50% { text-shadow: 0 0 15px var(--zep-blue),0 0 25px var(--zep-violet); transform: scale(1.05);}
+  100% { text-shadow: 0 0 5px var(--zep-blue),0 0 10px var(--zep-violet); transform: scale(1);}
+}
 
 /* STUDENT INFO */
 .student-info{
@@ -71,15 +85,9 @@ header{
 .task-card button:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
 
 /* PROGRESS BAR */
-.progress-bar-container{
-  max-width:1200px;margin:20px auto;padding:0 20px;
-}
-.progress-bar{
-  width:100%;height:16px;background:rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;
-}
-.progress-bar-fill{
-  height:100%;width:0%;background:var(--accent);border-radius:12px;transition:width 0.5s ease-in-out;
-}
+.progress-bar-container{max-width:1200px;margin:20px auto;padding:0 20px;}
+.progress-bar{width:100%;height:16px;background:rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;}
+.progress-bar-fill{height:100%;width:0%;background:var(--accent);border-radius:12px;transition:width 0.5s ease-in-out;}
 
 /* STREAK BADGES */
 .streak-badge{
@@ -152,8 +160,7 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
 
 <script>
 // =======================
-// SAFE ACCESS CONTROL
-// =======================
+// STUDENT DATA (LOCAL STORAGE OR DEFAULT)
 let studentData = JSON.parse(localStorage.getItem('studentData')) || {
   name: "Test Student",
   university: "Test University",
@@ -172,7 +179,6 @@ document.getElementById('walletBalance').innerText = studentData.walletBalance |
 // PROGRAM SELECTION
 const programs = ["Virtual Assistant","Content Creator (Video)","Blog Writer","Voice-over Artist","Data Entry","UI/UX Designer","Online Tutor"];
 const programsContainer = document.getElementById('programsContainer');
-
 programs.forEach(prog=>{
   const card = document.createElement('div');
   card.className='program-card';
@@ -189,10 +195,10 @@ programs.forEach(prog=>{
   programsContainer.appendChild(card);
 });
 
-// TASKS PER PROGRAM (progressive, client-ready)
+// TASKS PER PROGRAM (21-Day Client-Ready Plan)
 const taskTemplates = {
   "Virtual Assistant":[
-    "Record a 1-min intro video on yourself",
+    "Record a 1-min intro video",
     "Organize your email inbox efficiently",
     "Create a daily to-do list",
     "Schedule 3 meetings in Google Calendar",
@@ -259,31 +265,8 @@ const taskTemplates = {
     "Analyze traffic data",
     "Publish final article series",
     "Portfolio showcase: Best 3 blogs"
-  ],
-  "Voice-over Artist":[
-    "Record 1-min intro video",
-    "Practice vocal warm-ups",
-    "Record short script",
-    "Edit audio in Audacity",
-    "Add background music",
-    "Submit demo for review",
-    "Read script clearly",
-    "Practice pacing & tone",
-    "Record character voice",
-    "Mix audio clips",
-    "Create audio ad",
-    "Record narration for blog",
-    "Create podcast clip",
-    "Add sound effects",
-    "Voice-over tutorial",
-    "Record multilingual audio",
-    "Sync audio with video",
-    "Create professional demo",
-    "Submit portfolio project",
-    "Final capstone",
-    "Portfolio showcase: Best recordings"
-  ],
-  // Other programs continue similarly...
+  ]
+  // Add other programs similarly...
 };
 
 // PROGRESS & STREAK
@@ -347,7 +330,6 @@ function renderTasks(program){
   progressFill.style.width=`${(completedCount/21)*100}%`;
 }
 
-// STREAK BADGES
 function addStreakBadge(day){
   const badge = document.createElement('span');
   badge.className='streak-badge earned';
@@ -355,7 +337,6 @@ function addStreakBadge(day){
   streakContainer.appendChild(badge);
 }
 
-// CONFETTI
 function launchConfetti(){
   confettiCanvas.width=window.innerWidth; confettiCanvas.height=window.innerHeight;
   const confettiCount = 100;
