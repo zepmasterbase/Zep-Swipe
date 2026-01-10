@@ -12,90 +12,97 @@
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,0.08);
   --text-light:rgba(255,255,255,.85);
-  --card-bg:rgba(255,255,255,0.05);
-  --badge-green:#00ff9d;
-  --badge-gray:#aaa;
 }
 
-/* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.4;overflow-x:hidden;}
+body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden;}
 a{text-decoration:none;color:inherit;}
 
-/* HEADER */
 header{
   display:flex;justify-content:space-between;align-items:center;
-  padding:16px 20px;max-width:1200px;margin:auto;
+  padding:16px 20px;max-width:1200px;margin:10px auto;
   border-radius:12px;
   background:rgba(0,0,0,0.15);
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
   animation:pulse 2s infinite;
-  margin-top:10px;
 }
 @keyframes pulse{
   0%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
   50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}
   100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
 }
-.brand{font-family:Orbitron;font-size:1.6rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-nav a{margin-left:20px;font-weight:500;transition:.3s;}
+.brand{
+  font-family:Orbitron;
+  font-size:1.6rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+nav a{margin-left:20px;font-weight:500;}
 nav a:hover{color:var(--zep-blue);}
 
-/* FILTERS */
 .filters{display:flex;flex-wrap:wrap;gap:12px;padding:20px;justify-content:center;}
-.filters select{padding:8px 12px;border-radius:12px;border:none;background:rgba(255,255,255,0.1);color:#fff;outline:none;}
+.filters select{
+  padding:8px 12px;border-radius:12px;border:none;
+  background:rgba(255,255,255,0.1);color:#fff;
+}
 
-/* JOB CARDS */
-.jobs-container{display:grid;grid-template-columns:1fr;gap:16px;padding:20px;}
+.jobs-container{
+  display:grid;grid-template-columns:1fr;gap:16px;padding:20px;
+}
 @media(min-width:600px){.jobs-container{grid-template-columns:1fr 1fr;}}
 @media(min-width:900px){.jobs-container{grid-template-columns:1fr 1fr 1fr;}}
+
 .job-card{
-  background:var(--glass);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.12);
-  display:flex;flex-direction:column;gap:8px;position:relative;transition:.3s;
+  background:var(--glass);
+  border-radius:16px;
+  padding:16px;
+  position:relative;
+  border:1px solid rgba(255,255,255,.12);
 }
-.job-card:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(156,77,255,.3);}
-.job-card h3{font-size:1.1rem;margin-bottom:4px;}
+.job-card h3{font-size:1.1rem;}
 .job-card p{font-size:.9rem;color:var(--text-light);}
-.job-card .meta{font-size:.8rem;color:var(--text-light);display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
-.job-card .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
-.job-card .tags span{background:rgba(156,77,255,0.2);padding:2px 6px;border-radius:8px;font-size:.75rem;}
-
-/* LOCKED OVERLAY ON CARD */
-.job-card .locked-overlay{
-  position:absolute;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);
-  display:flex;flex-direction:column;justify-content:center;align-items:center;
-  text-align:center;border-radius:16px;opacity:0;pointer-events:none;
-  transition:opacity 0.4s ease;
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
+.tags span{
+  background:rgba(156,77,255,0.2);
+  padding:2px 6px;border-radius:8px;font-size:.75rem;
 }
-.job-card .locked-overlay.active{opacity:1;pointer-events:auto;}
-.job-card .locked-overlay h2{font-family:Orbitron;font-size:1.2rem;margin-bottom:8px;}
-.job-card .locked-overlay p{font-size:0.9rem;margin-bottom:12px;color:var(--text-light);}
-.job-card .locked-overlay button{
-  padding:10px 18px;border:none;border-radius:999px;
+
+.locked-overlay{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(6px);
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  border-radius:16px;
+}
+.locked-overlay button{
+  margin-top:10px;
+  padding:10px 18px;
+  border:none;border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
+  font-family:Orbitron;
+  cursor:pointer;
 }
-.job-card .locked-overlay button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
 
-/* GLOBAL LOCKED MODAL */
 #lockedModal{
-  position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);
-  display:flex;flex-direction:column;justify-content:center;align-items:center;
-  text-align:center;opacity:0;pointer-events:none;
-  transition:opacity 0.4s ease;z-index:1000;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(8px);
+  display:none;
+  justify-content:center;align-items:center;
+  flex-direction:column;
+  z-index:1000;
 }
-#lockedModal.active{opacity:1;pointer-events:auto;}
-#lockedModal h2{font-family:Orbitron;font-size:1.5rem;margin-bottom:8px;}
-#lockedModal p{font-size:1rem;margin-bottom:12px;color:var(--text-light);}
-#lockedModal button{
-  padding:12px 24px;border:none;border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
-}
-#lockedModal button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
+#lockedModal.active{display:flex;}
 
-/* FOOTER */
-footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid rgba(255,255,255,.1);color:var(--text-light);font-size:0.85rem;}
+footer{
+  text-align:center;
+  padding:20px;
+  color:var(--text-light);
+  border-top:1px solid rgba(255,255,255,.1);
+}
 </style>
 </head>
 <body>
@@ -105,78 +112,70 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
   <nav>
     <a href="index.html">Home</a>
     <a href="learn-earn.html">Learn & Earn</a>
-    <a href="#" style="color:var(--zep-blue);font-weight:600;">Marketplace</a>
+    <a style="color:var(--zep-blue)">Marketplace</a>
     <a href="profile.html">Profile</a>
   </nav>
 </header>
 
 <section class="filters">
-  <select id="filterSkill">
-    <option value="">Filter by Skill</option>
-    <option>Design</option>
-    <option>Development</option>
-    <option>Marketing</option>
-    <option>Writing</option>
-  </select>
-  <select id="filterPayout">
-    <option value="">Filter by Payout</option>
-    <option>Low → High</option>
-    <option>High → Low</option>
-  </select>
-  <select id="filterSort">
-    <option value="">Sort by</option>
-    <option>Newest</option>
-    <option>Remote/In-store</option>
-  </select>
+  <select><option>Filter by Skill</option></select>
+  <select><option>Filter by Payout</option></select>
+  <select><option>Sort by</option></select>
 </section>
 
-<section class="jobs-container" id="jobsContainer">
-  <!-- Job cards inserted by JS -->
-</section>
+<section class="jobs-container" id="jobsContainer"></section>
 
-<!-- GLOBAL LOCKED MODAL -->
 <div id="lockedModal">
   <h2>Unlock Jobs by Becoming a Verified Freelancer</h2>
   <p>Complete your verification to access all freelance opportunities.</p>
-  <button onclick="location.href='login.html'">Get Verified</button>
+  <button onclick="handleGetVerified()">Get Verified</button>
 </div>
 
-<footer>
-  &copy; 2026 Zep Swipe. All Rights Reserved.
-</footer>
+<footer>© 2026 Zep Swipe. All Rights Reserved.</footer>
 
 <script>
-// MOCK STUDENT STATUS
-const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {verified:false};
+// SAFE USER READ (NO OVERWRITE)
+const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+const isLoggedIn = currentUser && currentUser.loggedIn === true;
+const isVerified = isLoggedIn && currentUser.verified === true;
 
-// MOCK JOBS
-const jobs = [
-  {id:1,title:"Logo Design",company:"Brandify",skill:"Design",payout:"$50",tags:["Design","Logo"]},
-  {id:2,title:"Website Development",company:"TechCorp",skill:"Development",payout:"$200",tags:["Web","Frontend"]},
-  {id:3,title:"Social Media Marketing",company:"SocialBee",skill:"Marketing",payout:"$80",tags:["Marketing","Social Media"]},
-  {id:4,title:"App UI Design",company:"AppWorks",skill:"Design",payout:"$120",tags:["UI","UX"]},
-  {id:5,title:"Backend API Dev",company:"DevHouse",skill:"Development",payout:"$150",tags:["Backend","API"]},
+// REDIRECT LOGIC
+function handleGetVerified(){
+  if(!isLoggedIn){
+    window.location.href = 'login.html';
+    return;
+  }
+  if(!isVerified){
+    window.location.href = 'learn-earn.html';
+  }
+}
+
+// JOB DATA
+const jobs=[
+  {title:"Logo Design",company:"Brandify",tags:["Design","Logo"]},
+  {title:"Web Development",company:"TechCorp",tags:["Frontend"]},
+  {title:"Social Media Marketing",company:"SocialBee",tags:["Marketing"]}
 ];
 
-// RENDER JOBS
-const container = document.getElementById('jobsContainer');
+const container=document.getElementById('jobsContainer');
 jobs.forEach(job=>{
-  const card = document.createElement('div');
+  const card=document.createElement('div');
   card.className='job-card';
   card.innerHTML=`
     <h3>${job.title}</h3>
     <p>${job.company}</p>
-    <div class="meta">${job.skill} · ${job.payout}</div>
     <div class="tags">${job.tags.map(t=>`<span>${t}</span>`).join('')}</div>
-    ${!currentUser.verified?`<div class="locked-overlay active"><h2>Unlock Jobs</h2><p>Become verified to access this job.</p><button onclick="location.href='login.html'">Get Verified</button></div>`:''}
+    ${!isVerified?`<div class="locked-overlay">
+      <h3>Locked</h3>
+      <button onclick="handleGetVerified()">Get Verified</button>
+    </div>`:''}
   `;
   container.appendChild(card);
 });
 
-// GLOBAL LOCKED MODAL FOR UNVERIFIED USERS
-if(!currentUser.verified){
-  const lockedModal = document.getElementById('lockedModal');
-  setTimeout(()=>lockedModal.classList.add('active'),300); // fade in after page load
+// GLOBAL MODAL
+if(!isVerified){
+  setTimeout(()=>document.getElementById('lockedModal').classList.add('active'),400);
 }
 </script>
 
