@@ -30,11 +30,9 @@ header{
   border-radius:12px;background:rgba(0,0,0,0.15);backdrop-filter:blur(6px);
 }
 .brand{
-  font-family:Orbitron;
-  font-size:1.6rem;
+  font-family:Orbitron;font-size:1.6rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   animation: pulseGlow 2s infinite;
 }
 .home-btn{background:var(--zep-blue);color:#050015;padding:6px 12px;border-radius:12px;font-weight:700;transition:.3s;}
@@ -47,17 +45,12 @@ header{
 
 /* PROFILE CARD */
 .profile-card{
-  max-width:1200px;
-  margin:20px auto;
-  padding:16px 20px;
+  max-width:1200px;margin:20px auto;padding:16px 20px;
   display:flex;align-items:center;justify-content:space-between;
   background:var(--card-bg);border-radius:16px;backdrop-filter:blur(6px);
 }
 .profile-card div span{display:block;}
-.profile-card .verified{
-  color:var(--accent);
-  font-weight:700;
-}
+.profile-card .verified{color:var(--accent);font-weight:700;}
 
 /* WALLET OVERVIEW */
 .wallet-overview{
@@ -91,12 +84,8 @@ header{
 
 /* PORTFOLIO 3D */
 #portfolio3D{
-  max-width:1200px;
-  margin:20px auto;
-  padding:0 20px;
-  height:300px;
-  background:rgba(255,255,255,0.05);
-  border-radius:16px;
+  max-width:1200px;margin:20px auto;padding:0 20px;height:300px;
+  background:rgba(255,255,255,0.05);border-radius:16px;
   display:flex;justify-content:center;align-items:center;
   font-size:1.2rem;color:var(--text-light);
   perspective:1000px;transition:transform 0.5s;
@@ -113,8 +102,7 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
 }
 .modal-content{
   background:var(--card-bg);padding:20px;border-radius:16px;max-width:400px;width:90%;backdrop-filter:blur(6px);
-  text-align:center;
-  position:relative;
+  text-align:center;position:relative;
 }
 .modal-content h3{margin-bottom:12px;}
 .modal-content input, .modal-content select{
@@ -124,15 +112,11 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
   width:100%;padding:12px;border-radius:50%;background:var(--zep-blue);color:#050015;font-weight:700;transition:.3s;position:relative;
 }
 .modal-content button.confirming::after{
-  content:"";
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   width:24px;height:24px;border:3px solid #fff;border-top-color:transparent;border-radius:50%;
   animation:spin 1s linear infinite;
 }
-@keyframes spin{
-  0%{transform:translate(-50%,-50%) rotate(0deg);}
-  100%{transform:translate(-50%,-50%) rotate(360deg);}
-}
+@keyframes spin{0%{transform:translate(-50%,-50%) rotate(0deg);}100%{transform:translate(-50%,-50%) rotate(360deg);}}
 
 /* TRANSACTION HISTORY */
 #transactionHistory{
@@ -176,7 +160,8 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
   <div class="wallet-card">
     <h3>USD Balance</h3>
     <p><span id="usdBalance">0</span> USD</p>
-    <button id="withdrawBtn">Withdraw</button>
+    <button id="withdrawMomoBtn">Withdraw to MoMo</button>
+    <button id="withdrawBankBtn">Withdraw to Bank</button>
   </div>
 </div>
 
@@ -186,29 +171,36 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
 <!-- TRANSACTION HISTORY -->
 <div id="transactionHistory"></div>
 
-<!-- MODAL -->
-<div class="modal" id="withdrawModal">
+<!-- MODALS -->
+<div class="modal" id="momoModal">
   <div class="modal-content">
-    <h3>Withdraw USD</h3>
-    <select id="withdrawMethod">
-      <option value="">Select Method</option>
-      <option value="momo">MTN MoMo</option>
-      <option value="bank">Bank Transfer (Southern Africa)</option>
-    </select>
-    <input type="text" id="fullName" placeholder="Full Name">
-    <select id="country">
+    <h3>Withdraw USD via MTN MoMo</h3>
+    <input type="text" id="momoName" placeholder="Full Name">
+    <select id="momoCountry">
       <option value="">Select Country</option>
       <option value="Ghana">Ghana</option>
       <option value="Uganda">Uganda</option>
       <option value="Nigeria">Nigeria</option>
+    </select>
+    <input type="text" id="momoNumber" placeholder="MTN MoMo Number">
+    <button id="confirmMomoBtn">→</button>
+  </div>
+</div>
+
+<div class="modal" id="bankModal">
+  <div class="modal-content">
+    <h3>Withdraw USD to Bank</h3>
+    <input type="text" id="bankName" placeholder="Full Name">
+    <select id="bankCountry">
+      <option value="">Select Country</option>
       <option value="South Africa">South Africa</option>
       <option value="Botswana">Botswana</option>
       <option value="Namibia">Namibia</option>
       <option value="Malawi">Malawi</option>
+      <option value="Zambia">Zambia</option>
     </select>
-    <input type="text" id="momoNumber" placeholder="MTN MoMo Number (for momo)">
-    <input type="text" id="bankDetails" placeholder="Bank Name / Account (for bank)">
-    <button id="confirmWithdrawBtn">→</button>
+    <input type="text" id="bankAccount" placeholder="Bank Account Number">
+    <button id="confirmBankBtn">→</button>
   </div>
 </div>
 
@@ -221,27 +213,21 @@ let studentData = JSON.parse(localStorage.getItem('studentData')) || {
   walletZAC:100, walletUSD:50, verified:true, loggedIn:true, transactions:[]
 };
 
-// ZAC → USD conversion
-const ZACtoUSD = 0.014;
+const ZAC_TO_USD = 0.014;
 
-// ========================
-// UI UPDATE
-// ========================
+// UPDATE UI
 function updateWalletUI(){
   document.getElementById('studentName').innerText=studentData.name;
   document.getElementById('studentUni').innerText=studentData.university;
   document.getElementById('studentProgram').querySelector('strong').innerText=studentData.program;
   document.getElementById('verifiedStatus').innerText=studentData.verified?"Verified Freelancer":"Unverified";
   document.getElementById('zacBalance').innerText=studentData.walletZAC;
-  studentData.walletUSD = (studentData.walletZAC * ZACtoUSD).toFixed(2);
   document.getElementById('usdBalance').innerText=studentData.walletUSD;
-  document.getElementById('totalPortfolio').innerText=(parseFloat(studentData.walletUSD) + studentData.walletZAC*ZACtoUSD).toFixed(2);
+  document.getElementById('totalPortfolio').innerText=(studentData.walletUSD + studentData.walletZAC*ZAC_TO_USD).toFixed(2);
   renderTransactions();
 }
 
-// ========================
 // TRANSACTIONS
-// ========================
 function renderTransactions(){
   const historyDiv=document.getElementById('transactionHistory');
   historyDiv.innerHTML='';
@@ -254,48 +240,60 @@ function renderTransactions(){
 }
 
 // ========================
-// MODAL LOGIC
+// MODAL HANDLING
 // ========================
-const withdrawBtn=document.getElementById('withdrawBtn');
-const modal=document.getElementById('withdrawModal');
-const confirmBtn=document.getElementById('confirmWithdrawBtn');
-const withdrawMethod=document.getElementById('withdrawMethod');
+const momoModal=document.getElementById('momoModal');
+const bankModal=document.getElementById('bankModal');
 
-withdrawBtn.onclick=()=>modal.style.display='flex';
-window.onclick=e=>{if(e.target===modal) modal.style.display='none';}
+document.getElementById('withdrawMomoBtn').onclick=()=>momoModal.style.display='flex';
+document.getElementById('withdrawBankBtn').onclick=()=>bankModal.style.display='flex';
 
-confirmBtn.onclick=()=>{
-  const method = withdrawMethod.value;
-  const name = document.getElementById('fullName').value.trim();
-  const country = document.getElementById('country').value;
-  const momo = document.getElementById('momoNumber').value.trim();
-  const bank = document.getElementById('bankDetails').value.trim();
-  if(!method || !name || !country){alert("Fill required fields"); return;}
-  if(method==='momo' && !momo){alert("Enter MTN MoMo Number"); return;}
-  if(method==='bank' && !bank){alert("Enter Bank Details"); return;}
-  if(studentData.walletUSD<=0){alert("No USD available"); return;}
-  
-  confirmBtn.classList.add('confirming');
-  
-  // MOCK API CALL - replace with Flutterwave/MTN MoMo API
+window.onclick=e=>{
+  if(e.target===momoModal) momoModal.style.display='none';
+  if(e.target===bankModal) bankModal.style.display='none';
+}
+
+// CONFIRM MTN MOMO WITHDRAWAL
+document.getElementById('confirmMomoBtn').onclick=()=>{
+  const name=document.getElementById('momoName').value.trim();
+  const country=document.getElementById('momoCountry').value;
+  const momo=document.getElementById('momoNumber').value.trim();
+  if(!name || !country || !momo || studentData.walletUSD<=0){alert("Fill all fields and have USD"); return;}
+  const btn=document.getElementById('confirmMomoBtn');
+  btn.classList.add('confirming');
   setTimeout(()=>{
-    studentData.transactions.push({
-      date:new Date().toLocaleString(),
-      type: method==='momo'?`MTN MoMo (${country})`:`Bank Transfer (${country})`,
-      amount:studentData.walletUSD
-    });
+    studentData.transactions.push({date:new Date().toLocaleString(),type:`MoMo Withdrawal (${country})`,amount:studentData.walletUSD});
     studentData.walletUSD=0;
-    studentData.walletZAC=0; // reset ZAC after conversion
     updateWalletUI();
     localStorage.setItem('studentData',JSON.stringify(studentData));
-    confirmBtn.classList.remove('confirming');
-    modal.style.display='none';
-    document.getElementById('fullName').value='';
-    document.getElementById('country').value='';
+    btn.classList.remove('confirming');
+    momoModal.style.display='none';
+    document.getElementById('momoName').value='';
+    document.getElementById('momoCountry').value='';
     document.getElementById('momoNumber').value='';
-    document.getElementById('bankDetails').value='';
-    withdrawMethod.value='';
-    alert("Withdrawal request sent successfully!");
+    alert("MoMo withdrawal initiated successfully!");
+  },1500);
+}
+
+// CONFIRM BANK WITHDRAWAL
+document.getElementById('confirmBankBtn').onclick=()=>{
+  const name=document.getElementById('bankName').value.trim();
+  const country=document.getElementById('bankCountry').value;
+  const account=document.getElementById('bankAccount').value.trim();
+  if(!name || !country || !account || studentData.walletUSD<=0){alert("Fill all fields and have USD"); return;}
+  const btn=document.getElementById('confirmBankBtn');
+  btn.classList.add('confirming');
+  setTimeout(()=>{
+    studentData.transactions.push({date:new Date().toLocaleString(),type:`Bank Withdrawal (${country})`,amount:studentData.walletUSD});
+    studentData.walletUSD=0;
+    updateWalletUI();
+    localStorage.setItem('studentData',JSON.stringify(studentData));
+    btn.classList.remove('confirming');
+    bankModal.style.display='none';
+    document.getElementById('bankName').value='';
+    document.getElementById('bankCountry').value='';
+    document.getElementById('bankAccount').value='';
+    alert("Bank withdrawal initiated successfully!");
   },1500);
 }
 
@@ -306,6 +304,7 @@ window.addEventListener('storage',e=>{
   if(e.key==='studentData'){
     const updated=JSON.parse(e.newValue);
     studentData.walletZAC=updated.walletZAC;
+    studentData.walletUSD=updated.walletUSD;
     updateWalletUI();
   }
 });
@@ -320,7 +319,7 @@ portfolio3D.addEventListener('mousemove',(e)=>{
   const y=(e.clientY/window.innerHeight-0.5)*15;
   portfolio3D.style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
 });
-portfolio3D.addEventListener('mouseleave',()=>portfolio3D.style.transform='rotateY(0deg) rotateX(0deg)');
+portfolio3D.addEventListener('mouseleave'=>portfolio3D.style.transform='rotateY(0deg) rotateX(0deg)');
 </script>
 </body>
 </html>
