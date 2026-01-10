@@ -98,24 +98,22 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--blue),0 0 30px
 <script>
 let mode = "login";
 
+/* Toggle Login/Signup */
 function toggleMode(){
   mode = mode === "login" ? "signup" : "login";
-  document.getElementById("title").innerText =
-    mode === "login" ? "Login" : "Sign Up";
-
-  document.getElementById("name").style.display =
-    mode === "signup" ? "block" : "none";
-
-  document.querySelector(".switch").innerText =
-    mode === "login"
-      ? "Don’t have an account? Sign up"
-      : "Already have an account? Login";
+  document.getElementById("title").innerText = mode === "login" ? "Login" : "Sign Up";
+  document.getElementById("name").style.display = mode === "signup" ? "block" : "none";
+  document.querySelector(".switch").innerText = mode === "login"
+    ? "Don’t have an account? Sign up"
+    : "Already have an account? Login";
 }
 
+/* Generate unique user ID */
 function generateUserCode(){
   return "ZEP-" + Math.random().toString(36).substring(2,8).toUpperCase();
 }
 
+/* Handle Login / Signup */
 function handleAuth(){
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
@@ -126,11 +124,10 @@ function handleAuth(){
     return;
   }
 
-  // Load users or initialize empty array, preserving existing data
+  // Load users array, preserve existing users
   let users = JSON.parse(localStorage.getItem("users")) || [];
 
   if(mode === "signup"){
-    // Prevent duplicate emails
     if(users.some(u=>u.email===email)){
       alert("Account already exists");
       return;
@@ -141,15 +138,15 @@ function handleAuth(){
       name,
       email,
       password,
-      walletBalance: 0,  // ZAC
+      walletBalance: 0,
       level: "Beginner Freelancer",
       tasksCompleted: 0,
       verified: false,
       joined: new Date().toISOString(),
-      transactions: []
+      transactions: [],
+      tasks: Array(21).fill(false) // 21-day Learn & Earn tasks
     };
 
-    // Push new user without overwriting existing users
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
     localStorage.setItem("currentUser", JSON.stringify(newUser));
@@ -164,33 +161,36 @@ function handleAuth(){
     localStorage.setItem("currentUser", JSON.stringify(user));
   }
 
-  // Redirect to Learn & Earn by default after login/signup
-  window.location.href = "learn-earn.html";
+  // Redirect to student dashboard
+  window.location.href = "student-dashboard.html";
 }
 
-// OPTIONAL: persist current form values to prevent losing data on accidental reload
+/* Persist form on reload */
 window.addEventListener('beforeunload', ()=>{
-  const formState = {
+  localStorage.setItem("loginFormState", JSON.stringify({
     name: document.getElementById("name").value,
     email: document.getElementById("email").value,
     password: document.getElementById("password").value,
     mode
-  };
-  localStorage.setItem("loginFormState", JSON.stringify(formState));
+  }));
 });
 
-// Restore form state on load
+/* Restore form state */
 window.addEventListener('load', ()=>{
-  const savedState = JSON.parse(localStorage.getItem("loginFormState"));
-  if(savedState){
-    mode = savedState.mode || "login";
+  const saved = JSON.parse(localStorage.getItem("loginFormState"));
+  if(saved){
+    mode = saved.mode || "login";
     document.getElementById("title").innerText = mode==="login"?"Login":"Sign Up";
     document.getElementById("name").style.display = mode==="signup"?"block":"none";
     document.querySelector(".switch").innerText = mode==="login"?"Don’t have an account? Sign up":"Already have an account? Login";
-    document.getElementById("name").value = savedState.name || "";
-    document.getElementById("email").value = savedState.email || "";
-    document.getElementById("password").value = savedState.password || "";
+    document.getElementById("name").value = saved.name || "";
+    document.getElementById("email").value = saved.email || "";
+    document.getElementById("password").value = saved.password || "";
   }
+
+  // Auto-redirect if already logged in
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if(currentUser) window.location.href = "student-dashboard.html";
 });
 </script>
 
