@@ -4,276 +4,228 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Wallet</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
-
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
+  --accent:#00ff9d;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,0.08);
-  --text-light:rgba(255,255,255,0.85);
+  --glass:rgba(255,255,255,0.05);
+  --text-light:rgba(255,255,255,.85);
+  --card-bg:rgba(255,255,255,.08);
+  --highlight:#ffea00;
 }
 
 /* RESET */
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.4;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;border:none;}
 
 /* HEADER */
 header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:18px;
-  margin:16px;
-  border-radius:16px;
-  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
-  backdrop-filter:blur(14px);
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 20px;max-width:1200px;margin:auto;margin-top:10px;
+  border-radius:12px;background:rgba(0,0,0,0.15);backdrop-filter:blur(6px);
 }
 .brand{
   font-family:Orbitron;
-  font-size:1.4rem;
+  font-size:1.6rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
+  animation: pulseGlow 2s infinite;
 }
-.home-btn{
-  background:rgba(255,255,255,.1);
-  border:none;
-  border-radius:50%;
-  width:42px;
-  height:42px;
-  color:#fff;
-  font-size:18px;
-  cursor:pointer;
+.home-btn{background:var(--zep-blue);color:#050015;padding:6px 12px;border-radius:12px;font-weight:700;transition:.3s;}
+.home-btn:hover{transform:scale(1.05);}
+@keyframes pulseGlow{
+  0% { text-shadow: 0 0 5px var(--zep-blue),0 0 10px var(--zep-violet); transform: scale(1);}
+  50% { text-shadow: 0 0 15px var(--zep-blue),0 0 25px var(--zep-violet); transform: scale(1.05);}
+  100% { text-shadow: 0 0 5px var(--zep-blue),0 0 10px var(--zep-violet); transform: scale(1);}
 }
 
-/* LAYOUT */
-.container{
-  max-width:1100px;
-  margin:auto;
+/* PROFILE CARD */
+.profile-card{
+  max-width:1200px;
+  margin:20px auto;
+  padding:16px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--card-bg);border-radius:16px;backdrop-filter:blur(6px);
+}
+.profile-card div span{display:block;}
+.profile-card .verified{
+  color:var(--accent);
+  font-weight:700;
+}
+
+/* WALLET OVERVIEW */
+.wallet-overview{
+  max-width:1200px;
+  margin:20px auto;
+  display:flex;flex-wrap:wrap;gap:16px;padding:0 20px;
+}
+.wallet-card{
+  flex:1 1 220px;
+  background:var(--card-bg);
+  border-radius:16px;
   padding:16px;
-  display:flex;
-  flex-direction:column;
-  gap:22px;
-}
-
-.card{
-  background:var(--glass);
-  border-radius:18px;
-  padding:18px;
-  border:1px solid rgba(255,255,255,.12);
-}
-
-/* BALANCE */
-.balance{
   text-align:center;
+  backdrop-filter:blur(6px);
+  transition:.3s;
 }
-.balance h1{
-  font-family:Orbitron;
-  font-size:2.6rem;
-}
-.balance span{
-  font-size:.95rem;
-  color:var(--text-light);
-}
-
-/* WALLET ACTIONS */
-.wallet-actions{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:14px;
-}
-.wallet-actions button{
-  border:none;
+.wallet-card:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+.wallet-card h3{font-family:Orbitron;margin-bottom:8px;}
+.wallet-card p{color:var(--text-light);}
+.wallet-card button{
+  margin-top:10px;
+  padding:8px 16px;
   border-radius:999px;
-  padding:14px;
-  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;font-family:Orbitron;font-weight:700;
   cursor:pointer;
   transition:.3s;
 }
-.withdraw-usd{
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-}
-.withdraw-zac{
-  background:rgba(255,255,255,.1);
-  cursor:not-allowed;
-  opacity:.5;
-}
+.wallet-card button:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
 
-/* TRANSACTIONS */
-.tx{
-  display:flex;
-  justify-content:space-between;
-  padding:10px;
-  background:rgba(255,255,255,.05);
-  border-radius:12px;
-  margin-bottom:8px;
+/* PORTFOLIO 3D */
+#portfolio3D{
+  max-width:1200px;
+  margin:20px auto;
+  padding:0 20px;
+  height:300px;
+  background:rgba(255,255,255,0.05);
+  border-radius:16px;
+  display:flex;justify-content:center;align-items:center;
+  font-size:1.2rem;color:var(--text-light);
+  perspective:1000px;transition:transform 0.5s;
 }
-.tx span{
-  font-size:.85rem;
-  color:var(--text-light);
-}
+#portfolio3D:hover{transform:rotateY(15deg) rotateX(5deg);}
+
+/* FOOTER */
+footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid rgba(255,255,255,.1);color:var(--text-light);font-size:0.85rem;}
 
 /* MODAL */
 .modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:10;
+  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.7);justify-content:center;align-items:center;z-index:1000;
 }
-.modal.active{display:flex;}
-.modal-box{
-  background:#070022;
-  padding:22px;
-  border-radius:18px;
-  width:90%;
-  max-width:420px;
-  border:1px solid rgba(255,255,255,.15);
+.modal-content{
+  background:var(--card-bg);padding:20px;border-radius:16px;max-width:400px;width:90%;backdrop-filter:blur(6px);
 }
-.modal-box h3{
-  font-family:Orbitron;
-  margin-bottom:12px;
+.modal-content h3{margin-bottom:12px;}
+.modal-content input{
+  width:100%;padding:10px;border-radius:12px;border:none;margin-bottom:12px;background:rgba(255,255,255,0.1);color:#fff;outline:none;
 }
-.modal-box input{
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:none;
-  margin-bottom:10px;
+.modal-content button{
+  width:100%;padding:10px;border-radius:999px;background:var(--zep-blue);color:#050015;font-weight:700;
 }
-.modal-box button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:999px;
-  font-family:Orbitron;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  cursor:pointer;
-}
-
-/* INFO */
-.info{
-  font-size:.85rem;
-  color:var(--text-light);
-  text-align:center;
-}
+.modal-content button:hover{transform:scale(1.05);}
 </style>
 </head>
-
 <body>
 
 <header>
-  <button class="home-btn" onclick="location.href='student-dashboard.html'">🏠</button>
-  <div class="brand">Zep Swipe Wallet</div>
-  <div style="width:42px"></div>
+  <div class="brand">Zep Swipe</div>
+  <button class="home-btn" onclick="location.href='student-dashboard.html'">Home</button>
 </header>
 
-<div class="container">
-
-<!-- BALANCE -->
-<div class="card balance">
-  <h1 id="zacBalance">0 ZAC</h1>
-  <span id="usdBalance">≈ $0.00 USD</span>
-</div>
-
-<!-- ACTIONS -->
-<div class="card wallet-actions">
-  <button class="withdraw-usd" onclick="openWithdrawModal()">Withdraw USD</button>
-  <button class="withdraw-zac" title="ZAC withdrawals coming soon">Withdraw ZAC 🔒</button>
-</div>
-
-<!-- TRANSACTIONS -->
-<div class="card">
-  <h3 style="font-family:Orbitron;margin-bottom:12px;">Transaction History</h3>
-  <div id="txList"></div>
-</div>
-
-<div class="info">
-  ZAC rewards are earned via Learn & Earn.<br>
-  ZAC withdrawal will unlock after full verification.
-</div>
-
-</div>
-
-<!-- MODAL -->
-<div class="modal" id="withdrawModal">
-  <div class="modal-box">
-    <h3>Withdraw USD</h3>
-    <input type="number" id="amount" placeholder="Enter USD amount">
-    <input type="text" placeholder="Bank Name">
-    <input type="text" placeholder="Account Number">
-    <button onclick="submitWithdrawal()">Confirm Withdrawal</button>
+<!-- PROFILE CARD -->
+<div class="profile-card">
+  <div>
+    <span id="studentName">Student Name</span>
+    <span id="studentUni">University</span>
+    <span id="studentProgram">Program: <strong>--</strong></span>
+    <span id="verifiedStatus" class="verified">Verified Freelancer</span>
+  </div>
+  <div class="wallet-total">
+    <h3>Total Portfolio</h3>
+    <p><span id="totalPortfolio">0</span> USD</p>
   </div>
 </div>
 
+<!-- WALLET OVERVIEW -->
+<div class="wallet-overview">
+  <div class="wallet-card">
+    <h3>ZAC Balance</h3>
+    <p><span id="zacBalance">0</span> ZAC</p>
+    <button disabled>Withdraw ZAC</button>
+  </div>
+  <div class="wallet-card">
+    <h3>USD Balance</h3>
+    <p><span id="usdBalance">0</span> USD</p>
+    <button id="withdrawBtn">Withdraw to Bank</button>
+  </div>
+</div>
+
+<!-- 3D Portfolio Preview -->
+<div id="portfolio3D">3D Portfolio Value Preview</div>
+
+<!-- MODAL -->
+<div class="modal" id="withdrawModal">
+  <div class="modal-content">
+    <h3>Withdraw USD</h3>
+    <input type="text" id="bankAccount" placeholder="Enter Bank Account">
+    <button onclick="confirmWithdrawal()">Confirm Withdrawal</button>
+  </div>
+</div>
+
+<footer>
+  <a href="about.html">About</a> | <a href="marketplace.html">Marketplace</a> | <a href="student-deals.html">Student Deals</a> | <a href="contact.html">Contact</a>
+</footer>
+
 <script>
-/* SESSION */
-const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-if(!currentUser) location.href="login.html";
+// ========================
+// STUDENT DATA
+// ========================
+let studentData = JSON.parse(localStorage.getItem('studentData')) || {
+  name: "Test Student",
+  university: "Test University",
+  program: "Virtual Assistant",
+  walletZAC: 120,
+  walletUSD: 50,
+  verified:true,
+  loggedIn:true
+};
 
-/* BALANCE */
-const ZAC_RATE = 0.014;
-const zac = currentUser.walletBalance || 0;
-const usd = (zac * ZAC_RATE).toFixed(2);
+document.getElementById('studentName').innerText = studentData.name;
+document.getElementById('studentUni').innerText = studentData.university;
+document.getElementById('studentProgram').querySelector('strong').innerText = studentData.program;
+document.getElementById('verifiedStatus').innerText = studentData.verified?"Verified Freelancer":"Unverified";
+document.getElementById('zacBalance').innerText = studentData.walletZAC;
+document.getElementById('usdBalance').innerText = studentData.walletUSD;
+document.getElementById('totalPortfolio').innerText = (studentData.walletUSD + studentData.walletZAC*0.1).toFixed(2);
 
-document.getElementById("zacBalance").innerText = `${zac} ZAC`;
-document.getElementById("usdBalance").innerText = `≈ $${usd} USD`;
+// MODAL
+const withdrawBtn = document.getElementById('withdrawBtn');
+const modal = document.getElementById('withdrawModal');
 
-/* TRANSACTIONS */
-const txList = document.getElementById("txList");
-(currentUser.transactions || []).forEach(tx=>{
-  const d = document.createElement("div");
-  d.className="tx";
-  d.innerHTML=`<span>${tx.type}</span><span>$${tx.amount}</span>`;
-  txList.appendChild(d);
+withdrawBtn.onclick = ()=>{
+  modal.style.display='flex';
+}
+
+function confirmWithdrawal(){
+  const account = document.getElementById('bankAccount').value.trim();
+  if(!account){alert("Enter a bank account"); return;}
+  alert(`Withdrawal of $${studentData.walletUSD} initiated to ${account}`);
+  studentData.walletUSD = 0;
+  document.getElementById('usdBalance').innerText = studentData.walletUSD;
+  document.getElementById('totalPortfolio').innerText = (studentData.walletUSD + studentData.walletZAC*0.1).toFixed(2);
+  localStorage.setItem('studentData', JSON.stringify(studentData));
+  modal.style.display='none';
+}
+
+// Click outside modal to close
+window.onclick = (e)=>{if(e.target===modal) modal.style.display='none';}
+
+// 3D Portfolio Hover Effect
+const portfolio3D = document.getElementById('portfolio3D');
+portfolio3D.addEventListener('mousemove', (e)=>{
+  const x = (e.clientX/window.innerWidth -0.5)*30;
+  const y = (e.clientY/window.innerHeight -0.5)*15;
+  portfolio3D.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
 });
-
-/* MODAL */
-function openWithdrawModal(){
-  document.getElementById("withdrawModal").classList.add("active");
-}
-document.getElementById("withdrawModal").onclick=e=>{
-  if(e.target.id==="withdrawModal")
-    e.target.classList.remove("active");
-}
-
-/* WITHDRAW (BACKEND READY) */
-function submitWithdrawal(){
-  const amount = parseFloat(document.getElementById("amount").value);
-  if(!amount || amount<=0 || amount>usd){
-    alert("Invalid amount");
-    return;
-  }
-
-  /* 🔌 FLUTTERWAVE API HOOK (READY)
-     Send request to backend:
-     POST /withdraw
-     {
-       userId,
-       amount,
-       currency: "USD",
-       bankDetails
-     }
-  */
-
-  alert("Withdrawal request submitted!");
-
-  currentUser.transactions = currentUser.transactions || [];
-  currentUser.transactions.unshift({
-    type:"USD Withdrawal",
-    amount,
-    date:new Date().toISOString()
-  });
-
-  localStorage.setItem("currentUser", JSON.stringify(currentUser));
-  location.reload();
-}
+portfolio3D.addEventListener('mouseleave', ()=>portfolio3D.style.transform='rotateY(0deg) rotateX(0deg)');
 </script>
-
 </body>
 </html>
