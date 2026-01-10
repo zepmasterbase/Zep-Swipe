@@ -14,13 +14,12 @@
   --text-light:rgba(255,255,255,.85);
   --card-bg:rgba(255,255,255,.05);
   --accent:#00ff9d;
-  --lock:#555;
   --streak:#ffea00;
 }
 
 /* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden;line-height:1.4;}
+body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.4;}
 a{text-decoration:none;color:inherit;}
 
 /* HEADER */
@@ -69,7 +68,13 @@ header nav a:hover{color:var(--zep-blue);}
   background:var(--card-bg);border-radius:16px;padding:16px;
   position:relative;transition:.3s;display:flex;flex-direction:column;gap:8px;
 }
-.task-card.locked{opacity:0.5;}
+.task-card.locked{opacity:0.5;filter:grayscale(70%);}
+.task-card.completed{animation:taskCompleted 0.6s ease forwards;}
+@keyframes taskCompleted{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.05) rotate(2deg);}
+  100%{transform:scale(1);}
+}
 .task-card h4{margin-bottom:6px;font-size:1rem;}
 .task-card p{font-size:0.85rem;color:var(--text-light);}
 .task-card input[type="text"]{padding:8px;border-radius:12px;border:none;background:rgba(255,255,255,0.1);color:#fff;outline:none;}
@@ -98,6 +103,7 @@ header nav a:hover{color:var(--zep-blue);}
 .streak-badge.earned{animation:pop 0.5s ease forwards;}
 @keyframes pop{0%{transform:scale(0.5);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
 
+/* CONFETTI */
 #confettiCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1000;}
 
 /* VERIFICATION BANNER */
@@ -125,7 +131,6 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
   </nav>
 </header>
 
-<!-- STUDENT INFO -->
 <div class="student-info">
   <div>
     <span id="studentName">Student Name</span>
@@ -136,23 +141,18 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
   <div><a href="profile.html">Profile</a></div>
 </div>
 
-<!-- PROGRAM SELECTION -->
 <div class="programs" id="programsContainer"></div>
 
-<!-- PROGRESS BAR -->
 <div class="progress-bar-container">
   <div class="progress-bar">
     <div class="progress-bar-fill" id="progressFill"></div>
   </div>
 </div>
 
-<!-- STREAK BADGES -->
 <div id="streakContainer" style="max-width:1200px;margin:10px auto;padding:0 20px;"></div>
 
-<!-- TASKS -->
 <div class="tasks-container" id="tasksContainer"></div>
 
-<!-- VERIFICATION BANNER -->
 <div id="verificationBanner" onclick="location.href='verification.html'">
   Become a Verified Freelancer – $5
 </div>
@@ -166,19 +166,13 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
 <script>
 // ACCESS CONTROL
 let studentData = JSON.parse(localStorage.getItem('studentData'));
-if(!studentData || !studentData.loggedIn){
-  window.location.href='login.html';
-}
+if(!studentData){ window.location.href='login.html'; }
 
 // INITIAL STUDENT INFO
-const studentName = document.getElementById('studentName');
-const studentUni = document.getElementById('studentUni');
-const studentProgramEl = document.getElementById('studentProgram').querySelector('strong');
-const walletBalance = document.getElementById('walletBalance');
-studentName.innerText = studentData.name;
-studentUni.innerText = studentData.university;
-walletBalance.innerText = studentData.walletBalance || 0;
-studentProgramEl.innerText = studentData.program || '--';
+document.getElementById('studentName').innerText = studentData.name;
+document.getElementById('studentUni').innerText = studentData.university || '';
+document.getElementById('studentProgram').querySelector('strong').innerText = studentData.program || '--';
+document.getElementById('walletBalance').innerText = studentData.walletBalance || 0;
 
 // PROGRAM SELECTION
 const programs = ["Virtual Assistant","Content Creator (Video)","Blog Writer","Voice-over Artist","Data Entry","UI/UX Designer","Online Tutor"];
@@ -194,53 +188,30 @@ programs.forEach(prog=>{
     localStorage.setItem('studentData', JSON.stringify(studentData));
     document.querySelectorAll('.program-card').forEach(c=>c.classList.remove('selected'));
     card.classList.add('selected');
-    studentProgramEl.innerText = prog;
+    document.getElementById('studentProgram').querySelector('strong').innerText = prog;
     renderTasks(prog);
   }
   programsContainer.appendChild(card);
 });
 
-// TASKS BY PROGRAM
+// TASK TEMPLATES
 const taskTemplates = {
-  "Virtual Assistant": [
-    "Organize email inbox", "Schedule meetings for a client", "Create daily to-do list",
-    "Update Google Sheets database", "Research suppliers online", "Set up Zoom calls",
-    "Draft professional emails"
-  ],
-  "Content Creator (Video)": [
-    "Create 1-min TikTok video", "Edit YouTube short", "Film B-roll footage",
-    "Add captions to video", "Upload video to platform", "Storyboard next video", "Engage with comments"
-  ],
-  "Blog Writer":[
-    "Write 300-word blog post", "Proofread previous blog", "Research topic keywords",
-    "Format blog with images", "SEO optimize content", "Share post on social media", "Reply to blog comments"
-  ],
-  "Voice-over Artist":[
-    "Record 1-min voice clip", "Edit audio in Audacity", "Add background music", 
-    "Submit demo for review", "Practice vocal warm-ups", "Read script clearly", "Record narration"
-  ],
-  "Data Entry":[
-    "Enter 20 rows in Excel", "Clean up spreadsheet data", "Verify email addresses",
-    "Input survey results", "Organize client database", "Create pivot table", "Generate weekly report"
-  ],
-  "UI/UX Designer":[
-    "Sketch wireframe", "Create Figma prototype", "Design login page", 
-    "Redesign navigation menu", "Design mobile screen", "Prepare assets for dev", "Review user feedback"
-  ],
-  "Online Tutor":[
-    "Prepare 30-min lesson", "Create assignment", "Grade 5 student submissions", 
-    "Host 1-on-1 session", "Create quiz", "Update study notes", "Answer student questions"
-  ]
+  "Virtual Assistant": ["Organize inbox","Schedule meetings","Create daily to-do","Update Sheets","Research suppliers","Set up Zoom","Draft emails"],
+  "Content Creator (Video)": ["Create TikTok video","Edit YouTube short","Film B-roll","Add captions","Upload video","Storyboard","Engage comments"],
+  "Blog Writer":["Write 300-word blog","Proofread previous blog","Research keywords","Format blog","SEO optimize","Share post","Reply comments"],
+  "Voice-over Artist":["Record voice clip","Edit audio","Add background music","Submit demo","Practice vocals","Read script","Record narration"],
+  "Data Entry":["Enter 20 rows","Clean spreadsheet","Verify emails","Input survey","Organize database","Create pivot","Generate report"],
+  "UI/UX Designer":["Sketch wireframe","Create Figma prototype","Design login page","Redesign nav","Design mobile screen","Prepare assets","Review feedback"],
+  "Online Tutor":["Prepare 30-min lesson","Create assignment","Grade 5 submissions","Host 1-on-1 session","Create quiz","Update notes","Answer questions"]
 };
 
-// PROGRESS & STREAK
+// TASKS RENDERING
 const tasksContainer = document.getElementById('tasksContainer');
 const progressFill = document.getElementById('progressFill');
 const streakContainer = document.getElementById('streakContainer');
 
 function renderTasks(program){
-  tasksContainer.innerHTML='';
-  streakContainer.innerHTML='';
+  tasksContainer.innerHTML=''; streakContainer.innerHTML='';
   if(!studentData.tasksCompleted) studentData.tasksCompleted=[];
   const programTasks = taskTemplates[program];
   for(let day=1;day<=21;day++){
@@ -248,10 +219,10 @@ function renderTasks(program){
     taskCard.className='task-card';
     const completed = studentData.tasksCompleted.includes(`${program}-${day}`);
     if(day>1 && !studentData.tasksCompleted.includes(`${program}-${day-1}`)) taskCard.classList.add('locked');
-    const taskDesc = programTasks[(day-1)%programTasks.length];
+    if(completed) taskCard.classList.add('completed');
     taskCard.innerHTML=`
       <h4>Day ${day}</h4>
-      <p>${taskDesc}</p>
+      <p>${programTasks[(day-1)%programTasks.length]}</p>
       <input type="text" placeholder="Submit Zora link" ${taskCard.classList.contains('locked')?'disabled':''} id="taskInput${day}">
       <button ${taskCard.classList.contains('locked')?'disabled':''}>Submit (+25 ZAC)</button>
     `;
@@ -271,27 +242,21 @@ function renderTasks(program){
         const taskKey = `${program}-${day}`;
         if(!studentData.tasksCompleted.includes(taskKey)) studentData.tasksCompleted.push(taskKey);
         studentData.walletBalance = (studentData.walletBalance||0)+25;
-        walletBalance.innerText = studentData.walletBalance;
+        document.getElementById('walletBalance').innerText = studentData.walletBalance;
         localStorage.setItem('studentData', JSON.stringify(studentData));
-        btn.disabled = true;
-        input.disabled = true;
-        addStreakBadge(day);
-        launchConfetti();
+        btn.disabled = true; input.disabled = true;
+        addStreakBadge(day); launchConfetti();
         // unlock next task
         const nextTask = tasksContainer.children[day];
-        if(nextTask){
-          nextTask.classList.remove('locked');
-          nextTask.querySelector('button').disabled=false;
-          nextTask.querySelector('input').disabled=false;
-        }
-        // show verification banner if all 21 tasks done
+        if(nextTask){ nextTask.classList.remove('locked'); 
+        nextTask.querySelector('button').disabled=false; nextTask.querySelector('input').disabled=false;}
+        // progress bar
         const completedCount = studentData.tasksCompleted.filter(t=>t.startsWith(program)).length;
         progressFill.style.width=`${(completedCount/21)*100}%`;
         if(completedCount===21) document.getElementById('verificationBanner').style.display='block';
       }
     }
   }
-  // update progress bar
   const completedCount = studentData.tasksCompleted.filter(t=>t.startsWith(program)).length;
   progressFill.style.width=`${(completedCount/21)*100}%`;
 }
@@ -309,37 +274,21 @@ function launchConfetti(){
   const canvas = document.getElementById('confettiCanvas');
   const ctx = canvas.getContext('2d');
   canvas.width=window.innerWidth; canvas.height=window.innerHeight;
-  const confettiCount = 100;
-  const confettis=[];
+  const confettiCount=100; const confettis=[];
   for(let i=0;i<confettiCount;i++){
-    confettis.push({
-      x:Math.random()*canvas.width,
-      y:Math.random()*canvas.height-20,
-      r:Math.random()*6+2,
-      dx:(Math.random()-0.5)*2,
-      dy:Math.random()*3+2,
-      color:`hsl(${Math.random()*360},80%,60%)`
-    });
+    confettis.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height-20,r:Math.random()*6+2,dx:(Math.random()-0.5)*2,dy:Math.random()*3+2,color:`hsl(${Math.random()*360},80%,60%)`});
   }
   function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    confettis.forEach(c=>{
-      ctx.fillStyle=c.color;
-      ctx.beginPath();
-      ctx.arc(c.x,c.y,c.r,0,2*Math.PI);
-      ctx.fill();
-      c.x+=c.dx; c.y+=c.dy;
-      if(c.y>canvas.height){ c.y=0; c.x=Math.random()*canvas.width; }
-    });
+    confettis.forEach(c=>{ctx.fillStyle=c.color;ctx.beginPath();ctx.arc(c.x,c.y,c.r,0,2*Math.PI);ctx.fill();c.x+=c.dx;c.y+=c.dy;if(c.y>canvas.height){c.y=0;c.x=Math.random()*canvas.width;}});
     requestAnimationFrame(draw);
   }
   draw();
   setTimeout(()=>{ctx.clearRect(0,0,canvas.width,canvas.height);},3000);
 }
 
-// INITIAL RENDER
+// INITIAL TASKS
 if(studentData.program) renderTasks(studentData.program);
 </script>
-
 </body>
 </html>
