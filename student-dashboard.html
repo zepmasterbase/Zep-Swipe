@@ -1,204 +1,278 @@
-<!-- Wallet link updated and jobs locked for unverified students -->
-<!DOCTYPE html>    
-<html lang="en">    
-<head>    
-<meta charset="UTF-8">    
-<meta name="viewport" content="width=device-width, initial-scale=1.0">    
-<title>Zep Swipe — Student Dashboard</title>    
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">    
-    
-<style>    
-:root{    
-  --zep-blue:#00f0ff;    
-  --zep-violet:#9c4dff;    
-  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);    
-  --glass:rgba(255,255,255,0.08);    
-  --text-light:rgba(255,255,255,0.85);    
-}    
-    
-/* RESET */    
-*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}    
-body{background:var(--bg);color:#fff;min-height:100vh;}    
-    
-/* HEADER */    
-header{display:flex;justify-content:space-between;align-items:center;padding:18px;margin:16px;border-radius:16px;background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));backdrop-filter:blur(14px);}    
-.brand{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}    
-.logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;transition:.3s;}    
-.logout-btn:hover{background:rgba(255,0,80,.25);}    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Student Dashboard</title>
 
-/* DASHBOARD SECTIONS */    
-.dashboard{padding:16px;display:flex;flex-direction:column;gap:22px;max-width:1200px;margin:auto;}    
-.section{background:var(--glass);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.12);}    
-.section h3{font-family:Orbitron;margin-bottom:12px;}    
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 
-/* PROFILE SUMMARY */    
-.profile-summary{display:flex;align-items:center;gap:16px;}    
-.profile-summary img{width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;transition:transform 0.3s;}    
-.profile-summary img:hover{transform:scale(1.1);}    
-.profile-summary div span{font-size:.85rem;color:var(--text-light);}    
+<style>
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,0.08);
+  --text-light:rgba(255,255,255,0.85);
+}
 
-/* TASKS & STREAKS */    
-.tasks .task{background:rgba(255,255,255,.05);border-radius:12px;padding:12px;margin-bottom:10px;position:relative;transition:transform 0.3s;}    
-.task.locked{opacity:0.5;filter:grayscale(70%);}    
-.task.completed{animation:taskCompleted 0.6s ease forwards;}    
-@keyframes taskCompleted{0%{transform:scale(1);}50%{transform:scale(1.05) rotate(2deg);}100%{transform:scale(1);}}    
-.task h4{margin-bottom:4px;}    
-.task span{font-size:.8rem;color:var(--text-light);}    
-.progress{height:6px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;margin-top:6px;}    
-.progress div{height:100%;background:var(--zep-blue);transition:width 0.5s ease;}    
-.streaks{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}    
-.streaks span{width:22px;height:22px;background:rgba(255,255,255,.05);border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:0.7rem;transition:transform 0.3s, background 0.3s;}    
-.streaks span.completed{background:var(--zep-blue);color:#050015;transform:scale(1.3);}    
-.streaks span.locked{background:rgba(255,255,255,.02);color:rgba(255,255,255,.4);}    
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;min-height:100vh;}
 
-/* EARNINGS */    
-.earnings{display:flex;justify-content:space-between;gap:12px;}    
-.earnings div{flex:1;background:rgba(255,255,255,.05);border-radius:12px;padding:12px;text-align:center;transition:transform 0.3s;}    
-.earnings div:hover{transform:scale(1.03) rotate(-1deg);}    
+/* HEADER */
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px;margin:16px;border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
+}
+.brand{
+  font-family:Orbitron;font-size:1.5rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.logout-btn{
+  background:rgba(255,255,255,.1);border:none;border-radius:50%;
+  width:38px;height:38px;color:#fff;cursor:pointer;
+}
 
-/* LIVE JOBS */    
-.jobs-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;}    
-.job{background:rgba(255,255,255,.05);border-radius:12px;padding:12px;cursor:pointer;transition:.3s;position:relative;}    
-.job.locked{filter:blur(4px);opacity:0.5;pointer-events:none;}    
-.job:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 20px rgba(156,77,255,.3);}    
-.job img{width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:6px;}    
-.job h4{margin-bottom:4px;}    
-.job span{font-size:.8rem;color:var(--text-light);}    
-.apply-btn.applied{background:rgba(0,240,255,.3);border-radius:999px;}    
+/* LAYOUT */
+.dashboard{
+  padding:16px;display:flex;flex-direction:column;
+  gap:22px;max-width:1200px;margin:auto;
+}
+.section{
+  background:var(--glass);
+  border-radius:16px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,.12);
+}
+.section h3{font-family:Orbitron;margin-bottom:12px;}
 
-/* ACTION BUTTONS */    
-.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}    
-.actions button{border:none;border-radius:999px;padding:12px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:transform 0.3s;}    
-.actions button:hover{transform:scale(1.05) rotate(-1deg);}    
-@media(max-width:480px){.actions{grid-template-columns:1fr;}}    
+/* PROFILE */
+.profile-summary{
+  display:flex;align-items:center;gap:16px;
+}
+.profile-summary img{
+  width:80px;height:80px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.3);
+}
+.profile-summary span{font-size:.85rem;color:var(--text-light);}
 
-</style>    
-</head>    
-<body>    
-    
-<header>    
-  <div class="brand">Zep Swipe</div>    
-  <button class="logout-btn" onclick="logout()">⎋</button>    
-</header>    
-    
-<div class="dashboard">    
-    
-  <!-- PROFILE SUMMARY -->    
-  <div class="section profile-summary">    
-    <img id="profileImg" src="" alt="Profile">    
-    <div>    
-      <h3 id="studentName">Student Name</h3>    
-      <span id="studentLevel">Beginner Freelancer</span><br>    
-      <span id="completionText">Profile Completion: 0%</span><br>    
-      <span id="walletBalance">Wallet: 0 ZAC (~$0)</span>    
-    </div>    
-  </div>    
-    
-  <!-- TASKS & STREAKS -->    
-  <div class="section tasks">    
-    <h3>21-Day Learn & Earn Streak</h3>    
-    <div id="tasksContainer"></div>    
-  </div>    
-    
-  <!-- EARNINGS -->    
-  <div class="section earnings">    
-    <div>    
-      <h4>Weekly Earnings</h4>    
-      <span id="weeklyUSD">$0</span> USD<br>    
-      <span id="weeklyZAC">0</span> ZAC    
-    </div>    
-    <div>    
-      <h4>Monthly Earnings</h4>    
-      <span id="monthlyUSD">$0</span> USD<br>    
-      <span id="monthlyZAC">0</span> ZAC    
-    </div>    
-  </div>    
-    
-  <!-- LIVE JOBS -->    
-  <div class="section">    
-    <h3>Live Jobs</h3>    
-    <div class="jobs-list" id="jobsList"></div>    
-  </div>    
+/* GRAPH */
+.graph-box{
+  position:relative;
+  height:180px;
+  border-radius:14px;
+  background:linear-gradient(135deg,rgba(0,240,255,.08),rgba(156,77,255,.08));
+  overflow:hidden;
+  cursor:pointer;
+}
+.graph-placeholder{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:Orbitron;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{opacity:.6}
+  50%{opacity:1}
+  100%{opacity:.6}
+}
+.bars{
+  display:flex;align-items:flex-end;
+  height:100%;gap:8px;padding:16px;
+}
+.bar{
+  flex:1;
+  background:linear-gradient(180deg,var(--zep-blue),var(--zep-violet));
+  border-radius:8px 8px 0 0;
+  animation:grow .8s ease forwards;
+}
+@keyframes grow{
+  from{height:0}
+}
 
-  <!-- ACTIONS -->    
-  <div class="section actions">    
-    <button onclick="location.href='learn-earn.html'">Tasks</button>    
-    <button onclick="location.href='swipe-merchants.html'">Jobs</button>    
-    <button onclick="location.href='wallet.html'">Wallet</button>    
-    <button onclick="location.href='profile.html'">Profile</button>    
-    <button onclick="location.href='deals.html'">Deals Day</button>
-  </div>    
-    
-</div>    
-    
-<script>    
-/* SESSION PROTECTION */    
-let currentUser = JSON.parse(localStorage.getItem("currentUser"));    
-if(!currentUser){window.location.href="login.html";}    
-    
-/* LOGOUT */    
-function logout(){localStorage.removeItem("currentUser");window.location.href="login.html";}    
-    
-/* LOAD PROFILE */    
-document.getElementById("profileImg").src = currentUser.profileImage || "https://via.placeholder.com/80";    
-document.getElementById("studentName").innerText = currentUser.name;    
-document.getElementById("studentLevel").innerText = currentUser.level;    
-document.getElementById("completionText").innerText = `Profile Completion: ${currentUser.profileCompletion || 0}%`;    
-    
-/* WALLET BALANCE */    
-function updateWalletUI(){    
-  const zac = currentUser.walletBalance || 0;    
-  const usd = (zac*0.014).toFixed(2);    
-  document.getElementById("walletBalance").innerText = `Wallet: ${zac} ZAC (~$${usd})`;    
-  document.getElementById("weeklyZAC").innerText = zac;    
-  document.getElementById("weeklyUSD").innerText = `$${usd}`;    
-  document.getElementById("monthlyZAC").innerText = zac;    
-  document.getElementById("monthlyUSD").innerText = `$${usd}`;    
-}    
-    
-function saveCurrentUser(){    
-  let users = JSON.parse(localStorage.getItem("users")) || [];    
-  const idx = users.findIndex(u=>u.email===currentUser.email);    
-  if(idx!==-1){users[idx] = currentUser; localStorage.setItem("users", JSON.stringify(users));}    
-  localStorage.setItem("currentUser", JSON.stringify(currentUser));    
-}    
+/* ANALYTICS */
+.analytics{
+  display:none;margin-top:12px;font-size:.85rem;
+}
+.analytics.active{display:block}
 
-/* 21-DAY TASKS STREAK */    
-const tasksContainer = document.getElementById("tasksContainer");    
-function renderTasks(){    
-  tasksContainer.innerHTML = "";    
-  for(let day=1; day<=21; day++){    
-    const taskDiv = document.createElement("div");    
-    taskDiv.className = "task";    
-    if(day>1 && !currentUser.tasks[day-2]) taskDiv.classList.add("locked");    
-    if(currentUser.tasks[day-1]) taskDiv.classList.add("completed");    
-    taskDiv.innerHTML = `<h4>Day ${day} Task</h4><span>Complete this task to earn +25 ZAC</span><div class="progress"><div style="width:${currentUser.tasks[day-1]?100:0}%"></div></div><div class="streaks">${[...Array(21)].map((_,i)=>{let cls=i<day?(currentUser.tasks[i]?'completed':'locked') :'';return `<span class="${cls}">${i+1}</span>`;}).join('')}</div><button ${day>1 && !currentUser.tasks[day-2] ? "disabled" : ""} onclick="completeTask(${day})">${currentUser.tasks[day-1] ? "Completed ✅" : "Complete Task"}</button>`;    
-    tasksContainer.appendChild(taskDiv);    
-  }    
-}    
-function completeTask(day){    
-  if(currentUser.tasks[day-1]) return;    
-  currentUser.tasks[day-1]=true;    
-  currentUser.tasksCompleted=(currentUser.tasksCompleted||0)+1;    
-  currentUser.walletBalance=(currentUser.walletBalance||0)+25;    
-  updateWalletUI();    
-  saveCurrentUser();    
-  renderTasks();    
-}    
-updateWalletUI();    
-renderTasks();    
+/* JOBS */
+.jobs-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:12px;
+}
+.job{
+  background:rgba(255,255,255,.05);
+  border-radius:12px;
+  padding:12px;
+  position:relative;
+}
+.job.locked{
+  filter:blur(4px);
+  pointer-events:none;
+}
 
-/* LOAD LIVE JOBS FROM SWIPE-MERCHANTS */    
-const jobsList = document.getElementById("jobsList");    
-const swipeJobs = JSON.parse(localStorage.getItem("swipeJobs")) || []; // fetched from swipe-merchants.html    
-swipeJobs.forEach(job=>{    
-  const div = document.createElement("div");    
-  div.className="job";    
-  if(!currentUser.verified) div.classList.add("locked"); // blur/unverified    
-  div.innerHTML=`<img src="${job.image||'https://via.placeholder.com/150'}"><h4>${job.title}</h4><span>${job.amountUSD} USD • ${job.status}</span><button class="apply-btn">${job.applied?'Applied ✅':'Apply'}</button>`;    
-  jobsList.appendChild(div);    
-});    
-</script>    
-    
-</body>    
+/* VERIFY OVERLAY */
+.verify-overlay{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,.75);
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;border-radius:12px;
+}
+.verify-overlay button{
+  margin-top:10px;padding:8px 14px;
+  border:none;border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+}
+
+/* ACTIONS */
+.actions{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+}
+.actions button{
+  border:none;border-radius:999px;padding:12px;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  cursor:pointer;
+}
+@media(max-width:480px){
+  .actions{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">Zep Swipe</div>
+  <button class="logout-btn" onclick="logout()">⎋</button>
+</header>
+
+<div class="dashboard">
+
+<!-- PROFILE -->
+<div class="section profile-summary">
+  <img id="profileImg">
+  <div>
+    <h3 id="studentName"></h3>
+    <span id="studentLevel"></span><br>
+    <span id="completionText"></span><br>
+    <span id="walletBalance"></span>
+  </div>
+</div>
+
+<!-- WEEKLY GRAPH -->
+<div class="section">
+  <h3>Weekly Earnings</h3>
+  <div class="graph-box" onclick="toggleAnalytics()">
+    <div id="graphPlaceholder" class="graph-placeholder">
+      Start Learning to See Earnings 📈
+    </div>
+    <div id="bars" class="bars"></div>
+  </div>
+  <div id="analytics" class="analytics"></div>
+</div>
+
+<!-- EARNINGS SUMMARY -->
+<div class="section earnings">
+  <div>
+    <h4>Weekly</h4>
+    <span id="weeklyUSD">$0</span><br>
+    <span id="weeklyZAC">0 ZAC</span>
+  </div>
+  <div>
+    <h4>Monthly</h4>
+    <span id="monthlyUSD">$0</span><br>
+    <span id="monthlyZAC">0 ZAC</span>
+  </div>
+</div>
+
+<!-- JOBS -->
+<div class="section">
+  <h3>Live Jobs</h3>
+  <div class="jobs-list" id="jobsList"></div>
+</div>
+
+<!-- ACTIONS -->
+<div class="section actions">
+  <button onclick="location.href='learn-earn.html'">Tasks</button>
+  <button onclick="location.href='swipe-merchants.html'">Jobs</button>
+  <button onclick="location.href='wallet.html'">Wallet</button>
+  <button onclick="location.href='profile.html'">Profile</button>
+  <button onclick="location.href='deals.html'">Deals Day</button>
+</div>
+
+</div>
+
+<script>
+let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+if(!currentUser) location.href="login.html";
+
+function logout(){
+  localStorage.removeItem("currentUser");
+  location.href="login.html";
+}
+
+/* PROFILE */
+profileImg.src=currentUser.profileImage||"https://via.placeholder.com/80";
+studentName.innerText=currentUser.name;
+studentLevel.innerText=currentUser.level;
+completionText.innerText=`Profile Completion: ${currentUser.profileCompletion||0}%`;
+
+/* WALLET */
+function updateWallet(){
+  const zac=currentUser.walletBalance||0;
+  const usd=(zac*0.014).toFixed(2);
+  walletBalance.innerText=`Wallet: ${zac} ZAC (~$${usd})`;
+  weeklyZAC.innerText=zac;
+  weeklyUSD.innerText=`$${usd}`;
+  monthlyZAC.innerText=zac;
+  monthlyUSD.innerText=`$${usd}`;
+}
+updateWallet();
+
+/* GRAPH SYNC WITH LEARN & EARN */
+const earnings=currentUser.earningsHistory||[];
+if(earnings.length){
+  graphPlaceholder.style.display="none";
+  earnings.slice(-7).forEach(v=>{
+    const b=document.createElement("div");
+    b.className="bar";
+    b.style.height=(v/100)*100+"%";
+    bars.appendChild(b);
+  });
+  analytics.innerHTML=`Total streak days: ${currentUser.tasksCompleted||0}<br>Total ZAC earned: ${currentUser.walletBalance||0}`;
+}
+
+/* ANALYTICS TOGGLE */
+function toggleAnalytics(){
+  analytics.classList.toggle("active");
+}
+
+/* JOBS */
+const jobs=JSON.parse(localStorage.getItem("swipeJobs"))||[];
+jobs.forEach(j=>{
+  const d=document.createElement("div");
+  d.className="job";
+  if(!currentUser.verified) d.classList.add("locked");
+  d.innerHTML=`<h4>${j.title}</h4><span>${j.amountUSD} USD</span>`;
+  if(!currentUser.verified){
+    d.innerHTML+=`<div class="verify-overlay">
+      <div>
+        <strong>Verify Account</strong><br>
+        Unlock paid jobs
+        <br><button onclick="location.href='profile.html'">Verify</button>
+      </div>
+    </div>`;
+  }
+  jobsList.appendChild(d);
+});
+</script>
+
+</body>
 </html>
