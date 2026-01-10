@@ -14,7 +14,7 @@
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,0.08);
 }
-*{box-sizing:border-box}
+*{box-sizing:border-box;}
 body{
   margin:0;
   min-height:100vh;
@@ -32,6 +32,12 @@ body{
   padding:28px;
   border-radius:18px;
   box-shadow:0 0 30px rgba(0,240,255,.25);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 20px rgba(0,240,255,.25),0 0 40px rgba(156,77,255,.25);}
+  50%{box-shadow:0 0 30px rgba(0,240,255,.35),0 0 60px rgba(156,77,255,.35);}
+  100%{box-shadow:0 0 20px rgba(0,240,255,.25),0 0 40px rgba(156,77,255,.25);}
 }
 h1{
   font-family:Orbitron;
@@ -47,7 +53,10 @@ input{
   border:none;
   border-radius:12px;
   margin-bottom:14px;
+  background:rgba(255,255,255,0.05);
+  color:#fff;
 }
+input::placeholder{color:rgba(255,255,255,0.6);}
 button{
   width:100%;
   padding:12px;
@@ -57,7 +66,9 @@ button{
   background:linear-gradient(90deg,var(--blue),var(--violet));
   color:#050015;
   cursor:pointer;
+  transition:.3s;
 }
+button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--blue),0 0 30px var(--violet);}
 .switch{
   text-align:center;
   margin-top:12px;
@@ -115,10 +126,12 @@ function handleAuth(){
     return;
   }
 
+  // Load users or initialize empty array, preserving existing data
   let users = JSON.parse(localStorage.getItem("users")) || [];
 
   if(mode === "signup"){
-    if(users.find(u=>u.email===email)){
+    // Prevent duplicate emails
+    if(users.some(u=>u.email===email)){
       alert("Account already exists");
       return;
     }
@@ -128,20 +141,22 @@ function handleAuth(){
       name,
       email,
       password,
-      ZAC: 0,
-      USD: 0,
+      walletBalance: 0,  // ZAC
       level: "Beginner Freelancer",
-      joined: new Date().toISOString()
+      tasksCompleted: 0,
+      verified: false,
+      joined: new Date().toISOString(),
+      transactions: []
     };
 
+    // Push new user without overwriting existing users
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
     localStorage.setItem("currentUser", JSON.stringify(newUser));
 
   } else {
-    const user = users.find(
-      u=>u.email===email && u.password===password
-    );
+    // LOGIN
+    const user = users.find(u=>u.email===email && u.password===password);
     if(!user){
       alert("Invalid credentials");
       return;
@@ -149,8 +164,34 @@ function handleAuth(){
     localStorage.setItem("currentUser", JSON.stringify(user));
   }
 
-  window.location.href = "student-dashboard.html";
+  // Redirect to Learn & Earn by default after login/signup
+  window.location.href = "learn-earn.html";
 }
+
+// OPTIONAL: persist current form values to prevent losing data on accidental reload
+window.addEventListener('beforeunload', ()=>{
+  const formState = {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    password: document.getElementById("password").value,
+    mode
+  };
+  localStorage.setItem("loginFormState", JSON.stringify(formState));
+});
+
+// Restore form state on load
+window.addEventListener('load', ()=>{
+  const savedState = JSON.parse(localStorage.getItem("loginFormState"));
+  if(savedState){
+    mode = savedState.mode || "login";
+    document.getElementById("title").innerText = mode==="login"?"Login":"Sign Up";
+    document.getElementById("name").style.display = mode==="signup"?"block":"none";
+    document.querySelector(".switch").innerText = mode==="login"?"Don’t have an account? Sign up":"Already have an account? Login";
+    document.getElementById("name").value = savedState.name || "";
+    document.getElementById("email").value = savedState.email || "";
+    document.getElementById("password").value = savedState.password || "";
+  }
+});
 </script>
 
 </body>
