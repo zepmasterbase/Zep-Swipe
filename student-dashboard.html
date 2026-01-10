@@ -12,17 +12,18 @@
   --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,0.08);
-  --text-light:rgba(255,255,255,.85);
+  --text-light:rgba(255,255,255,0.85);
 }
 
-/* RESET & BODY */
+/* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden;}
+body{background:var(--bg);color:#fff;min-height:100vh;}
 
 /* HEADER */
 header{
   display:flex;justify-content:space-between;align-items:center;
-  padding:18px;margin:16px;border-radius:16px;
+  padding:18px;margin:16px;
+  border-radius:16px;
   background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
   backdrop-filter:blur(14px);
 }
@@ -30,7 +31,7 @@ header{
 .logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;transition:.3s;}
 .logout-btn:hover{background:rgba(255,0,80,.25);}
 
-/* DASHBOARD */
+/* DASHBOARD SECTIONS */
 .dashboard{padding:16px;display:flex;flex-direction:column;gap:22px;max-width:1200px;margin:auto;}
 .section{background:var(--glass);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.12);}
 .section h3{font-family:Orbitron;margin-bottom:12px;}
@@ -40,22 +41,17 @@ header{
 .profile-summary img{width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
 .profile-summary div span{font-size:.85rem;color:var(--text-light);}
 
-/* TASKS */
-.tasks .task{background:rgba(255,255,255,.05);border-radius:12px;padding:12px;margin-bottom:10px;position:relative;transition:.3s;}
-.tasks .task.locked{opacity:0.4;}
-.tasks .task h4{margin-bottom:6px;}
-.tasks .task input[type="text"]{width:70%;padding:6px;border-radius:8px;border:none;margin-right:6px;background:rgba(255,255,255,.1);color:#fff;}
-.tasks .task button{padding:6px 12px;border:none;border-radius:999px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:.3s;}
-.tasks .task button:hover{transform:translateY(-1px);box-shadow:0 0 10px var(--zep-blue),0 0 20px var(--zep-violet);}
-
-/* STREAK BADGES */
-.streak-container{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
-.streak-badge{width:24px;height:24px;border-radius:50%;background:rgba(156,77,255,.2);display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;transition:.3s;}
-.streak-badge.completed{background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;box-shadow:0 0 8px var(--zep-blue),0 0 16px var(--zep-violet);}
-
-/* PROGRESS BAR */
+/* TASKS & STREAKS */
+.tasks .task{background:rgba(255,255,255,.05);border-radius:12px;padding:12px;margin-bottom:10px;position:relative;}
+.task.locked{opacity:0.5;}
+.task h4{margin-bottom:4px;}
+.task span{font-size:.8rem;color:var(--text-light);}
 .progress{height:6px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;margin-top:6px;}
-.progress div{height:100%;background:var(--zep-blue);transition:width .5s ease-in-out;}
+.progress div{height:100%;background:var(--zep-blue);transition:width 0.4s ease;}
+.streaks{display:flex;gap:6px;margin-top:6px;}
+.streaks span{width:20px;height:20px;background:rgba(255,255,255,.05);border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:0.7rem;transition:transform 0.3s;}
+.streaks span.completed{background:var(--zep-blue);color:#050015;transform:scale(1.2);}
+.streaks span.locked{background:rgba(255,255,255,.02);color:rgba(255,255,255,.4);}
 
 /* EARNINGS */
 .earnings{display:flex;justify-content:space-between;gap:12px;}
@@ -68,14 +64,15 @@ header{
 .job img{width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:6px;}
 .job h4{margin-bottom:4px;}
 .job span{font-size:.8rem;color:var(--text-light);}
+.apply-btn.applied{background:rgba(0,240,255,.3);border-radius:999px;}
 
-/* ACTIONS */
-.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px;}
+/* ACTION BUTTONS */
+.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
 .actions button{border:none;border-radius:999px;padding:12px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;}
-@media(max-width:480px){.actions{grid-template-columns:1fr}}
+@media(max-width:480px){.actions{grid-template-columns:1fr;}}
+
 </style>
 </head>
-
 <body>
 
 <header>
@@ -91,28 +88,28 @@ header{
     <div>
       <h3 id="studentName">Student Name</h3>
       <span id="studentLevel">Beginner Freelancer</span><br>
-      <span id="completionText">Profile Completion: 0%</span>
+      <span id="completionText">Profile Completion: 0%</span><br>
+      <span id="walletBalance">Wallet: 0 ZAC (~$0)</span>
     </div>
   </div>
 
-  <!-- TASKS / 21-DAY STREAK -->
+  <!-- TASKS & STREAKS -->
   <div class="section tasks">
-    <h3>Learn & Earn Daily Tasks</h3>
+    <h3>21-Day Learn & Earn Streak</h3>
     <div id="tasksContainer"></div>
-    <div class="streak-container" id="streakContainer"></div>
   </div>
 
   <!-- EARNINGS -->
   <div class="section earnings">
     <div>
-      <h4>Wallet Balance</h4>
-      <span id="walletZAC">0</span> ZAC<br>
-      <span id="walletUSD">$0</span> USD
+      <h4>Weekly Earnings</h4>
+      <span id="weeklyUSD">$0</span> USD<br>
+      <span id="weeklyZAC">0</span> ZAC
     </div>
     <div>
       <h4>Monthly Earnings</h4>
-      <span id="monthlyZAC">0</span> ZAC<br>
-      <span id="monthlyUSD">$0</span> USD
+      <span id="monthlyUSD">$0</span> USD<br>
+      <span id="monthlyZAC">0</span> ZAC
     </div>
   </div>
 
@@ -135,7 +132,9 @@ header{
 <script>
 /* SESSION PROTECTION */
 let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-if(!currentUser) window.location.href="login.html";
+if(!currentUser){
+  window.location.href="login.html";
+}
 
 /* LOGOUT */
 function logout(){
@@ -144,90 +143,97 @@ function logout(){
 }
 
 /* LOAD PROFILE */
-const profileImg = document.getElementById("profileImg");
-const studentName = document.getElementById("studentName");
-const studentLevel = document.getElementById("studentLevel");
-const completionText = document.getElementById("completionText");
+document.getElementById("profileImg").src = currentUser.profileImage || "https://via.placeholder.com/80";
+document.getElementById("studentName").innerText = currentUser.name;
+document.getElementById("studentLevel").innerText = currentUser.level;
+document.getElementById("completionText").innerText = `Profile Completion: ${currentUser.profileCompletion || 0}%`;
 
-profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
-studentName.innerText = currentUser.name || "Student";
-studentLevel.innerText = currentUser.level || "Beginner Freelancer";
-completionText.innerText = `Profile Completion: ${currentUser.profileCompletion || 0}%`;
+/* WALLET BALANCE */
+function updateWalletUI(){
+  const zac = currentUser.walletBalance || 0;
+  const usd = (zac*0.014).toFixed(2);
+  document.getElementById("walletBalance").innerText = `Wallet: ${zac} ZAC (~$${usd})`;
+  // Optional weekly/monthly display
+  document.getElementById("weeklyZAC").innerText = zac;
+  document.getElementById("weeklyUSD").innerText = `$${usd}`;
+  document.getElementById("monthlyZAC").innerText = zac;
+  document.getElementById("monthlyUSD").innerText = `$${usd}`;
+}
 
-/* LOAD 21-DAY TASKS */
+/* UPDATE WALLET IN REAL TIME */
+function saveCurrentUser(){
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  const idx = users.findIndex(u=>u.email===currentUser.email);
+  if(idx!==-1){
+    users[idx] = currentUser; // update without overwriting other users
+    localStorage.setItem("users", JSON.stringify(users));
+  }
+  localStorage.setItem("currentUser", JSON.stringify(currentUser));
+}
+
+/* 21-DAY TASKS STREAK */
 const tasksContainer = document.getElementById("tasksContainer");
-const streakContainer = document.getElementById("streakContainer");
-const TOTAL_DAYS = 21;
-const ZAC_PER_TASK = 25;
-const ZAC_TO_USD = 0.014;
+for(let day=1; day<=21; day++){
+  const taskDiv = document.createElement("div");
+  taskDiv.className = "task";
+  taskDiv.classList.toggle("locked", day>1 && !currentUser.tasks[day-2]);
+  taskDiv.innerHTML = `
+    <h4>Day ${day} Task</h4>
+    <span>Complete this task to earn +25 ZAC</span>
+    <div class="progress"><div style="width:${currentUser.tasks[day-1]?100:0}%"></div></div>
+    <div class="streaks">
+      ${[...Array(21)].map((_,i)=>{
+        let cls = i<day ? (currentUser.tasks[i] ? 'completed':'locked') : '';
+        return `<span class="${cls}">${i+1}</span>`;
+      }).join('')}
+    </div>
+    <button ${day>1 && !currentUser.tasks[day-2] ? "disabled" : ""} onclick="completeTask(${day})">
+      ${currentUser.tasks[day-1] ? "Completed ✅" : "Complete Task"}
+    </button>
+  `;
+  tasksContainer.appendChild(taskDiv);
+}
 
-if(!currentUser.tasks) currentUser.tasks = Array(TOTAL_DAYS).fill(false); // preserve tasks
-
-function renderTasks(){
+/* COMPLETE TASK FUNCTION */
+function completeTask(day){
+  if(currentUser.tasks[day-1]) return;
+  currentUser.tasks[day-1] = true;
+  currentUser.tasksCompleted = (currentUser.tasksCompleted||0)+1;
+  currentUser.walletBalance = (currentUser.walletBalance||0)+25;
+  updateWalletUI();
+  saveCurrentUser();
   tasksContainer.innerHTML = "";
-  streakContainer.innerHTML = "";
-
-  currentUser.tasks.forEach((completed, idx)=>{
+  // Re-render tasks
+  for(let d=1; d<=21; d++){
     const taskDiv = document.createElement("div");
     taskDiv.className = "task";
-    if(idx > 0 && !currentUser.tasks[idx-1]) taskDiv.classList.add("locked");
-
+    taskDiv.classList.toggle("locked", d>1 && !currentUser.tasks[d-2]);
     taskDiv.innerHTML = `
-      <h4>Day ${idx+1} Task</h4>
-      <span>+${ZAC_PER_TASK} ZAC</span>
-      <input type="text" placeholder="Submit Zora Link" ${taskDiv.classList.contains("locked")?"disabled":""}>
-      <button ${taskDiv.classList.contains("locked")?"disabled":""}>Submit</button>
+      <h4>Day ${d} Task</h4>
+      <span>Complete this task to earn +25 ZAC</span>
+      <div class="progress"><div style="width:${currentUser.tasks[d-1]?100:0}%"></div></div>
+      <div class="streaks">
+        ${[...Array(21)].map((_,i)=>{
+          let cls = i<d ? (currentUser.tasks[i] ? 'completed':'locked') : '';
+          return `<span class="${cls}">${i+1}</span>`;
+        }).join('')}
+      </div>
+      <button ${d>1 && !currentUser.tasks[d-2] ? "disabled" : ""} onclick="completeTask(${d})">
+        ${currentUser.tasks[d-1] ? "Completed ✅" : "Complete Task"}
+      </button>
     `;
-    const input = taskDiv.querySelector("input");
-    const btn = taskDiv.querySelector("button");
-
-    btn.onclick = ()=>{
-      if(input.value.trim()==="") return alert("Enter Zora link!");
-      currentUser.tasks[idx] = true;
-      currentUser.walletBalance = (currentUser.walletBalance||0)+ZAC_PER_TASK;
-      updateWalletUI();
-      localStorage.setItem("currentUser", JSON.stringify(currentUser));
-
-      // confetti animation (simple)
-      const confetti = document.createElement("div");
-      confetti.innerText="🎉";
-      confetti.style.position="absolute";
-      confetti.style.top="0"; confetti.style.left="50%";
-      confetti.style.fontSize="32px";
-      document.body.appendChild(confetti);
-      setTimeout(()=>confetti.remove(),1000);
-
-      renderTasks();
-    };
-
     tasksContainer.appendChild(taskDiv);
-
-    // Streak badges
-    const badge = document.createElement("div");
-    badge.className="streak-badge "+(completed?"completed":"");
-    badge.innerText=idx+1;
-    streakContainer.appendChild(badge);
-  });
+  }
 }
 
-/* UPDATE WALLET */
-function updateWalletUI(){
-  document.getElementById("walletZAC").innerText = currentUser.walletBalance || 0;
-  document.getElementById("walletUSD").innerText = "$"+((currentUser.walletBalance||0)*ZAC_TO_USD).toFixed(2);
+/* INITIAL WALLET UPDATE */
+updateWalletUI();
 
-  // monthly update placeholder
-  document.getElementById("monthlyZAC").innerText = currentUser.walletBalance || 0;
-  document.getElementById("monthlyUSD").innerText = "$"+((currentUser.walletBalance||0)*ZAC_TO_USD).toFixed(2);
-}
-
-/* LOAD LIVE JOBS (sample) */
+/* LOAD LIVE JOBS (example) */
 const jobsList = document.getElementById("jobsList");
 const escrowJobs = JSON.parse(localStorage.getItem("escrowJobs")) || [];
 const appliedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || [];
-
 escrowJobs.forEach(job=>{
-  if(job.level==="Beginner" && !currentUser.tasks[0]) return;
-
   const div = document.createElement("div");
   div.className="job";
   const isApplied = appliedJobs.includes(job.id);
@@ -235,23 +241,17 @@ escrowJobs.forEach(job=>{
     <img src="https://images.unsplash.com/photo-1600195077078-fb1caa8c4a5e?auto=format&fit=crop&w=400&q=60">
     <h4>${job.title}</h4>
     <span>${job.amountUSD} USD • ${job.status}</span>
-    <button class="apply-btn ${isApplied ? 'applied' : ''}">${isApplied ? 'Applied ✅' : 'Apply'}</button>
+    <button class="apply-btn ${isApplied?'applied':''}">${isApplied?'Applied ✅':'Apply'}</button>
   `;
   const btn = div.querySelector("button");
-  if(!isApplied){
-    btn.onclick = ()=>{
-      appliedJobs.push(job.id);
-      localStorage.setItem("appliedJobs", JSON.stringify(appliedJobs));
-      btn.innerText="Applied ✅";
-      btn.classList.add("applied");
-    }
+  if(!isApplied) btn.onclick=()=>{
+    appliedJobs.push(job.id);
+    localStorage.setItem("appliedJobs", JSON.stringify(appliedJobs));
+    btn.innerText="Applied ✅";
+    btn.classList.add("applied");
   }
   jobsList.appendChild(div);
 });
-
-/* INITIALIZE */
-renderTasks();
-updateWalletUI();
 </script>
 
 </body>
