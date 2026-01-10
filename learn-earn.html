@@ -15,37 +15,31 @@
   --accent:#00ff9d;
   --lock:#555;
   --streak:#ffea00;
+  --card-bg:rgba(255,255,255,.05);
 }
 
 /* RESET */
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.4;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden;line-height:1.4;}
 a{text-decoration:none;color:inherit;}
+button{cursor:pointer;}
 
 /* HEADER */
 header{
   display:flex;justify-content:space-between;align-items:center;
-  padding:16px 20px;
-  max-width:1200px;
-  margin:auto;
-  border-radius:12px;
-  background:rgba(0,0,0,0.15);
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
-  animation:pulse 2s infinite;
-}
-@keyframes pulse{
-  0%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
-  50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}
-  100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+  padding:16px 20px;max-width:1200px;margin:auto;
+  border-radius:12px;background:rgba(0,0,0,0.15);
+  backdrop-filter:blur(6px);
 }
 .brand{font-family:Orbitron;font-size:1.6rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.home-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:42px;height:42px;color:#fff;font-size:18px;cursor:pointer;}
+.home-btn{background:var(--zep-blue);border:none;color:#050015;padding:6px 12px;border-radius:12px;font-weight:700;transition:.3s;}
+.home-btn:hover{transform:scale(1.05);}
 
 /* STUDENT INFO */
 .student-info{
   display:flex;justify-content:space-between;align-items:center;
   padding:16px 20px;max-width:1200px;margin:20px auto;
-  background:var(--glass);border-radius:16px;backdrop-filter:blur(6px);
+  background:var(--card-bg);border-radius:16px;backdrop-filter:blur(6px);
 }
 .student-info div{display:flex;flex-direction:column;}
 .student-info div span{font-size:0.85rem;color:var(--text-light);}
@@ -55,17 +49,17 @@ header{
 .programs{display:flex;flex-wrap:wrap;gap:12px;max-width:1200px;margin:0 auto 20px;padding:0 20px;}
 .program-card{
   flex:1 1 140px;padding:14px;border-radius:16px;text-align:center;
-  background:var(--glass);cursor:pointer;transition:.3s;position:relative;
+  background:var(--card-bg);cursor:pointer;transition:.3s;position:relative;
 }
 .program-card.selected{border:2px solid var(--zep-blue);box-shadow:0 0 15px var(--zep-blue);}
-.program-card:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-violet);}
+.program-card:hover{transform:translateY(-2px) scale(1.02);}
 
 /* TASK CARDS */
 .tasks-container{display:grid;grid-template-columns:1fr;gap:16px;max-width:1200px;margin:auto;padding:0 20px 40px;}
 @media(min-width:600px){.tasks-container{grid-template-columns:1fr 1fr;}}
 @media(min-width:900px){.tasks-container{grid-template-columns:1fr 1fr 1fr;}}
 .task-card{
-  background:var(--glass);border-radius:16px;padding:16px;
+  background:var(--card-bg);border-radius:16px;padding:16px;
   position:relative;transition:.3s;display:flex;flex-direction:column;gap:8px;
 }
 .task-card.locked{opacity:0.5;filter:grayscale(70%);}
@@ -76,7 +70,7 @@ header{
   padding:8px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
 }
-.task-card button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
+.task-card button:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
 
 /* PROGRESS BAR */
 .progress-bar-container{
@@ -97,14 +91,19 @@ header{
 .streak-badge.earned{animation:pop 0.5s ease forwards;}
 @keyframes pop{0%{transform:scale(0.5);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
 
-#confettiCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1000;}
+/* 3D Portfolio Viewer */
+#portfolio3D{
+  max-width:1200px;margin:20px auto;padding:0 20px;
+  height:300px;background:rgba(255,255,255,0.05);border-radius:16px;display:flex;justify-content:center;align-items:center;font-size:1.2rem;color:var(--text-light);
+  perspective:1000px;transition:transform 0.5s;
+}
+#portfolio3D:hover{transform:rotateY(15deg) rotateX(5deg);}
 
 /* VERIFICATION BANNER */
 #verificationBanner{
   max-width:1200px;margin:20px auto;padding:16px;border-radius:16px;text-align:center;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  cursor:pointer;font-family:Orbitron;font-weight:700;transition:.3s;
-  display:none;
+  cursor:pointer;font-family:Orbitron;font-weight:700;transition:.3s;display:none;
 }
 #verificationBanner:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
 
@@ -115,9 +114,8 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
 <body>
 
 <header>
-  <button class="home-btn" onclick="location.href='student-dashboard.html'">🏠</button>
   <div class="brand">Zep Swipe</div>
-  <div style="width:42px"></div>
+  <button class="home-btn" onclick="location.href='student-dashboard.html'">Home</button>
 </header>
 
 <!-- STUDENT INFO -->
@@ -144,6 +142,9 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
 <!-- STREAK BADGES -->
 <div id="streakContainer" style="max-width:1200px;margin:10px auto;padding:0 20px;"></div>
 
+<!-- 3D Portfolio Preview -->
+<div id="portfolio3D">Student Portfolio Preview</div>
+
 <!-- TASKS -->
 <div class="tasks-container" id="tasksContainer"></div>
 
@@ -152,11 +153,11 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
   Become a Verified Freelancer – $5
 </div>
 
-<canvas id="confettiCanvas"></canvas>
-
 <footer>
   <a href="about.html">About</a> | <a href="marketplace.html">Marketplace</a> | <a href="student-deals.html">Student Deals</a> | <a href="contact.html">Contact</a>
 </footer>
+
+<canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1000;"></canvas>
 
 <script>
 // ACCESS CONTROL
@@ -166,14 +167,10 @@ if(!studentData || !studentData.loggedIn){
 }
 
 // INITIAL STUDENT INFO
-const studentName = document.getElementById('studentName');
-const studentUni = document.getElementById('studentUni');
-const studentProgramEl = document.getElementById('studentProgram').querySelector('strong');
-const walletBalance = document.getElementById('walletBalance');
-studentName.innerText = studentData.name;
-studentUni.innerText = studentData.university;
-walletBalance.innerText = studentData.walletBalance || 0;
-studentProgramEl.innerText = studentData.program || '--';
+document.getElementById('studentName').innerText = studentData.name;
+document.getElementById('studentUni').innerText = studentData.university;
+document.getElementById('studentProgram').querySelector('strong').innerText = studentData.program || '--';
+document.getElementById('walletBalance').innerText = studentData.walletBalance || 0;
 
 // PROGRAM SELECTION
 const programs = ["Virtual Assistant","Content Creator (Video)","Blog Writer","Voice-over Artist","Data Entry","UI/UX Designer","Online Tutor"];
@@ -189,84 +186,69 @@ programs.forEach(prog=>{
     localStorage.setItem('studentData', JSON.stringify(studentData));
     document.querySelectorAll('.program-card').forEach(c=>c.classList.remove('selected'));
     card.classList.add('selected');
-    studentProgramEl.innerText = prog;
+    document.getElementById('studentProgram').querySelector('strong').innerText = prog;
     renderTasks(prog);
   }
   programsContainer.appendChild(card);
 });
 
-// TASKS BY PROGRAM (21-day plan)
+// 21-DAY TASKS PER PROGRAM
 const taskTemplates = {
   "Virtual Assistant":[
-    "Day 1: Intro Video – Record 1-min intro video, post on Zora, share link",
-    "Day 2: Organize inbox – Clean & categorize emails, share screenshot",
-    "Day 3: Daily planner – Create daily to-do list, share PDF",
-    "Day 4: Meeting scheduling – Schedule mock meetings, post calendar link",
-    "Day 5: Google Sheets – Create a sample spreadsheet, share link",
-    "Day 6: Online research – Research suppliers & submit findings",
-    "Day 7: Zoom setup – Set up Zoom call invite, post screenshot",
-    "Day 8: Professional email – Draft sample emails",
-    "Day 9: Task automation – Record a simple automated task",
-    "Day10: Calendar management – Plan weekly events",
-    "Day11: Travel booking – Simulate booking, share steps",
-    "Day12: CRM update – Update client database screenshot",
-    "Day13: Document formatting – Format doc and share",
-    "Day14: Time management – Track time & share report",
-    "Day15: Online survey – Create & submit survey results",
-    "Day16: Client follow-up – Draft follow-up emails",
-    "Day17: File management – Organize files in folders",
-    "Day18: Social media post – Draft & schedule post",
-    "Day19: Presentation – Create 3-slide deck",
-    "Day20: Productivity tip – Share top tip",
-    "Day21: Final project – Combine previous tasks & share portfolio link"
+    "Record a 1-min intro video on yourself", 
+    "Organize your email inbox efficiently", 
+    "Create daily to-do list", 
+    "Schedule 3 meetings in Google Calendar", 
+    "Update Google Sheets database", 
+    "Research suppliers online", 
+    "Draft professional emails", 
+    "Manage social media posts", 
+    "Prepare simple reports", 
+    "Set up Zoom calls", 
+    "Respond to client queries professionally", 
+    "Track weekly tasks", 
+    "Automate recurring tasks", 
+    "Create a workflow chart", 
+    "Manage small projects", 
+    "Review team progress", 
+    "Optimize calendar scheduling", 
+    "Organize digital files", 
+    "Prepare client summaries", 
+    "Final capstone: Run a full VA workflow", 
+    "Portfolio showcase: Document all tasks"
   ],
   "Content Creator (Video)":[
-    "Day 1: Intro Video – Record 1-min intro video, post on Zora, share link",
-    "Day 2: Short clip – Shoot 15-sec video",
-    "Day 3: Edit clip – Apply basic edits",
-    "Day 4: Add captions – Add captions to video",
-    "Day 5: B-roll footage – Shoot & insert B-roll",
-    "Day 6: Color correction – Basic color grading",
-    "Day 7: Voice-over – Add narration",
-    "Day 8: Music overlay – Add background music",
-    "Day 9: Thumbnail – Design thumbnail",
-    "Day10: Upload – Publish video to platform",
-    "Day11: Storyboard – Create next content storyboard",
-    "Day12: Engagement – Respond to comments",
-    "Day13: Analytics – Screenshot analytics page",
-    "Day14: Collaboration – Plan collab content",
-    "Day15: Reel – Make Instagram reel",
-    "Day16: TikTok – Post TikTok video",
-    "Day17: YouTube short – Create & publish",
-    "Day18: Mini-series – Plan 3-video series",
-    "Day19: Community – Engage in niche forums",
-    "Day20: Monetization – Research monetization options",
-    "Day21: Final project – Combine clips & create portfolio"
-  ]
-  // Add other programs similarly with 21-day structured tasks
+    "Record 1-min intro video", "Film a 30-sec clip", "Edit video", "Add captions",
+    "Create TikTok/Reels", "Film B-roll content", "Storyboard next video", "Engage with audience",
+    "Add background music", "Create trending video challenge", "Upload YouTube Short",
+    "Optimize SEO for video", "Record voiceover", "Experiment with transitions", "Add subtitles",
+    "Film creative tutorial", "Create short documentary", "Live-stream for practice", "Edit multiple clips",
+    "Final capstone: Publish 5 videos", "Portfolio showcase: Best 3 videos"
+  ],
+  // Add other programs similarly...
 };
 
 // PROGRESS & STREAK
 const tasksContainer = document.getElementById('tasksContainer');
 const progressFill = document.getElementById('progressFill');
 const streakContainer = document.getElementById('streakContainer');
+const confettiCanvas = document.getElementById('confettiCanvas');
+const confettiCtx = confettiCanvas.getContext('2d');
 
 function renderTasks(program){
   tasksContainer.innerHTML='';
   streakContainer.innerHTML='';
   if(!studentData.tasksCompleted) studentData.tasksCompleted=[];
-  const programTasks = taskTemplates[program];
-  if(!programTasks) return; // fallback
+  const programTasks = taskTemplates[program] || [];
   for(let day=1;day<=21;day++){
     const taskCard = document.createElement('div');
     taskCard.className='task-card';
     const completed = studentData.tasksCompleted.includes(`${program}-${day}`);
     if(day>1 && !studentData.tasksCompleted.includes(`${program}-${day-1}`)) taskCard.classList.add('locked');
-    const taskDesc = programTasks[day-1] || "Task coming soon";
     taskCard.innerHTML=`
-      <h4>${taskDesc.split(":")[0]}</h4>
-      <p>${taskDesc.split(":")[1]}</p>
-      <input type="text" placeholder="Paste Zora link" ${taskCard.classList.contains('locked')?'disabled':''} id="taskInput${day}">
+      <h4>Day ${day}</h4>
+      <p>${programTasks[(day-1)%programTasks.length]}</p>
+      <input type="text" placeholder="Submit Zora link" ${taskCard.classList.contains('locked')?'disabled':''} id="taskInput${day}">
       <button ${taskCard.classList.contains('locked')?'disabled':''}>Submit (+25 ZAC)</button>
     `;
     tasksContainer.appendChild(taskCard);
@@ -281,17 +263,16 @@ function renderTasks(program){
       const btn = taskCard.querySelector('button');
       btn.onclick = ()=>{
         const input = document.getElementById(`taskInput${day}`);
-        if(!input.value.trim()){ alert("Please submit your Zora link"); return;}
+        if(!input.value.trim()){ alert("Please submit a valid Zora link"); return;}
         const taskKey = `${program}-${day}`;
         if(!studentData.tasksCompleted.includes(taskKey)) studentData.tasksCompleted.push(taskKey);
         studentData.walletBalance = (studentData.walletBalance||0)+25;
-        walletBalance.innerText = studentData.walletBalance;
+        document.getElementById('walletBalance').innerText = studentData.walletBalance;
         localStorage.setItem('studentData', JSON.stringify(studentData));
         btn.disabled = true;
         input.disabled = true;
         addStreakBadge(day);
         launchConfetti();
-        // unlock next task
         const nextTask = tasksContainer.children[day];
         if(nextTask){
           nextTask.classList.remove('locked');
@@ -318,40 +299,31 @@ function addStreakBadge(day){
 
 // CONFETTI
 function launchConfetti(){
-  const canvas = document.getElementById('confettiCanvas');
-  const ctx = canvas.getContext('2d');
-  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  confettiCanvas.width=window.innerWidth; confettiCanvas.height=window.innerHeight;
   const confettiCount = 100;
   const confettis=[];
   for(let i=0;i<confettiCount;i++){
-    confettis.push({
-      x:Math.random()*canvas.width,
-      y:Math.random()*canvas.height-20,
-      r:Math.random()*6+2,
-      dx:(Math.random()-0.5)*2,
-      dy:Math.random()*3+2,
-      color:`hsl(${Math.random()*360},80%,60%)`
-    });
+    confettis.push({x:Math.random()*confettiCanvas.width,y:Math.random()*confettiCanvas.height-20,r:Math.random()*6+2,dx:(Math.random()-0.5)*2,dy:Math.random()*3+2,color:`hsl(${Math.random()*360},80%,60%)`});
   }
   function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    confettiCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
     confettis.forEach(c=>{
-      ctx.fillStyle=c.color;
-      ctx.beginPath();
-      ctx.arc(c.x,c.y,c.r,0,2*Math.PI);
-      ctx.fill();
+      confettiCtx.fillStyle=c.color;
+      confettiCtx.beginPath();
+      confettiCtx.arc(c.x,c.y,c.r,0,2*Math.PI);
+      confettiCtx.fill();
       c.x+=c.dx; c.y+=c.dy;
-      if(c.y>canvas.height){ c.y=0; c.x=Math.random()*canvas.width; }
+      if(c.y>confettiCanvas.height){ c.y=0; c.x=Math.random()*confettiCanvas.width; }
     });
     requestAnimationFrame(draw);
   }
   draw();
-  setTimeout(()=>{ctx.clearRect(0,0,canvas.width,canvas.height);},3000);
+  setTimeout(()=>{confettiCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);},3000);
 }
 
 // INITIAL RENDER
 if(studentData.program) renderTasks(studentData.program);
-</script>
 
+</script>
 </body>
 </html>
