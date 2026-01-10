@@ -1,430 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Learn & Earn</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
-
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at top, #020014 0%, #00000a 100%);
-  --glass:rgba(255,255,255,0.06);
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Poppins,sans-serif;
-  background:var(--bg);
-  color:#fff;
-}
-.container{
-  max-width:980px;
-  margin:24px auto 140px;
-  padding:16px;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,0.08);
+  --text-light:rgba(255,255,255,.85);
+  --card-bg:rgba(255,255,255,.05);
+  --accent:#00ff9d;
+  --lock:#555;
+  --streak:#ffea00;
 }
 
-/* Header */
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:16px;
-  border-radius:18px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(18px);
-}
-.brand{
-  font-family:Orbitron;
-  font-size:1.4rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.btn{
-  font-family:Orbitron;
-  font-size:12px;
-  padding:8px 16px;
-  border-radius:999px;
-  border:none;
-  cursor:pointer;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-}
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden;line-height:1.4;}
+a{text-decoration:none;color:inherit;}
 
-/* Courses */
-.section-title{
-  margin:26px 0 14px;
-  font-family:Orbitron;
-  font-size:1.15rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.courses{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:14px;
-}
-.course{
-  padding:16px;
-  border-radius:18px;
-  background:rgba(0,0,0,.7);
-  border:1px solid rgba(255,255,255,.12);
-  cursor:pointer;
-}
-.progress{
-  height:6px;
-  background:rgba(255,255,255,.1);
-  border-radius:999px;
-  overflow:hidden;
-  margin-top:8px;
-}
-.progress span{
-  display:block;
-  height:100%;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-}
-
-/* Modal */
-.modal-back{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.8);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
-}
-.modal{
-  width:95%;
-  max-width:460px;
-  background:rgba(10,15,40,.96);
-  padding:18px;
-  border-radius:20px;
-  border:1px solid rgba(255,255,255,.15);
-}
-.small{font-size:12px;opacity:.85}
-input{
-  width:100%;
-  margin-top:10px;
-  padding:12px;
+/* HEADER */
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 20px;max-width:1200px;margin:auto;
   border-radius:12px;
-  border:1px solid rgba(255,255,255,.2);
-  background:#020617;
-  color:#fff;
+  background:rgba(0,0,0,0.15);
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  animation:pulse 2s infinite;
+  margin-top:10px;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+  50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}
+  100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+}
+.brand{font-family:Orbitron;font-size:1.6rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+header nav a{margin-left:20px;font-weight:500;transition:.3s;}
+header nav a:hover{color:var(--zep-blue);}
+
+/* STUDENT INFO CARD */
+.student-info{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 20px;max-width:1200px;margin:20px auto;
+  background:var(--card-bg);border-radius:16px;backdrop-filter:blur(6px);
+}
+.student-info div{display:flex;flex-direction:column;}
+.student-info div span{font-size:0.85rem;color:var(--text-light);}
+.wallet-balance{font-weight:700;font-family:Orbitron;}
+
+/* PROGRAM SELECTION */
+.programs{display:flex;flex-wrap:wrap;gap:12px;max-width:1200px;margin:0 auto 20px;padding:0 20px;}
+.program-card{
+  flex:1 1 140px;padding:14px;border-radius:16px;text-align:center;
+  background:var(--card-bg);cursor:pointer;transition:.3s;position:relative;
+}
+.program-card.selected{border:2px solid var(--zep-blue);box-shadow:0 0 15px var(--zep-blue);}
+.program-card:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-violet);}
+
+/* TASK CARDS */
+.tasks-container{display:grid;grid-template-columns:1fr;gap:16px;max-width:1200px;margin:auto;padding:0 20px 40px;}
+@media(min-width:600px){.tasks-container{grid-template-columns:1fr 1fr;}}
+@media(min-width:900px){.tasks-container{grid-template-columns:1fr 1fr 1fr;}}
+.task-card{
+  background:var(--card-bg);border-radius:16px;padding:16px;
+  position:relative;transition:.3s;display:flex;flex-direction:column;gap:8px;
+}
+.task-card.locked{opacity:0.5;}
+.task-card h4{margin-bottom:6px;font-size:1rem;}
+.task-card p{font-size:0.85rem;color:var(--text-light);}
+.task-card input[type="text"]{padding:8px;border-radius:12px;border:none;background:rgba(255,255,255,0.1);color:#fff;outline:none;}
+.task-card button{
+  padding:8px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
+}
+.task-card button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
+
+/* PROGRESS BAR */
+.progress-bar-container{
+  max-width:1200px;margin:20px auto;padding:0 20px;
+}
+.progress-bar{
+  width:100%;height:16px;background:rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;
+}
+.progress-bar-fill{
+  height:100%;width:0%;background:var(--accent);border-radius:12px;transition:width 0.5s ease-in-out;
 }
 
-/* Footer */
-.footer{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  padding:14px 22px;
-  background:rgba(0,0,0,.6);
-  backdrop-filter:blur(12px);
-  display:flex;
-  justify-content:space-around;
+/* STREAK BADGES */
+.streak-badge{
+  display:inline-block;margin-right:6px;padding:4px 8px;border-radius:12px;background:var(--streak);color:#050015;font-weight:600;font-size:0.75rem;transition:.3s;
+  transform:scale(1);
 }
-.fbtn{
-  width:56px;height:56px;
-  border-radius:18px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.1);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:20px;
-  text-decoration:none;
-  color:#fff;
-  box-shadow:0 0 22px rgba(0,240,255,.25);
+.streak-badge.earned{animation:pop 0.5s ease forwards;}
+@keyframes pop{0%{transform:scale(0.5);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
+
+#confettiCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1000;}
+
+/* VERIFICATION BANNER */
+#verificationBanner{
+  max-width:1200px;margin:20px auto;padding:16px;border-radius:16px;text-align:center;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  cursor:pointer;font-family:Orbitron;font-weight:700;transition:.3s;
+  display:none;
 }
+#verificationBanner:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+
+/* FOOTER */
+footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid rgba(255,255,255,.1);color:var(--text-light);font-size:0.85rem;}
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<header>
+  <div class="brand">Zep Swipe</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="#" style="color:var(--zep-blue);font-weight:600;">Learn & Earn</a>
+    <a href="marketplace.html">Marketplace</a>
+    <a href="student-wallet.html">Wallet</a>
+  </nav>
+</header>
 
-  <!-- Header -->
-  <div class="header">
-    <div class="brand">Zep Swipe · Learn & Earn</div>
-    <button class="btn" onclick="location.href='student-dashboard.html'">Home</button>
+<!-- STUDENT INFO -->
+<div class="student-info">
+  <div>
+    <span id="studentName">Student Name</span>
+    <span id="studentUni">University</span>
+    <span id="studentProgram">Program: <strong>--</strong></span>
   </div>
-
-  <div class="section-title">21-Day Skill Mastery Tracks</div>
-  <div class="courses" id="courseGrid"></div>
-
+  <div class="wallet-balance">Wallet: <span id="walletBalance">0</span> ZAC</div>
+  <div><a href="profile.html">Profile</a></div>
 </div>
 
-<!-- Modal -->
-<div class="modal-back" id="modalBack">
-  <div class="modal">
-    <h3 id="modalTitle"></h3>
-    <p id="modalTask" class="small"></p>
-    <input id="proof" placeholder="Paste Zora post link (required)" />
-    <button class="btn" onclick="submitTask()">Submit Proof</button>
-    <button class="btn" style="margin-top:8px;background:none;color:#fff;border:1px solid rgba(255,255,255,.2)" onclick="closeModal()">Close</button>
+<!-- PROGRAM SELECTION -->
+<div class="programs" id="programsContainer"></div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar-container">
+  <div class="progress-bar">
+    <div class="progress-bar-fill" id="progressFill"></div>
   </div>
 </div>
 
-<!-- Footer -->
-<div class="footer">
-  <a class="fbtn" href="student-dashboard.html">🏠</a>
-  <a class="fbtn" href="https://zora.co" target="_blank">🌈</a>
-  <a class="fbtn" href="profile.html">👤</a>
+<!-- STREAK BADGES -->
+<div id="streakContainer" style="max-width:1200px;margin:10px auto;padding:0 20px;"></div>
+
+<!-- TASKS -->
+<div class="tasks-container" id="tasksContainer"></div>
+
+<!-- VERIFICATION BANNER -->
+<div id="verificationBanner" onclick="location.href='verification.html'">
+  Become a Verified Freelancer – $5
 </div>
+
+<canvas id="confettiCanvas"></canvas>
+
+<footer>
+  <a href="about.html">About</a> | <a href="marketplace.html">Marketplace</a> | <a href="student-deals.html">Student Deals</a> | <a href="contact.html">Contact</a>
+</footer>
 
 <script>
-/* COURSES */
-const courses=[
- {id:"prompt",title:"AI Prompt Engineering"},
- {id:"content",title:"AI Content Creation"},
- {id:"design",title:"No-Code Design"},
- {id:"video",title:"Video Editing"},
- {id:"web",title:"Websites"},
- {id:"bot",title:"Chatbot Building"},
- {id:"research",title:"Research & Lead Gen"},
- {id:"auto",title:"Automation"}
-];
+// ACCESS CONTROL
+let studentData = JSON.parse(localStorage.getItem('studentData'));
+if(!studentData || !studentData.loggedIn){
+  window.location.href='login.html';
+}
 
-/* COURSE-SPECIFIC 21-DAY TASKS */
-const tasks={
-prompt:[
-"Write a basic AI prompt and publish output",
-"Improve the prompt using constraints",
-"Add role + context to the prompt",
-"Create a reusable prompt template",
-"Design a prompt for summarization",
-"Design a prompt for ideation",
-"Prompt for reasoning (step-by-step)",
-"Compare outputs of 2 prompt versions",
-"Prompt for data extraction",
-"Prompt for tone control",
-"Prompt for accuracy improvement",
-"Build a prompt library (3 prompts)",
-"Explain prompt failures publicly",
-"Prompt chaining example",
-"Prompt for business use case",
-"Prompt for marketing copy",
-"Prompt for coding help",
-"Prompt evaluation rubric",
-"Optimize prompt for speed",
-"Create prompt for client task",
-"Publish final mastered prompt"
-],
-content:[
-"Generate a content idea using AI",
-"Create a content outline",
-"Write a long-form post",
-"Convert post to short thread",
-"Create hook variations",
-"Generate captions",
-"Optimize content tone",
-"Create CTA variants",
-"Repurpose content to carousel",
-"Content calendar (7 days)",
-"Audience persona creation",
-"SEO-optimized content",
-"Content rewrite for clarity",
-"Storytelling with AI",
-"Content for brand voice",
-"Educational content piece",
-"Promotional content",
-"Analyze engagement",
-"Improve underperforming content",
-"Client-ready content pack",
-"Publish full content system"
-],
-design:[
-"Design a simple social post",
-"Create brand color palette",
-"Typography selection",
-"Layout hierarchy exercise",
-"Redesign existing post",
-"Create carousel design",
-"Design thumbnail",
-"Visual consistency test",
-"Accessibility check",
-"Design for mobile",
-"Design for desktop",
-"Create reusable template",
-"Explain design choices",
-"Design for conversion",
-"Design for storytelling",
-"Design client brief",
-"Before/after redesign",
-"Feedback iteration",
-"Design speed challenge",
-"Final brand kit",
-"Publish full design pack"
-],
-video:[
-"Edit raw clip",
-"Add basic cuts",
-"Add captions",
-"Add hook",
-"Sound cleanup",
-"Color correction",
-"Aspect ratio edits",
-"Add transitions",
-"Add text overlays",
-"Speed ramping",
-"Story structure edit",
-"Export for platforms",
-"Thumbnail creation",
-"Before/after edit",
-"Edit for engagement",
-"Edit client content",
-"Batch editing",
-"Optimize export",
-"Feedback revision",
-"Final showreel",
-"Publish video portfolio"
-],
-web:[
-"Website wireframe",
-"Landing page structure",
-"Hero section design",
-"Copy + layout pairing",
-"Mobile responsiveness",
-"CTA optimization",
-"SEO basics",
-"Performance check",
-"Accessibility check",
-"No-code build",
-"Deploy website",
-"Analytics setup",
-"Conversion logic",
-"Client brief mapping",
-"Design iteration",
-"Form integration",
-"Page speed optimization",
-"Feedback improvement",
-"Final polish",
-"Publish website",
-"Website case study"
-],
-bot:[
-"Define chatbot goal",
-"Map conversation flow",
-"Create intents",
-"Build FAQ bot",
-"Test edge cases",
-"Improve responses",
-"Tone customization",
-"Add fallback logic",
-"User testing",
-"Analytics review",
-"Optimize flows",
-"Add lead capture",
-"Bot deployment",
-"Client use case",
-"Security review",
-"Error handling",
-"Multi-language support",
-"Refinement iteration",
-"Final demo",
-"Publish bot demo",
-"Bot case study"
-],
-research:[
-"Define research goal",
-"Identify data sources",
-"Collect dataset",
-"Clean data",
-"Structure data",
-"Analyze trends",
-"Generate insights",
-"Create lead list",
-"Validate data accuracy",
-"Visualize findings",
-"Summarize insights",
-"Client research brief",
-"Competitive analysis",
-"Market sizing",
-"Persona insights",
-"Decision framework",
-"Report formatting",
-"Insight storytelling",
-"Final research pack",
-"Publish research",
-"Research case study"
-],
-auto:[
-"Identify automation task",
-"Map workflow",
-"Select tools",
-"Create trigger",
-"Create action",
-"Test automation",
-"Error handling",
-"Optimize speed",
-"Add conditions",
-"Scale workflow",
-"Multi-step automation",
-"Documentation",
-"Client use case",
-"Security check",
-"Monitoring setup",
-"Iteration improvement",
-"Automation demo",
-"Efficiency analysis",
-"Final workflow",
-"Publish automation",
-"Automation case study"
-]
-};
+// INITIAL STUDENT INFO
+const studentName = document.getElementById('studentName');
+const studentUni = document.getElementById('studentUni');
+const studentProgramEl = document.getElementById('studentProgram').querySelector('strong');
+const walletBalance = document.getElementById('walletBalance');
+studentName.innerText = studentData.name;
+studentUni.innerText = studentData.university;
+walletBalance.innerText = studentData.walletBalance || 0;
+studentProgramEl.innerText = studentData.program || '--';
 
-let active=null;
-const progress=JSON.parse(localStorage.getItem("zepProgress")||"{}");
-const student=JSON.parse(localStorage.getItem("zepStudent")||"{}");
+// PROGRAM SELECTION
+const programs = ["Virtual Assistant","Content Creator (Video)","Blog Writer","Voice-over Artist","Data Entry","UI/UX Designer","Online Tutor"];
+const programsContainer = document.getElementById('programsContainer');
 
-/* Render */
-const grid=document.getElementById("courseGrid");
-courses.forEach(c=>{
- const d=progress[c.id]?.day||1;
- const pct=(d-1)/21*100;
- const el=document.createElement("div");
- el.className="course";
- el.innerHTML=`<strong>${c.title}</strong>
- <div class="small">Day ${d}/21</div>
- <div class="progress"><span style="width:${pct}%"></span></div>`;
- el.onclick=()=>openCourse(c);
- grid.appendChild(el);
+programs.forEach(prog=>{
+  const card = document.createElement('div');
+  card.className='program-card';
+  if(studentData.program === prog) card.classList.add('selected');
+  card.innerText = prog;
+  card.onclick = ()=>{
+    studentData.program = prog;
+    localStorage.setItem('studentData', JSON.stringify(studentData));
+    document.querySelectorAll('.program-card').forEach(c=>c.classList.remove('selected'));
+    card.classList.add('selected');
+    studentProgramEl.innerText = prog;
+    renderTasks(prog);
+  }
+  programsContainer.appendChild(card);
 });
 
-function openCourse(c){
- active=c;
- const day=progress[c.id]?.day||1;
- document.getElementById("modalTitle").textContent=c.title;
- document.getElementById("modalTask").textContent=`Day ${day}: ${tasks[c.id][day-1]}`;
- document.getElementById("proof").value="";
- modalBack.style.display="flex";
+// TASKS BY PROGRAM
+const taskTemplates = {
+  "Virtual Assistant": [
+    "Organize email inbox", "Schedule meetings for a client", "Create daily to-do list",
+    "Update Google Sheets database", "Research suppliers online", "Set up Zoom calls",
+    "Draft professional emails"
+  ],
+  "Content Creator (Video)": [
+    "Create 1-min TikTok video", "Edit YouTube short", "Film B-roll footage",
+    "Add captions to video", "Upload video to platform", "Storyboard next video", "Engage with comments"
+  ],
+  "Blog Writer":[
+    "Write 300-word blog post", "Proofread previous blog", "Research topic keywords",
+    "Format blog with images", "SEO optimize content", "Share post on social media", "Reply to blog comments"
+  ],
+  "Voice-over Artist":[
+    "Record 1-min voice clip", "Edit audio in Audacity", "Add background music", 
+    "Submit demo for review", "Practice vocal warm-ups", "Read script clearly", "Record narration"
+  ],
+  "Data Entry":[
+    "Enter 20 rows in Excel", "Clean up spreadsheet data", "Verify email addresses",
+    "Input survey results", "Organize client database", "Create pivot table", "Generate weekly report"
+  ],
+  "UI/UX Designer":[
+    "Sketch wireframe", "Create Figma prototype", "Design login page", 
+    "Redesign navigation menu", "Design mobile screen", "Prepare assets for dev", "Review user feedback"
+  ],
+  "Online Tutor":[
+    "Prepare 30-min lesson", "Create assignment", "Grade 5 student submissions", 
+    "Host 1-on-1 session", "Create quiz", "Update study notes", "Answer student questions"
+  ]
+};
+
+// PROGRESS & STREAK
+const tasksContainer = document.getElementById('tasksContainer');
+const progressFill = document.getElementById('progressFill');
+const streakContainer = document.getElementById('streakContainer');
+
+function renderTasks(program){
+  tasksContainer.innerHTML='';
+  streakContainer.innerHTML='';
+  if(!studentData.tasksCompleted) studentData.tasksCompleted=[];
+  const programTasks = taskTemplates[program];
+  for(let day=1;day<=21;day++){
+    const taskCard = document.createElement('div');
+    taskCard.className='task-card';
+    const completed = studentData.tasksCompleted.includes(`${program}-${day}`);
+    if(day>1 && !studentData.tasksCompleted.includes(`${program}-${day-1}`)) taskCard.classList.add('locked');
+    const taskDesc = programTasks[(day-1)%programTasks.length];
+    taskCard.innerHTML=`
+      <h4>Day ${day}</h4>
+      <p>${taskDesc}</p>
+      <input type="text" placeholder="Submit Zora link" ${taskCard.classList.contains('locked')?'disabled':''} id="taskInput${day}">
+      <button ${taskCard.classList.contains('locked')?'disabled':''}>Submit (+25 ZAC)</button>
+    `;
+    tasksContainer.appendChild(taskCard);
+
+    if(completed){
+      taskCard.querySelector('button').disabled=true;
+      taskCard.querySelector('input').disabled=true;
+      addStreakBadge(day);
+    }
+
+    if(!taskCard.classList.contains('locked')){
+      const btn = taskCard.querySelector('button');
+      btn.onclick = ()=>{
+        const input = document.getElementById(`taskInput${day}`);
+        if(!input.value.trim()){ alert("Please submit a valid link"); return;}
+        const taskKey = `${program}-${day}`;
+        if(!studentData.tasksCompleted.includes(taskKey)) studentData.tasksCompleted.push(taskKey);
+        studentData.walletBalance = (studentData.walletBalance||0)+25;
+        walletBalance.innerText = studentData.walletBalance;
+        localStorage.setItem('studentData', JSON.stringify(studentData));
+        btn.disabled = true;
+        input.disabled = true;
+        addStreakBadge(day);
+        launchConfetti();
+        // unlock next task
+        const nextTask = tasksContainer.children[day];
+        if(nextTask){
+          nextTask.classList.remove('locked');
+          nextTask.querySelector('button').disabled=false;
+          nextTask.querySelector('input').disabled=false;
+        }
+        // show verification banner if all 21 tasks done
+        const completedCount = studentData.tasksCompleted.filter(t=>t.startsWith(program)).length;
+        progressFill.style.width=`${(completedCount/21)*100}%`;
+        if(completedCount===21) document.getElementById('verificationBanner').style.display='block';
+      }
+    }
+  }
+  // update progress bar
+  const completedCount = studentData.tasksCompleted.filter(t=>t.startsWith(program)).length;
+  progressFill.style.width=`${(completedCount/21)*100}%`;
 }
-function closeModal(){modalBack.style.display="none";}
 
-/* Submit */
-function submitTask(){
- const link=document.getElementById("proof").value.trim();
- if(!link || !link.includes("zora")) return alert("Zora proof required");
- const today=new Date().toDateString();
- if(progress[active.id]?.last===today) return alert("Only one task per course per day");
-
- const day=progress[active.id]?.day||1;
- progress[active.id]={day:Math.min(day+1,21),last:today,proof:link};
- localStorage.setItem("zepProgress",JSON.stringify(progress));
-
- student.zacAmount=(student.zacAmount||0)+25;
- localStorage.setItem("zepStudent",JSON.stringify(student));
-
- alert("+25 ZAC earned");
- location.reload();
+// STREAK BADGES
+function addStreakBadge(day){
+  const badge = document.createElement('span');
+  badge.className='streak-badge earned';
+  badge.innerText=`Day ${day} ✅`;
+  streakContainer.appendChild(badge);
 }
+
+// CONFETTI
+function launchConfetti(){
+  const canvas = document.getElementById('confettiCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  const confettiCount = 100;
+  const confettis=[];
+  for(let i=0;i<confettiCount;i++){
+    confettis.push({
+      x:Math.random()*canvas.width,
+      y:Math.random()*canvas.height-20,
+      r:Math.random()*6+2,
+      dx:(Math.random()-0.5)*2,
+      dy:Math.random()*3+2,
+      color:`hsl(${Math.random()*360},80%,60%)`
+    });
+  }
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    confettis.forEach(c=>{
+      ctx.fillStyle=c.color;
+      ctx.beginPath();
+      ctx.arc(c.x,c.y,c.r,0,2*Math.PI);
+      ctx.fill();
+      c.x+=c.dx; c.y+=c.dy;
+      if(c.y>canvas.height){ c.y=0; c.x=Math.random()*canvas.width; }
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+  setTimeout(()=>{ctx.clearRect(0,0,canvas.width,canvas.height);},3000);
+}
+
+// INITIAL RENDER
+if(studentData.program) renderTasks(studentData.program);
 </script>
 
 </body>
