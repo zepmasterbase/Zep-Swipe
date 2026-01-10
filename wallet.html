@@ -141,6 +141,7 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
   <div>
     <span id="studentName">Student Name</span>
     <span id="studentUni">University</span>
+    <span id="studentCountryCity">Country - City</span>
     <span id="studentProgram">Program: <strong>--</strong></span>
     <span id="verifiedStatus" class="verified">Verified Freelancer</span>
   </div>
@@ -175,12 +176,9 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
 <div class="modal" id="momoModal">
   <div class="modal-content">
     <h3>Withdraw USD via MTN MoMo</h3>
-    <input type="text" id="momoName" placeholder="Full Name">
-    <select id="momoCountry">
-      <option value="">Select Country</option>
-      <option value="Ghana">Ghana</option>
-      <option value="Uganda">Uganda</option>
-      <option value="Nigeria">Nigeria</option>
+    <input type="text" id="momoName" placeholder="Full Name" readonly>
+    <select id="momoCountry" disabled>
+      <option value="">Country</option>
     </select>
     <input type="text" id="momoNumber" placeholder="MTN MoMo Number">
     <button id="confirmMomoBtn">→</button>
@@ -190,14 +188,9 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
 <div class="modal" id="bankModal">
   <div class="modal-content">
     <h3>Withdraw USD to Bank</h3>
-    <input type="text" id="bankName" placeholder="Full Name">
-    <select id="bankCountry">
-      <option value="">Select Country</option>
-      <option value="South Africa">South Africa</option>
-      <option value="Botswana">Botswana</option>
-      <option value="Namibia">Namibia</option>
-      <option value="Malawi">Malawi</option>
-      <option value="Zambia">Zambia</option>
+    <input type="text" id="bankName" placeholder="Full Name" readonly>
+    <select id="bankCountry" disabled>
+      <option value="">Country</option>
     </select>
     <input type="text" id="bankAccount" placeholder="Bank Account Number">
     <button id="confirmBankBtn">→</button>
@@ -210,7 +203,7 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
 // ========================
 let studentData = JSON.parse(localStorage.getItem('studentData')) || {
   name:"Test Student", university:"Test Uni", program:"VA",
-  walletZAC:100, walletUSD:50, verified:true, loggedIn:true, transactions:[]
+  country:"Ghana", city:"Accra", walletZAC:100, walletUSD:50, verified:true, transactions:[]
 };
 
 const ZAC_TO_USD = 0.014;
@@ -219,11 +212,19 @@ const ZAC_TO_USD = 0.014;
 function updateWalletUI(){
   document.getElementById('studentName').innerText=studentData.name;
   document.getElementById('studentUni').innerText=studentData.university;
+  document.getElementById('studentCountryCity').innerText=studentData.country + " - " + studentData.city;
   document.getElementById('studentProgram').querySelector('strong').innerText=studentData.program;
   document.getElementById('verifiedStatus').innerText=studentData.verified?"Verified Freelancer":"Unverified";
   document.getElementById('zacBalance').innerText=studentData.walletZAC;
   document.getElementById('usdBalance').innerText=studentData.walletUSD;
   document.getElementById('totalPortfolio').innerText=(studentData.walletUSD + studentData.walletZAC*ZAC_TO_USD).toFixed(2);
+
+  // Pre-fill modal with profile details
+  document.getElementById('momoName').value = studentData.name;
+  document.getElementById('momoCountry').innerHTML = `<option value="${studentData.country}">${studentData.country}</option>`;
+  document.getElementById('bankName').value = studentData.name;
+  document.getElementById('bankCountry').innerHTML = `<option value="${studentData.country}">${studentData.country}</option>`;
+
   renderTransactions();
 }
 
@@ -246,7 +247,10 @@ const momoModal=document.getElementById('momoModal');
 const bankModal=document.getElementById('bankModal');
 
 document.getElementById('withdrawMomoBtn').onclick=()=>momoModal.style.display='flex';
-document.getElementById('withdrawBankBtn').onclick=()=>bankModal.style.display='flex';
+document.getElementById('withdrawBankBtn').onclick=()=>{
+  if(!studentData.walletUSD) return alert("No USD available for withdrawal");
+  bankModal.style.display='flex';
+};
 
 window.onclick=e=>{
   if(e.target===momoModal) momoModal.style.display='none';
@@ -255,21 +259,17 @@ window.onclick=e=>{
 
 // CONFIRM MTN MOMO WITHDRAWAL
 document.getElementById('confirmMomoBtn').onclick=()=>{
-  const name=document.getElementById('momoName').value.trim();
-  const country=document.getElementById('momoCountry').value;
   const momo=document.getElementById('momoNumber').value.trim();
-  if(!name || !country || !momo || studentData.walletUSD<=0){alert("Fill all fields and have USD"); return;}
+  if(!momo || studentData.walletUSD<=0){alert("Enter MTN MoMo number and ensure USD available"); return;}
   const btn=document.getElementById('confirmMomoBtn');
   btn.classList.add('confirming');
   setTimeout(()=>{
-    studentData.transactions.push({date:new Date().toLocaleString(),type:`MoMo Withdrawal (${country})`,amount:studentData.walletUSD});
+    studentData.transactions.push({date:new Date().toLocaleString(),type:`MoMo Withdrawal (${studentData.country})`,amount:studentData.walletUSD});
     studentData.walletUSD=0;
     updateWalletUI();
     localStorage.setItem('studentData',JSON.stringify(studentData));
     btn.classList.remove('confirming');
     momoModal.style.display='none';
-    document.getElementById('momoName').value='';
-    document.getElementById('momoCountry').value='';
     document.getElementById('momoNumber').value='';
     alert("MoMo withdrawal initiated successfully!");
   },1500);
@@ -277,21 +277,17 @@ document.getElementById('confirmMomoBtn').onclick=()=>{
 
 // CONFIRM BANK WITHDRAWAL
 document.getElementById('confirmBankBtn').onclick=()=>{
-  const name=document.getElementById('bankName').value.trim();
-  const country=document.getElementById('bankCountry').value;
   const account=document.getElementById('bankAccount').value.trim();
-  if(!name || !country || !account || studentData.walletUSD<=0){alert("Fill all fields and have USD"); return;}
+  if(!account || studentData.walletUSD<=0){alert("Enter bank account number and ensure USD available"); return;}
   const btn=document.getElementById('confirmBankBtn');
   btn.classList.add('confirming');
   setTimeout(()=>{
-    studentData.transactions.push({date:new Date().toLocaleString(),type:`Bank Withdrawal (${country})`,amount:studentData.walletUSD});
+    studentData.transactions.push({date:new Date().toLocaleString(),type:`Bank Withdrawal (${studentData.country})`,amount:studentData.walletUSD});
     studentData.walletUSD=0;
     updateWalletUI();
     localStorage.setItem('studentData',JSON.stringify(studentData));
     btn.classList.remove('confirming');
     bankModal.style.display='none';
-    document.getElementById('bankName').value='';
-    document.getElementById('bankCountry').value='';
     document.getElementById('bankAccount').value='';
     alert("Bank withdrawal initiated successfully!");
   },1500);
@@ -319,7 +315,7 @@ portfolio3D.addEventListener('mousemove',(e)=>{
   const y=(e.clientY/window.innerHeight-0.5)*15;
   portfolio3D.style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
 });
-portfolio3D.addEventListener('mouseleave'=>portfolio3D.style.transform='rotateY(0deg) rotateX(0deg)');
+portfolio3D.addEventListener('mouseleave',()=>portfolio3D.style.transform='rotateY(0deg) rotateX(0deg)');
 </script>
 </body>
 </html>
