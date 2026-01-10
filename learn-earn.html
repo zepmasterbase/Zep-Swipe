@@ -16,24 +16,21 @@
   --streak:#ffea00;
   --card-bg:rgba(255,255,255,.05);
 }
-
-/* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
 body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.4;overflow-x:hidden;}
 a{text-decoration:none;color:inherit;}
 button{cursor:pointer;border:none;}
-
-/* HEADER */
 header{
   display:flex;justify-content:space-between;align-items:center;
   padding:16px 20px;max-width:1200px;margin:auto;margin-top:10px;
   border-radius:12px;background:rgba(0,0,0,0.15);backdrop-filter:blur(6px);
+  position:relative; overflow:hidden;
 }
 .brand{
   font-family:Orbitron;font-size:1.6rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation: pulseGlow 2s infinite;
+  position:relative;animation: pulseGlow 2s infinite;
 }
 .home-btn{background:var(--zep-blue);color:#050015;padding:6px 12px;border-radius:12px;font-weight:700;transition:.3s;}
 .home-btn:hover{transform:scale(1.05);}
@@ -42,8 +39,6 @@ header{
   50% { text-shadow: 0 0 15px var(--zep-blue),0 0 25px var(--zep-violet); transform: scale(1.05);}
   100% { text-shadow: 0 0 5px var(--zep-blue),0 0 10px var(--zep-violet); transform: scale(1);}
 }
-
-/* STUDENT INFO */
 .student-info{
   display:flex;justify-content:space-between;align-items:center;
   padding:16px 20px;max-width:1200px;margin:20px auto;
@@ -52,8 +47,6 @@ header{
 .student-info div{display:flex;flex-direction:column;}
 .student-info div span{font-size:0.85rem;color:var(--text-light);}
 .wallet-balance{font-weight:700;font-family:Orbitron;}
-
-/* PROGRAM SELECTION */
 .programs{display:flex;flex-wrap:wrap;gap:12px;max-width:1200px;margin:0 auto 20px;padding:0 20px;}
 .program-card{
   flex:1 1 140px;padding:14px;border-radius:16px;text-align:center;
@@ -61,8 +54,6 @@ header{
 }
 .program-card.selected{border:2px solid var(--zep-blue);box-shadow:0 0 15px var(--zep-blue);}
 .program-card:hover{transform:translateY(-2px) scale(1.02);}
-
-/* TASK CARDS */
 .tasks-container{display:grid;grid-template-columns:1fr;gap:16px;max-width:1200px;margin:auto;padding:0 20px 40px;}
 @media(min-width:600px){.tasks-container{grid-template-columns:1fr 1fr;}}
 @media(min-width:900px){.tasks-container{grid-template-columns:1fr 1fr 1fr;}}
@@ -75,41 +66,31 @@ header{
 .task-card p{font-size:0.85rem;color:var(--text-light);}
 .task-card input[type="text"]{padding:8px;border-radius:12px;border:none;background:rgba(255,255,255,0.1);color:#fff;outline:none;}
 .task-card button{
-  padding:8px 16px;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  padding:8px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
 }
 .task-card button:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
-
-/* PROGRESS BAR */
 .progress-bar-container{max-width:1200px;margin:20px auto;padding:0 20px;}
 .progress-bar{width:100%;height:16px;background:rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;}
 .progress-bar-fill{height:100%;width:0%;background:var(--accent);border-radius:12px;transition:width 0.5s ease-in-out;}
-
-/* STREAK BADGES */
 .streak-badge{
   display:inline-block;margin-right:6px;padding:4px 8px;border-radius:12px;background:var(--streak);color:#050015;font-weight:600;font-size:0.75rem;transition:.3s;
   transform:scale(1);
 }
 .streak-badge.earned{animation:pop 0.5s ease forwards;}
 @keyframes pop{0%{transform:scale(0.5);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
-
-/* 3D Portfolio Viewer */
 #portfolio3D{
   max-width:1200px;margin:20px auto;padding:0 20px;
   height:300px;background:rgba(255,255,255,0.05);border-radius:16px;display:flex;justify-content:center;align-items:center;font-size:1.2rem;color:var(--text-light);
   perspective:1000px;transition:transform 0.5s;
 }
 #portfolio3D:hover{transform:rotateY(15deg) rotateX(5deg);}
-
-/* VERIFICATION BANNER */
 #verificationBanner{
   max-width:1200px;margin:20px auto;padding:16px;border-radius:16px;text-align:center;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  cursor:pointer;font-family:Orbitron;font-weight:700;transition:.3s;display:none;
+  cursor:pointer;font-family:Orbitron;font-weight:700;transition:.3s;
 }
 #verificationBanner:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
-
-/* FOOTER */
 footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid rgba(255,255,255,.1);color:var(--text-light);font-size:0.85rem;}
 </style>
 </head>
@@ -146,7 +127,7 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
 
 <div class="tasks-container" id="tasksContainer"></div>
 
-<div id="verificationBanner" onclick="location.href='verification.html'">
+<div id="verificationBanner" onclick="payVerification()">
   Become a Verified Freelancer – $5
 </div>
 
@@ -156,34 +137,29 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
 
 <canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1000;"></canvas>
 
+<script src="https://checkout.flutterwave.com/v3.js"></script>
 <script>
-// ========================
+// =======================
 // STUDENT DATA
 let studentData = JSON.parse(localStorage.getItem('studentData')) || {
-  name:"Test Student",
-  city:"Test City",
-  country:"Test Country",
-  university:"Test University",
-  program:"Virtual Assistant",
-  walletZAC:0,
-  walletUSD:0,
-  tasksCompleted:[],
+  name: "Test Student",
+  city: "Test City",
+  country: "Test Country",
+  university: "Test University",
+  program: "Virtual Assistant",
+  walletBalance: 0,
+  tasksCompleted: [],
   verified:false
 };
 
-// ========================
-// INITIALIZE INFO
-function updateStudentInfo(){
-  document.getElementById('studentName').innerText = studentData.name;
-  document.getElementById('studentCity').innerText = "City: " + (studentData.city||"--");
-  document.getElementById('studentCountry').innerText = "Country: " + (studentData.country||"--");
-  document.getElementById('studentUni').innerText = studentData.university;
-  document.getElementById('studentProgram').querySelector('strong').innerText = studentData.program || '--';
-  document.getElementById('walletBalance').innerText = studentData.walletZAC || 0;
-}
-updateStudentInfo();
+// INITIAL INFO
+document.getElementById('studentName').innerText = studentData.name;
+document.getElementById('studentCity').innerText = "City: " + (studentData.city||"--");
+document.getElementById('studentCountry').innerText = "Country: " + (studentData.country||"--");
+document.getElementById('studentUni').innerText = studentData.university;
+document.getElementById('studentProgram').querySelector('strong').innerText = studentData.program || '--';
+document.getElementById('walletBalance').innerText = studentData.walletBalance || 0;
 
-// ========================
 // PROGRAMS
 const programs = ["Virtual Assistant","Content Creator (Video)","Blog Writer","Voice-over Artist","Data Entry","UI/UX Designer","Online Tutor"];
 const programsContainer = document.getElementById('programsContainer');
@@ -203,8 +179,7 @@ programs.forEach(prog=>{
   programsContainer.appendChild(card);
 });
 
-// ========================
-// TASKS PER PROGRAM
+// TASKS
 const taskTemplates = {
   "Virtual Assistant":[
     "Record an intro video of yourself, register profile on www.zora.co and submit your post link here",
@@ -229,11 +204,9 @@ const taskTemplates = {
     "Run a full VA workflow",
     "Portfolio showcase: Document all tasks"
   ]
-  // Add other programs with tasks similarly
 };
 
-// ========================
-// TASK RENDERING
+// PROGRESS & STREAK
 const tasksContainer = document.getElementById('tasksContainer');
 const progressFill = document.getElementById('progressFill');
 const streakContainer = document.getElementById('streakContainer');
@@ -271,8 +244,8 @@ function renderTasks(program){
         if(!input.value.trim()){ alert("Please submit a valid Zora link"); return;}
         const taskKey = `${program}-${day}`;
         if(!studentData.tasksCompleted.includes(taskKey)) studentData.tasksCompleted.push(taskKey);
-        studentData.walletZAC = (studentData.walletZAC||0)+25; // ZAC updates
-        updateStudentInfo(); // Update wallet UI
+        studentData.walletBalance = (studentData.walletBalance||0)+25;
+        document.getElementById('walletBalance').innerText = studentData.walletBalance;
         localStorage.setItem('studentData', JSON.stringify(studentData));
         btn.disabled = true;
         input.disabled = true;
@@ -286,7 +259,7 @@ function renderTasks(program){
         }
         const completedCount = studentData.tasksCompleted.filter(t=>t.startsWith(program)).length;
         progressFill.style.width=`${(completedCount/programTasks.length)*100}%`;
-        if(completedCount===programTasks.length) document.getElementById('verificationBanner').style.display='block';
+        if(completedCount===programTasks.length && !studentData.verified) document.getElementById('verificationBanner').style.display='block';
       }
     }
   }
@@ -301,8 +274,6 @@ function addStreakBadge(day){
   streakContainer.appendChild(badge);
 }
 
-// ========================
-// CONFETTI
 function launchConfetti(){
   confettiCanvas.width=window.innerWidth; confettiCanvas.height=window.innerHeight;
   const confettiCount = 100;
@@ -326,17 +297,49 @@ function launchConfetti(){
   setTimeout(()=>{confettiCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);},3000);
 }
 
-// ========================
 // INITIAL RENDER
 if(studentData.program) renderTasks(studentData.program);
 
-// ========================
-// SYNC WITH WALLET IN REAL-TIME
+// =======================
+// FLUTTERWAVE PAYMENT
+function payVerification(){
+  if(studentData.verified){ alert("You are already verified! ✅"); return;}
+  FlutterwaveCheckout({
+    public_key: "FLWPUBK_TEST-xxxxxxxxxxxxxxxxXXXX-X", // replace with your public key
+    tx_ref: "VERIF-"+Date.now(),
+    amount: 5,
+    currency: "USD",
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: studentData.email || "student@example.com",
+      name: studentData.name || "Student Name",
+      phone_number: studentData.phone || "N/A",
+    },
+    meta: {
+      student_id: studentData.id || "12345",
+      country: studentData.country,
+      city: studentData.city,
+      university: studentData.university
+    },
+    callback: function(data){
+      if(data.status==="successful"){
+        studentData.verified = true;
+        localStorage.setItem('studentData', JSON.stringify(studentData));
+        alert("Payment Successful! You are now a verified freelancer ✅");
+        document.getElementById('verificationBanner').style.display="none";
+      } else {
+        alert("Payment not completed. Please try again.");
+      }
+    },
+    onclose: function(){ console.log("Payment closed"); }
+  });
+}
+
+// LIVE WALLET UPDATE
 window.addEventListener('storage', e=>{
   if(e.key==='studentData'){
     studentData = JSON.parse(e.newValue);
-    updateStudentInfo();
-    renderTasks(studentData.program);
+    document.getElementById('walletBalance').innerText = studentData.walletBalance;
   }
 });
 </script>
