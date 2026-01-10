@@ -10,8 +10,8 @@
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,0.08);
-  --text-light:rgba(255,255,255,0.85);
+  --glass:rgba(255,255,255,.08);
+  --text-light:rgba(255,255,255,.85);
 }
 
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
@@ -138,9 +138,12 @@ if(!user){
   <input type="text" id="name" placeholder="Full Name" value="">
   <input type="email" id="email" placeholder="Email" value="">
   <input type="text" id="level" placeholder="Level (e.g., Beginner Freelancer)" value="">
+  <input type="text" id="country" placeholder="Country" value="">
+  <input type="text" id="city" placeholder="City" value="">
+  <input type="text" id="university" placeholder="University" value="">
   
   <button onclick="saveProfile()">Save Profile</button>
-  <span>Profile completeness will sync across dashboard and wallet.</span>
+  <span>Profile completeness will sync across dashboard, wallet, and Learn & Earn.</span>
 </div>
 
 <script>
@@ -149,6 +152,9 @@ const profileImg = document.getElementById("profileImg");
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
 const levelInput = document.getElementById("level");
+const countryInput = document.getElementById("country");
+const cityInput = document.getElementById("city");
+const universityInput = document.getElementById("university");
 const imgUpload = document.getElementById("imgUpload");
 
 function loadUser(){
@@ -156,6 +162,9 @@ function loadUser(){
     nameInput.value = user.name || '';
     emailInput.value = user.email || '';
     levelInput.value = user.level || 'Beginner Freelancer';
+    countryInput.value = user.country || '';
+    cityInput.value = user.city || '';
+    universityInput.value = user.university || '';
     profileImg.src = user.profileImage || 'https://via.placeholder.com/120';
   }
 }
@@ -177,6 +186,9 @@ function saveProfile(){
   user.name = nameInput.value.trim() || user.name;
   user.email = emailInput.value.trim() || user.email;
   user.level = levelInput.value.trim() || user.level;
+  user.country = countryInput.value.trim() || user.country;
+  user.city = cityInput.value.trim() || user.city;
+  user.university = universityInput.value.trim() || user.university;
   localStorage.setItem("currentUser", JSON.stringify(user));
   alert("Profile saved successfully!");
 }
