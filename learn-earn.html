@@ -28,15 +28,11 @@ header{
   display:flex;justify-content:space-between;align-items:center;
   padding:16px 20px;max-width:1200px;margin:auto;margin-top:10px;
   border-radius:12px;background:rgba(0,0,0,0.15);backdrop-filter:blur(6px);
-  position:relative; overflow:hidden;
 }
 .brand{
-  font-family:Orbitron;
-  font-size:1.6rem;
+  font-family:Orbitron;font-size:1.6rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  position:relative;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   animation: pulseGlow 2s infinite;
 }
 .home-btn{background:var(--zep-blue);color:#050015;padding:6px 12px;border-radius:12px;font-weight:700;transition:.3s;}
@@ -79,7 +75,7 @@ header{
 .task-card p{font-size:0.85rem;color:var(--text-light);}
 .task-card input[type="text"]{padding:8px;border-radius:12px;border:none;background:rgba(255,255,255,0.1);color:#fff;outline:none;}
 .task-card button{
-  padding:8px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  padding:8px 16px;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
 }
 .task-card button:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
@@ -161,28 +157,34 @@ footer{text-align:center;padding:20px 10px;margin-top:40px;border-top:1px solid 
 <canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1000;"></canvas>
 
 <script>
-// =======================
-// STUDENT DATA (LOCAL STORAGE OR DEFAULT)
+// ========================
+// STUDENT DATA
 let studentData = JSON.parse(localStorage.getItem('studentData')) || {
-  name: "Test Student",
-  city: "Test City",
-  country: "Test Country",
-  university: "Test University",
-  program: "Virtual Assistant",
-  walletBalance: 0,
-  tasksCompleted: [],
-  loggedIn: true
+  name:"Test Student",
+  city:"Test City",
+  country:"Test Country",
+  university:"Test University",
+  program:"Virtual Assistant",
+  walletZAC:0,
+  walletUSD:0,
+  tasksCompleted:[],
+  verified:false
 };
 
-// INITIAL INFO
-document.getElementById('studentName').innerText = studentData.name;
-document.getElementById('studentCity').innerText = "City: " + (studentData.city||"--");
-document.getElementById('studentCountry').innerText = "Country: " + (studentData.country||"--");
-document.getElementById('studentUni').innerText = studentData.university;
-document.getElementById('studentProgram').querySelector('strong').innerText = studentData.program || '--';
-document.getElementById('walletBalance').innerText = studentData.walletBalance || 0;
+// ========================
+// INITIALIZE INFO
+function updateStudentInfo(){
+  document.getElementById('studentName').innerText = studentData.name;
+  document.getElementById('studentCity').innerText = "City: " + (studentData.city||"--");
+  document.getElementById('studentCountry').innerText = "Country: " + (studentData.country||"--");
+  document.getElementById('studentUni').innerText = studentData.university;
+  document.getElementById('studentProgram').querySelector('strong').innerText = studentData.program || '--';
+  document.getElementById('walletBalance').innerText = studentData.walletZAC || 0;
+}
+updateStudentInfo();
 
-// PROGRAM SELECTION
+// ========================
+// PROGRAMS
 const programs = ["Virtual Assistant","Content Creator (Video)","Blog Writer","Voice-over Artist","Data Entry","UI/UX Designer","Online Tutor"];
 const programsContainer = document.getElementById('programsContainer');
 programs.forEach(prog=>{
@@ -201,7 +203,8 @@ programs.forEach(prog=>{
   programsContainer.appendChild(card);
 });
 
-// TASKS PER PROGRAM (Enhanced with Zora submission)
+// ========================
+// TASKS PER PROGRAM
 const taskTemplates = {
   "Virtual Assistant":[
     "Record an intro video of yourself, register profile on www.zora.co and submit your post link here",
@@ -226,10 +229,11 @@ const taskTemplates = {
     "Run a full VA workflow",
     "Portfolio showcase: Document all tasks"
   ]
-  // Other programs omitted for brevity (you can copy previous tasks and just add Zora intro task)
+  // Add other programs with tasks similarly
 };
 
-// PROGRESS & STREAK
+// ========================
+// TASK RENDERING
 const tasksContainer = document.getElementById('tasksContainer');
 const progressFill = document.getElementById('progressFill');
 const streakContainer = document.getElementById('streakContainer');
@@ -267,8 +271,8 @@ function renderTasks(program){
         if(!input.value.trim()){ alert("Please submit a valid Zora link"); return;}
         const taskKey = `${program}-${day}`;
         if(!studentData.tasksCompleted.includes(taskKey)) studentData.tasksCompleted.push(taskKey);
-        studentData.walletBalance = (studentData.walletBalance||0)+25;
-        document.getElementById('walletBalance').innerText = studentData.walletBalance;
+        studentData.walletZAC = (studentData.walletZAC||0)+25; // ZAC updates
+        updateStudentInfo(); // Update wallet UI
         localStorage.setItem('studentData', JSON.stringify(studentData));
         btn.disabled = true;
         input.disabled = true;
@@ -297,6 +301,8 @@ function addStreakBadge(day){
   streakContainer.appendChild(badge);
 }
 
+// ========================
+// CONFETTI
 function launchConfetti(){
   confettiCanvas.width=window.innerWidth; confettiCanvas.height=window.innerHeight;
   const confettiCount = 100;
@@ -320,15 +326,17 @@ function launchConfetti(){
   setTimeout(()=>{confettiCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);},3000);
 }
 
+// ========================
 // INITIAL RENDER
 if(studentData.program) renderTasks(studentData.program);
 
-// =======================
-// LIVE WALLET UPDATE FOR wallet.html
+// ========================
+// SYNC WITH WALLET IN REAL-TIME
 window.addEventListener('storage', e=>{
   if(e.key==='studentData'){
     studentData = JSON.parse(e.newValue);
-    document.getElementById('walletBalance').innerText = studentData.walletBalance;
+    updateStudentInfo();
+    renderTasks(studentData.program);
   }
 });
 </script>
