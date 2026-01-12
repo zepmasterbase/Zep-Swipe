@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Student Dashboard</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600,700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -59,6 +59,16 @@ header{
   border:2px solid rgba(255,255,255,.3);
 }
 .profile-summary span{font-size:.85rem;color:var(--text-light);}
+#verifiedBadge{
+  display:inline-block;
+  margin-left:8px;
+  padding:2px 8px;
+  background:linear-gradient(90deg,#00ff9d,#00f0ff);
+  color:#050015;
+  border-radius:12px;
+  font-size:0.75rem;
+  font-weight:600;
+}
 
 /* GRAPH */
 .graph-box{
@@ -172,6 +182,7 @@ header{
       <span id="completionText"></span><br>
       <span id="walletBalance"></span>
     </div>
+    <span id="verifiedBadge" style="display:none;">Verified ✅</span>
   </div>
 
   <!-- WEEKLY GRAPH -->
@@ -222,18 +233,16 @@ header{
 /* =======================
    USER SESSION & LOGOUT
 ======================= */
-let users = JSON.parse(localStorage.getItem("users")) || {};
+let users = JSON.parse(localStorage.getItem("users")) || [];
 let currentUserId = localStorage.getItem("currentUserId");
 
-// If no session, redirect to login
-if(!currentUserId || !users[currentUserId]){
+if(!currentUserId){
   location.href="login.html";
 }
 
-let currentUser = users[currentUserId];
+let currentUser = users.find(u=>u.id===currentUserId);
 
 function logout(){
-  // Remove only session
   localStorage.removeItem("currentUserId");
   location.href="login.html";
 }
@@ -246,11 +255,17 @@ const studentName = document.getElementById("studentName");
 const studentLevel = document.getElementById("studentLevel");
 const completionText = document.getElementById("completionText");
 const walletBalance = document.getElementById("walletBalance");
+const verifiedBadge = document.getElementById("verifiedBadge");
 
-profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
-studentName.innerText = currentUser.name;
-studentLevel.innerText = currentUser.level;
-completionText.innerText = `Profile Completion: ${currentUser.profileCompletion || 0}%`;
+function renderProfile(){
+  profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
+  studentName.innerText = currentUser.name;
+  studentLevel.innerText = currentUser.level;
+  completionText.innerText = `Profile Completion: ${currentUser.profileCompletion || 0}%`;
+  verifiedBadge.style.display = currentUser.verified ? 'inline-block' : 'none';
+}
+
+renderProfile();
 
 /* =======================
    WALLET
@@ -285,7 +300,6 @@ if(earnings.length){
   analytics.innerHTML=`Total streak days: ${currentUser.tasksCompleted || 0}<br>Total ZAC earned: ${currentUser.walletBalance || 0}`;
 }
 
-/* ANALYTICS TOGGLE */
 function toggleAnalytics(){
   analytics.classList.toggle("active");
 }
@@ -295,6 +309,7 @@ function toggleAnalytics(){
 ======================= */
 const jobs = JSON.parse(localStorage.getItem("swipeJobs")) || [];
 const jobsList = document.getElementById("jobsList");
+jobsList.innerHTML = '';
 jobs.forEach(j=>{
   const d=document.createElement("div");
   d.className="job";
@@ -311,7 +326,40 @@ jobs.forEach(j=>{
   }
   jobsList.appendChild(d);
 });
-</script>
 
+/* =======================
+   UPDATE USER DATA IN REAL TIME
+======================= */
+function updateUser(newData){
+  currentUser = {...currentUser, ...newData};
+  const idx = users.findIndex(u=>u.id===currentUser.id);
+  if(idx>-1) users[idx]=currentUser;
+  localStorage.setItem("users",JSON.stringify(users));
+  renderProfile();
+  updateWallet();
+  // Refresh jobs overlay if verified changes
+  jobsList.innerHTML='';
+  jobs.forEach(j=>{
+    const d=document.createElement("div");
+    d.className="job";
+    if(!currentUser.verified) d.classList.add("locked");
+    d.innerHTML=`<h4>${j.title}</h4><span>${j.amountUSD} USD</span>`;
+    if(!currentUser.verified){
+      d.innerHTML+=`<div class="verify-overlay">
+        <div>
+          <strong>Verify Account</strong><br>
+          Unlock paid jobs
+          <br><button onclick="location.href='profile.html'">Verify</button>
+        </div>
+      </div>`;
+    }
+    jobsList.appendChild(d);
+  });
+}
+
+// Example: whenever learn-earn sets verified:
+// updateUser({verified:true});
+
+</script>
 </body>
 </html>
