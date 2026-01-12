@@ -124,17 +124,18 @@ function handleAuth(){
     return;
   }
 
-  // Load users array, preserve existing users
-  let users = JSON.parse(localStorage.getItem("users")) || [];
+  // Load users dictionary
+  let users = JSON.parse(localStorage.getItem("users")) || {};
 
   if(mode === "signup"){
-    if(users.some(u=>u.email===email)){
+    if(Object.values(users).some(u=>u.email===email)){
       alert("Account already exists");
       return;
     }
 
+    const userId = generateUserCode();
     const newUser = {
-      id: generateUserCode(),
+      id: userId,
       name,
       email,
       password,
@@ -142,23 +143,25 @@ function handleAuth(){
       level: "Beginner Freelancer",
       tasksCompleted: 0,
       verified: false,
+      profileImage: "",
       joined: new Date().toISOString(),
       transactions: [],
-      tasks: Array(21).fill(false) // 21-day Learn & Earn tasks
+      tasks: Array(21).fill(false) // 21-day Learn & Earn
     };
 
-    users.push(newUser);
+    users[userId] = newUser;
     localStorage.setItem("users", JSON.stringify(users));
-    localStorage.setItem("currentUser", JSON.stringify(newUser));
+    localStorage.setItem("currentUserId", userId);
 
   } else {
     // LOGIN
-    const user = users.find(u=>u.email===email && u.password===password);
-    if(!user){
+    const userEntry = Object.entries(users).find(([id,u])=>u.email===email && u.password===password);
+    if(!userEntry){
       alert("Invalid credentials");
       return;
     }
-    localStorage.setItem("currentUser", JSON.stringify(user));
+    const [userId] = userEntry;
+    localStorage.setItem("currentUserId", userId);
   }
 
   // Redirect to student dashboard
@@ -189,8 +192,9 @@ window.addEventListener('load', ()=>{
   }
 
   // Auto-redirect if already logged in
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  if(currentUser) window.location.href = "student-dashboard.html";
+  const currentUserId = localStorage.getItem("currentUserId");
+  const users = JSON.parse(localStorage.getItem("users")) || {};
+  if(currentUserId && users[currentUserId]) window.location.href = "student-dashboard.html";
 });
 </script>
 
