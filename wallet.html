@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Zep Swipe — Wallet</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300,400,500,600&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -12,184 +14,312 @@
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,0.08);
   --text-light:rgba(255,255,255,0.85);
+  --success:#33ffb1;
+  --danger:#ff5f7a;
 }
-*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;}
+
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
+
+body{
+  background:var(--bg);
+  color:#fff;
+  min-height:100vh;
+}
+
+/* HEADER */
 header{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:18px;margin:16px;border-radius:16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 22px;
+  margin:16px;
+  border-radius:16px;
   background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
   backdrop-filter:blur(14px);
 }
 .brand{
-  font-family:Orbitron;font-size:1.5rem;
+  font-family:Orbitron;
+  font-size:1.4rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-.logout-btn{
-  background:rgba(255,255,255,.1);border:none;border-radius:50%;
-  width:38px;height:38px;color:#fff;cursor:pointer;
+.home-btn{
+  border:none;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  cursor:pointer;
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  font-size:18px;
 }
-.logout-btn:hover{
-  background:rgba(0,240,255,.25);
-}
+.home-btn:hover{background:rgba(0,240,255,.3)}
 
-.dashboard{padding:16px;display:flex;flex-direction:column;gap:22px;max-width:1200px;margin:auto;}
-
-.section{
-  background:var(--glass);
-  border-radius:16px;
+/* MAIN */
+.container{
+  max-width:900px;
+  margin:auto;
   padding:16px;
+}
+
+/* BALANCE CARD */
+.balance-card{
+  background:linear-gradient(135deg, rgba(0,240,255,.18), rgba(156,77,255,.18));
+  border-radius:22px;
+  padding:28px;
+  box-shadow:0 0 40px rgba(156,77,255,.35);
+  text-align:center;
+  margin-bottom:24px;
+}
+.balance-card h2{
+  font-family:Orbitron;
+  letter-spacing:1px;
+}
+.zac{
+  font-size:3rem;
+  font-family:Orbitron;
+  margin:10px 0;
+}
+.usd{
+  opacity:.8;
+  margin-bottom:20px;
+}
+.actions{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.actions button{
+  padding:12px 22px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:600;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+.actions button.secondary{
+  background:rgba(255,255,255,.12);
+  color:#fff;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+@media(max-width:768px){
+  .grid{grid-template-columns:1fr}
+}
+
+/* CARDS */
+.card{
+  background:var(--glass);
+  border-radius:18px;
+  padding:20px;
   border:1px solid rgba(255,255,255,.12);
 }
-.section h3{font-family:Orbitron;margin-bottom:12px;}
+.card h3{
+  font-family:Orbitron;
+  margin-bottom:12px;
+}
 
-.wallet-summary{
-  display:flex;flex-direction:column;gap:8px;font-size:1.1rem;
+/* HISTORY */
+.tx{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
-.wallet-summary span{font-weight:600;}
+.tx:last-child{border-bottom:none}
+.positive{color:var(--success)}
+.negative{color:var(--danger)}
 
-.withdraw-section{
-  display:flex;flex-direction:column;gap:12px;margin-top:12px;
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:99;
 }
-.withdraw-section input, .withdraw-section select{
-  padding:10px;border-radius:12px;border:none;outline:none;width:100%;
-  background:rgba(255,255,255,0.1);color:#fff;
+.modal-box{
+  background:#0a0620;
+  border-radius:18px;
+  padding:24px;
+  width:90%;
+  max-width:420px;
+  box-shadow:0 0 40px rgba(156,77,255,.4);
 }
-.withdraw-section button{
-  padding:12px;border:none;border-radius:999px;
+.modal-box h3{
+  font-family:Orbitron;
+  margin-bottom:12px;
+}
+.modal-box input, .modal-box select{
+  width:100%;
+  padding:12px;
+  margin-bottom:12px;
+  border-radius:12px;
+  border:none;
+}
+.modal-box button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:999px;
+  font-weight:600;
+  cursor:pointer;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  font-family:Orbitron;cursor:pointer;transition:.3s;
 }
-.withdraw-section button:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
 
-/* Responsive */
-@media(max-width:480px){
-  .withdraw-section input{font-size:0.9rem;}
+/* FOOT NOTE */
+.note{
+  text-align:center;
+  font-size:.85rem;
+  opacity:.75;
+  margin-top:20px;
 }
 </style>
 </head>
+
 <body>
+
+<script>
+/* SESSION CHECK */
+const user = JSON.parse(localStorage.getItem("currentUser"));
+if(!user){
+  window.location.href="auth.html";
+}
+</script>
 
 <header>
   <div class="brand">Zep Swipe</div>
-  <button class="logout-btn" onclick="logout()">⎋</button>
+  <button class="home-btn" onclick="location.href='student-dashboard.html'">🏠</button>
 </header>
 
-<div class="dashboard">
+<div class="container">
 
-  <!-- Wallet Balances -->
-  <div class="section wallet-summary">
-    <h3>Wallet Balances</h3>
-    <span id="walletZAC">0 ZAC</span>
-    <span id="walletUSD">~$0.00 USD</span>
+  <!-- BALANCE -->
+  <div class="balance-card">
+    <h2>Total Portfolio</h2>
+    <div class="zac" id="zacBal">0 ZAC</div>
+    <div class="usd" id="usdBal">$0.00 USD</div>
+    <div class="actions">
+      <button onclick="openMoMo()">Withdraw to MTN MoMo</button>
+      <button class="secondary" onclick="openBank()">Withdraw to Bank</button>
+    </div>
   </div>
 
-  <!-- ZAC Withdrawal (Locked) -->
-  <div class="section withdraw-section">
-    <h3>Withdraw ZAC (Locked)</h3>
-    <p>You cannot withdraw ZAC yet. Complete tasks to unlock USD withdrawal.</p>
-    <button disabled>Withdraw ZAC</button>
+  <!-- GRID -->
+  <div class="grid">
+
+    <!-- EARNINGS -->
+    <div class="card">
+      <h3>Earnings Overview</h3>
+      <p>Today: <strong id="todayEarn">+0 ZAC</strong></p>
+      <p>This Week: <strong id="weekEarn">+0 ZAC</strong></p>
+      <p>All Time: <strong id="allEarn">0 ZAC</strong></p>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="card">
+      <h3>Recent Activity</h3>
+      <div id="history"></div>
+    </div>
+
   </div>
 
-  <!-- USD Withdrawal -->
-  <div class="section withdraw-section">
-    <h3>Withdraw USD</h3>
-    <label for="withdrawMethod">Select Withdrawal Method:</label>
-    <select id="withdrawMethod">
-      <option value="momo">MTN Mobile Money</option>
-      <option value="bank">Bank Transfer</option>
-    </select>
-
-    <input type="text" id="fullName" placeholder="Full Name">
-    <input type="email" id="email" placeholder="Email">
-    <input type="text" id="phone" placeholder="Phone Number (for Momo)">
-    <input type="text" id="bankName" placeholder="Bank Name (if Bank)">
-    <input type="text" id="accountNumber" placeholder="Account Number (if Bank)">
-    <input type="text" id="branchCode" placeholder="Branch Code (if Bank)">
-    <input type="number" id="usdAmount" placeholder="Amount in USD">
-
-    <button onclick="requestUSDWithdrawal()">Request Withdrawal</button>
+  <div class="note">
+    ✔ Secure wallet • ✔ Flutterwave-ready • ✔ Manual withdrawal review
   </div>
 
 </div>
 
-<script src="https://checkout.flutterwave.com/v3.js"></script>
+<!-- MTN MOMO MODAL -->
+<div class="modal" id="momoModal">
+  <div class="modal-box">
+    <h3>Withdraw to MTN MoMo</h3>
+    <input id="momoName" placeholder="Account Name" />
+    <input id="momoNumber" placeholder="MTN MoMo Number" />
+    <select id="momoCountry">
+      <option value="">Select Country</option>
+      <option>Ghana</option>
+      <option>Uganda</option>
+      <option>Cameroon</option>
+      <option>Rwanda</option>
+      <option>Zambia</option>
+    </select>
+    <input id="momoAmount" placeholder="Amount (ZAC)" type="number"/>
+    <button onclick="submitMoMo()">Submit Withdrawal</button>
+  </div>
+</div>
+
+<!-- BANK MODAL -->
+<div class="modal" id="bankModal">
+  <div class="modal-box">
+    <h3>Withdraw to Bank</h3>
+    <input placeholder="Account Name"/>
+    <input placeholder="Account Number"/>
+    <input placeholder="Bank Name"/>
+    <input placeholder="Country"/>
+    <input placeholder="Amount (ZAC)" type="number"/>
+    <button>Submit Withdrawal</button>
+  </div>
+</div>
+
 <script>
-// Load current user
-let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-if(!currentUser) location.href="login.html";
+const ZAC_RATE = 0.014;
 
-// Logout
-function logout(){
-  localStorage.removeItem("currentUser");
-  location.href="login.html";
+function loadWallet(){
+  const zac = user.zacBalance || 0;
+  document.getElementById("zacBal").innerText = zac + " ZAC";
+  document.getElementById("usdBal").innerText = "$" + (zac * ZAC_RATE).toFixed(2);
+
+  document.getElementById("allEarn").innerText = zac + " ZAC";
+
+  const history = document.getElementById("history");
+  history.innerHTML = "";
+
+  (user.transactions || []).slice(-5).reverse().forEach(tx=>{
+    const div = document.createElement("div");
+    div.className="tx";
+    div.innerHTML = `
+      <span>${tx.note}</span>
+      <span class="${tx.amount>0?'positive':'negative'}">${tx.amount>0?'+':''}${tx.amount} ZAC</span>
+    `;
+    history.appendChild(div);
+  });
 }
 
-// Wallet update
-function updateWallet(){
-  const zac = currentUser.walletBalance || 0;
-  const usd = (zac * 0.014).toFixed(2); // 1 ZAC = $0.014
-  document.getElementById("walletZAC").innerText = `${zac} ZAC`;
-  document.getElementById("walletUSD").innerText = `~$${usd} USD`;
-}
-updateWallet();
+function openMoMo(){document.getElementById("momoModal").style.display="flex"}
+function openBank(){document.getElementById("bankModal").style.display="flex"}
 
-// USD Withdrawal Request
-function requestUSDWithdrawal(){
-  const method = document.getElementById("withdrawMethod").value;
-  const fullName = document.getElementById("fullName").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const bankName = document.getElementById("bankName").value.trim();
-  const accountNumber = document.getElementById("accountNumber").value.trim();
-  const branchCode = document.getElementById("branchCode").value.trim();
-  const usdAmount = parseFloat(document.getElementById("usdAmount").value);
-
-  if(!fullName || !email || !usdAmount || usdAmount <=0){
-    alert("Please fill all required fields correctly");
-    return;
-  }
-  if(method === "momo" && !phone){
-    alert("Please enter phone number for MTN Momo");
-    return;
-  }
-  if(method === "bank" && (!bankName || !accountNumber || !branchCode)){
-    alert("Please fill all bank details");
-    return;
-  }
-  if(usdAmount > (currentUser.walletBalance*0.014)){
-    alert("Insufficient balance");
-    return;
-  }
-
-  // Prepare Flutterwave withdrawal payload (example)
-  const payload = {
-    tx_ref: "USD-WITHDRAW-"+Date.now(),
-    amount: usdAmount,
-    currency: "USD",
-    payment_method: method,
-    customer: {
-      name: fullName,
-      email: email,
-      phone_number: phone || "N/A"
-    },
-    meta: {
-      bank_name: bankName,
-      account_number: accountNumber,
-      branch_code: branchCode,
-      student_id: currentUser.id || "12345"
-    }
+function submitMoMo(){
+  const payload={
+    name: momoName.value,
+    number: momoNumber.value,
+    country: momoCountry.value,
+    amount: momoAmount.value,
+    currency:"ZAC",
+    usd_equivalent:(momoAmount.value * ZAC_RATE).toFixed(2),
+    provider:"MTN_MOMO"
   };
-  console.log("USD Withdrawal Request:", payload);
-  alert("Withdrawal request sent! Our team will process it shortly.");
-
-  // Optional: Deduct balance locally
-  currentUser.walletBalance -= usdAmount / 0.014;
-  localStorage.setItem("currentUser", JSON.stringify(currentUser));
-  updateWallet();
+  console.log("Flutterwave MoMo payload:",payload);
+  alert("Withdrawal submitted for review.");
+  document.getElementById("momoModal").style.display="none";
 }
 
+window.onclick=e=>{
+  if(e.target.classList.contains("modal")) e.target.style.display="none";
+}
+
+loadWallet();
 </script>
+
 </body>
 </html>
