@@ -3,262 +3,241 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Learn & Earn 21 Days Program</title>
-<meta name="description" content="Join Zep Swipe's Learn & Earn 21-day program. Build real skills, earn ZAC tokens, complete client-ready tasks, and showcase your portfolio.">
-<meta name="keywords" content="Zep Swipe, Learn and Earn, 21 Days Program, Student Freelancer, Online Courses, ZAC Tokens, Portfolio, Remote Work">
-<meta name="author" content="Zep Swipe">
-
-<!-- Open Graph for Social Sharing -->
-<meta property="og:title" content="Zep Swipe — Learn & Earn 21 Days Program">
-<meta property="og:description" content="Join Zep Swipe's Learn & Earn program and turn your skills into real client-ready work. Earn ZAC tokens along the way!">
-<meta property="og:image" content="assets/landing-og-image.png">
-<meta property="og:url" content="https://www.zepswipe.com/learn-earn-landing.html">
-<meta property="og:type" content="website">
-
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600,700&family=Poppins:wght@300,400,500,600&display=swap" rel="stylesheet">
-
+<title>Zep Swipe — Learn & Earn</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --zep-blue: #00f0ff;
-  --zep-violet: #9c4dff;
-  --accent: #00ff9d;
-  --bg: linear-gradient(135deg, #050018, #00000c);
-  --card-bg: rgba(255,255,255,0.05);
-  --text-light: rgba(255,255,255,0.85);
-  --streak: #ffea00;
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,.08);
+  --text-light:rgba(255,255,255,.85);
 }
 
+/* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;line-height:1.6;overflow-x:hidden;}
-a{text-decoration:none;color:inherit;}
-button{cursor:pointer;border:none;}
+body{background:var(--bg);color:#fff;min-height:100vh;}
 
+/* HEADER */
 header{
   display:flex;justify-content:space-between;align-items:center;
-  padding:20px 30px;
-  background:rgba(0,0,0,0.2);
-  backdrop-filter:blur(8px);
-  position:sticky;
-  top:0;
-  z-index:100;
+  padding:18px;margin:16px;border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
 }
 .brand{
-  font-family:Orbitron;
-  font-size:1.8rem;
+  font-family:Orbitron;font-size:1.5rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation: pulseGlow 2s infinite;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 .home-btn{
-  background:var(--zep-blue);
-  color:#050015;
-  padding:8px 16px;
-  border-radius:12px;
-  font-weight:700;
-  transition:.3s;
-}
-.home-btn:hover{transform:scale(1.05);}
-@keyframes pulseGlow{
-  0% { text-shadow:0 0 5px var(--zep-blue),0 0 10px var(--zep-violet); transform:scale(1);}
-  50% { text-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet); transform:scale(1.05);}
-  100% { text-shadow:0 0 5px var(--zep-blue),0 0 10px var(--zep-violet); transform:scale(1);}
+  background:rgba(255,255,255,.1);
+  border:none;border-radius:50%;width:38px;height:38px;color:#fff;cursor:pointer;
 }
 
-/* Hero Section */
-.hero{
-  display:flex;flex-direction:column;align-items:center;text-align:center;
-  padding:100px 20px 60px;
-  background:radial-gradient(circle at top, rgba(0,240,255,0.1), rgba(156,77,255,0.1));
-  position:relative;
-  overflow:hidden;
-}
-.hero h1{
-  font-family:Orbitron;
-  font-size:2.5rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  margin-bottom:20px;
-}
-.hero p{
-  font-size:1.1rem;
-  color:var(--text-light);
-  max-width:650px;
-  margin-bottom:30px;
-}
-.hero button{
-  padding:14px 28px;
-  font-family:Orbitron;
-  font-weight:700;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  border-radius:999px;
-  font-size:1rem;
-  transition:.3s;
-}
-.hero button:hover{
-  transform:translateY(-2px) scale(1.05);
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+/* DASHBOARD LAYOUT */
+.dashboard{
+  padding:16px;display:flex;flex-direction:column;gap:22px;max-width:1200px;margin:auto;
 }
 
-/* Floating animation for hero graphics */
-.float{
-  position:absolute;
-  width:60px;height:60px;
-  border-radius:50%;
-  opacity:0.2;
-  animation: floatAnim 6s ease-in-out infinite;
-}
-@keyframes floatAnim{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-20px);}
-}
-
-/* How it works */
-.section{
-  max-width:1200px;
-  margin:60px auto;
-  padding:0 20px;
-}
-.section h2{
-  font-family:Orbitron;
-  font-size:2rem;
-  text-align:center;
-  margin-bottom:40px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.steps{
+/* COURSES GRID */
+.courses-grid{
   display:grid;
-  grid-template-columns:1fr;
-  gap:30px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;
 }
-@media(min-width:768px){.steps{grid-template-columns:1fr 1fr 1fr;}}
-.step{
-  background:var(--card-bg);
-  padding:30px 20px;
+.course{
+  background:var(--glass);
   border-radius:16px;
-  text-align:center;
-  backdrop-filter:blur(6px);
-  transition:.5s;
-  transform:translateY(0);
+  padding:20px;
+  border:1px solid rgba(255,255,255,.12);
+  display:flex;flex-direction:column;justify-content:space-between;
+  cursor:pointer;
+  transition:.3s;
+  position:relative;
 }
-.step:hover{transform:translateY(-10px) scale(1.02);}
-.step h3{margin-bottom:15px;color:var(--accent);}
-.step p{color:var(--text-light);font-size:0.95rem;}
+.course:hover, .course.active{
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  transform:scale(1.03);
+}
+.course h4{margin-bottom:8px;font-family:Orbitron;}
+.course p{font-size:.85rem;color:var(--text-light);flex:1;}
+.course .status{
+  margin-top:10px;font-size:.85rem;
+  color:var(--zep-blue);
+  font-weight:600;
+}
 
-/* Newsletter */
-.newsletter{
-  max-width:600px;
-  margin:60px auto;
-  padding:30px 20px;
-  background:var(--card-bg);
-  border-radius:16px;
-  text-align:center;
-  backdrop-filter:blur(6px);
-}
-.newsletter input[type="email"]{
-  width:70%;
+/* PAYMENT BUTTON */
+#verifyBtn{
+  margin-top:12px;
   padding:12px;
-  border-radius:999px;
-  border:none;
-  outline:none;
-  margin-right:10px;
-  background:rgba(255,255,255,0.1);
-  color:#fff;
-}
-.newsletter button{
-  padding:12px 20px;
-  border-radius:999px;
-  border:none;
-  font-family:Orbitron;
-  font-weight:700;
+  border:none;border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;
+  font-family:Orbitron;
+  cursor:pointer;
+  width:100%;
   transition:.3s;
 }
-.newsletter button:hover{transform:scale(1.05);}
+#verifyBtn:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
 
-/* Footer */
-footer{text-align:center;padding:20px 10px;margin-top:60px;border-top:1px solid rgba(255,255,255,.1);color:var(--text-light);font-size:0.85rem;}
-
-/* Scroll-based fade-in */
-.fade-in{opacity:0;transform:translateY(30px);transition:all 1s ease-out;}
-.fade-in.visible{opacity:1;transform:translateY(0);}
+/* MOBILE RESPONSIVE */
+@media(max-width:480px){.courses-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">Zep Swipe</div>
-  <button class="home-btn" onclick="location.href='login.html'">Get Started</button>
+  <div class="brand">Zep Swipe — Learn & Earn</div>
+  <button class="home-btn" onclick="goHome()">🏠</button>
 </header>
 
-<!-- Hero Section -->
-<section class="hero">
-  <h1>Learn & Earn in 21 Days</h1>
-  <p>Build real skills, complete client-ready tasks, earn ZAC tokens, and showcase your portfolio on Zora. Transform your skills into freelance opportunities!</p>
-  <button onclick="location.href='login.html'">Get Started</button>
-  <div class="float" style="top:20px;left:10%;width:50px;height:50px;background:var(--zep-blue);"></div>
-  <div class="float" style="top:50px;right:15%;width:40px;height:40px;background:var(--zep-violet);"></div>
-  <div class="float" style="bottom:20px;left:25%;width:60px;height:60px;background:var(--accent);"></div>
-</section>
+<div class="dashboard">
 
-<!-- How it Works -->
-<section class="section fade-in">
-  <h2>How It Works</h2>
-  <div class="steps">
-    <div class="step">
-      <h3>Step 1: Choose Program</h3>
-      <p>Select your learning track like Virtual Assistant, Content Creator, or UI/UX Designer and set your goal.</p>
-    </div>
-    <div class="step">
-      <h3>Step 2: Complete Daily Tasks</h3>
-      <p>Follow the 21-day curriculum with real-world tasks that make you client-ready and earn ZAC tokens as you progress.</p>
-    </div>
-    <div class="step">
-      <h3>Step 3: Showcase Your Work</h3>
-      <p>Publish your completed tasks and portfolio on Zora, gain visibility, and attract real freelance opportunities.</p>
+  <!-- PROFILE SUMMARY -->
+  <div class="section profile-summary">
+    <img id="profileImg" width="80" height="80" style="border-radius:50%;">
+    <div>
+      <h3 id="studentName"></h3>
+      <span id="studentLevel"></span><br>
+      <span id="completionText"></span><br>
+      <span id="walletBalance"></span><br>
+      <span id="verifiedBadge" style="color:limegreen;font-weight:600;"></span>
     </div>
   </div>
-</section>
 
-<!-- Newsletter -->
-<section class="newsletter fade-in">
-  <h2>Join Our Newsletter</h2>
-  <p>Get tips, updates, and exclusive offers delivered directly to your inbox.</p>
-  <form onsubmit="subscribeNewsletter(event)">
-    <input type="email" placeholder="Your email address" required>
-    <button type="submit">Subscribe</button>
-  </form>
-</section>
+  <!-- COURSES GRID -->
+  <div class="section">
+    <h3>Available Courses</h3>
+    <div class="courses-grid" id="coursesGrid"></div>
+  </div>
 
-<footer>
-  &copy; 2026 Zep Swipe | <a href="about.html">About</a> | <a href="contact.html">Contact</a>
-</footer>
+</div>
 
 <script>
-// Scroll-based fade-in animation
-const faders = document.querySelectorAll('.fade-in');
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){entry.target.classList.add('visible');}
-  });
-},{threshold:0.3});
-faders.forEach(f=>observer.observe(f));
+/* =======================
+   USER SESSION
+======================= */
+let users = JSON.parse(localStorage.getItem("users")) || [];
+let currentUserId = localStorage.getItem("currentUserId");
+let currentUser = users.find(u=>u.id === currentUserId);
 
-// Newsletter form submission
-function subscribeNewsletter(event){
-  event.preventDefault();
-  const email = event.target.querySelector('input').value.trim();
-  if(email){
-    alert(`Thanks for subscribing! ${email}`);
-    event.target.reset();
-  }
+if(!currentUser){
+  location.href="login.html";
 }
+
+/* =======================
+   PROFILE DISPLAY
+======================= */
+const profileImg = document.getElementById("profileImg");
+const studentName = document.getElementById("studentName");
+const studentLevel = document.getElementById("studentLevel");
+const completionText = document.getElementById("completionText");
+const walletBalance = document.getElementById("walletBalance");
+const verifiedBadge = document.getElementById("verifiedBadge");
+
+function updateProfile(){
+  profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
+  studentName.innerText = currentUser.name;
+  studentLevel.innerText = currentUser.level;
+  completionText.innerText = `Profile Completion: ${currentUser.profileCompletion || 0}%`;
+  walletBalance.innerText = `Wallet: ${currentUser.walletBalance || 0} ZAC`;
+  verifiedBadge.innerText = currentUser.verified ? "✔ Verified" : "";
+}
+updateProfile();
+
+/* =======================
+   COURSES DATA
+======================= */
+const courses = [
+  {
+    id:1,
+    title:"Freelancer Basics",
+    description:"Learn how to create client-ready profiles and bid successfully on projects.",
+    instruction:"Record an intro video of yourself, sign up on www.zora.co, upload the video to your profile, copy the link, and submit it on Zep Swipe to complete the task.",
+    reward:10
+  },
+  {
+    id:2,
+    title:"Advanced Freelancing",
+    description:"Master client communication, proposals, and winning projects.",
+    instruction:"Complete 2 sample proposals and submit via Zep Swipe to earn ZAC.",
+    reward:15
+  },
+  {
+    id:3,
+    title:"Portfolio Creation",
+    description:"Build your portfolio with real projects.",
+    instruction:"Upload 3 completed projects to your profile to earn ZAC.",
+    reward:20
+  },
+  {
+    id:4,
+    title:"Verified Freelancer",
+    description:"Pay $5 verification to unlock premium jobs and show verified badge.",
+    instruction:"Use Flutterwave to pay $5. After confirmation, your profile will be verified.",
+    reward:0,
+    verification:true
+  }
+];
+
+/* =======================
+   RENDER COURSES
+======================= */
+const coursesGrid = document.getElementById("coursesGrid");
+
+function renderCourses(){
+  coursesGrid.innerHTML = "";
+  courses.forEach(course=>{
+    const div = document.createElement("div");
+    div.className = "course";
+    div.innerHTML = `
+      <h4>${course.title}</h4>
+      <p>${course.description}</p>
+      <div class="status">${currentUser.tasks[course.id-1] ? "✅ Completed" : ""}</div>
+      ${course.verification ? `<button id="verifyBtn">Pay $5 to Verify</button>` : ""}
+    `;
+    coursesGrid.appendChild(div);
+
+    if(!course.verification){
+      div.addEventListener("click", ()=>{
+        if(!currentUser.tasks[course.id-1]){
+          alert(course.instruction);
+          // Update user
+          currentUser.tasks[course.id-1] = true;
+          currentUser.walletBalance = (currentUser.walletBalance || 0) + course.reward;
+          currentUser.tasksCompleted = (currentUser.tasksCompleted || 0) + 1;
+          // Save
+          users = users.map(u=>u.id===currentUserId ? currentUser : u);
+          localStorage.setItem("users", JSON.stringify(users));
+          updateProfile();
+          renderCourses();
+        }
+      });
+    } else {
+      // Verification payment placeholder
+      const btn = div.querySelector("#verifyBtn");
+      btn.addEventListener("click", ()=>{
+        alert("Flutterwave $5 payment integration placeholder.\nAfter payment, profile will be verified.");
+        // Simulate verification
+        currentUser.verified = true;
+        users = users.map(u=>u.id===currentUserId ? currentUser : u);
+        localStorage.setItem("users", JSON.stringify(users));
+        updateProfile();
+        renderCourses();
+      });
+    }
+
+  });
+}
+
+renderCourses();
+
+/* =======================
+   NAVIGATION
+======================= */
+function goHome(){window.location.href="student-dashboard.html";}
 </script>
 
 </body>
