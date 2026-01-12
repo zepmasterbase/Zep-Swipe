@@ -1,302 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Zep Swipe — Wallet</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --accent:#00ff9d;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,.05);
-  --text-light:rgba(255,255,255,.85);
-  --card-bg:rgba(255,255,255,.08);
-  --highlight:#ffea00;
+  --glass:rgba(255,255,255,0.08);
+  --text-light:rgba(255,255,255,0.85);
+  --success:#33ffb1;
+  --danger:#ff5f7a;
 }
 
-/* RESET */
-*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden;}
-a{text-decoration:none;color:inherit;}
-button{cursor:pointer;border:none;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
+
+body{
+  background:var(--bg);
+  color:#fff;
+  min-height:100vh;
+}
 
 /* HEADER */
 header{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:16px 20px;max-width:1200px;margin:auto;margin-top:10px;
-  border-radius:12px;background:rgba(0,0,0,0.15);backdrop-filter:blur(6px);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 22px;
+  margin:16px;
+  border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
 }
 .brand{
-  font-family:Orbitron;font-size:1.6rem;
+  font-family:Orbitron;
+  font-size:1.4rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation: pulseGlow 2s infinite;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-.home-btn{background:var(--zep-blue);color:#050015;padding:6px 12px;border-radius:12px;font-weight:700;transition:.3s;}
-.home-btn:hover{transform:scale(1.05);}
-@keyframes pulseGlow{
-  0% { text-shadow:0 0 5px var(--zep-blue),0 0 10px var(--zep-violet); transform: scale(1);}
-  50%{ text-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet); transform: scale(1.05);}
-  100%{ text-shadow:0 0 5px var(--zep-blue),0 0 10px var(--zep-violet); transform: scale(1);}
+.home-btn{
+  border:none;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  cursor:pointer;
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  font-size:18px;
+}
+.home-btn:hover{background:rgba(0,240,255,.3)}
+
+/* MAIN */
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:16px;
 }
 
-/* PROFILE CARD */
-.profile-card{
-  max-width:1200px;margin:20px auto;padding:16px 20px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:var(--card-bg);border-radius:16px;backdrop-filter:blur(6px);
+/* BALANCE CARD */
+.balance-card{
+  background:linear-gradient(135deg, rgba(0,240,255,.18), rgba(156,77,255,.18));
+  border-radius:22px;
+  padding:28px;
+  box-shadow:0 0 40px rgba(156,77,255,.35);
+  text-align:center;
+  margin-bottom:24px;
 }
-.profile-card div span{display:block;}
-.profile-card .verified{color:var(--accent);font-weight:700;}
-
-/* WALLET CARDS */
-.wallet-overview{
-  max-width:1200px;margin:20px auto;display:flex;flex-wrap:wrap;gap:16px;padding:0 20px;
+.balance-card h2{
+  font-family:Orbitron;
+  letter-spacing:1px;
 }
-.wallet-card{
-  flex:1 1 220px;
-  background:var(--card-bg);border-radius:16px;padding:16px;text-align:center;backdrop-filter:blur(6px);
-  transition:.3s;position:relative;
+.zac{
+  font-size:3rem;
+  font-family:Orbitron;
+  margin:10px 0;
 }
-.wallet-card:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
-.wallet-card h3{font-family:Orbitron;margin-bottom:8px;}
-.wallet-card p{color:var(--text-light);}
-.wallet-card button{
-  margin-top:10px;padding:8px 16px;border-radius:999px;
+.usd{
+  opacity:.8;
+  margin-bottom:20px;
+}
+.actions{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.actions button{
+  padding:12px 22px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:600;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;font-family:Orbitron;font-weight:700;cursor:pointer;transition:.3s;
+  color:#050015;
 }
-.wallet-card button:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
+.actions button.secondary{
+  background:rgba(255,255,255,.12);
+  color:#fff;
+}
 
-/* 3D Portfolio Preview */
-#portfolio3D{
-  max-width:1200px;margin:20px auto;padding:0 20px;height:300px;
-  background:rgba(255,255,255,0.05);border-radius:16px;
-  display:flex;justify-content:center;align-items:center;font-size:1.2rem;color:var(--text-light);
-  perspective:1000px;transition:transform 0.5s;
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
 }
-#portfolio3D:hover{transform:rotateY(15deg) rotateX(5deg);}
+@media(max-width:768px){
+  .grid{grid-template-columns:1fr}
+}
 
-/* TRANSACTION HISTORY */
-#transactionHistory{
-  max-width:1200px;margin:20px auto;padding:0 20px;
+/* CARDS */
+.card{
+  background:var(--glass);
+  border-radius:18px;
+  padding:20px;
+  border:1px solid rgba(255,255,255,.12);
 }
-.transaction-card{
-  background:var(--card-bg);padding:12px 16px;border-radius:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;
-  backdrop-filter:blur(6px);
+.card h3{
+  font-family:Orbitron;
+  margin-bottom:12px;
 }
-.transaction-card span{color:var(--text-light);font-size:0.85rem;}
+
+/* HISTORY */
+.tx{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.tx:last-child{border-bottom:none}
+.positive{color:var(--success)}
+.negative{color:var(--danger)}
 
 /* MODAL */
 .modal{
-  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
-  background:rgba(0,0,0,0.7);justify-content:center;align-items:center;z-index:1000;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:99;
 }
-.modal-content{
-  background:var(--card-bg);padding:20px;border-radius:16px;max-width:400px;width:90%;backdrop-filter:blur(6px);
-  text-align:center;position:relative;
+.modal-box{
+  background:#0a0620;
+  border-radius:18px;
+  padding:24px;
+  width:90%;
+  max-width:420px;
+  box-shadow:0 0 40px rgba(156,77,255,.4);
 }
-.modal-content h3{margin-bottom:12px;}
-.modal-content input, .modal-content select{
-  width:100%;padding:10px;border-radius:12px;border:none;margin-bottom:12px;background:rgba(255,255,255,0.1);color:#fff;outline:none;
+.modal-box h3{
+  font-family:Orbitron;
+  margin-bottom:12px;
 }
-.modal-content button{
-  width:100%;padding:12px;border-radius:50%;background:var(--zep-blue);color:#050015;font-weight:700;transition:.3s;position:relative;
+.modal-box input, .modal-box select{
+  width:100%;
+  padding:12px;
+  margin-bottom:12px;
+  border-radius:12px;
+  border:none;
 }
-.modal-content button.confirming::after{
-  content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:24px;height:24px;border:3px solid #fff;border-top-color:transparent;border-radius:50%;
-  animation:spin 1s linear infinite;
+.modal-box button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:999px;
+  font-weight:600;
+  cursor:pointer;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
 }
-@keyframes spin{0%{transform:translate(-50%,-50%) rotate(0deg);}100%{transform:translate(-50%,-50%) rotate(360deg);}}
+
+/* FOOT NOTE */
+.note{
+  text-align:center;
+  font-size:.85rem;
+  opacity:.75;
+  margin-top:20px;
+}
 </style>
 </head>
+
 <body>
+
+<script>
+/* SESSION CHECK */
+const user = JSON.parse(localStorage.getItem("currentUser"));
+if(!user){
+  window.location.href="auth.html";
+}
+</script>
 
 <header>
   <div class="brand">Zep Swipe</div>
-  <button class="home-btn" onclick="location.href='student-dashboard.html'">Home</button>
+  <button class="home-btn" onclick="location.href='student-dashboard.html'">🏠</button>
 </header>
 
-<!-- PROFILE CARD -->
-<div class="profile-card">
-  <div>
-    <span id="studentName">Student Name</span>
-    <span id="studentUni">University</span>
-    <span id="studentCity">City</span>
-    <span id="studentCountry">Country</span>
-    <span id="studentProgram">Program: <strong>--</strong></span>
-    <span id="verifiedStatus" class="verified">Verified Freelancer</span>
+<div class="container">
+
+  <!-- BALANCE -->
+  <div class="balance-card">
+    <h2>Total Portfolio</h2>
+    <div class="zac" id="zacBal">0 ZAC</div>
+    <div class="usd" id="usdBal">$0.00 USD</div>
+    <div class="actions">
+      <button onclick="openMoMo()">Withdraw to MTN MoMo</button>
+      <button class="secondary" onclick="openBank()">Withdraw to Bank</button>
+    </div>
   </div>
-  <div class="wallet-total">
-    <h3>Total Portfolio</h3>
-    <p><span id="totalPortfolio">0</span> USD</p>
+
+  <!-- GRID -->
+  <div class="grid">
+
+    <!-- EARNINGS -->
+    <div class="card">
+      <h3>Earnings Overview</h3>
+      <p>Today: <strong id="todayEarn">+0 ZAC</strong></p>
+      <p>This Week: <strong id="weekEarn">+0 ZAC</strong></p>
+      <p>All Time: <strong id="allEarn">0 ZAC</strong></p>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="card">
+      <h3>Recent Activity</h3>
+      <div id="history"></div>
+    </div>
+
   </div>
+
+  <div class="note">
+    ✔ Secure wallet • ✔ Flutterwave-ready • ✔ Manual withdrawal review
+  </div>
+
 </div>
 
-<!-- WALLET CARDS -->
-<div class="wallet-overview">
-  <div class="wallet-card">
-    <h3>ZAC Balance</h3>
-    <p><span id="zacBalance">0</span> ZAC</p>
-    <button disabled>ZAC Locked</button>
-  </div>
-  <div class="wallet-card">
-    <h3>USD Balance</h3>
-    <p><span id="usdBalance">0</span> USD</p>
-    <button id="withdrawMomoBtn">Withdraw to MoMo</button>
-    <button id="withdrawBankBtn">Withdraw to Bank</button>
-  </div>
-</div>
-
-<!-- 3D Portfolio Preview -->
-<div id="portfolio3D">3D Portfolio Preview</div>
-
-<!-- TRANSACTION HISTORY -->
-<div id="transactionHistory"></div>
-
-<!-- MODALS -->
+<!-- MTN MOMO MODAL -->
 <div class="modal" id="momoModal">
-  <div class="modal-content">
-    <h3>Withdraw USD via MTN MoMo</h3>
-    <input type="text" id="momoName" placeholder="Full Name" readonly>
-    <input type="text" id="momoCountry" placeholder="Country" readonly>
-    <input type="text" id="momoNumber" placeholder="MTN MoMo Number">
-    <button id="confirmMomoBtn">→</button>
+  <div class="modal-box">
+    <h3>Withdraw to MTN MoMo</h3>
+    <input id="momoName" placeholder="Account Name" />
+    <input id="momoNumber" placeholder="MTN MoMo Number" />
+    <select id="momoCountry">
+      <option value="">Select Country</option>
+      <option>Ghana</option>
+      <option>Uganda</option>
+      <option>Cameroon</option>
+      <option>Rwanda</option>
+      <option>Zambia</option>
+    </select>
+    <input id="momoAmount" placeholder="Amount (ZAC)" type="number"/>
+    <button onclick="submitMoMo()">Submit Withdrawal</button>
   </div>
 </div>
 
+<!-- BANK MODAL -->
 <div class="modal" id="bankModal">
-  <div class="modal-content">
-    <h3>Withdraw USD to Bank</h3>
-    <input type="text" id="bankName" placeholder="Full Name" readonly>
-    <input type="text" id="bankCountry" placeholder="Country" readonly>
-    <input type="text" id="bankAccount" placeholder="Bank Account Number">
-    <button id="confirmBankBtn">→</button>
+  <div class="modal-box">
+    <h3>Withdraw to Bank</h3>
+    <input placeholder="Account Name"/>
+    <input placeholder="Account Number"/>
+    <input placeholder="Bank Name"/>
+    <input placeholder="Country"/>
+    <input placeholder="Amount (ZAC)" type="number"/>
+    <button>Submit Withdrawal</button>
   </div>
 </div>
 
 <script>
-// ========================
-// STUDENT DATA
-// ========================
-let studentData = JSON.parse(localStorage.getItem('studentData')) || {
-  name:"Test Student", university:"Test Uni", city:"City", country:"Country",
-  program:"VA", walletZAC:100, walletUSD:50, verified:true, transactions:[]
-};
+const ZAC_RATE = 0.014;
 
-const ZAC_TO_USD = 0.014;
+function loadWallet(){
+  const zac = user.zacBalance || 0;
+  document.getElementById("zacBal").innerText = zac + " ZAC";
+  document.getElementById("usdBal").innerText = "$" + (zac * ZAC_RATE).toFixed(2);
 
-// UPDATE UI
-function updateWalletUI(){
-  document.getElementById('studentName').innerText = studentData.name;
-  document.getElementById('studentUni').innerText = studentData.university;
-  document.getElementById('studentCity').innerText = studentData.city;
-  document.getElementById('studentCountry').innerText = studentData.country;
-  document.getElementById('studentProgram').querySelector('strong').innerText = studentData.program;
-  document.getElementById('verifiedStatus').innerText = studentData.verified?"Verified Freelancer":"Unverified";
-  document.getElementById('zacBalance').innerText = studentData.walletZAC;
-  document.getElementById('usdBalance').innerText = studentData.walletUSD;
-  document.getElementById('totalPortfolio').innerText = (studentData.walletUSD + studentData.walletZAC*ZAC_TO_USD).toFixed(2);
-  renderTransactions();
-}
+  document.getElementById("allEarn").innerText = zac + " ZAC";
 
-// TRANSACTIONS
-function renderTransactions(){
-  const historyDiv = document.getElementById('transactionHistory');
-  historyDiv.innerHTML='';
-  studentData.transactions.slice().reverse().forEach(tx=>{
-    const card = document.createElement('div');
-    card.className='transaction-card';
-    card.innerHTML = `<span>${tx.date}</span><span>${tx.type} +${tx.amount}</span>`;
-    historyDiv.appendChild(card);
+  const history = document.getElementById("history");
+  history.innerHTML = "";
+
+  (user.transactions || []).slice(-5).reverse().forEach(tx=>{
+    const div = document.createElement("div");
+    div.className="tx";
+    div.innerHTML = `
+      <span>${tx.note}</span>
+      <span class="${tx.amount>0?'positive':'negative'}">${tx.amount>0?'+':''}${tx.amount} ZAC</span>
+    `;
+    history.appendChild(div);
   });
 }
 
-// ========================
-// MODAL HANDLING
-// ========================
-const momoModal = document.getElementById('momoModal');
-const bankModal = document.getElementById('bankModal');
+function openMoMo(){document.getElementById("momoModal").style.display="flex"}
+function openBank(){document.getElementById("bankModal").style.display="flex"}
 
-document.getElementById('withdrawMomoBtn').onclick=()=>{
-  document.getElementById('momoName').value = studentData.name;
-  document.getElementById('momoCountry').value = studentData.country;
-  momoModal.style.display='flex';
-};
-document.getElementById('withdrawBankBtn').onclick=()=>{
-  document.getElementById('bankName').value = studentData.name;
-  document.getElementById('bankCountry').value = studentData.country;
-  bankModal.style.display='flex';
-};
-
-window.onclick = e=>{
-  if(e.target===momoModal) momoModal.style.display='none';
-  if(e.target===bankModal) bankModal.style.display='none';
+function submitMoMo(){
+  const payload={
+    name: momoName.value,
+    number: momoNumber.value,
+    country: momoCountry.value,
+    amount: momoAmount.value,
+    currency:"ZAC",
+    usd_equivalent:(momoAmount.value * ZAC_RATE).toFixed(2),
+    provider:"MTN_MOMO"
+  };
+  console.log("Flutterwave MoMo payload:",payload);
+  alert("Withdrawal submitted for review.");
+  document.getElementById("momoModal").style.display="none";
 }
 
-// CONFIRM MTN MOMO WITHDRAWAL
-document.getElementById('confirmMomoBtn').onclick=()=>{
-  const momo = document.getElementById('momoNumber').value.trim();
-  if(!momo || studentData.walletUSD<=0){alert("Enter MoMo number and ensure USD balance"); return;}
-  const btn=document.getElementById('confirmMomoBtn');
-  btn.classList.add('confirming');
-  setTimeout(()=>{
-    studentData.transactions.push({date:new Date().toLocaleString(), type:`MoMo Withdrawal (${studentData.country})`, amount:studentData.walletUSD});
-    studentData.walletUSD = 0;
-    updateWalletUI();
-    localStorage.setItem('studentData', JSON.stringify(studentData));
-    btn.classList.remove('confirming');
-    momoModal.style.display='none';
-    document.getElementById('momoNumber').value='';
-    alert("MoMo withdrawal initiated successfully!");
-  },1500);
+window.onclick=e=>{
+  if(e.target.classList.contains("modal")) e.target.style.display="none";
 }
 
-// CONFIRM BANK WITHDRAWAL
-document.getElementById('confirmBankBtn').onclick=()=>{
-  const account=document.getElementById('bankAccount').value.trim();
-  if(!account || studentData.walletUSD<=0){alert("Enter account number and ensure USD balance"); return;}
-  const btn=document.getElementById('confirmBankBtn');
-  btn.classList.add('confirming');
-  setTimeout(()=>{
-    studentData.transactions.push({date:new Date().toLocaleString(), type:`Bank Withdrawal (${studentData.country})`, amount:studentData.walletUSD});
-    studentData.walletUSD = 0;
-    updateWalletUI();
-    localStorage.setItem('studentData', JSON.stringify(studentData));
-    btn.classList.remove('confirming');
-    bankModal.style.display='none';
-    document.getElementById('bankAccount').value='';
-    alert("Bank withdrawal initiated successfully!");
-  },1500);
-}
-
-// ========================
-// LIVE ZAC UPDATE FROM Learn & Earn
-// ========================
-window.addEventListener('storage', e=>{
-  if(e.key==='studentData'){
-    const updated = JSON.parse(e.newValue);
-    studentData.walletZAC = updated.walletZAC;
-    studentData.walletUSD = updated.walletUSD;
-    updateWalletUI();
-  }
-});
-
-// INITIAL UI
-updateWalletUI();
-
-// 3D Portfolio Hover Effect
-const portfolio3D = document.getElementById('portfolio3D');
-portfolio3D.addEventListener('mousemove',(e)=>{
-  const x=(e.clientX/window.innerWidth-0.5)*30;
-  const y=(e.clientY/window.innerHeight-0.5)*15;
-  portfolio3D.style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
-});
-portfolio3D.addEventListener('mouseleave',()=>portfolio3D.style.transform='rotateY(0deg) rotateX(0deg)');
+loadWallet();
 </script>
+
 </body>
 </html>
