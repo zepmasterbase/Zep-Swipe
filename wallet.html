@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Wallet</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300,400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -16,7 +16,7 @@
   --pulse-duration:2s;
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;}
+body{background:var(--bg);color:#fff;min-height:100vh;margin:0;}
 header{
   display:flex;justify-content:space-between;align-items:center;
   padding:16px;margin:16px;border-radius:16px;
@@ -151,7 +151,11 @@ header{
       <input type="text" id="bankName" placeholder="Enter bank name">
       <label for="accountNumber">Account Number</label>
       <input type="text" id="accountNumber" placeholder="Enter account number">
+      <label for="accountHolder">Account Holder Name</label>
+      <input type="text" id="accountHolder" placeholder="Account holder name">
     </div>
+    <label for="momoNumber" id="momoLabel">Momo Number</label>
+    <input type="text" id="momoNumber" placeholder="Enter MTN Momo number">
     <button onclick="processWithdraw()">Confirm Withdrawal</button>
   </div>
 </div>
@@ -171,28 +175,35 @@ const studentCity = document.getElementById("studentCity");
 const completionText = document.getElementById("completionText");
 const verifiedBadge = document.getElementById("verifiedBadge");
 
-profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
-studentName.innerText = currentUser.name || "Student Name";
-studentUniversity.innerText = currentUser.university || "-";
-studentCity.innerText = `${currentUser.city || "-"}, ${currentUser.country || "-"}`;
-completionText.innerText = `Profile Completion: ${currentUser.profileCompletion || 0}%`;
-if(currentUser.verified) verifiedBadge.style.display="inline-block";
+function loadProfileData(){
+  profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
+  studentName.innerText = currentUser.name || "-";
+  studentUniversity.innerText = currentUser.university || "-";
+  studentCity.innerText = `${currentUser.city || "-"}, ${currentUser.country || "-"}`;
+  completionText.innerText = `Profile Completion: ${currentUser.profileCompletion || 0}%`;
+  verifiedBadge.style.display = currentUser.verified ? "inline-block" : "none";
+}
+loadProfileData();
 
 /* ===== WALLET DATA ===== */
 const zacBalance = document.getElementById("zacBalance");
 const zacValue = document.getElementById("zacValue");
 const usdBalance = document.getElementById("usdBalance");
 
+// Accumulate ZAC daily from Learn & Earn
 function updateWallet(){
-  // ZAC accumulates 25 per completed task
-  const zac = (currentUser.tasksCompleted || 0) * 25;
-  currentUser.walletBalance = zac; // store updated ZAC
+  // simulate daily ZAC 25 reward per completed task
+  const tasksCompleted = currentUser.tasksCompleted || 0;
+  const zac = tasksCompleted * 25;
+  currentUser.walletBalance = zac; // update local storage
+  users[currentUserId] = currentUser;
+  localStorage.setItem("users", JSON.stringify(users));
+
   const usd = currentUser.usdBalance || 0;
+
   zacBalance.innerText = `${zac} ZAC`;
   zacValue.innerText = `~$${(zac*0.014).toFixed(2)}`;
   usdBalance.innerText = `$${usd.toFixed(2)}`;
-  users[currentUserId] = currentUser;
-  localStorage.setItem("users", JSON.stringify(users));
 }
 updateWallet();
 
@@ -200,16 +211,28 @@ updateWallet();
 const withdrawModal = document.getElementById("withdrawModal");
 const withdrawMethod = document.getElementById("withdrawMethod");
 const bankDetails = document.getElementById("bankDetails");
+const momoNumber = document.getElementById("momoNumber");
+const momoLabel = document.getElementById("momoLabel");
+
 function openWithdrawModal(){withdrawModal.style.display="flex";}
 function closeWithdrawModal(){withdrawModal.style.display="none";}
+
 withdrawMethod.addEventListener("change",()=>{
-  bankDetails.style.display = withdrawMethod.value==="bank"?"block":"none";
+  if(withdrawMethod.value==="bank"){
+    bankDetails.style.display="block";
+    momoNumber.style.display="none";
+    momoLabel.style.display="none";
+  } else {
+    bankDetails.style.display="none";
+    momoNumber.style.display="block";
+    momoLabel.style.display="block";
+  }
 });
 
 /* ===== PROCESS WITHDRAW ===== */
 function processWithdraw(){
   const amount = parseFloat(document.getElementById("withdrawAmount").value);
-  if(isNaN(amount) || amount <=0) return alert("Enter a valid amount");
+  if(isNaN(amount) || amount <=0) return alert("Enter valid amount");
   if(amount > (currentUser.usdBalance || 0)) return alert("Insufficient balance");
 
   const method = withdrawMethod.value;
@@ -217,11 +240,19 @@ function processWithdraw(){
   if(method==="bank"){
     const bankName = document.getElementById("bankName").value.trim();
     const accountNumber = document.getElementById("accountNumber").value.trim();
-    if(!bankName || !accountNumber) return alert("Enter bank details");
-    details = {bankName, accountNumber};
+    const accountHolder = document.getElementById("accountHolder").value.trim();
+    if(!bankName || !accountNumber || !accountHolder) return alert("Enter all bank details");
+    details = {bankName, accountNumber, accountHolder};
+  } else {
+    const momoNum = momoNumber.value.trim();
+    if(!momoNum) return alert("Enter MTN Momo number");
+    details = {momoNum};
   }
 
+  // Placeholder for Flutterwave withdrawal request
   alert(`Withdrawal of $${amount.toFixed(2)} via ${method.toUpperCase()} requested.`);
+
+  // Deduct from USD wallet
   currentUser.usdBalance -= amount;
   users[currentUserId] = currentUser;
   localStorage.setItem("users", JSON.stringify(users));
