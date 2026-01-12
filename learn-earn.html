@@ -4,38 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Zep Swipe | Learn & Earn – 21 Day Freelancer Program</title>
-<meta name="description" content="Zep Swipe Learn & Earn helps students become verified freelancers in 21 days through real-world tasks and portfolio building.">
+<title>Zep Swipe — Learn & Earn</title>
+<meta name="description" content="Zep Swipe Learn & Earn helps students become client-ready freelancers in 21 days through real-world portfolio tasks.">
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --bg:#050018;
-  --glass:rgba(255,255,255,.07);
+  --glass:rgba(255,255,255,.08);
   --text:rgba(255,255,255,.9);
   --accent:#00ff9d;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+
 body{
-  background:radial-gradient(circle at top,#0a002a,#000);
+  background:radial-gradient(circle at top,#090025,#000);
   color:#fff;
   min-height:100vh;
 }
 
+/* HEADER */
 header{
   max-width:1200px;
-  margin:20px auto;
+  margin:16px auto;
   padding:16px 20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   background:rgba(0,0,0,.25);
   backdrop-filter:blur(10px);
-  border-radius:16px;
+  border-radius:18px;
 }
 
 .brand{
@@ -47,40 +49,96 @@ header{
 }
 
 .home-btn{
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
   border:none;
   padding:8px 16px;
   border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
   font-weight:700;
   cursor:pointer;
 }
 
-.container{max-width:1200px;margin:auto;padding:0 20px;}
+/* LAYOUT */
+.container{max-width:1200px;margin:auto;padding:0 20px}
 
+/* STUDENT CARD */
 .student-card{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+  align-items:center;
+  background:var(--glass);
+  border-radius:20px;
+  padding:20px;
   margin-top:20px;
+}
+
+.avatar{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.3);
+  object-fit:cover;
+}
+
+.student-meta span{
+  display:block;
+  font-size:.85rem;
+  color:var(--text);
+}
+
+.wallet{
+  margin-left:auto;
+  font-family:Orbitron;
+  font-size:1.05rem;
+}
+
+/* COURSES */
+.courses{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:18px;
+  margin:30px 0;
+}
+
+.course{
   background:var(--glass);
   border-radius:18px;
-  padding:20px;
-  display:flex;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:16px;
+  padding:18px;
+  text-align:center;
+  cursor:pointer;
+  transition:.35s;
+  position:relative;
 }
 
-.student-card div span{display:block;font-size:.85rem;color:var(--text);}
-.wallet{
-  font-family:Orbitron;
-  font-size:1.1rem;
+.course::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:20px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  opacity:.15;
+  z-index:-1;
+  filter:blur(12px);
 }
 
-.progress-wrap{margin:30px 0;}
+.course:hover{
+  transform:translateY(-4px) scale(1.03);
+  box-shadow:0 0 25px rgba(0,240,255,.35);
+}
+
+.course.active{
+  outline:2px solid var(--zep-blue);
+  box-shadow:0 0 30px rgba(0,240,255,.6);
+}
+
+/* PROGRESS */
+.progress-wrap{margin-bottom:20px}
 .progress{
   width:100%;
   height:14px;
   background:rgba(255,255,255,.1);
-  border-radius:12px;
+  border-radius:999px;
   overflow:hidden;
 }
 .progress-fill{
@@ -90,18 +148,7 @@ header{
   transition:.4s ease;
 }
 
-.streaks{margin:10px 0;}
-.streak{
-  display:inline-block;
-  padding:4px 8px;
-  margin:4px;
-  border-radius:999px;
-  background:#ffea00;
-  color:#000;
-  font-size:.75rem;
-  font-weight:600;
-}
-
+/* TASKS */
 .tasks{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
@@ -116,12 +163,12 @@ header{
   display:flex;
   flex-direction:column;
   gap:10px;
-  transition:.3s;
 }
 
-.task.locked{opacity:.45;filter:grayscale(70%);}
-.task h4{font-size:1rem;}
-.task p{font-size:.85rem;color:var(--text);}
+.task.locked{opacity:.45;filter:grayscale(70%)}
+
+.task h4{font-size:1rem}
+.task p{font-size:.85rem;color:var(--text)}
 
 .task input{
   padding:8px 12px;
@@ -144,14 +191,20 @@ header{
 footer{
   text-align:center;
   padding:20px;
-  border-top:1px solid rgba(255,255,255,.1);
   font-size:.8rem;
   color:var(--text);
+  border-top:1px solid rgba(255,255,255,.1);
 }
 </style>
 </head>
 
 <body>
+
+<script>
+/* SESSION CHECK */
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+if(!currentUser){ window.location.href="auth.html"; }
+</script>
 
 <header>
   <div class="brand">Zep Swipe</div>
@@ -160,144 +213,140 @@ footer{
 
 <div class="container">
 
+<!-- STUDENT -->
 <div class="student-card">
-  <div>
-    <span id="name">Name</span>
-    <span id="uni">University</span>
-    <span id="city">City</span>
-    <span id="country">Country</span>
-    <span>Program: <strong id="program"></strong></span>
+  <img class="avatar" id="avatar">
+  <div class="student-meta">
+    <span id="name"></span>
+    <span id="uni"></span>
+    <span id="city"></span>
+    <span id="country"></span>
   </div>
-  <div class="wallet">
-    ZAC Balance: <span id="zac">0</span>
-  </div>
+  <div class="wallet">ZAC: <span id="zac">0</span></div>
 </div>
 
+<!-- COURSES -->
+<div class="courses" id="courses"></div>
+
+<!-- PROGRESS -->
 <div class="progress-wrap">
-  <div class="progress">
-    <div class="progress-fill" id="progressFill"></div>
-  </div>
-  <div class="streaks" id="streaks"></div>
+  <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
 </div>
 
+<!-- TASKS -->
 <div class="tasks" id="tasks"></div>
 
 </div>
 
-<footer>
-© Zep Swipe — Learn by Doing, Earn While Learning
-</footer>
+<footer>© Zep Swipe — Learn by Doing, Earn While Learning</footer>
 
 <script>
-/* ======================
-   SAFE LOCAL STORAGE
-====================== */
-let student = JSON.parse(localStorage.getItem("studentData")) || {};
-student.tasksCompleted = student.tasksCompleted || [];
-student.walletBalance = student.walletBalance || 0;
-student.program = student.program || "Virtual Assistant";
+/* SAFE DATA */
+let data = JSON.parse(localStorage.getItem("learnEarn")) || {};
+data.tasks = data.tasks || {};
+data.zac = data.zac || 0;
+data.course = data.course || null;
 
-/* ======================
-   DISPLAY PROFILE
-====================== */
-document.getElementById("name").innerText = student.name || "Student";
-document.getElementById("uni").innerText = student.university || "University";
-document.getElementById("city").innerText = student.city || "City";
-document.getElementById("country").innerText = student.country || "Country";
-document.getElementById("program").innerText = student.program;
-document.getElementById("zac").innerText = student.walletBalance;
+/* PROFILE */
+document.getElementById("avatar").src = currentUser.profileImage || "https://via.placeholder.com/120";
+document.getElementById("name").innerText = currentUser.name || "Student";
+document.getElementById("uni").innerText = currentUser.university || "";
+document.getElementById("city").innerText = currentUser.city || "";
+document.getElementById("country").innerText = currentUser.country || "";
+document.getElementById("zac").innerText = data.zac;
 
-/* ======================
-   TASK DATA (CLIENT READY)
-====================== */
-const tasks = [
-"Record an intro video of yourself, sign up on www.zora.co, upload the video to your profile, copy the link, and submit it on Zep Swipe to complete the task.",
-"Create a professional freelancer bio and post it on Zora.",
-"Research 5 real clients who need your service and document them.",
-"Create a service offer card (what you do + pricing).",
-"Complete a mock client task and upload proof.",
-"Optimize your workflow for speed and quality.",
-"Create a portfolio showcase post on Zora.",
-"Write a proposal for a real freelance job.",
-"Simulate client communication and responses.",
-"Deliver a full task as if for a paying client.",
-"Improve based on feedback & document changes.",
-"Package your service as a clear offer.",
-"Create a client onboarding checklist.",
-"Design a repeatable work system.",
-"Complete a second full mock client job.",
-"Publish before/after results on Zora.",
-"Set your freelancer availability & rules.",
-"Create a professional invoice template.",
-"Draft a contract agreement.",
-"Prepare a final portfolio showcase.",
-"Graduate: Publish your full freelancer journey."
+/* COURSES */
+const courseList=[
+"Virtual Assistant",
+"Content Creator",
+"Blog Writer",
+"Voice-over Artist",
+"Data Entry Specialist",
+"UI/UX Designer",
+"Online Tutor"
 ];
 
-/* ======================
-   RENDER TASKS
-====================== */
-const container = document.getElementById("tasks");
-const streaks = document.getElementById("streaks");
-const progressFill = document.getElementById("progressFill");
+const courseBox=document.getElementById("courses");
+
+courseList.forEach(c=>{
+  const div=document.createElement("div");
+  div.className="course"+(data.course===c?" active":"");
+  div.innerText=c;
+  div.onclick=()=>{
+    if(!data.course){
+      data.course=c;
+      localStorage.setItem("learnEarn",JSON.stringify(data));
+      render();
+    }
+  }
+  courseBox.appendChild(div);
+});
+
+/* TASKS */
+const tasksText=[
+"Record an intro video of yourself, sign up on www.zora.co, upload the video to your profile, copy the link, and submit it on Zep Swipe to complete the task.",
+"Create a professional service description and post it on Zora.",
+"Research 5 real clients that need your service.",
+"Create a sample client task and upload proof.",
+"Design a simple workflow for delivering work.",
+"Package your service with pricing.",
+"Write a real freelance proposal.",
+"Simulate client communication.",
+"Deliver a mock client job.",
+"Improve based on feedback.",
+"Build a portfolio post.",
+"Refine your service offer.",
+"Create a repeatable process.",
+"Document results.",
+"Deliver another client-ready task.",
+"Optimize workflow.",
+"Prepare onboarding checklist.",
+"Create invoice template.",
+"Draft contract basics.",
+"Final portfolio showcase.",
+"Graduate & publish journey."
+];
 
 function render(){
-  container.innerHTML = "";
-  streaks.innerHTML = "";
+  document.getElementById("tasks").innerHTML="";
+  if(!data.course) return;
 
-  tasks.forEach((text,i)=>{
-    const day = i+1;
-    const key = `${student.program}-day-${day}`;
-    const done = student.tasksCompleted.includes(key);
-    const locked = day>1 && !student.tasksCompleted.includes(`${student.program}-day-${day-1}`);
+  tasksText.forEach((t,i)=>{
+    const day=i+1;
+    const key=data.course+"-"+day;
+    const done=data.tasks[key];
+    const locked=day>1 && !data.tasks[data.course+"-"+(day-1)];
 
-    const card = document.createElement("div");
-    card.className = "task" + (locked ? " locked":"");
+    const card=document.createElement("div");
+    card.className="task"+(locked?" locked":"");
 
-    card.innerHTML = `
+    card.innerHTML=`
       <h4>Day ${day}</h4>
-      <p>${text}</p>
+      <p>${t}</p>
       <input placeholder="Paste Zora link" ${locked||done?"disabled":""}>
       <button ${locked||done?"disabled":""}>Submit +25 ZAC</button>
     `;
 
-    const btn = card.querySelector("button");
-    const input = card.querySelector("input");
+    const btn=card.querySelector("button");
+    const input=card.querySelector("input");
 
-    btn.onclick = ()=>{
+    btn.onclick=()=>{
       if(!input.value.trim()) return alert("Submit your Zora link");
-      student.tasksCompleted.push(key);
-      student.walletBalance += 25;
-      localStorage.setItem("studentData",JSON.stringify(student));
+      data.tasks[key]=true;
+      data.zac+=25;
+      localStorage.setItem("learnEarn",JSON.stringify(data));
       render();
     };
 
-    container.appendChild(card);
-
-    if(done){
-      const s = document.createElement("span");
-      s.className="streak";
-      s.innerText=`Day ${day} ✓`;
-      streaks.appendChild(s);
-    }
+    document.getElementById("tasks").appendChild(card);
   });
 
-  const completed = student.tasksCompleted.filter(t=>t.startsWith(student.program)).length;
-  progressFill.style.width = `${(completed/tasks.length)*100}%`;
-  document.getElementById("zac").innerText = student.walletBalance;
+  const completed=Object.keys(data.tasks).filter(k=>k.startsWith(data.course)).length;
+  document.getElementById("progressFill").style.width=(completed/21*100)+"%";
+  document.getElementById("zac").innerText=data.zac;
 }
 
 render();
-
-/* ======================
-   LIVE WALLET SYNC
-====================== */
-window.addEventListener("storage",e=>{
-  if(e.key==="studentData"){
-    student = JSON.parse(e.newValue);
-    document.getElementById("zac").innerText = student.walletBalance;
-  }
-});
 </script>
 
 </body>
