@@ -3,210 +3,156 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep AI — Your Freelance Mentor</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Zep AI — Your Freelance Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,.08);
-  --text-light:rgba(255,255,255,.85);
-  --accent:#00ff9d;
+  --glass:rgba(255,255,255,0.08);
+  --text-light:rgba(255,255,255,0.85);
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
 body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden;}
-
-/* HEADER */
 header{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:16px 20px;max-width:1200px;margin:auto;margin-top:10px;
-  border-radius:12px;background:rgba(0,0,0,0.15);backdrop-filter:blur(6px);
+  display:flex;justify-content:space-between;align-items:center;padding:18px;margin:16px;border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
 }
 .brand{
-  font-family:Orbitron;
-  font-size:1.6rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation: pulseGlow 2s infinite;
-}
-.home-btn{
-  background:var(--zep-blue);color:#050015;padding:6px 12px;border-radius:12px;font-weight:700;transition:.3s;
-}
-.home-btn:hover{transform:scale(1.05);}
-@keyframes pulseGlow{
-  0% { text-shadow:0 0 5px var(--zep-blue),0 0 10px var(--zep-violet);}
-  50% { text-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet);}
-  100% { text-shadow:0 0 5px var(--zep-blue),0 0 10px var(--zep-violet);}
-}
-
-/* AI PANEL */
-#zepAI{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  width:300px;
-  max-width:90%;
-  background:var(--glass);
-  border-radius:16px;
-  padding:16px;
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 0 36px rgba(156,77,255,.2);
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  backdrop-filter:blur(8px);
-  transition:.3s;
-}
-#zepAI h4{
-  font-family:Orbitron;
+  font-family:Orbitron;font-size:1.5rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  margin-bottom:8px;
 }
-#zepAI p{color:var(--text-light);font-size:0.9rem;}
-.ai-button{
-  padding:8px 12px;
-  border:none;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  cursor:pointer;
-  font-family:Orbitron;
+.home-btn{
+  background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;color:#fff;font-size:16px;
   transition:.3s;
 }
-.ai-button:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
-}
+.home-btn:hover{background:rgba(0,240,255,.25);}
 
-/* FLOATING ORB */
-#aiOrb{
-  position:fixed;
-  bottom:30px;
-  right:30px;
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+/* ZEP AI FLOATING CHAT */
+#zepAIChat{
+  position:fixed;bottom:20px;right:20px;width:320px;max-height:500px;
+  background:var(--glass);backdrop-filter:blur(12px);border-radius:16px;
+  display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 36px rgba(156,77,255,.4);
+  transition:all .3s ease;
+  font-family:Poppins;
+  z-index:1000;
+}
+#zepAIHeader{
+  padding:12px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;font-family:Orbitron;font-weight:700;display:flex;justify-content:space-between;align-items:center;
   cursor:pointer;
-  animation: orbPulse 2s infinite;
-  display:flex;justify-content:center;align-items:center;
-  font-family:Orbitron;font-weight:700;color:#050015;
 }
-@keyframes orbPulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.1);}
-  100%{transform:scale(1);}
+#zepAIBody{
+  flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;
+}
+.message{
+  max-width:80%;padding:10px 14px;border-radius:12px;animation:fadeIn .4s ease;
+}
+.message.student{align-self:flex-end;background:rgba(0,240,255,0.2);color:#fff;}
+.message.bot{align-self:flex-start;background:rgba(156,77,255,0.15);color:#fff;}
+@keyframes fadeIn{0%{opacity:0;transform:translateY(10px);}100%{opacity:1;transform:translateY(0);}}
+#zepAIInput{
+  display:flex;padding:8px;background:rgba(0,0,0,0.05);border-top:1px solid rgba(255,255,255,.1);
+}
+#zepAIInput input{
+  flex:1;padding:10px;border:none;border-radius:12px;margin-right:6px;background:rgba(255,255,255,0.1);color:#fff;outline:none;
+}
+#zepAIInput button{
+  padding:10px 16px;border:none;border-radius:12px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
+}
+#zepAIInput button:hover{transform:scale(1.05);}
+@media(max-width:480px){
+  #zepAIChat{width:90%;bottom:10px;right:5%;}
 }
 
-/* ANIMATION SCROLL */
-@keyframes float{
-  0%{transform:translateY(0px);}
-  50%{transform:translateY(-6px);}
-  100%{transform:translateY(0px);}
-}
-.ai-section{animation:float 3s ease-in-out infinite;}
-
-/* RESPONSIVE */
-@media(max-width:600px){
-  #zepAI{width:90%;right:5%;bottom:20px;}
-  #aiOrb{bottom:25px;right:25px;width:50px;height:50px;font-size:14px;}
-}
+/* Floating animation */
+#zepAIChat:hover{transform:translateY(-5px);}
 </style>
 </head>
 <body>
 
 <header>
   <div class="brand">Zep Swipe</div>
-  <button class="home-btn" onclick="goHome()">Home</button>
+  <button class="home-btn" onclick="location.href='student-dashboard.html'">🏠</button>
 </header>
 
-<div id="zepAI" style="display:none;">
-  <h4>Hello, <span id="studentNameAI"></span> 👋</h4>
-  <p id="zepMessage">I’m your Zep AI Mentor. I can guide you to become a client-ready freelancer based on your course.</p>
-  <button class="ai-button" onclick="nextTip()">Give Me My Next Task Tip</button>
+<div id="zepAIChat">
+  <div id="zepAIHeader">Zep AI 🤖 <span id="toggleChat" style="cursor:pointer;">—</span></div>
+  <div id="zepAIBody"></div>
+  <div id="zepAIInput">
+    <input type="text" id="userMessage" placeholder="Ask me anything about freelancing, tasks, or courses...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
 </div>
 
-<div id="aiOrb">🤖</div>
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-// ======================
-// LOAD STUDENT DATA
-let studentData = JSON.parse(localStorage.getItem("currentUser")) || {
-  name: "Student",
-  city:"--",
-  country:"--",
-  university:"--",
-  course:"--",
-  walletBalance:0,
-  completedTasks:[]
-};
+// ================= STUDENT INFO
+let currentUser = JSON.parse(localStorage.getItem("currentUser")) || {name:"Student",course:"--",city:"--",university:"--"};
+const chatBody = document.getElementById("zepAIBody");
+const input = document.getElementById("userMessage");
 
-// INITIALIZE AI PANEL
-const aiPanel = document.getElementById("zepAI");
-const aiOrb = document.getElementById("aiOrb");
-const studentNameAI = document.getElementById("studentNameAI");
-const zepMessage = document.getElementById("zepMessage");
-
-studentNameAI.innerText = studentData.name;
-
-// SHOW AI PANEL ON ORB CLICK
-aiOrb.addEventListener('click', ()=>{
-  aiPanel.style.display = aiPanel.style.display==="none"?"flex":"none";
-});
-
-// AI MESSAGES BASED ON COURSE
-const tips = {
-  "Virtual Assistant":[
-    "Record an intro video, register on Zora, and submit your profile link to build credibility.",
-    "Organize your email inbox efficiently for clients.",
-    "Automate recurring tasks to save time and impress clients."
-  ],
-  "Content Creator (Video)":[
-    "Post a 1-min video daily to showcase your skills.",
-    "Engage your audience to attract clients.",
-    "Edit content professionally using free tools."
-  ],
-  "Blog Writer":[
-    "Submit a blog draft to your portfolio daily.",
-    "Use SEO keywords to get real client attention.",
-    "Engage in writing communities for visibility."
-  ],
-  "Voice-over Artist":[
-    "Record a sample voice-over and add to your Zora portfolio.",
-    "Experiment with different tones and styles.",
-    "Offer a 1-min voice demo to clients."
-  ],
-  "Data Entry":[
-    "Complete a sample dataset and submit for review.",
-    "Automate repetitive tasks with Google Sheets formulas.",
-    "Document your workflow for clients."
-  ],
-  "UI/UX Designer":[
-    "Design a small landing page and submit screenshots.",
-    "Share your portfolio link on Zora daily.",
-    "Learn client requirements and mockup design workflow."
-  ],
-  "Online Tutor":[
-    "Create a 10-min lesson and upload to your portfolio.",
-    "Engage with mock students for real feedback.",
-    "Record your teaching workflow for clients."
-  ]
-};
-
-// GET NEXT TIP
-let tipIndex = 0;
-function nextTip(){
-  const courseTips = tips[studentData.course] || ["Keep learning and building!"];
-  zepMessage.innerText = courseTips[tipIndex];
-  tipIndex = (tipIndex+1) % courseTips.length;
+// TOGGLE CHAT
+document.getElementById("toggleChat").onclick = ()=>{
+  const chat = document.getElementById("zepAIChat");
+  if(chat.style.height==="60px"){
+    chat.style.height="500px";document.getElementById("zepAIInput").style.display="flex";chatBody.style.display="flex";
+  } else {
+    chat.style.height="60px";document.getElementById("zepAIInput").style.display="none";chatBody.style.display="none";
+  }
 }
 
-// GO HOME
-function goHome(){ window.location.href="student-dashboard.html"; }
+// GREETING
+function greetStudent(){
+  addBotMessage(`Hello ${currentUser.name}! I am Zep AI, your AI assistant to help you become a top freelancer in your course: ${currentUser.course}. Ask me anything!`);
+}
+greetStudent();
+
+// ADD MESSAGES
+function addBotMessage(msg){
+  const div = document.createElement("div");div.className="message bot";div.innerText=msg;chatBody.appendChild(div);chatBody.scrollTop = chatBody.scrollHeight;
+}
+function addStudentMessage(msg){
+  const div = document.createElement("div");div.className="message student";div.innerText=msg;chatBody.appendChild(div);chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// SEND MESSAGE
+async function sendMessage(){
+  const msg = input.value.trim();
+  if(!msg) return;
+  addStudentMessage(msg);
+  input.value="";
+  
+  // CALL OPENAI API
+  addBotMessage("Zep AI is thinking... ⏳");
+  
+  try{
+    const botDiv = chatBody.querySelector(".message.bot:last-child");
+    const response = await axios.post("https://api.openai.com/v1/chat/completions", {
+      model: "gpt-4",
+      messages: [
+        {role:"system", content:`You are Zep AI, an AI assistant for students to help them complete tasks and become freelancers. Student info: Name: ${currentUser.name}, Course: ${currentUser.course}, City: ${currentUser.city}, University: ${currentUser.university}. Answer concisely and helpfully.`},
+        {role:"user", content: msg}
+      ],
+      max_tokens: 400,
+      temperature:0.8
+    },{
+      headers:{
+        "Authorization":"Bearer YOUR_OPENAI_API_KEY",
+        "Content-Type":"application/json"
+      }
+    });
+    botDiv.innerText = response.data.choices[0].message.content;
+  }catch(err){
+    console.error(err);
+    const botDiv = chatBody.querySelector(".message.bot:last-child");
+    botDiv.innerText="Sorry, I couldn't reach AI. Try again later.";
+  }
+}
 </script>
 
 </body>
