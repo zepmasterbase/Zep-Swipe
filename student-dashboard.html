@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Student Dashboard</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600,700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -14,6 +12,7 @@
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,.08);
   --text-light:rgba(255,255,255,.85);
+  --verified-green:#39ff14;
 }
 
 /* RESET */
@@ -35,12 +34,16 @@ header{
 .logout-btn{
   background:rgba(255,255,255,.1);border:none;border-radius:50%;
   width:38px;height:38px;color:#fff;cursor:pointer;
+  transition:.3s;
+}
+.logout-btn:hover{
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  box-shadow:0 0 12px var(--zep-blue),0 0 24px var(--zep-violet);
 }
 
 /* DASHBOARD LAYOUT */
 .dashboard{
-  padding:16px;display:flex;flex-direction:column;
-  gap:22px;max-width:1200px;margin:auto;
+  padding:16px;display:flex;flex-direction:column;gap:22px;max-width:1200px;margin:auto;
 }
 .section{
   background:var(--glass);
@@ -53,88 +56,95 @@ header{
 /* PROFILE */
 .profile-summary{
   display:flex;align-items:center;gap:16px;
+  background:linear-gradient(90deg,rgba(0,240,255,.1),rgba(156,77,255,.1));
+  padding:16px;
+  border-radius:16px;
 }
 .profile-summary img{
   width:80px;height:80px;border-radius:50%;
   border:2px solid rgba(255,255,255,.3);
 }
-.profile-summary span{font-size:.85rem;color:var(--text-light);}
-#verifiedBadge{
+.profile-info h3{margin:0;display:flex;align-items:center;gap:8px;}
+.profile-info span{font-size:.85rem;color:var(--text-light);}
+
+/* VERIFIED BADGE */
+.verified-badge{
+  width:18px;height:18px;
+  background:var(--verified-green);
+  border-radius:50%;
   display:inline-block;
-  margin-left:8px;
-  padding:2px 8px;
-  background:linear-gradient(90deg,#00ff9d,#00f0ff);
-  color:#050015;
-  border-radius:12px;
-  font-size:0.75rem;
-  font-weight:600;
+  box-shadow:0 0 8px var(--verified-green);
 }
 
-/* GRAPH */
+/* WEEKLY GRAPH */
 .graph-box{
   position:relative;height:180px;border-radius:14px;
   background:linear-gradient(135deg,rgba(0,240,255,.08),rgba(156,77,255,.08));
   overflow:hidden;cursor:pointer;
+  display:flex;align-items:flex-end;gap:8px;padding:16px;
 }
-.graph-placeholder{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  font-family:Orbitron;
-  animation:pulse 2s infinite;
-}
-@keyframes pulse{
-  0%{opacity:.6}50%{opacity:1}100%{opacity:.6}
-}
-.bars{display:flex;align-items:flex-end;height:100%;gap:8px;padding:16px;}
-.bar{
+.graph-bar{
   flex:1;
+  margin:0 4px;
   background:linear-gradient(180deg,var(--zep-blue),var(--zep-violet));
   border-radius:8px 8px 0 0;
-  animation:grow .8s ease forwards;
-}
-@keyframes grow{from{height:0}}
-
-/* ANALYTICS */
-.analytics{display:none;margin-top:12px;font-size:.85rem;}
-.analytics.active{display:block}
-
-/* JOBS */
-.jobs-list{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:12px;
-}
-.job{
-  background:rgba(255,255,255,.05);
-  border-radius:12px;
-  padding:12px;
   position:relative;
-}
-.job.locked{filter:blur(4px);pointer-events:none;}
-.verify-overlay{
-  position:absolute;inset:0;
-  background:rgba(0,0,0,.75);
-  display:flex;align-items:center;justify-content:center;
-  text-align:center;border-radius:12px;
-}
-.verify-overlay button{
-  margin-top:10px;padding:8px 14px;
-  border:none;border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  animation:pulseBar 2s infinite;
   cursor:pointer;
+  transition:.3s;
+}
+.graph-bar:hover{
+  transform:scaleY(1.1);
+}
+.graph-bar span{
+  position:absolute;
+  top:-22px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:.75rem;
+  color:var(--text-light);
+  display:none;
+  white-space:nowrap;
+  background:rgba(0,0,0,.6);
+  padding:2px 6px;
+  border-radius:6px;
+}
+.graph-bar:hover span{display:block;}
+@keyframes pulseBar{
+  0%,100%{opacity:.7;}
+  50%{opacity:1;}
 }
 
-/* ACTIONS */
+/* QUICK ACTIONS */
 .actions{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:16px;
 }
 .actions button{
-  border:none;border-radius:999px;padding:12px;
+  border:none;border-radius:16px;padding:18px;
   font-family:Orbitron;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   cursor:pointer;
+  color:#050015;
+  font-weight:600;
+  font-size:.95rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  transition:.3s;
+  box-shadow:0 0 12px var(--zep-blue),0 0 24px var(--zep-violet);
 }
-@media(max-width:480px){.actions{grid-template-columns:1fr}}
+.actions button:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+}
+
+/* BUTTON ICON */
+.actions button span{
+  font-size:1.8rem;margin-bottom:6px;
+}
 
 /* FLOATING ZEP AI BUTTON */
 #zepAIButton{
@@ -161,9 +171,14 @@ header{
   50%{transform:scale(1.1);}
   100%{transform:scale(1);}
 }
+
+/* RESPONSIVE */
+@media(max-width:480px){
+  .profile-summary{flex-direction:column;align-items:center;text-align:center;}
+  .actions{grid-template-columns:1fr;}
+}
 </style>
 </head>
-
 <body>
 
 <header>
@@ -173,55 +188,30 @@ header{
 
 <div class="dashboard">
 
-  <!-- PROFILE -->
+  <!-- PROFILE SUMMARY -->
   <div class="section profile-summary">
-    <img id="profileImg">
-    <div>
-      <h3 id="studentName"></h3>
-      <span id="studentLevel"></span><br>
-      <span id="completionText"></span><br>
-      <span id="walletBalance"></span>
+    <img id="profileImg" src="https://via.placeholder.com/80">
+    <div class="profile-info">
+      <h3 id="studentName">Student Name <span id="verifiedBadge" style="display:none;" class="verified-badge"></span></h3>
+      <span id="studentLevel">Beginner Freelancer</span><br>
+      <span id="completionText">Profile Completion: 0%</span><br>
+      <span id="walletBalance">Wallet: 0 ZAC (~$0)</span>
     </div>
-    <span id="verifiedBadge" style="display:none;">Verified ✅</span>
   </div>
 
-  <!-- WEEKLY GRAPH -->
+  <!-- WEEKLY EARNINGS GRAPH -->
   <div class="section">
     <h3>Weekly Earnings</h3>
-    <div class="graph-box" onclick="toggleAnalytics()">
-      <div id="graphPlaceholder" class="graph-placeholder">Start Learning to See Earnings 📈</div>
-      <div id="bars" class="bars"></div>
-    </div>
-    <div id="analytics" class="analytics"></div>
+    <div class="graph-box" id="weeklyGraph"></div>
   </div>
 
-  <!-- EARNINGS SUMMARY -->
-  <div class="section earnings">
-    <div>
-      <h4>Weekly</h4>
-      <span id="weeklyUSD">$0</span><br>
-      <span id="weeklyZAC">0 ZAC</span>
-    </div>
-    <div>
-      <h4>Monthly</h4>
-      <span id="monthlyUSD">$0</span><br>
-      <span id="monthlyZAC">0 ZAC</span>
-    </div>
-  </div>
-
-  <!-- JOBS -->
-  <div class="section">
-    <h3>Live Jobs</h3>
-    <div class="jobs-list" id="jobsList"></div>
-  </div>
-
-  <!-- ACTIONS -->
+  <!-- QUICK ACTION BUTTONS -->
   <div class="section actions">
-    <button onclick="location.href='learn-earn.html'">Tasks</button>
-    <button onclick="location.href='swipe-merchants.html'">Jobs</button>
-    <button onclick="location.href='wallet.html'">Wallet</button>
-    <button onclick="location.href='profile.html'">Profile</button>
-    <button onclick="location.href='deals.html'">Deals Day</button>
+    <button onclick="location.href='learn-earn.html'"><span>📚</span>Tasks</button>
+    <button onclick="location.href='swipe-merchants.html'"><span>💼</span>Jobs</button>
+    <button onclick="location.href='wallet.html'"><span>💰</span>Wallet</button>
+    <button onclick="location.href='profile.html'"><span>👤</span>Profile</button>
+    <button onclick="location.href='deals.html'"><span>🎉</span>Deals Day</button>
   </div>
 
 </div>
@@ -230,26 +220,22 @@ header{
 <button id="zepAIButton" title="Zep AI Mentor" onclick="location.href='zep-ai.html'">🤖</button>
 
 <script>
-/* =======================
-   USER SESSION & LOGOUT
-======================= */
-let users = JSON.parse(localStorage.getItem("users")) || [];
+// =======================
+// USER SESSION & LOGOUT
+// =======================
+let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
-
-if(!currentUserId){
-  location.href="login.html";
-}
-
-let currentUser = users.find(u=>u.id===currentUserId);
+if(!currentUserId || !users[currentUserId]) location.href="login.html";
+let currentUser = users[currentUserId];
 
 function logout(){
-  localStorage.removeItem("currentUserId");
+  localStorage.removeItem("currentUserId"); // remove session only
   location.href="login.html";
 }
 
-/* =======================
-   PROFILE
-======================= */
+// =======================
+// PROFILE DISPLAY
+// =======================
 const profileImg = document.getElementById("profileImg");
 const studentName = document.getElementById("studentName");
 const studentLevel = document.getElementById("studentLevel");
@@ -257,109 +243,36 @@ const completionText = document.getElementById("completionText");
 const walletBalance = document.getElementById("walletBalance");
 const verifiedBadge = document.getElementById("verifiedBadge");
 
-function renderProfile(){
-  profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
-  studentName.innerText = currentUser.name;
-  studentLevel.innerText = currentUser.level;
-  completionText.innerText = `Profile Completion: ${currentUser.profileCompletion || 0}%`;
-  verifiedBadge.style.display = currentUser.verified ? 'inline-block' : 'none';
-}
+profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
+studentName.innerText = currentUser.name || "Student Name";
+studentLevel.innerText = currentUser.level || "Beginner Freelancer";
+completionText.innerText = `Profile Completion: ${currentUser.profileCompletion || 0}%`;
+walletBalance.innerText = `Wallet: ${currentUser.walletBalance || 0} ZAC (~$${((currentUser.walletBalance||0)*0.014).toFixed(2)})`;
+if(currentUser.verified) verifiedBadge.style.display="inline-block";
 
-renderProfile();
+// =======================
+// WEEKLY GRAPH
+// =======================
+const weeklyGraph = document.getElementById("weeklyGraph");
+const earnings = currentUser.earningsHistory || [0,10,5,15,8,12,20]; // example weekly earnings
 
-/* =======================
-   WALLET
-======================= */
+earnings.forEach((val,idx)=>{
+  const bar = document.createElement("div");
+  bar.className = "graph-bar";
+  bar.style.height = `${val*5}px`; // scale for demo
+  bar.innerHTML = `<span>${val} ZAC</span>`;
+  weeklyGraph.appendChild(bar);
+});
+
+// =======================
+// Update wallet on page load
+// =======================
 function updateWallet(){
-  const zac = currentUser.walletBalance || 0;
-  const usd = (zac*0.014).toFixed(2);
-  walletBalance.innerText = `Wallet: ${zac} ZAC (~$${usd})`;
-  document.getElementById("weeklyZAC").innerText = zac;
-  document.getElementById("weeklyUSD").innerText = `$${usd}`;
-  document.getElementById("monthlyZAC").innerText = zac;
-  document.getElementById("monthlyUSD").innerText = `$${usd}`;
+  walletBalance.innerText = `Wallet: ${currentUser.walletBalance || 0} ZAC (~$${((currentUser.walletBalance||0)*0.014).toFixed(2)})`;
 }
 updateWallet();
 
-/* =======================
-   GRAPH
-======================= */
-const graphPlaceholder = document.getElementById("graphPlaceholder");
-const bars = document.getElementById("bars");
-const analytics = document.getElementById("analytics");
-
-const earnings = currentUser.earningsHistory || [];
-if(earnings.length){
-  graphPlaceholder.style.display="none";
-  earnings.slice(-7).forEach(v=>{
-    const b=document.createElement("div");
-    b.className="bar";
-    b.style.height=(v/100)*100+"%";
-    bars.appendChild(b);
-  });
-  analytics.innerHTML=`Total streak days: ${currentUser.tasksCompleted || 0}<br>Total ZAC earned: ${currentUser.walletBalance || 0}`;
-}
-
-function toggleAnalytics(){
-  analytics.classList.toggle("active");
-}
-
-/* =======================
-   JOBS
-======================= */
-const jobs = JSON.parse(localStorage.getItem("swipeJobs")) || [];
-const jobsList = document.getElementById("jobsList");
-jobsList.innerHTML = '';
-jobs.forEach(j=>{
-  const d=document.createElement("div");
-  d.className="job";
-  if(!currentUser.verified) d.classList.add("locked");
-  d.innerHTML=`<h4>${j.title}</h4><span>${j.amountUSD} USD</span>`;
-  if(!currentUser.verified){
-    d.innerHTML+=`<div class="verify-overlay">
-      <div>
-        <strong>Verify Account</strong><br>
-        Unlock paid jobs
-        <br><button onclick="location.href='profile.html'">Verify</button>
-      </div>
-    </div>`;
-  }
-  jobsList.appendChild(d);
-});
-
-/* =======================
-   UPDATE USER DATA IN REAL TIME
-======================= */
-function updateUser(newData){
-  currentUser = {...currentUser, ...newData};
-  const idx = users.findIndex(u=>u.id===currentUser.id);
-  if(idx>-1) users[idx]=currentUser;
-  localStorage.setItem("users",JSON.stringify(users));
-  renderProfile();
-  updateWallet();
-  // Refresh jobs overlay if verified changes
-  jobsList.innerHTML='';
-  jobs.forEach(j=>{
-    const d=document.createElement("div");
-    d.className="job";
-    if(!currentUser.verified) d.classList.add("locked");
-    d.innerHTML=`<h4>${j.title}</h4><span>${j.amountUSD} USD</span>`;
-    if(!currentUser.verified){
-      d.innerHTML+=`<div class="verify-overlay">
-        <div>
-          <strong>Verify Account</strong><br>
-          Unlock paid jobs
-          <br><button onclick="location.href='profile.html'">Verify</button>
-        </div>
-      </div>`;
-    }
-    jobsList.appendChild(d);
-  });
-}
-
-// Example: whenever learn-earn sets verified:
-// updateUser({verified:true});
-
 </script>
+
 </body>
 </html>
