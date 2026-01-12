@@ -3,351 +3,288 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Zep Swipe — Learn & Earn</title>
-<meta name="description" content="Zep Swipe Learn & Earn helps students become client-ready freelancers in 21 days through real-world portfolio tasks.">
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:#050018;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,.08);
-  --text:rgba(255,255,255,.9);
+  --text-light:rgba(255,255,255,.85);
   --accent:#00ff9d;
+  --streak:#ffea00;
+  --card-bg:rgba(255,255,255,.05);
 }
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.4;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;border:none;}
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
-
-body{
-  background:radial-gradient(circle at top,#090025,#000);
-  color:#fff;
-  min-height:100vh;
-}
-
-/* HEADER */
 header{
-  max-width:1200px;
-  margin:16px auto;
-  padding:16px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:rgba(0,0,0,.25);
-  backdrop-filter:blur(10px);
-  border-radius:18px;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 20px;max-width:1200px;margin:auto;margin-top:10px;
+  border-radius:12px;background:rgba(0,0,0,0.15);backdrop-filter:blur(6px);
 }
-
 .brand{
-  font-family:Orbitron;
-  font-size:1.6rem;
+  font-family:Orbitron;font-size:1.6rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation: pulseGlow 2s infinite;
 }
-
 .home-btn{
-  border:none;
-  padding:8px 16px;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  font-weight:700;
-  cursor:pointer;
+  background:var(--zep-blue);color:#050015;padding:6px 12px;border-radius:12px;font-weight:700;transition:.3s;
+}
+.home-btn:hover{transform:scale(1.05);}
+@keyframes pulseGlow{
+  0% { text-shadow: 0 0 5px var(--zep-blue),0 0 10px var(--zep-violet); transform: scale(1);}
+  50% { text-shadow: 0 0 15px var(--zep-blue),0 0 25px var(--zep-violet); transform: scale(1.05);}
+  100% { text-shadow: 0 0 5px var(--zep-blue),0 0 10px var(--zep-violet); transform: scale(1);}
 }
 
-/* LAYOUT */
-.container{max-width:1200px;margin:auto;padding:0 20px}
-
-/* STUDENT CARD */
-.student-card{
-  display:flex;
-  gap:18px;
-  flex-wrap:wrap;
-  align-items:center;
-  background:var(--glass);
-  border-radius:20px;
-  padding:20px;
-  margin-top:20px;
+.student-info{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 20px;max-width:1200px;margin:20px auto;
+  background:var(--card-bg);border-radius:16px;backdrop-filter:blur(6px);
 }
+.student-info div{display:flex;flex-direction:column;}
+.student-info div span{font-size:0.85rem;color:var(--text-light);}
+.wallet-balance{font-weight:700;font-family:Orbitron;}
 
-.avatar{
-  width:80px;
-  height:80px;
-  border-radius:50%;
-  border:2px solid rgba(255,255,255,.3);
-  object-fit:cover;
-}
-
-.student-meta span{
-  display:block;
-  font-size:.85rem;
-  color:var(--text);
-}
-
-.wallet{
-  margin-left:auto;
-  font-family:Orbitron;
-  font-size:1.05rem;
-}
-
-/* COURSES */
-.courses{
+.programs{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:18px;
-  margin:30px 0;
+  grid-template-columns:1fr 1fr;
+  gap:12px;max-width:1200px;margin:0 auto 20px;padding:0 20px;
+}
+.program-card{
+  padding:14px;border-radius:16px;text-align:center;
+  background:var(--card-bg);cursor:pointer;transition:.3s;position:relative;
+  box-shadow:0 0 10px rgba(0,240,255,0.2),0 0 10px rgba(156,77,255,0.2);
+}
+.program-card:hover{
+  transform:translateY(-3px) scale(1.05);
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+}
+.program-card.selected{border:2px solid var(--zep-blue);box-shadow:0 0 15px var(--zep-blue);}
+
+.tasks-container{display:grid;grid-template-columns:1fr;gap:16px;max-width:1200px;margin:auto;padding:0 20px 40px;}
+@media(min-width:600px){.tasks-container{grid-template-columns:1fr 1fr;}}
+@media(min-width:900px){.tasks-container{grid-template-columns:1fr 1fr 1fr;}}
+
+.task-card{
+  background:var(--card-bg);border-radius:16px;padding:16px;
+  position:relative;transition:.3s;display:flex;flex-direction:column;gap:8px;
+}
+.task-card.locked{opacity:0.5;filter:grayscale(70%);}
+.task-card h4{margin-bottom:6px;font-size:1rem;}
+.task-card p{font-size:0.85rem;color:var(--text-light);}
+.task-card input[type="text"]{padding:8px;border-radius:12px;border:none;background:rgba(255,255,255,0.1);color:#fff;outline:none;}
+.task-card button{
+  padding:8px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
+}
+.task-card button:hover{
+  transform:translateY(-2px) scale(1.02);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
 }
 
-.course{
-  background:var(--glass);
-  border-radius:18px;
-  padding:18px;
-  text-align:center;
-  cursor:pointer;
-  transition:.35s;
-  position:relative;
-}
+.progress-bar-container{max-width:1200px;margin:20px auto;padding:0 20px;}
+.progress-bar{width:100%;height:16px;background:rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;}
+.progress-bar-fill{height:100%;width:0%;background:var(--accent);border-radius:12px;transition:width 0.5s ease-in-out;}
 
-.course::after{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  border-radius:20px;
+.streak-badge{
+  display:inline-block;margin-right:6px;padding:4px 8px;border-radius:12px;background:var(--streak);color:#050015;font-weight:600;font-size:0.75rem;transition:.3s;
+  transform:scale(1);
+}
+.streak-badge.earned{animation:pop 0.5s ease forwards;}
+@keyframes pop{0%{transform:scale(0.5);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
+
+#verificationBanner{
+  max-width:1200px;margin:20px auto;padding:16px;border-radius:16px;text-align:center;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  opacity:.15;
-  z-index:-1;
-  filter:blur(12px);
+  cursor:pointer;font-family:Orbitron;font-weight:700;transition:.3s;
 }
-
-.course:hover{
-  transform:translateY(-4px) scale(1.03);
-  box-shadow:0 0 25px rgba(0,240,255,.35);
-}
-
-.course.active{
-  outline:2px solid var(--zep-blue);
-  box-shadow:0 0 30px rgba(0,240,255,.6);
-}
-
-/* PROGRESS */
-.progress-wrap{margin-bottom:20px}
-.progress{
-  width:100%;
-  height:14px;
-  background:rgba(255,255,255,.1);
-  border-radius:999px;
-  overflow:hidden;
-}
-.progress-fill{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,var(--accent),var(--zep-blue));
-  transition:.4s ease;
-}
-
-/* TASKS */
-.tasks{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:18px;
-  margin-bottom:60px;
-}
-
-.task{
-  background:var(--glass);
-  border-radius:18px;
-  padding:18px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.task.locked{opacity:.45;filter:grayscale(70%)}
-
-.task h4{font-size:1rem}
-.task p{font-size:.85rem;color:var(--text)}
-
-.task input{
-  padding:8px 12px;
-  border-radius:999px;
-  border:none;
-  background:rgba(255,255,255,.12);
-  color:#fff;
-}
-
-.task button{
-  border:none;
-  border-radius:999px;
-  padding:8px;
-  font-family:Orbitron;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  cursor:pointer;
-}
-
-footer{
-  text-align:center;
-  padding:20px;
-  font-size:.8rem;
-  color:var(--text);
-  border-top:1px solid rgba(255,255,255,.1);
-}
+#verificationBanner:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
 </style>
 </head>
-
 <body>
-
-<script>
-/* SESSION CHECK */
-const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-if(!currentUser){ window.location.href="auth.html"; }
-</script>
 
 <header>
   <div class="brand">Zep Swipe</div>
   <button class="home-btn" onclick="location.href='student-dashboard.html'">Home</button>
 </header>
 
-<div class="container">
-
-<!-- STUDENT -->
-<div class="student-card">
-  <img class="avatar" id="avatar">
-  <div class="student-meta">
-    <span id="name"></span>
-    <span id="uni"></span>
-    <span id="city"></span>
-    <span id="country"></span>
+<div class="student-info">
+  <div>
+    <span id="studentName"></span>
+    <span id="studentCity"></span>
+    <span id="studentCountry"></span>
+    <span id="studentUni"></span>
+    <span id="studentProgram">Program: <strong>--</strong></span>
   </div>
-  <div class="wallet">ZAC: <span id="zac">0</span></div>
+  <div class="wallet-balance">Wallet: <span id="walletBalance">0</span> ZAC</div>
+  <div><a href="profile.html">Profile</a></div>
 </div>
 
-<!-- COURSES -->
-<div class="courses" id="courses"></div>
+<div class="programs" id="programsContainer"></div>
 
-<!-- PROGRESS -->
-<div class="progress-wrap">
-  <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-bar-container">
+  <div class="progress-bar">
+    <div class="progress-bar-fill" id="progressFill"></div>
+  </div>
 </div>
 
-<!-- TASKS -->
-<div class="tasks" id="tasks"></div>
+<div id="streakContainer" style="max-width:1200px;margin:10px auto;padding:0 20px;"></div>
 
-</div>
+<div class="tasks-container" id="tasksContainer"></div>
 
-<footer>© Zep Swipe — Learn by Doing, Earn While Learning</footer>
+<div id="verificationBanner" onclick="payVerification()">Become a Verified Freelancer – $5</div>
 
+<script src="https://checkout.flutterwave.com/v3.js"></script>
 <script>
-/* SAFE DATA */
-let data = JSON.parse(localStorage.getItem("learnEarn")) || {};
-data.tasks = data.tasks || {};
-data.zac = data.zac || 0;
-data.course = data.course || null;
+/* ======================= */
+/* USERS + CURRENT USER SYSTEM */
+let users = JSON.parse(localStorage.getItem("users")) || [];
+let currentUserId = localStorage.getItem("currentUserId");
+let currentUser = users.find(u=>u.id===currentUserId);
 
-/* PROFILE */
-document.getElementById("avatar").src = currentUser.profileImage || "https://via.placeholder.com/120";
-document.getElementById("name").innerText = currentUser.name || "Student";
-document.getElementById("uni").innerText = currentUser.university || "";
-document.getElementById("city").innerText = currentUser.city || "";
-document.getElementById("country").innerText = currentUser.country || "";
-document.getElementById("zac").innerText = data.zac;
+if(!currentUser) location.href="login.html";
 
-/* COURSES */
-const courseList=[
-"Virtual Assistant",
-"Content Creator",
-"Blog Writer",
-"Voice-over Artist",
-"Data Entry Specialist",
-"UI/UX Designer",
-"Online Tutor"
-];
+/* INITIAL INFO */
+document.getElementById('studentName').innerText = currentUser.name;
+document.getElementById('studentCity').innerText = "City: " + (currentUser.city||"--");
+document.getElementById('studentCountry').innerText = "Country: " + (currentUser.country||"--");
+document.getElementById('studentUni').innerText = currentUser.university;
+document.getElementById('studentProgram').querySelector('strong').innerText = currentUser.program || '--';
+document.getElementById('walletBalance').innerText = currentUser.walletBalance || 0;
 
-const courseBox=document.getElementById("courses");
-
-courseList.forEach(c=>{
-  const div=document.createElement("div");
-  div.className="course"+(data.course===c?" active":"");
-  div.innerText=c;
-  div.onclick=()=>{
-    if(!data.course){
-      data.course=c;
-      localStorage.setItem("learnEarn",JSON.stringify(data));
-      render();
-    }
+/* PROGRAMS */
+const programs = ["Virtual Assistant","Content Creator"];
+const programsContainer = document.getElementById('programsContainer');
+programs.forEach(prog=>{
+  const card = document.createElement('div');
+  card.className='program-card';
+  if(currentUser.program===prog) card.classList.add('selected');
+  card.innerText = prog;
+  card.onclick = ()=>{
+    currentUser.program = prog;
+    updateUser();
+    document.querySelectorAll('.program-card').forEach(c=>c.classList.remove('selected'));
+    card.classList.add('selected');
+    document.getElementById('studentProgram').querySelector('strong').innerText = prog;
+    renderTasks(prog);
   }
-  courseBox.appendChild(div);
+  programsContainer.appendChild(card);
 });
 
 /* TASKS */
-const tasksText=[
-"Record an intro video of yourself, sign up on www.zora.co, upload the video to your profile, copy the link, and submit it on Zep Swipe to complete the task.",
-"Create a professional service description and post it on Zora.",
-"Research 5 real clients that need your service.",
-"Create a sample client task and upload proof.",
-"Design a simple workflow for delivering work.",
-"Package your service with pricing.",
-"Write a real freelance proposal.",
-"Simulate client communication.",
-"Deliver a mock client job.",
-"Improve based on feedback.",
-"Build a portfolio post.",
-"Refine your service offer.",
-"Create a repeatable process.",
-"Document results.",
-"Deliver another client-ready task.",
-"Optimize workflow.",
-"Prepare onboarding checklist.",
-"Create invoice template.",
-"Draft contract basics.",
-"Final portfolio showcase.",
-"Graduate & publish journey."
-];
+const taskTemplates = {
+  "Virtual Assistant":[
+    "Record an intro video of yourself, sign up on www.zora.co, upload the video to your profile, copy the link, and submit it on Zep Swipe to complete the task.",
+    "Organize your email inbox efficiently",
+    "Create a daily to-do list"
+  ],
+  "Content Creator":[
+    "Create a 30-second introduction video for your portfolio",
+    "Draft a content plan for a week",
+    "Publish one social media post"
+  ]
+};
 
-function render(){
-  document.getElementById("tasks").innerHTML="";
-  if(!data.course) return;
+const tasksContainer = document.getElementById('tasksContainer');
+const progressFill = document.getElementById('progressFill');
+const streakContainer = document.getElementById('streakContainer');
 
-  tasksText.forEach((t,i)=>{
-    const day=i+1;
-    const key=data.course+"-"+day;
-    const done=data.tasks[key];
-    const locked=day>1 && !data.tasks[data.course+"-"+(day-1)];
-
-    const card=document.createElement("div");
-    card.className="task"+(locked?" locked":"");
-
-    card.innerHTML=`
+function renderTasks(program){
+  tasksContainer.innerHTML='';
+  streakContainer.innerHTML='';
+  if(!currentUser.tasksCompleted) currentUser.tasksCompleted=[];
+  const programTasks = taskTemplates[program] || [];
+  for(let day=1; day<=programTasks.length; day++){
+    const taskCard = document.createElement('div');
+    taskCard.className='task-card';
+    const completed = currentUser.tasksCompleted.includes(`${program}-${day}`);
+    if(day>1 && !currentUser.tasksCompleted.includes(`${program}-${day-1}`)) taskCard.classList.add('locked');
+    taskCard.innerHTML=`
       <h4>Day ${day}</h4>
-      <p>${t}</p>
-      <input placeholder="Paste Zora link" ${locked||done?"disabled":""}>
-      <button ${locked||done?"disabled":""}>Submit +25 ZAC</button>
+      <p>${programTasks[day-1]}</p>
+      <input type="text" placeholder="Submit Zora link" ${taskCard.classList.contains('locked')?'disabled':''} id="taskInput${day}">
+      <button ${taskCard.classList.contains('locked')?'disabled':''}>Submit (+25 ZAC)</button>
     `;
+    tasksContainer.appendChild(taskCard);
 
-    const btn=card.querySelector("button");
-    const input=card.querySelector("input");
+    if(completed){
+      taskCard.querySelector('button').disabled=true;
+      taskCard.querySelector('input').disabled=true;
+      addStreakBadge(day);
+    }
 
-    btn.onclick=()=>{
-      if(!input.value.trim()) return alert("Submit your Zora link");
-      data.tasks[key]=true;
-      data.zac+=25;
-      localStorage.setItem("learnEarn",JSON.stringify(data));
-      render();
-    };
-
-    document.getElementById("tasks").appendChild(card);
-  });
-
-  const completed=Object.keys(data.tasks).filter(k=>k.startsWith(data.course)).length;
-  document.getElementById("progressFill").style.width=(completed/21*100)+"%";
-  document.getElementById("zac").innerText=data.zac;
+    if(!taskCard.classList.contains('locked')){
+      const btn = taskCard.querySelector('button');
+      btn.onclick = ()=>{
+        const input = document.getElementById(`taskInput${day}`);
+        if(!input.value.trim()){ alert("Please submit a valid Zora link"); return;}
+        const taskKey = `${program}-${day}`;
+        if(!currentUser.tasksCompleted.includes(taskKey)) currentUser.tasksCompleted.push(taskKey);
+        currentUser.walletBalance = (currentUser.walletBalance||0)+25;
+        updateUser();
+        btn.disabled = true; input.disabled = true;
+        addStreakBadge(day);
+        const nextTask = tasksContainer.children[day];
+        if(nextTask){
+          nextTask.classList.remove('locked');
+          nextTask.querySelector('button').disabled=false;
+          nextTask.querySelector('input').disabled=false;
+        }
+        progressFill.style.width=`${(currentUser.tasksCompleted.filter(t=>t.startsWith(program)).length/programTasks.length)*100}%`;
+        if(currentUser.tasksCompleted.filter(t=>t.startsWith(program)).length===programTasks.length && !currentUser.verified) document.getElementById('verificationBanner').style.display='block';
+      }
+    }
+  }
+  progressFill.style.width=`${(currentUser.tasksCompleted.filter(t=>t.startsWith(program)).length/programTasks.length)*100}%`;
 }
 
-render();
-</script>
+function addStreakBadge(day){
+  const badge = document.createElement('span');
+  badge.className='streak-badge earned';
+  badge.innerText=`Day ${day} ✅`;
+  streakContainer.appendChild(badge);
+}
 
+/* UPDATE USER IN LOCALSTORAGE */
+function updateUser(){
+  const idx = users.findIndex(u=>u.id===currentUser.id);
+  if(idx>-1) users[idx] = currentUser;
+  localStorage.setItem("users", JSON.stringify(users));
+  localStorage.setItem("currentUserId", currentUser.id);
+  document.getElementById('walletBalance').innerText = currentUser.walletBalance;
+}
+
+/* INITIAL RENDER */
+if(currentUser.program) renderTasks(currentUser.program);
+
+/* ================= FLUTTERWAVE PAYMENT INTEGRATION */
+function payVerification(){
+  if(currentUser.verified){ alert("Already verified!"); return;}
+  FlutterwaveCheckout({
+    public_key: "FLWPUBK_TEST-xxxxxxxxxxxx", // replace with your public key
+    tx_ref: "VERIF-"+Date.now(),
+    amount: 5,
+    currency: "USD",
+    payment_options: "card,mobilemoney",
+    customer:{
+      email: currentUser.email || "student@example.com",
+      name: currentUser.name || "Student"
+    },
+    callback: function(data){
+      if(data.status==="successful"){
+        currentUser.verified = true;
+        updateUser();
+        alert("Payment Successful! You are now a verified freelancer ✅");
+      } else { alert("Payment failed. Please try again."); }
+    },
+    onclose: function(){ console.log("Payment closed"); }
+  });
+}
+</script>
 </body>
 </html>
