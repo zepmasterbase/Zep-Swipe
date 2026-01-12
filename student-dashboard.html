@@ -219,33 +219,60 @@ header{
 <button id="zepAIButton" title="Zep AI Mentor" onclick="location.href='zep-ai.html'">🤖</button>
 
 <script>
-let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-if(!currentUser) location.href="login.html";
+/* =======================
+   USER SESSION & LOGOUT
+======================= */
+let users = JSON.parse(localStorage.getItem("users")) || {};
+let currentUserId = localStorage.getItem("currentUserId");
 
-function logout(){
-  localStorage.removeItem("currentUser");
+// If no session, redirect to login
+if(!currentUserId || !users[currentUserId]){
   location.href="login.html";
 }
 
-/* PROFILE */
+let currentUser = users[currentUserId];
+
+function logout(){
+  // Remove only session
+  localStorage.removeItem("currentUserId");
+  location.href="login.html";
+}
+
+/* =======================
+   PROFILE
+======================= */
+const profileImg = document.getElementById("profileImg");
+const studentName = document.getElementById("studentName");
+const studentLevel = document.getElementById("studentLevel");
+const completionText = document.getElementById("completionText");
+const walletBalance = document.getElementById("walletBalance");
+
 profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
 studentName.innerText = currentUser.name;
 studentLevel.innerText = currentUser.level;
 completionText.innerText = `Profile Completion: ${currentUser.profileCompletion || 0}%`;
 
-/* WALLET */
+/* =======================
+   WALLET
+======================= */
 function updateWallet(){
   const zac = currentUser.walletBalance || 0;
   const usd = (zac*0.014).toFixed(2);
   walletBalance.innerText = `Wallet: ${zac} ZAC (~$${usd})`;
-  weeklyZAC.innerText = zac;
-  weeklyUSD.innerText = `$${usd}`;
-  monthlyZAC.innerText = zac;
-  monthlyUSD.innerText = `$${usd}`;
+  document.getElementById("weeklyZAC").innerText = zac;
+  document.getElementById("weeklyUSD").innerText = `$${usd}`;
+  document.getElementById("monthlyZAC").innerText = zac;
+  document.getElementById("monthlyUSD").innerText = `$${usd}`;
 }
 updateWallet();
 
-/* GRAPH SYNC WITH LEARN & EARN */
+/* =======================
+   GRAPH
+======================= */
+const graphPlaceholder = document.getElementById("graphPlaceholder");
+const bars = document.getElementById("bars");
+const analytics = document.getElementById("analytics");
+
 const earnings = currentUser.earningsHistory || [];
 if(earnings.length){
   graphPlaceholder.style.display="none";
@@ -263,8 +290,11 @@ function toggleAnalytics(){
   analytics.classList.toggle("active");
 }
 
-/* JOBS */
+/* =======================
+   JOBS
+======================= */
 const jobs = JSON.parse(localStorage.getItem("swipeJobs")) || [];
+const jobsList = document.getElementById("jobsList");
 jobs.forEach(j=>{
   const d=document.createElement("div");
   d.className="job";
