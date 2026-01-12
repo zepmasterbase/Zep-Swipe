@@ -92,6 +92,7 @@ header{
   position:absolute;top:12px;right:12px;font-size:20px;cursor:pointer;
 }
 @keyframes fadeIn{0%{opacity:0;transform:translateY(-10px);}100%{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%{opacity:.6}50%{opacity:1}100%{opacity:.6}}
 @media(max-width:768px){.wallet-container{grid-template-columns:1fr;}}
 </style>
 </head>
@@ -107,7 +108,6 @@ header{
   <img id="profileImg" src="https://via.placeholder.com/80" alt="Profile">
   <div class="profile-info">
     <h3 id="studentName">Student Name</h3>
-    <span id="studentEmail">Email</span>
     <span id="studentUniversity">University</span>
     <span id="studentCity">City, Country</span>
     <span id="completionText">Profile Completion: 0%</span>
@@ -160,25 +160,19 @@ header{
 /* ===== USER SESSION ===== */
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
-
-if(!currentUserId || !users[currentUserId]){
-  location.href="login.html";
-}
-
+if(!currentUserId || !users[currentUserId]) location.href="login.html";
 let currentUser = users[currentUserId];
 
 /* ===== PROFILE DATA ===== */
 const profileImg = document.getElementById("profileImg");
 const studentName = document.getElementById("studentName");
-const studentEmail = document.getElementById("studentEmail");
 const studentUniversity = document.getElementById("studentUniversity");
 const studentCity = document.getElementById("studentCity");
 const completionText = document.getElementById("completionText");
 const verifiedBadge = document.getElementById("verifiedBadge");
 
 profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
-studentName.innerText = currentUser.name;
-studentEmail.innerText = currentUser.email;
+studentName.innerText = currentUser.name || "Student Name";
 studentUniversity.innerText = currentUser.university || "-";
 studentCity.innerText = `${currentUser.city || "-"}, ${currentUser.country || "-"}`;
 completionText.innerText = `Profile Completion: ${currentUser.profileCompletion || 0}%`;
@@ -190,20 +184,22 @@ const zacValue = document.getElementById("zacValue");
 const usdBalance = document.getElementById("usdBalance");
 
 function updateWallet(){
-  const zac = currentUser.walletBalance || 0;
+  // ZAC accumulates 25 per completed task
+  const zac = (currentUser.tasksCompleted || 0) * 25;
+  currentUser.walletBalance = zac; // store updated ZAC
   const usd = currentUser.usdBalance || 0;
   zacBalance.innerText = `${zac} ZAC`;
   zacValue.innerText = `~$${(zac*0.014).toFixed(2)}`;
   usdBalance.innerText = `$${usd.toFixed(2)}`;
+  users[currentUserId] = currentUser;
+  localStorage.setItem("users", JSON.stringify(users));
 }
-
 updateWallet();
 
 /* ===== MODAL ===== */
 const withdrawModal = document.getElementById("withdrawModal");
 const withdrawMethod = document.getElementById("withdrawMethod");
 const bankDetails = document.getElementById("bankDetails");
-
 function openWithdrawModal(){withdrawModal.style.display="flex";}
 function closeWithdrawModal(){withdrawModal.style.display="none";}
 withdrawMethod.addEventListener("change",()=>{
@@ -225,16 +221,13 @@ function processWithdraw(){
     details = {bankName, accountNumber};
   }
 
-  // Placeholder: Process withdrawal (Flutterwave backend ready)
   alert(`Withdrawal of $${amount.toFixed(2)} via ${method.toUpperCase()} requested.`);
-
-  // Update local storage
   currentUser.usdBalance -= amount;
   users[currentUserId] = currentUser;
   localStorage.setItem("users", JSON.stringify(users));
   updateWallet();
   closeWithdrawModal();
-});
+}
 </script>
 
 </body>
