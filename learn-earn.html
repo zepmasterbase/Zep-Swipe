@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Learn & Earn</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500,600&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -12,279 +14,247 @@
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,.08);
   --text-light:rgba(255,255,255,.85);
-  --accent:#00ff9d;
-  --streak:#ffea00;
-  --card-bg:rgba(255,255,255,.05);
 }
-*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.4;overflow-x:hidden;}
-a{text-decoration:none;color:inherit;}
-button{cursor:pointer;border:none;}
 
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;min-height:100vh;}
+
+/* HEADER */
 header{
   display:flex;justify-content:space-between;align-items:center;
-  padding:16px 20px;max-width:1200px;margin:auto;margin-top:10px;
-  border-radius:12px;background:rgba(0,0,0,0.15);backdrop-filter:blur(6px);
+  padding:18px;margin:16px;border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
 }
 .brand{
-  font-family:Orbitron;font-size:1.6rem;
+  font-family:Orbitron;font-size:1.5rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation: pulseGlow 2s infinite;
 }
 .home-btn{
-  background:var(--zep-blue);color:#050015;padding:6px 12px;border-radius:12px;font-weight:700;transition:.3s;
-}
-.home-btn:hover{transform:scale(1.05);}
-@keyframes pulseGlow{
-  0% { text-shadow: 0 0 5px var(--zep-blue),0 0 10px var(--zep-violet); transform: scale(1);}
-  50% { text-shadow: 0 0 15px var(--zep-blue),0 0 25px var(--zep-violet); transform: scale(1.05);}
-  100% { text-shadow: 0 0 5px var(--zep-blue),0 0 10px var(--zep-violet); transform: scale(1);}
-}
-
-.student-info{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:16px 20px;max-width:1200px;margin:20px auto;
-  background:var(--card-bg);border-radius:16px;backdrop-filter:blur(6px);
-}
-.student-info div{display:flex;flex-direction:column;}
-.student-info div span{font-size:0.85rem;color:var(--text-light);}
-.wallet-balance{font-weight:700;font-family:Orbitron;}
-
-.programs{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;max-width:1200px;margin:0 auto 20px;padding:0 20px;
-}
-.program-card{
-  padding:14px;border-radius:16px;text-align:center;
-  background:var(--card-bg);cursor:pointer;transition:.3s;position:relative;
-  box-shadow:0 0 10px rgba(0,240,255,0.2),0 0 10px rgba(156,77,255,0.2);
-}
-.program-card:hover{
-  transform:translateY(-3px) scale(1.05);
+  width:50px;height:50px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  cursor:pointer;color:#050015;font-size:24px;
+  display:flex;align-items:center;justify-content:center;
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  transition:.3s;
 }
-.program-card.selected{border:2px solid var(--zep-blue);box-shadow:0 0 15px var(--zep-blue);}
+.home-btn:hover{transform:scale(1.1);}
 
-.tasks-container{display:grid;grid-template-columns:1fr;gap:16px;max-width:1200px;margin:auto;padding:0 20px 40px;}
-@media(min-width:600px){.tasks-container{grid-template-columns:1fr 1fr;}}
-@media(min-width:900px){.tasks-container{grid-template-columns:1fr 1fr 1fr;}}
+/* PROFILE SUMMARY */
+.profile-container{
+  display:flex;align-items:center;gap:16px;
+  background:var(--glass);border-radius:16px;padding:16px;margin:16px;
+  border:1px solid rgba(255,255,255,.12);
+}
+.profile-container img{
+  width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;
+}
+.profile-details h3{margin-bottom:4px;}
+.profile-details span{font-size:.85rem;color:var(--text-light);display:block;}
 
+/* 21-DAY TASK GRID */
+.tasks-container{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:12px;margin:16px;
+}
 .task-card{
-  background:var(--card-bg);border-radius:16px;padding:16px;
-  position:relative;transition:.3s;display:flex;flex-direction:column;gap:8px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;
+  padding:12px;
+  display:flex;flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:.3s;
+  position:relative;
 }
-.task-card.locked{opacity:0.5;filter:grayscale(70%);}
-.task-card h4{margin-bottom:6px;font-size:1rem;}
-.task-card p{font-size:0.85rem;color:var(--text-light);}
-.task-card input[type="text"]{padding:8px;border-radius:12px;border:none;background:rgba(255,255,255,0.1);color:#fff;outline:none;}
-.task-card button{
-  padding:8px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
+.task-card:hover{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);transform:scale(1.05);}
+.task-card.completed{background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));color:#050015;}
+.task-card.completed::after{
+  content:"✅";position:absolute;top:6px;right:6px;font-size:1rem;
 }
-.task-card button:hover{
-  transform:translateY(-2px) scale(1.02);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
-}
+.task-card.locked{opacity:.4;pointer-events:none;}
 
-.progress-bar-container{max-width:1200px;margin:20px auto;padding:0 20px;}
-.progress-bar{width:100%;height:16px;background:rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;}
-.progress-bar-fill{height:100%;width:0%;background:var(--accent);border-radius:12px;transition:width 0.5s ease-in-out;}
-
-.streak-badge{
-  display:inline-block;margin-right:6px;padding:4px 8px;border-radius:12px;background:var(--streak);color:#050015;font-weight:600;font-size:0.75rem;transition:.3s;
-  transform:scale(1);
+/* TASK DETAIL PANEL */
+#taskDetail{
+  background:var(--glass);border-radius:16px;padding:16px;margin:16px;
 }
-.streak-badge.earned{animation:pop 0.5s ease forwards;}
-@keyframes pop{0%{transform:scale(0.5);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
+#taskDetail h4{margin-bottom:8px;}
+#taskDetail input[type="text"]{width:100%;padding:10px;margin:8px 0;border-radius:12px;border:none;outline:none;background:rgba(255,255,255,.05);color:#fff;}
+#taskDetail button{width:100%;padding:12px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;}
+#taskDetail button:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
 
-#verificationBanner{
-  max-width:1200px;margin:20px auto;padding:16px;border-radius:16px;text-align:center;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  cursor:pointer;font-family:Orbitron;font-weight:700;transition:.3s;
+/* VERIFIED CALL-TO-ACTION */
+#verifyContainer{
+  margin:16px;padding:16px;border-radius:16px;background:linear-gradient(135deg,rgba(0,240,255,.1),rgba(156,77,255,.1));
+  display:flex;flex-direction:column;gap:12px;align-items:center;
 }
-#verificationBanner:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+#verifyContainer button{padding:12px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;}
+#verifyContainer button:hover{transform:scale(1.05);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+#verifiedBadge{color:#00ff4d;font-weight:700;font-size:1.1rem;}
 </style>
 </head>
+
 <body>
 
 <header>
   <div class="brand">Zep Swipe</div>
-  <button class="home-btn" onclick="location.href='student-dashboard.html'">Home</button>
+  <button class="home-btn" onclick="location.href='student-dashboard.html'" title="Home">🏠</button>
 </header>
 
-<div class="student-info">
-  <div>
-    <span id="studentName"></span>
-    <span id="studentCity"></span>
-    <span id="studentCountry"></span>
-    <span id="studentUni"></span>
-    <span id="studentProgram">Program: <strong>--</strong></span>
-  </div>
-  <div class="wallet-balance">Wallet: <span id="walletBalance">0</span> ZAC</div>
-  <div><a href="profile.html">Profile</a></div>
-</div>
-
-<div class="programs" id="programsContainer"></div>
-
-<div class="progress-bar-container">
-  <div class="progress-bar">
-    <div class="progress-bar-fill" id="progressFill"></div>
+<!-- PROFILE SUMMARY -->
+<div class="profile-container">
+  <img id="profileImg" src="">
+  <div class="profile-details">
+    <h3 id="studentName"></h3>
+    <span id="studentLevel"></span>
+    <span id="tasksCompleted"></span>
+    <span id="walletBalance"></span>
+    <span id="verifiedBadge"></span>
   </div>
 </div>
 
-<div id="streakContainer" style="max-width:1200px;margin:10px auto;padding:0 20px;"></div>
-
+<!-- 21-DAY TASK GRID -->
 <div class="tasks-container" id="tasksContainer"></div>
 
-<div id="verificationBanner" onclick="payVerification()">Become a Verified Freelancer – $5</div>
+<!-- TASK DETAIL PANEL -->
+<div id="taskDetail" style="display:none;">
+  <h4 id="taskTitle"></h4>
+  <p id="taskDescription"></p>
+  <input type="text" id="taskInput" placeholder="Paste your submission link here">
+  <button onclick="completeTask()">Complete Task</button>
+</div>
+
+<!-- VERIFIED FREELANCER PAYMENT -->
+<div id="verifyContainer">
+  <div id="verifyText">Subscribe $5 to become a verified freelancer and unlock the marketplace</div>
+  <button onclick="payFlutterwave()">Pay $5 & Verify</button>
+</div>
 
 <script src="https://checkout.flutterwave.com/v3.js"></script>
 <script>
-/* ======================= */
-/* USERS + CURRENT USER SYSTEM */
-let users = JSON.parse(localStorage.getItem("users")) || [];
+/* ===============================
+   SESSION & USER
+================================*/
+let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
-let currentUser = users.find(u=>u.id===currentUserId);
+if(!currentUserId || !users[currentUserId]) location.href="login.html";
 
-if(!currentUser) location.href="login.html";
+let currentUser = users[currentUserId];
 
-/* INITIAL INFO */
-document.getElementById('studentName').innerText = currentUser.name;
-document.getElementById('studentCity').innerText = "City: " + (currentUser.city||"--");
-document.getElementById('studentCountry').innerText = "Country: " + (currentUser.country||"--");
-document.getElementById('studentUni').innerText = currentUser.university;
-document.getElementById('studentProgram').querySelector('strong').innerText = currentUser.program || '--';
-document.getElementById('walletBalance').innerText = currentUser.walletBalance || 0;
+/* ===============================
+   PROFILE DISPLAY
+================================*/
+const profileImg = document.getElementById("profileImg");
+const studentName = document.getElementById("studentName");
+const studentLevel = document.getElementById("studentLevel");
+const tasksCompletedSpan = document.getElementById("tasksCompleted");
+const walletBalance = document.getElementById("walletBalance");
+const verifiedBadge = document.getElementById("verifiedBadge");
 
-/* PROGRAMS */
-const programs = ["Virtual Assistant","Content Creator"];
-const programsContainer = document.getElementById('programsContainer');
-programs.forEach(prog=>{
-  const card = document.createElement('div');
-  card.className='program-card';
-  if(currentUser.program===prog) card.classList.add('selected');
-  card.innerText = prog;
-  card.onclick = ()=>{
-    currentUser.program = prog;
-    updateUser();
-    document.querySelectorAll('.program-card').forEach(c=>c.classList.remove('selected'));
-    card.classList.add('selected');
-    document.getElementById('studentProgram').querySelector('strong').innerText = prog;
-    renderTasks(prog);
-  }
-  programsContainer.appendChild(card);
-});
+function updateProfileUI(){
+  profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
+  studentName.innerText = currentUser.name;
+  studentLevel.innerText = currentUser.level;
+  tasksCompletedSpan.innerText = `Tasks Completed: ${currentUser.tasksCompleted || 0}/21`;
+  walletBalance.innerText = `Wallet: ${currentUser.walletBalance || 0} ZAC`;
+  verifiedBadge.innerText = currentUser.verified ? "✅ Verified Freelancer" : "";
+}
+updateProfileUI();
 
-/* TASKS */
-const taskTemplates = {
-  "Virtual Assistant":[
-    "Record an intro video of yourself, sign up on www.zora.co, upload the video to your profile, copy the link, and submit it on Zep Swipe to complete the task.",
-    "Organize your email inbox efficiently",
-    "Create a daily to-do list"
-  ],
-  "Content Creator":[
-    "Create a 30-second introduction video for your portfolio",
-    "Draft a content plan for a week",
-    "Publish one social media post"
-  ]
-};
+/* ===============================
+   TASK GRID
+================================*/
+const tasksContainer = document.getElementById("tasksContainer");
+const taskDetail = document.getElementById("taskDetail");
+const taskTitle = document.getElementById("taskTitle");
+const taskDescription = document.getElementById("taskDescription");
+const taskInput = document.getElementById("taskInput");
 
-const tasksContainer = document.getElementById('tasksContainer');
-const progressFill = document.getElementById('progressFill');
-const streakContainer = document.getElementById('streakContainer');
+if(!currentUser.tasks) currentUser.tasks = Array(21).fill(false);
+if(!currentUser.tasksCompleted) currentUser.tasksCompleted = 0;
 
-function renderTasks(program){
-  tasksContainer.innerHTML='';
-  streakContainer.innerHTML='';
-  if(!currentUser.tasksCompleted) currentUser.tasksCompleted=[];
-  const programTasks = taskTemplates[program] || [];
-  for(let day=1; day<=programTasks.length; day++){
-    const taskCard = document.createElement('div');
-    taskCard.className='task-card';
-    const completed = currentUser.tasksCompleted.includes(`${program}-${day}`);
-    if(day>1 && !currentUser.tasksCompleted.includes(`${program}-${day-1}`)) taskCard.classList.add('locked');
-    taskCard.innerHTML=`
-      <h4>Day ${day}</h4>
-      <p>${programTasks[day-1]}</p>
-      <input type="text" placeholder="Submit Zora link" ${taskCard.classList.contains('locked')?'disabled':''} id="taskInput${day}">
-      <button ${taskCard.classList.contains('locked')?'disabled':''}>Submit (+25 ZAC)</button>
-    `;
-    tasksContainer.appendChild(taskCard);
+function renderTasks(){
+  tasksContainer.innerHTML = "";
+  currentUser.tasks.forEach((completed,i)=>{
+    const card = document.createElement("div");
+    card.className = "task-card";
+    if(completed) card.classList.add("completed");
+    if(i > 0 && !currentUser.tasks[i-1]) card.classList.add("locked");
+    card.innerHTML = `<span>Day ${i+1}</span>`;
+    card.addEventListener('click',()=>openTask(i));
+    tasksContainer.appendChild(card);
+  });
+}
+renderTasks();
 
-    if(completed){
-      taskCard.querySelector('button').disabled=true;
-      taskCard.querySelector('input').disabled=true;
-      addStreakBadge(day);
-    }
+let currentTaskIndex = null;
 
-    if(!taskCard.classList.contains('locked')){
-      const btn = taskCard.querySelector('button');
-      btn.onclick = ()=>{
-        const input = document.getElementById(`taskInput${day}`);
-        if(!input.value.trim()){ alert("Please submit a valid Zora link"); return;}
-        const taskKey = `${program}-${day}`;
-        if(!currentUser.tasksCompleted.includes(taskKey)) currentUser.tasksCompleted.push(taskKey);
-        currentUser.walletBalance = (currentUser.walletBalance||0)+25;
-        updateUser();
-        btn.disabled = true; input.disabled = true;
-        addStreakBadge(day);
-        const nextTask = tasksContainer.children[day];
-        if(nextTask){
-          nextTask.classList.remove('locked');
-          nextTask.querySelector('button').disabled=false;
-          nextTask.querySelector('input').disabled=false;
-        }
-        progressFill.style.width=`${(currentUser.tasksCompleted.filter(t=>t.startsWith(program)).length/programTasks.length)*100}%`;
-        if(currentUser.tasksCompleted.filter(t=>t.startsWith(program)).length===programTasks.length && !currentUser.verified) document.getElementById('verificationBanner').style.display='block';
-      }
-    }
-  }
-  progressFill.style.width=`${(currentUser.tasksCompleted.filter(t=>t.startsWith(program)).length/programTasks.length)*100}%`;
+function openTask(index){
+  currentTaskIndex = index;
+  taskDetail.style.display = "block";
+  taskTitle.innerText = `Day ${index+1} Task`;
+  taskDescription.innerText = "Record an intro video of yourself, sign up on www.zora.co, upload the video to your profile, copy the link, and submit it here to complete the task.";
+  taskInput.value = "";
 }
 
-function addStreakBadge(day){
-  const badge = document.createElement('span');
-  badge.className='streak-badge earned';
-  badge.innerText=`Day ${day} ✅`;
-  streakContainer.appendChild(badge);
-}
-
-/* UPDATE USER IN LOCALSTORAGE */
-function updateUser(){
-  const idx = users.findIndex(u=>u.id===currentUser.id);
-  if(idx>-1) users[idx] = currentUser;
+/* ===============================
+   COMPLETE TASK
+================================*/
+function completeTask(){
+  const link = taskInput.value.trim();
+  if(!link) return alert("Please paste your submission link");
+  
+  currentUser.tasks[currentTaskIndex] = true;
+  currentUser.tasksCompleted = currentUser.tasks.filter(t=>t).length;
+  currentUser.walletBalance = (currentUser.walletBalance || 0) + 10; // Example ZAC reward
+  users[currentUserId] = currentUser;
   localStorage.setItem("users", JSON.stringify(users));
-  localStorage.setItem("currentUserId", currentUser.id);
-  document.getElementById('walletBalance').innerText = currentUser.walletBalance;
+  updateProfileUI();
+  renderTasks();
+  alert("Task completed! +10 ZAC earned");
+  
+  // Hide detail panel
+  taskDetail.style.display = "none";
 }
 
-/* INITIAL RENDER */
-if(currentUser.program) renderTasks(currentUser.program);
+/* ===============================
+   FLUTTERWAVE PAYMENT
+================================*/
+function payFlutterwave(){
+  if(currentUser.tasksCompleted < 21){
+    return alert("Complete all 21 days first to verify");
+  }
 
-/* ================= FLUTTERWAVE PAYMENT INTEGRATION */
-function payVerification(){
-  if(currentUser.verified){ alert("Already verified!"); return;}
   FlutterwaveCheckout({
-    public_key: "FLWPUBK_TEST-xxxxxxxxxxxx", // replace with your public key
-    tx_ref: "VERIF-"+Date.now(),
+    public_key: "FLWPUBK_TEST-xxxxxxxxxxxxxxxxxxxx", // replace with your Flutterwave public key
+    tx_ref: "ZEP-"+Math.floor(Math.random()*1000000),
     amount: 5,
     currency: "USD",
     payment_options: "card,mobilemoney",
     customer:{
-      email: currentUser.email || "student@example.com",
-      name: currentUser.name || "Student"
+      email: currentUser.email,
+      name: currentUser.name
     },
     callback: function(data){
-      if(data.status==="successful"){
-        currentUser.verified = true;
-        updateUser();
-        alert("Payment Successful! You are now a verified freelancer ✅");
-      } else { alert("Payment failed. Please try again."); }
+      // Payment success
+      currentUser.verified = true;
+      users[currentUserId] = currentUser;
+      localStorage.setItem("users", JSON.stringify(users));
+      updateProfileUI();
+      alert("You are now a verified freelancer!");
     },
-    onclose: function(){ console.log("Payment closed"); }
+    onclose: function() {},
+    customizations:{
+      title: "Zep Swipe Verification",
+      description: "Verify as freelancer to unlock marketplace",
+      logo: "https://zepawipe.com/logo.png"
+    }
   });
 }
 </script>
+
 </body>
 </html>
