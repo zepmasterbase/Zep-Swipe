@@ -1,203 +1,222 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>Zep Swipe — Student Profile</title>  
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">  
-<style>  
-:root{  
-  --zep-blue:#00f0ff;  
-  --zep-violet:#9c4dff;  
-  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);  
-  --glass:rgba(255,255,255,0.08);  
-  --text-light:rgba(255,255,255,0.85);  
-}  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,.08);
+  --text-light:rgba(255,255,255,.85);
+}
+
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;min-height:100vh;}
+
+/* HEADER */
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 24px;margin:16px;
+  border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
+  box-shadow:0 0 20px rgba(0,240,255,.2),0 0 20px rgba(156,77,255,.2);
+}
+.brand{
+  font-family:Orbitron;
+  font-size:1.6rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.home-btn{
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  padding:10px 16px;
+  border:none;
+  border-radius:12px;
+  font-weight:700;
+  font-family:Orbitron;
+  cursor:pointer;
+  box-shadow:0 4px 8px rgba(0,240,255,.4),0 4px 8px rgba(156,77,255,.4);
+  transition:.3s;
+  perspective:500px;
+}
+.home-btn:hover{
+  transform:translateY(-3px) rotateX(10deg) scale(1.05);
+  box-shadow:0 8px 16px rgba(0,240,255,.6),0 8px 16px rgba(156,77,255,.6);
+}
+
+/* PROFILE CONTAINER */
+.profile-container{
+  max-width:400px;
+  margin:40px auto;
+  background:var(--glass);
+  border-radius:16px;
+  padding:24px;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 0 36px rgba(156,77,255,.2);
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+/* PROFILE IMAGE */
+.profile-image{
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  border:3px solid rgba(255,255,255,.3);
+  margin:0 auto;
+  object-fit:cover;
+  transition:.3s;
+}
+.profile-image:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+}
+
+/* INPUTS */
+.profile-container input[type="text"],
+.profile-container input[type="email"],
+.profile-container input[type="file"]{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+  margin-bottom:12px;
+  background:rgba(255,255,255,0.05);
+  color:#fff;
+}
+input::placeholder{color:var(--text-light);}
+
+/* SAVE BUTTON */
+.profile-container button.save-btn{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-family:Orbitron;
+  font-weight:700;
+  cursor:pointer;
+  transition:.3s;
+}
+.profile-container button.save-btn:hover{
+  transform:translateY(-2px) scale(1.02);
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+}
+
+span.info-text{
+  font-size:0.85rem;
+  color:var(--text-light);
+  text-align:center;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Zep Swipe</div>
+  <button class="home-btn" onclick="goHome()">🏠 Home</button>
+</header>
+
+<div class="profile-container">
+  <img src="" alt="Profile Image" class="profile-image" id="profileImg">
   
-*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}  
-  
-body{  
-  background:var(--bg);  
-  color:#fff;  
-  min-height:100vh;  
-}  
-  
-/* HEADER */  
-header{  
-  display:flex;  
-  justify-content:space-between;  
-  align-items:center;  
-  padding:18px;  
-  margin:16px;  
-  border-radius:16px;  
-  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));  
-  backdrop-filter:blur(14px);  
-}  
-.brand{  
-  font-family:Orbitron;  
-  font-size:1.5rem;  
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));  
-  -webkit-background-clip:text;  
-  -webkit-text-fill-color:transparent;  
-}  
-.home-btn{  
-  background:rgba(255,255,255,.1);  
-  border:none;  
-  border-radius:50%;  
-  width:38px;  
-  height:38px;  
-  cursor:pointer;  
-  color:#fff;  
-  font-size:16px;  
-  transition:.3s;  
-}  
-.home-btn:hover{  
-  background:rgba(0,240,255,.25);  
-}  
-  
-/* PROFILE CONTAINER */  
-.profile-container{  
-  max-width:400px;  
-  margin:20px auto;  
-  background:var(--glass);  
-  border-radius:16px;  
-  padding:20px;  
-  border:1px solid rgba(255,255,255,.12);  
-  box-shadow:0 0 36px rgba(156,77,255,.2);  
-  display:flex;  
-  flex-direction:column;  
-  gap:16px;  
-}  
-  
-/* PROFILE IMAGE */  
-.profile-image{  
-  width:120px;  
-  height:120px;  
-  border-radius:50%;  
-  border:2px solid rgba(255,255,255,.3);  
-  margin:0 auto;  
-  object-fit:cover;  
-}  
-  
-/* INPUTS */  
-.profile-container input[type="text"],  
-.profile-container input[type="email"],  
-.profile-container input[type="file"]{  
-  width:100%;  
-  padding:12px;  
-  border-radius:12px;  
-  border:none;  
-  outline:none;  
-  margin-bottom:12px;  
-}  
-  
-/* SAVE BUTTON */  
-.profile-container button{  
-  width:100%;  
-  padding:12px;  
-  border:none;  
-  border-radius:999px;  
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));  
-  color:#050015;  
-  font-family:Orbitron;  
-  cursor:pointer;  
-  transition:.3s;  
-}  
-.profile-container button:hover{  
-  transform:translateY(-2px);  
-  box-shadow:0 0 36px rgba(156,77,255,.45);  
-}  
-  
-span{  
-  font-size:0.85rem;  
-  color:var(--text-light);  
-}  
-</style>  
-</head>  
-<body>  
-  
-<script>  
-/* SESSION PROTECTION */  
-const user = JSON.parse(localStorage.getItem("currentUser"));  
-if(!user){  
-  window.location.href = "auth.html";  
-}  
-</script>  
-  
-<header>  
-  <div class="brand">Zep Swipe</div>  
-  <button class="home-btn" onclick="goHome()" title="Home">🏠</button>  
-</header>  
-  
-<div class="profile-container">  
-  <img src="" alt="Profile Image" class="profile-image" id="profileImg">  
-    
-  <label for="imgUpload" style="text-align:center; display:block; cursor:pointer;">📷 Upload Profile Image</label>  
-  <input type="file" id="imgUpload" accept="image/*">  
-  
-  <input type="text" id="name" placeholder="Full Name" value="">  
-  <input type="email" id="email" placeholder="Email" value="">  
-  <input type="text" id="level" placeholder="Level (e.g., Beginner Freelancer)" value="">  
-  <input type="text" id="country" placeholder="Country" value="">  
-  <input type="text" id="city" placeholder="City" value="">  
-  <input type="text" id="university" placeholder="University Name" value="">  
-      
-  <button onclick="saveProfile()">Save Profile</button>  
-  <span>Profile completeness will sync across dashboard and wallet.</span>  
-</div>  
-  
-<script>  
-// Load current user data  
-const profileImg = document.getElementById("profileImg");  
-const nameInput = document.getElementById("name");  
-const emailInput = document.getElementById("email");  
-const levelInput = document.getElementById("level");  
-const countryInput = document.getElementById("country");  
-const cityInput = document.getElementById("city");  
-const universityInput = document.getElementById("university");  
-const imgUpload = document.getElementById("imgUpload");  
-  
-function loadUser(){  
-  if(user){  
-    nameInput.value = user.name || '';  
-    emailInput.value = user.email || '';  
-    levelInput.value = user.level || 'Beginner Freelancer';  
-    countryInput.value = user.country || '';  
-    cityInput.value = user.city || '';  
-    universityInput.value = user.university || '';  
-    profileImg.src = user.profileImage || 'https://via.placeholder.com/120';  
-  }  
-}  
-  
-imgUpload.addEventListener('change', (e)=>{  
-  const file = e.target.files[0];  
-  if(file){  
-    const reader = new FileReader();  
-    reader.onload = function(event){  
-      profileImg.src = event.target.result;  
-      user.profileImage = event.target.result;  
-      localStorage.setItem("currentUser", JSON.stringify(user));  
-    }  
-    reader.readAsDataURL(file);  
-  }  
-});  
-  
-function saveProfile(){  
-  user.name = nameInput.value.trim() || user.name;  
-  user.email = emailInput.value.trim() || user.email;  
-  user.level = levelInput.value.trim() || user.level;  
-  user.country = countryInput.value.trim() || user.country;  
-  user.city = cityInput.value.trim() || user.city;  
-  user.university = universityInput.value.trim() || user.university;  
-  localStorage.setItem("currentUser", JSON.stringify(user));  
-  alert("Profile saved successfully!");  
-}  
-  
-function goHome(){  
-  window.location.href = "student-dashboard.html";  
-}  
-  
-loadUser();  
-</script>  
-</body>  
+  <label for="imgUpload" style="text-align:center;display:block;cursor:pointer;">📷 Upload Profile Image</label>
+  <input type="file" id="imgUpload" accept="image/*">
+
+  <input type="text" id="name" placeholder="Full Name">
+  <input type="email" id="email" placeholder="Email">
+  <input type="text" id="level" placeholder="Level (e.g., Beginner Freelancer)">
+  <input type="text" id="country" placeholder="Country">
+  <input type="text" id="city" placeholder="City">
+  <input type="text" id="university" placeholder="University Name">
+
+  <button class="save-btn" onclick="saveProfile()">Save Profile</button>
+  <span class="info-text">Profile completeness will sync across dashboard and wallet.</span>
+</div>
+
+<script>
+/* ================= SESSION PROTECTION ================= */
+let users = JSON.parse(localStorage.getItem("users")) || [];
+let currentUserId = localStorage.getItem("currentUserId");
+let currentUser = users.find(u=>u.id===currentUserId);
+if(!currentUser) window.location.href="login.html";
+
+/* PROFILE ELEMENTS */
+const profileImg = document.getElementById("profileImg");
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const levelInput = document.getElementById("level");
+const countryInput = document.getElementById("country");
+const cityInput = document.getElementById("city");
+const universityInput = document.getElementById("university");
+const imgUpload = document.getElementById("imgUpload");
+
+/* LOAD CURRENT DATA */
+function loadUser(){
+  if(currentUser){
+    profileImg.src = currentUser.profileImage || 'https://via.placeholder.com/140';
+    nameInput.value = currentUser.name || '';
+    emailInput.value = currentUser.email || '';
+    levelInput.value = currentUser.level || '';
+    countryInput.value = currentUser.country || '';
+    cityInput.value = currentUser.city || '';
+    universityInput.value = currentUser.university || '';
+  }
+}
+
+/* IMAGE UPLOAD */
+imgUpload.addEventListener('change',(e)=>{
+  const file = e.target.files[0];
+  if(file){
+    const reader = new FileReader();
+    reader.onload = function(event){
+      profileImg.src = event.target.result;
+      currentUser.profileImage = event.target.result;
+      updateUser();
+    }
+    reader.readAsDataURL(file);
+  }
+});
+
+/* SAVE PROFILE */
+function saveProfile(){
+  currentUser.name = nameInput.value.trim() || currentUser.name;
+  currentUser.email = emailInput.value.trim() || currentUser.email;
+  currentUser.level = levelInput.value.trim() || currentUser.level;
+  currentUser.country = countryInput.value.trim() || currentUser.country;
+  currentUser.city = cityInput.value.trim() || currentUser.city;
+  currentUser.university = universityInput.value.trim() || currentUser.university;
+  updateUser();
+  alert("Profile saved successfully!");
+}
+
+/* UPDATE LOCAL STORAGE */
+function updateUser(){
+  const idx = users.findIndex(u=>u.id===currentUser.id);
+  if(idx>-1) users[idx] = currentUser;
+  localStorage.setItem("users", JSON.stringify(users));
+  localStorage.setItem("currentUserId", currentUser.id);
+}
+
+/* HOME BUTTON */
+function goHome(){
+  window.location.href="student-dashboard.html";
+}
+
+/* INITIAL LOAD */
+loadUser();
+</script>
+
+</body>
 </html>
