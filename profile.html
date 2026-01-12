@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Student Profile</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 
 <style>
@@ -14,6 +13,7 @@
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,.08);
   --text-light:rgba(255,255,255,.85);
+  --green:#00ff94;
 }
 
 /* RESET */
@@ -26,195 +26,236 @@ header{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  padding:16px;
   margin-bottom:20px;
+  border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
 }
-.brand{
-  font-family:Orbitron;
-  font-size:1.6rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
+.brand{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .home-btn{
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  border:none;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  border:none;border-radius:50%;
+  width:50px;height:50px;cursor:pointer;
+  font-size:20px;
   color:#050015;
-  font-size:24px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  box-shadow:0 6px 12px rgba(0,240,255,.3),0 12px 24px rgba(156,77,255,.3);
-  transition: all 0.3s ease;
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  display:flex;align-items:center;justify-content:center;
+  transition:.3s;
 }
-.home-btn:hover{
-  transform:translateY(-4px) scale(1.05);
-  box-shadow:0 8px 16px rgba(0,240,255,.5),0 16px 32px rgba(156,77,255,.5);
-}
+.home-btn:hover{transform:scale(1.1);}
 
 /* PROFILE CARD */
 .profile-container{
-  width:100%;
   max-width:450px;
+  width:100%;
   background:var(--glass);
   border-radius:20px;
   padding:25px;
   border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 0 40px rgba(156,77,255,.2);
-  display:flex;
-  flex-direction:column;
-  gap:16px;
+  box-shadow:0 0 36px rgba(156,77,255,.2);
+  display:flex;flex-direction:column;gap:18px;
 }
 
 /* PROFILE IMAGE */
 .profile-image{
-  width:130px;
-  height:130px;
-  border-radius:50%;
+  width:130px;height:130px;border-radius:50%;
   border:3px solid rgba(255,255,255,.3);
   margin:0 auto;
   object-fit:cover;
   cursor:pointer;
   transition:.3s;
 }
-.profile-image:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
-}
+.profile-image:hover{transform:scale(1.05);box-shadow:0 0 25px var(--zep-blue),0 0 45px var(--zep-violet);}
 
 /* INPUTS */
-.profile-container input[type="text"],
-.profile-container input[type="email"],
-.profile-container input[type="file"]{
-  width:100%;
-  padding:14px;
-  border-radius:12px;
-  border:none;
-  outline:none;
-  margin-bottom:12px;
-  background:rgba(255,255,255,0.05);
-  color:#fff;
+.profile-container input[type="text"], 
+.profile-container input[type="email"]{
+  width:100%;padding:12px;border-radius:12px;border:none;
+  outline:none;margin-bottom:12px;background:rgba(255,255,255,0.05);color:#fff;
 }
-input::placeholder{color:rgba(255,255,255,.6);}
+input::placeholder{color:rgba(255,255,255,0.6);}
 
 /* SAVE BUTTON */
 .profile-container button{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:999px;
+  width:100%;padding:14px;border:none;border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  font-family:Orbitron;
-  cursor:pointer;
-  transition:.3s;
+  color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
 }
-.profile-container button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 36px rgba(156,77,255,.45);
+.profile-container button:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
+
+/* VERIFIED BADGE */
+.verified-badge{
+  display:flex;align-items:center;gap:8px;
+  justify-content:center;
+  font-family:Orbitron;font-size:14px;
+  background:linear-gradient(90deg,var(--green),var(--zep-blue));
+  padding:6px 12px;border-radius:12px;
+  color:#050015;margin:auto;
+  animation:badgePulse 2s infinite;
+}
+@keyframes badgePulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.05);}
+  100%{transform:scale(1);}
 }
 
-span{font-size:0.85rem;color:var(--text-light);text-align:center;display:block;}
+/* PROGRESS BAR */
+.progress-container{
+  width:100%;height:14px;background:rgba(255,255,255,0.1);
+  border-radius:12px;overflow:hidden;margin-bottom:10px;
+}
+.progress-bar{
+  height:100%;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  width:0%;transition:width .4s ease;
+  border-radius:12px;
+  animation:progressPulse 2s infinite;
+}
+@keyframes progressPulse{0%,100%{opacity:0.7;}50%{opacity:1;}}
+
+/* VERIFICATION BUTTON */
+#verifyBtn{display:none;margin-top:10px;background:linear-gradient(90deg,var(--green),var(--zep-blue));}
+
+/* RESPONSIVE */
+@media(max-width:480px){.profile-container{padding:18px;width:100%;}}
 </style>
 </head>
 <body>
 
 <header>
   <div class="brand">Zep Swipe</div>
-  <button class="home-btn" onclick="goHome()" title="Home">🏠</button>
+  <button class="home-btn" title="Home" onclick="location.href='student-dashboard.html'">🏠</button>
 </header>
 
 <div class="profile-container">
   <img src="https://via.placeholder.com/130" alt="Profile Image" class="profile-image" id="profileImg">
-
-  <label for="imgUpload" style="text-align:center; display:block; cursor:pointer;">📷 Upload Profile Image</label>
-  <input type="file" id="imgUpload" accept="image/*">
-
+  <input type="file" id="imgUpload" accept="image/*" style="display:none">
+  
   <input type="text" id="name" placeholder="Full Name">
   <input type="email" id="email" placeholder="Email">
-  <input type="text" id="level" placeholder="Level (e.g., Beginner Freelancer)">
+  <input type="text" id="university" placeholder="University">
   <input type="text" id="country" placeholder="Country">
   <input type="text" id="city" placeholder="City">
-  <input type="text" id="university" placeholder="University Name (Undergraduate)">
+  <input type="text" id="level" placeholder="Level (e.g., Beginner Freelancer)">
+
+  <div class="progress-container">
+    <div class="progress-bar" id="profileProgress"></div>
+  </div>
+  <span id="completionText" style="text-align:center;display:block;">Profile Completion: 0%</span>
+
+  <div id="verifiedBadge" class="verified-badge" style="display:none;">✔ Verified Freelancer</div>
+  <button id="verifyBtn" onclick="payForVerification()">Pay $5 for Freelancer Verification</button>
 
   <button onclick="saveProfile()">Save Profile</button>
-  <span>Profile completeness will sync across dashboard, wallet, and tasks.</span>
 </div>
 
 <script>
-// ======= SESSION CHECK =======
-let users = JSON.parse(localStorage.getItem("users")) || [];
+let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
+if(!currentUserId || !users[currentUserId]) location.href="login.html";
+let currentUser = users[currentUserId];
 
-if(!currentUserId){
-  location.href = "login.html";
-}
-
-let currentUser = users.find(u => u.id === currentUserId);
-if(!currentUser){
-  location.href = "login.html";
-}
-
-// ======= ELEMENTS =======
+// DOM Elements
 const profileImg = document.getElementById("profileImg");
+const imgUpload = document.getElementById("imgUpload");
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
-const levelInput = document.getElementById("level");
+const universityInput = document.getElementById("university");
 const countryInput = document.getElementById("country");
 const cityInput = document.getElementById("city");
-const universityInput = document.getElementById("university");
-const imgUpload = document.getElementById("imgUpload");
+const levelInput = document.getElementById("level");
+const profileProgress = document.getElementById("profileProgress");
+const completionText = document.getElementById("completionText");
+const verifiedBadge = document.getElementById("verifiedBadge");
+const verifyBtn = document.getElementById("verifyBtn");
 
-// ======= LOAD USER DATA =======
-function loadUser() {
-  profileImg.src = currentUser.profileImage || 'https://via.placeholder.com/130';
-  nameInput.value = currentUser.name || '';
-  emailInput.value = currentUser.email || '';
-  levelInput.value = currentUser.level || 'Beginner Freelancer';
-  countryInput.value = currentUser.country || '';
-  cityInput.value = currentUser.city || '';
-  universityInput.value = currentUser.university || '';
+// Load user info
+function loadUser(){
+  profileImg.src = currentUser.profileImage || "https://via.placeholder.com/130";
+  nameInput.value = currentUser.name || "";
+  emailInput.value = currentUser.email || "";
+  universityInput.value = currentUser.university || "";
+  countryInput.value = currentUser.country || "";
+  cityInput.value = currentUser.city || "";
+  levelInput.value = currentUser.level || "Beginner Freelancer";
+  updateCompletion();
+  updateVerifiedBadge();
 }
-
 loadUser();
 
-// ======= UPLOAD PROFILE IMAGE =======
-imgUpload.addEventListener('change', (e) => {
+// Upload profile image
+profileImg.addEventListener('click',()=>imgUpload.click());
+imgUpload.addEventListener('change',(e)=>{
   const file = e.target.files[0];
   if(file){
     const reader = new FileReader();
-    reader.onload = function(event){
-      profileImg.src = event.target.result;
-      currentUser.profileImage = event.target.result;
-      users = users.map(u => u.id === currentUserId ? currentUser : u);
-      localStorage.setItem("users", JSON.stringify(users));
+    reader.onload = function(ev){
+      profileImg.src = ev.target.result;
+      currentUser.profileImage = ev.target.result;
+      users[currentUserId] = currentUser;
+      localStorage.setItem("users",JSON.stringify(users));
     }
     reader.readAsDataURL(file);
   }
 });
 
-// ======= SAVE PROFILE =======
-function saveProfile() {
+// Save profile info
+function saveProfile(){
   currentUser.name = nameInput.value.trim() || currentUser.name;
   currentUser.email = emailInput.value.trim() || currentUser.email;
-  currentUser.level = levelInput.value.trim() || currentUser.level;
+  currentUser.university = universityInput.value.trim() || currentUser.university;
   currentUser.country = countryInput.value.trim() || currentUser.country;
   currentUser.city = cityInput.value.trim() || currentUser.city;
-  currentUser.university = universityInput.value.trim() || currentUser.university;
-
-  users = users.map(u => u.id === currentUserId ? currentUser : u);
-  localStorage.setItem("users", JSON.stringify(users));
-
+  currentUser.level = levelInput.value.trim() || currentUser.level;
+  users[currentUserId] = currentUser;
+  localStorage.setItem("users",JSON.stringify(users));
   alert("Profile saved successfully!");
+  updateCompletion();
+  updateVerifiedBadge();
 }
 
-// ======= HOME BUTTON =======
-function goHome() {
-  window.location.href = "student-dashboard.html";
+// Profile Completion
+function updateCompletion(){
+  let filled = 0;
+  [nameInput,emailInput,universityInput,countryInput,cityInput,levelInput].forEach(i=>{if(i.value.trim()!=="") filled++;});
+  let percent = Math.round((filled/6)*100);
+  profileProgress.style.width = percent+"%";
+  completionText.innerText = `Profile Completion: ${percent}%`;
+  // Show verify button only if 21-day Learn & Earn complete and not verified
+  if(currentUser.tasksCompleted>=21 && !currentUser.verified){
+    verifyBtn.style.display = "block";
+  } else {
+    verifyBtn.style.display = "none";
+  }
 }
+
+// Verified Badge
+function updateVerifiedBadge(){
+  if(currentUser.verified){
+    verifiedBadge.style.display = "flex";
+    verifyBtn.style.display = "none";
+  } else {
+    verifiedBadge.style.display = "none";
+  }
+}
+
+// Mock Flutterwave Payment Integration
+function payForVerification(){
+  // Replace with actual Flutterwave integration
+  let confirmPayment = confirm("Pay $5 for Freelancer Verification?");
+  if(confirmPayment){
+    currentUser.verified = true;
+    users[currentUserId] = currentUser;
+    localStorage.setItem("users",JSON.stringify(users));
+    alert("Payment successful! You are now verified.");
+    updateVerifiedBadge();
+  }
+}
+
+// Update completion on input
+[nameInput,emailInput,universityInput,countryInput,cityInput,levelInput].forEach(i=>{
+  i.addEventListener('input',updateCompletion);
+});
 </script>
 </body>
 </html>
