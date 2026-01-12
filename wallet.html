@@ -1,325 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Wallet</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,0.08);
-  --text-light:rgba(255,255,255,0.85);
-  --success:#33ffb1;
-  --danger:#ff5f7a;
+  --glass:rgba(255,255,255,.08);
+  --text-light:rgba(255,255,255,.85);
 }
 
-*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
-
-body{
-  background:var(--bg);
-  color:#fff;
-  min-height:100vh;
-}
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;min-height:100vh;}
 
 /* HEADER */
 header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 22px;
-  margin:16px;
-  border-radius:16px;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px;margin:16px;border-radius:16px;
   background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
   backdrop-filter:blur(14px);
 }
 .brand{
-  font-family:Orbitron;
-  font-size:1.4rem;
+  font-family:Orbitron;font-size:1.5rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 .home-btn{
-  border:none;
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  cursor:pointer;
-  background:rgba(255,255,255,.12);
-  color:#fff;
-  font-size:18px;
+  background:rgba(255,255,255,.1);border:none;border-radius:50%;
+  width:38px;height:38px;color:#fff;cursor:pointer;
+  transition:.3s;
 }
-.home-btn:hover{background:rgba(0,240,255,.3)}
+.home-btn:hover{background:rgba(0,240,255,.25);}
 
-/* MAIN */
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:16px;
-}
-
-/* BALANCE CARD */
-.balance-card{
-  background:linear-gradient(135deg, rgba(0,240,255,.18), rgba(156,77,255,.18));
-  border-radius:22px;
-  padding:28px;
-  box-shadow:0 0 40px rgba(156,77,255,.35);
-  text-align:center;
-  margin-bottom:24px;
-}
-.balance-card h2{
-  font-family:Orbitron;
-  letter-spacing:1px;
-}
-.zac{
-  font-size:3rem;
-  font-family:Orbitron;
-  margin:10px 0;
-}
-.usd{
-  opacity:.8;
-  margin-bottom:20px;
-}
-.actions{
-  display:flex;
-  gap:12px;
-  justify-content:center;
-  flex-wrap:wrap;
-}
-.actions button{
-  padding:12px 22px;
-  border:none;
-  border-radius:999px;
-  cursor:pointer;
-  font-weight:600;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-}
-.actions button.secondary{
-  background:rgba(255,255,255,.12);
-  color:#fff;
-}
-
-/* GRID */
-.grid{
+/* BALANCES SECTION */
+.wallet-section{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   gap:16px;
-}
-@media(max-width:768px){
-  .grid{grid-template-columns:1fr}
+  max-width:1200px;
+  margin:24px auto;
 }
 
-/* CARDS */
-.card{
+.wallet-card{
   background:var(--glass);
-  border-radius:18px;
+  border-radius:16px;
   padding:20px;
   border:1px solid rgba(255,255,255,.12);
-}
-.card h3{
-  font-family:Orbitron;
-  margin-bottom:12px;
-}
-
-/* HISTORY */
-.tx{
+  box-shadow:0 0 20px rgba(0,240,255,.2),0 0 40px rgba(156,77,255,.2);
   display:flex;
-  justify-content:space-between;
-  padding:10px 0;
-  border-bottom:1px solid rgba(255,255,255,.08);
+  flex-direction:column;
+  gap:12px;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  transition:.3s;
 }
-.tx:last-child{border-bottom:none}
-.positive{color:var(--success)}
-.negative{color:var(--danger)}
+.wallet-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 30px rgba(0,240,255,.35),0 0 60px rgba(156,77,255,.35);
+}
+.wallet-card::before{
+  content:'';
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background:linear-gradient(120deg, rgba(0,240,255,0.2), rgba(156,77,255,0.2));
+  z-index:0;
+  animation:glow 2.5s infinite alternate;
+  border-radius:16px;
+}
+@keyframes glow{
+  0%{opacity:0.3;}
+  100%{opacity:0.6;}
+}
 
-/* MODAL */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:99;
+.wallet-card-content{
+  position:relative;
+  z-index:1;
 }
-.modal-box{
-  background:#0a0620;
-  border-radius:18px;
-  padding:24px;
-  width:90%;
-  max-width:420px;
-  box-shadow:0 0 40px rgba(156,77,255,.4);
-}
-.modal-box h3{
-  font-family:Orbitron;
-  margin-bottom:12px;
-}
-.modal-box input, .modal-box select{
-  width:100%;
-  padding:12px;
-  margin-bottom:12px;
-  border-radius:12px;
-  border:none;
-}
-.modal-box button{
-  width:100%;
+.wallet-card h3{font-family:Orbitron;margin-bottom:6px;}
+.wallet-card span{font-size:.85rem;color:var(--text-light);}
+
+/* WITHDRAWAL BUTTONS */
+.withdraw-btn{
   padding:12px;
   border:none;
   border-radius:999px;
-  font-weight:600;
-  cursor:pointer;
+  font-family:Orbitron;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  cursor:pointer;
+  transition:.3s;
+}
+.withdraw-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
 }
 
-/* FOOT NOTE */
-.note{
-  text-align:center;
-  font-size:.85rem;
-  opacity:.75;
-  margin-top:20px;
+/* TRANSACTIONS */
+.transactions-section{
+  max-width:1200px;
+  margin:20px auto;
+  padding:16px;
+}
+.transactions-section h3{font-family:Orbitron;margin-bottom:12px;}
+.transaction{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 12px;
+  border-radius:12px;
+  background:rgba(255,255,255,.05);
+  margin-bottom:8px;
+  transition:.3s;
+}
+.transaction:hover{
+  background:rgba(0,240,255,.1);
+  box-shadow:0 0 12px var(--zep-blue);
+}
+.transaction span{font-size:.85rem;}
+
+/* RESPONSIVE */
+@media(max-width:480px){
+  .wallet-section{grid-template-columns:1fr;}
 }
 </style>
 </head>
-
 <body>
 
-<script>
-/* SESSION CHECK */
-const user = JSON.parse(localStorage.getItem("currentUser"));
-if(!user){
-  window.location.href="auth.html";
-}
-</script>
-
 <header>
-  <div class="brand">Zep Swipe</div>
-  <button class="home-btn" onclick="location.href='student-dashboard.html'">🏠</button>
+  <div class="brand">Zep Swipe Wallet</div>
+  <button class="home-btn" onclick="location.href='student-dashboard.html'" title="Home">🏠</button>
 </header>
 
-<div class="container">
-
-  <!-- BALANCE -->
-  <div class="balance-card">
-    <h2>Total Portfolio</h2>
-    <div class="zac" id="zacBal">0 ZAC</div>
-    <div class="usd" id="usdBal">$0.00 USD</div>
-    <div class="actions">
-      <button onclick="openMoMo()">Withdraw to MTN MoMo</button>
-      <button class="secondary" onclick="openBank()">Withdraw to Bank</button>
+<!-- BALANCES -->
+<div class="wallet-section">
+  <div class="wallet-card" id="zacCard">
+    <div class="wallet-card-content">
+      <h3>Learn & Earn ZAC</h3>
+      <span id="zacBalance">0 ZAC</span>
+      <button class="withdraw-btn" onclick="withdrawZAC()">Withdraw ZAC</button>
     </div>
   </div>
 
-  <!-- GRID -->
-  <div class="grid">
-
-    <!-- EARNINGS -->
-    <div class="card">
-      <h3>Earnings Overview</h3>
-      <p>Today: <strong id="todayEarn">+0 ZAC</strong></p>
-      <p>This Week: <strong id="weekEarn">+0 ZAC</strong></p>
-      <p>All Time: <strong id="allEarn">0 ZAC</strong></p>
+  <div class="wallet-card" id="usdCard">
+    <div class="wallet-card-content">
+      <h3>Freelance USD</h3>
+      <span id="usdBalance">$0.00</span>
+      <button class="withdraw-btn" onclick="withdrawUSD()">Withdraw USD</button>
     </div>
-
-    <!-- HISTORY -->
-    <div class="card">
-      <h3>Recent Activity</h3>
-      <div id="history"></div>
-    </div>
-
   </div>
-
-  <div class="note">
-    ✔ Secure wallet • ✔ Flutterwave-ready • ✔ Manual withdrawal review
-  </div>
-
 </div>
 
-<!-- MTN MOMO MODAL -->
-<div class="modal" id="momoModal">
-  <div class="modal-box">
-    <h3>Withdraw to MTN MoMo</h3>
-    <input id="momoName" placeholder="Account Name" />
-    <input id="momoNumber" placeholder="MTN MoMo Number" />
-    <select id="momoCountry">
-      <option value="">Select Country</option>
-      <option>Ghana</option>
-      <option>Uganda</option>
-      <option>Cameroon</option>
-      <option>Rwanda</option>
-      <option>Zambia</option>
+<!-- TRANSACTIONS -->
+<div class="transactions-section">
+  <h3>Recent Transactions</h3>
+  <div id="transactionsList">
+    <div class="transaction">No transactions yet.</div>
+  </div>
+</div>
+
+<!-- MODAL PLACEHOLDER -->
+<div id="withdrawModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);justify-content:center;align-items:center;z-index:1000;">
+  <div style="background:var(--glass);padding:24px;border-radius:16px;max-width:400px;width:90%;position:relative;">
+    <h3 id="modalTitle">Withdraw</h3>
+    <input type="text" id="withdrawInput" placeholder="Enter Amount" style="width:100%;padding:12px;border-radius:12px;border:none;margin-bottom:12px;background:rgba(255,255,255,.05);color:#fff;">
+    <select id="withdrawMethod" style="width:100%;padding:12px;border-radius:12px;border:none;margin-bottom:12px;background:rgba(255,255,255,.05);color:#fff;">
+      <option value="momo">MTN Momo</option>
+      <option value="bank">Bank Transfer</option>
     </select>
-    <input id="momoAmount" placeholder="Amount (ZAC)" type="number"/>
-    <button onclick="submitMoMo()">Submit Withdrawal</button>
-  </div>
-</div>
-
-<!-- BANK MODAL -->
-<div class="modal" id="bankModal">
-  <div class="modal-box">
-    <h3>Withdraw to Bank</h3>
-    <input placeholder="Account Name"/>
-    <input placeholder="Account Number"/>
-    <input placeholder="Bank Name"/>
-    <input placeholder="Country"/>
-    <input placeholder="Amount (ZAC)" type="number"/>
-    <button>Submit Withdrawal</button>
+    <button class="withdraw-btn" onclick="confirmWithdraw()">Confirm</button>
+    <button class="withdraw-btn" style="background:red;margin-top:8px;" onclick="closeModal()">Cancel</button>
   </div>
 </div>
 
 <script>
-const ZAC_RATE = 0.014;
+/* ====== USER SESSION ====== */
+let users = JSON.parse(localStorage.getItem("users")) || {};
+let currentUserId = localStorage.getItem("currentUserId");
 
-function loadWallet(){
-  const zac = user.zacBalance || 0;
-  document.getElementById("zacBal").innerText = zac + " ZAC";
-  document.getElementById("usdBal").innerText = "$" + (zac * ZAC_RATE).toFixed(2);
+if(!currentUserId || !users[currentUserId]){
+  location.href="login.html";
+}
+let currentUser = users[currentUserId];
 
-  document.getElementById("allEarn").innerText = zac + " ZAC";
+/* ====== BALANCES ====== */
+function updateBalances(){
+  const zac = currentUser.walletBalance || 0;
+  const usd = currentUser.usdBalance || 0;
+  document.getElementById("zacBalance").innerText = `${zac} ZAC`;
+  document.getElementById("usdBalance").innerText = `$${usd.toFixed(2)}`;
+}
+updateBalances();
 
-  const history = document.getElementById("history");
-  history.innerHTML = "";
-
-  (user.transactions || []).slice(-5).reverse().forEach(tx=>{
+/* ====== TRANSACTIONS ====== */
+const transactionsList = document.getElementById("transactionsList");
+function loadTransactions(){
+  transactionsList.innerHTML = '';
+  if(!currentUser.transactions || currentUser.transactions.length===0){
+    transactionsList.innerHTML = '<div class="transaction">No transactions yet.</div>';
+    return;
+  }
+  currentUser.transactions.slice().reverse().forEach(t=>{
     const div = document.createElement("div");
-    div.className="tx";
-    div.innerHTML = `
-      <span>${tx.note}</span>
-      <span class="${tx.amount>0?'positive':'negative'}">${tx.amount>0?'+':''}${tx.amount} ZAC</span>
-    `;
-    history.appendChild(div);
+    div.className = "transaction";
+    div.innerHTML = `<span>${t.date}</span> <span>${t.type}: ${t.amount}</span>`;
+    transactionsList.appendChild(div);
   });
 }
+loadTransactions();
 
-function openMoMo(){document.getElementById("momoModal").style.display="flex"}
-function openBank(){document.getElementById("bankModal").style.display="flex"}
+/* ====== WITHDRAW MODAL ====== */
+const modal = document.getElementById("withdrawModal");
+const withdrawInput = document.getElementById("withdrawInput");
+const withdrawMethod = document.getElementById("withdrawMethod");
 
-function submitMoMo(){
-  const payload={
-    name: momoName.value,
-    number: momoNumber.value,
-    country: momoCountry.value,
-    amount: momoAmount.value,
-    currency:"ZAC",
-    usd_equivalent:(momoAmount.value * ZAC_RATE).toFixed(2),
-    provider:"MTN_MOMO"
-  };
-  console.log("Flutterwave MoMo payload:",payload);
-  alert("Withdrawal submitted for review.");
-  document.getElementById("momoModal").style.display="none";
+function withdrawZAC(){openModal('Withdraw ZAC');}
+function withdrawUSD(){openModal('Withdraw USD');}
+
+function openModal(type){
+  document.getElementById("modalTitle").innerText = type;
+  modal.style.display = "flex";
 }
 
-window.onclick=e=>{
-  if(e.target.classList.contains("modal")) e.target.style.display="none";
+function closeModal(){
+  modal.style.display="none";
+  withdrawInput.value='';
 }
 
-loadWallet();
+/* ====== CONFIRM WITHDRAW (Backend Ready) ====== */
+function confirmWithdraw(){
+  const amount = parseFloat(withdrawInput.value);
+  if(isNaN(amount) || amount<=0){
+    alert("Enter a valid amount");
+    return;
+  }
+  const method = withdrawMethod.value;
+  if(document.getElementById("modalTitle").innerText.includes("ZAC")){
+    if(amount>currentUser.walletBalance){
+      alert("Insufficient ZAC balance");
+      return;
+    }
+    // Deduct balance and record transaction
+    currentUser.walletBalance -= amount;
+    currentUser.transactions.push({date:new Date().toLocaleString(),type:`ZAC Withdrawal (${method})`,amount:amount});
+  } else {
+    if(amount>currentUser.usdBalance){
+      alert("Insufficient USD balance");
+      return;
+    }
+    currentUser.usdBalance -= amount;
+    currentUser.transactions.push({date:new Date().toLocaleString(),type:`USD Withdrawal (${method})`,amount:`$${amount.toFixed(2)}`});
+  }
+
+  users[currentUserId] = currentUser;
+  localStorage.setItem("users", JSON.stringify(users));
+  updateBalances();
+  loadTransactions();
+  closeModal();
+
+  // TODO: Integrate Flutterwave API backend call here for actual transfer
+  alert(`Withdrawal request of ${amount} via ${method} submitted successfully!`);
+}
 </script>
-
 </body>
 </html>
