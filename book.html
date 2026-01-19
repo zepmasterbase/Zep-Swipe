@@ -1,170 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Rise of Africa's Trade Empire | Zep Swipe</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background-color: #0A0A0A;
-      color: #fff;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Books</title>
 
-    a {
-      text-decoration: none;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500,600&display=swap" rel="stylesheet">
 
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+<style>
+:root{
+  --blue:#00f0ff;
+  --violet:#9c4dff;
+  --green:#00ff94;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,0.08);
+  --text-light:rgba(255,255,255,.85);
+}
 
-    header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      padding: 40px 0;
-    }
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.6;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;}
 
-    .hero-text {
-      max-width: 600px;
-    }
+/* CONTAINER */
+.container{max-width:1100px;margin:auto;padding:16px;display:flex;flex-direction:column;gap:24px}
 
-    .hero-text h1 {
-      font-size: 2.5rem;
-      color: #FFD700; /* Gold accent */
-      margin-bottom: 20px;
-    }
+/* HEADER */
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px;margin-bottom:24px;border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(14px);
+}
+.brand{
+  font-family:Orbitron;font-size:1.6rem;
+  background:linear-gradient(90deg,var(--blue),var(--violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.home-btn{
+  width:46px;height:46px;border-radius:50%;
+  border:none;background:linear-gradient(135deg,var(--blue),var(--violet));
+  font-size:20px;color:#050015;display:flex;justify-content:center;align-items:center;
+  transition:.3s;
+}
+.home-btn:hover{transform:scale(1.1);}
 
-    .hero-text p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
+/* HERO */
+.hero{
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  background:var(--glass);border-radius:18px;padding:24px;border:1px solid rgba(255,255,255,.12);
+}
+.hero img{
+  width:200px;height:260px;border-radius:16px;object-fit:cover;
+  box-shadow:0 0 20px var(--blue),0 0 40px var(--violet);
+}
+.hero-content{
+  flex:1;
+  min-width:220px;
+}
+.hero-content h1{
+  font-family:Orbitron;font-size:1.8rem;margin-bottom:12px;
+  background:linear-gradient(90deg,var(--blue),var(--violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-content p{font-size:1rem;margin-bottom:16px;color:var(--text-light);}
+.hero-content .price{
+  font-weight:700;color:var(--green);margin-bottom:12px;font-size:1.1rem;
+}
+.hero-content .cta{
+  padding:12px 20px;border:none;border-radius:999px;
+  background:linear-gradient(90deg,var(--blue),var(--violet));
+  color:#050015;font-family:Orbitron;font-weight:600;transition:.3s;
+}
+.hero-content .cta:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--blue),0 0 40px var(--violet);}
 
-    .cta-button {
-      background-color: #FFD700;
-      color: #000;
-      font-weight: bold;
-      padding: 15px 25px;
-      border-radius: 8px;
-      display: inline-block;
-      transition: all 0.3s ease;
-    }
+/* SECTIONS */
+section{background:var(--glass);border-radius:16px;padding:20px;border:1px solid rgba(255,255,255,.12);}
+section h2{font-family:Orbitron;font-size:1.5rem;margin-bottom:12px;color:var(--green);}
+section ul{padding-left:20px;margin-top:12px;}
+section ul li{margin-bottom:8px;opacity:.85;}
 
-    .cta-button:hover {
-      background-color: #FFC107;
-    }
+/* LOCKED PLACEHOLDER */
+.locked{
+  opacity:.5;pointer-events:none;position:relative;
+}
+.locked .badge{
+  position:absolute;top:12px;right:12px;padding:6px 12px;border-radius:12px;
+  background:rgba(0,0,0,.7);color:var(--green);font-family:Orbitron;font-size:12px;
+}
 
-    .hero-image {
-      max-width: 350px;
-      border-radius: 12px;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
-    }
+/* BUTTONS */
+button.cta, .locked button{display:inline-block;}
+button:disabled{opacity:.5;cursor:not-allowed;}
 
-    .section {
-      margin: 60px 0;
-    }
+/* FOOTER */
+footer{
+  text-align:center;padding:16px;margin-top:24px;
+  font-size:.85rem;color:var(--text-light);
+}
 
-    .section h2 {
-      font-size: 2rem;
-      color: #FFD700;
-      margin-bottom: 20px;
-    }
-
-    .section p {
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 15px;
-    }
-
-    .price {
-      font-size: 1.2rem;
-      font-weight: bold;
-      margin: 20px 0;
-    }
-
-    .locked {
-      background-color: rgba(255, 215, 0, 0.1);
-      border: 2px dashed #FFD700;
-      padding: 25px;
-      border-radius: 10px;
-      text-align: center;
-      margin-top: 40px;
-      font-size: 1.1rem;
-      color: #FFD700;
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px 0;
-      color: #aaa;
-      font-size: 0.9rem;
-    }
-
-    @media(max-width: 768px){
-      header {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .hero-image {
-        margin-top: 30px;
-      }
-    }
-  </style>
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero{flex-direction:column;align-items:center;text-align:center}
+  .hero img{width:180px;height:240px}
+  .hero-content{min-width:0}
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <!-- Hero Section -->
-    <header>
-      <div class="hero-text">
-        <h1>The Rise of Africa's Trade Empire</h1>
-        <p>
-          Visionary entrepreneur <strong>Pericles Komey</strong> lays out a bold roadmap for the continent’s future — powered by borderless eCommerce, digital innovation, and a unified currency.  
-        </p>
-        <p>
-          Explore Africa’s hidden trade empires, the power of fintech & blockchain, and the Zep Commerce blueprint to empower entrepreneurs across the continent.
-        </p>
-        <p class="price">Price: $10.88</p>
-        <a href="https://payhip.com/b/pJOzq" class="cta-button" target="_blank">Buy Now & Earn Zep Cash</a>
-      </div>
-      <img src="book_cover.png" alt="The Rise of Africa's Trade Empire Cover" class="hero-image">
-    </header>
 
-    <!-- About Section -->
-    <section class="section">
-      <h2>About the Book</h2>
-      <p>This groundbreaking book explores:</p>
-      <ul>
-        <li>The hidden cost of economic fragmentation across African markets</li>
-        <li>Why one digital currency could be the key to financial inclusion</li>
-        <li>How fintech, blockchain, and e-commerce are reshaping trade</li>
-        <li>The Zep Commerce blueprint — a practical vision to unify markets and empower African and Caribbean entrepreneurs</li>
-      </ul>
-      <p>This isn’t just a book—it’s a movement. By purchasing a copy, you’re not just reading about change—you’re supporting it. Early supporters also receive **Zep Cash rewards** to use within the Zep Swipe ecosystem.</p>
-    </section>
+<header>
+  <div class="brand">Zep Swipe Books</div>
+  <button class="home-btn" onclick="location.href='student-dashboard.html'">🏠</button>
+</header>
 
-    <!-- Author Section -->
-    <section class="section">
-      <h2>About the Author</h2>
-      <p><strong>Pericles Komey</strong> — Founder of Zep Swipe, building tools for students to earn, learn, and gain real-world skills. This book directly supports student pilots and community growth.</p>
-    </section>
+<div class="container">
 
-    <!-- Vol. 2 Placeholder -->
-    <div class="locked">
-      🔒 <strong>Coming Soon:</strong> Vol. 2 — <em>Born for This: The Base Era (My Life Before Zep Swipe)</em>  
-      <br>Sign up for updates and be the first to access the next chapter of the journey!
+  <!-- HERO -->
+  <div class="hero">
+    <img src="https://via.placeholder.com/200x260" alt="Book Cover">
+    <div class="hero-content">
+      <h1>The Rise of Africa's Trade Empire</h1>
+      <p>Discover the blueprint for African trade, digital currency, and fintech innovation by the founder of Zep Swipe.</p>
+      <div class="price">$10.88</div>
+      <a href="https://payhip.com/b/pJOzq" target="_blank">
+        <button class="cta">Buy Now</button>
+      </a>
     </div>
-
-    <footer>
-      &copy; 2026 Zep Swipe | Books that fund real outcomes
-    </footer>
   </div>
+
+  <!-- ABOUT THE BOOK -->
+  <section>
+    <h2>About the Book</h2>
+    <ul>
+      <li>African trade growth & opportunities</li>
+      <li>Introduction to digital currencies</li>
+      <li>Zep Commerce blueprint for entrepreneurs</li>
+      <li>Fintech & e-commerce strategies</li>
+    </ul>
+  </section>
+
+  <!-- ABOUT THE AUTHOR -->
+  <section>
+    <h2>About the Author</h2>
+    <p>Pericles Komey, Founder of Zep Swipe. A visionary entrepreneur focused on building African fintech and digital economy solutions.</p>
+  </section>
+
+  <!-- LOCKED VOL 2 -->
+  <section class="locked">
+    <h2>Vol. 2: Born for This: The Base Era</h2>
+    <div class="badge">Coming Soon</div>
+    <p>My Life Before Zep Swipe</p>
+    <button disabled>Buy Now</button>
+  </section>
+
+</div>
+
+<footer>
+  © 2026 Zep Swipe | Books that fund real outcomes
+</footer>
+
 </body>
 </html>
