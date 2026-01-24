@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Learn, Earn & Become a Freelancer</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
-
+<title>Zep Swipe — Learn & Earn Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -14,312 +13,353 @@
   --glass:rgba(255,255,255,.08);
   --text-light:rgba(255,255,255,.85);
   --green:#00ff94;
-  --yellow:#ffea00;
-  --orange:#ff6b00;
 }
 
 /* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;line-height:1.5;}
+body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.5;}
 
 /* HEADER */
 header{
   display:flex;justify-content:space-between;align-items:center;
   padding:16px 24px;
-  background:rgba(0,0,0,.25);
-  backdrop-filter:blur(10px);
+  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
+  backdrop-filter:blur(12px);
 }
-.logo-container{
-  display:flex;align-items:center;gap:12px;
+header .logo{
+  display:flex;align-items:center;gap:10px;
 }
-.logo-container img{
-  width:50px;height:50px;
-  object-fit:contain;
-  border-radius:8px;
+header .logo img{
+  width:50px;height:50px;object-fit:contain;
+  animation:pulse 2s infinite;
 }
-.logo-text{
-  font-family:Orbitron;
-  font-size:1.5rem;
+header .logo span{
+  font-family:Orbitron;font-size:1.5rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
-.nav-links a{
-  margin-left:16px;
-  text-decoration:none;color:#fff;font-weight:500;
+nav{
+  display:flex;align-items:center;gap:14px;
+}
+nav a, nav button{
+  font-family:Orbitron;
+  text-decoration:none;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:12px;
   transition:.3s;
+  cursor:pointer;
 }
-.nav-links a:hover{
-  color:var(--zep-blue);
-  text-shadow:0 0 8px var(--zep-blue);
+nav a:hover, nav button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet);
+}
+.glow-btn{
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  animation:pulse 2s infinite;
+  border:none;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.05);}
 }
 
 /* HERO */
 .hero{
   display:flex;flex-direction:column;align-items:center;text-align:center;
-  padding:80px 20px 40px 20px;
+  padding:80px 20px 60px;
 }
 .hero h1{
-  font-family:Orbitron;font-size:2.5rem;
+  font-family:Orbitron;
+  font-size:2.5rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:pulseText 2s infinite;
-}
-@keyframes pulseText{
-  0%,100%{opacity:0.8;}
-  50%{opacity:1;}
+  margin-bottom:16px;
 }
 .hero p{
-  font-size:1.2rem;margin-top:16px;color:var(--text-light);
-  max-width:700px;
-}
-.hero img{
-  margin-top:24px;width:300px;max-width:80%;border-radius:16px;
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  font-size:1.1rem;
+  max-width:600px;
+  margin-bottom:30px;
+  color:var(--text-light);
 }
 .hero .cta-btn{
-  margin-top:32px;padding:16px 32px;border:none;border-radius:999px;
-  font-family:Orbitron;font-weight:700;
+  padding:14px 28px;
+  font-family:Orbitron;
+  font-size:1rem;
+  border:none;border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;cursor:pointer;transition:.3s;
+  color:#050015;
+  cursor:pointer;
+  animation:pulse 2s infinite;
 }
 .hero .cta-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  transform:scale(1.05);
+  box-shadow:0 0 25px var(--zep-blue),0 0 45px var(--zep-violet);
 }
 
 /* FEATURES */
 .features{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:20px;
-  padding:60px 20px;
-  max-width:1200px;margin:auto;
+  padding:40px 20px;
+  max-width:1200px;
+  margin:auto;
 }
 .feature-card{
-  background:var(--glass);border-radius:16px;padding:24px;text-align:center;
-  border:1px solid rgba(255,255,255,.12);transition:.3s;
+  background:var(--glass);
+  border-radius:16px;
+  padding:20px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.12);
+  transition:.3s;
 }
 .feature-card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 0 24px var(--zep-blue),0 0 48px var(--zep-violet);
+  transform:scale(1.05);
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
 }
-.feature-card h3{
-  font-family:Orbitron;margin-bottom:12px;
-}
-.feature-card p{
-  color:var(--text-light);font-size:0.95rem;
-}
+.feature-card h3{font-family:Orbitron;margin-bottom:12px;}
 
 /* HOW IT WORKS */
 .how-it-works{
-  padding:60px 20px;background:rgba(0,0,0,.15);
-  text-align:center;
+  background:rgba(0,0,0,.1);
+  padding:40px 20px;
 }
-.how-it-works h2{font-family:Orbitron;margin-bottom:32px;}
 .steps{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:1000px;margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  max-width:1000px;
+  margin:auto;
 }
-.step-card{
-  background:var(--glass);border-radius:16px;padding:20px;
+.step{
+  background:var(--glass);
+  border-radius:16px;
+  padding:20px;
+  text-align:center;
   border:1px solid rgba(255,255,255,.12);
-  transition:.3s;text-align:center;
+  transition:.3s;
 }
-.step-card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+.step:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
 }
-.step-card h3{font-family:Orbitron;margin-bottom:12px;}
-.step-card p{color:var(--text-light);font-size:0.95rem;}
+.step h4{font-family:Orbitron;margin-bottom:10px;}
 
 /* TESTIMONIALS */
 .testimonials{
-  padding:60px 20px;text-align:center;
+  padding:60px 20px;
+  text-align:center;
 }
-.testimonials h2{font-family:Orbitron;margin-bottom:32px;}
+.testimonials h2{
+  font-family:Orbitron;margin-bottom:30px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
 .testimonial-cards{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;max-width:1000px;margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+  max-width:1000px;margin:auto;
 }
-.testimonial-card{
-  background:var(--glass);border-radius:16px;padding:24px;position:relative;
+.testimonial{
+  background:var(--glass);
+  border-radius:16px;padding:20px;
   border:1px solid rgba(255,255,255,.12);
 }
-.testimonial-card img{
-  width:60px;height:60px;border-radius:50%;position:absolute;top:-30px;left:50%;transform:translateX(-50%);
-  border:2px solid rgba(255,255,255,.3);
+.testimonial img{
+  width:60px;height:60px;border-radius:50%;margin-bottom:10px;
+  object-fit:cover;
 }
-.testimonial-card p{margin-top:36px;font-size:0.95rem;color:var(--text-light);}
-.testimonial-card h4{margin-top:12px;font-family:Orbitron;font-size:1rem;}
 
 /* REWARDS */
 .rewards{
-  padding:60px 20px;text-align:center;background:rgba(0,0,0,.1);
+  padding:40px 20px;
+  text-align:center;
 }
-.rewards h2{font-family:Orbitron;margin-bottom:32px;}
-.rewards .reward-cards{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:1000px;margin:auto;
+.rewards h2{
+  font-family:Orbitron;margin-bottom:30px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.rewards-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  max-width:1000px;margin:auto;
 }
 .reward-card{
-  background:var(--glass);border-radius:16px;padding:24px;
+  background:var(--glass);
+  border-radius:16px;
+  padding:20px;
   border:1px solid rgba(255,255,255,.12);
-  text-align:center;
-  transition:.3s;
 }
 .reward-card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  transform:scale(1.05);
+  box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
 }
-.reward-card h3{font-family:Orbitron;margin-bottom:12px;}
-.reward-card p{color:var(--text-light);font-size:0.95rem;}
 
 /* FAQ */
 .faq{
-  padding:60px 20px;text-align:center;
+  padding:40px 20px;
 }
-.faq h2{font-family:Orbitron;margin-bottom:32px;}
+.faq h2{
+  font-family:Orbitron;margin-bottom:30px;text-align:center;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
 .faq-item{
-  max-width:800px;margin:16px auto;background:var(--glass);
-  padding:20px;border-radius:16px;border:1px solid rgba(255,255,255,.12);
+  max-width:800px;margin:12px auto;
+  background:var(--glass);
+  border-radius:12px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,.12);
 }
-.faq-item h4{font-family:Orbitron;margin-bottom:8px;}
-.faq-item p{color:var(--text-light);font-size:0.95rem;}
 
 /* FOOTER */
 footer{
-  padding:40px 20px;text-align:center;background:rgba(0,0,0,.25);
+  background:rgba(0,0,0,.2);
+  padding:30px 20px;
+  text-align:center;
 }
-footer a{color:var(--zep-blue);text-decoration:none;margin:0 8px;}
-footer a:hover{text-decoration:underline;}
-
-/* BUTTONS */
-.btn{
-  display:inline-block;padding:12px 24px;border-radius:999px;
-  font-family:Orbitron;font-weight:600;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;text-decoration:none;
-  transition:.3s;margin-top:12px;
+footer .socials{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin-bottom:20px;
 }
-.btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+footer .socials a{
+  color:#fff;font-size:20px;
+  transition:.3s;
 }
+footer .socials a:hover{
+  transform:scale(1.2);
+  color:var(--zep-blue);
+}
+footer p{font-size:.85rem;color:var(--text-light);}
 
 /* RESPONSIVE */
 @media(max-width:480px){
   .hero h1{font-size:2rem;}
-  .hero p{font-size:1rem;}
+  .hero p{font-size:.95rem;}
 }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo-container">
-    <img src="https://imgur.com/a/w4TVR1Y" alt="Zep Swipe Logo">
-    <div class="logo-text">Zep Swipe</div>
+  <div class="logo">
+    <img src="https://i.imgur.com/6NxhW9q.png" alt="Zep Swipe Logo">
+    <span>Zep Swipe</span>
   </div>
-  <nav class="nav-links">
-    <a href="deals.html">Student Deals</a>
+  <nav>
     <a href="swipe-merchants.html">Find Jobs</a>
-    <a href="login.html">Become a Student Freelancer</a>
+    <button class="glow-btn" onclick="location.href='deals.html'">Browse Student Deals</button>
+    <button class="glow-btn" onclick="location.href='login.html'">Become a Student Freelancer</button>
   </nav>
 </header>
 
 <section class="hero">
-  <h1>Learn, Earn & Become a Verified Freelancer</h1>
-  <p>Join Zep Swipe to upskill, complete daily client-ready tasks, earn ZAC rewards, and access the student freelancer market.</p>
-  <img src="https://imgur.com/a/VQGwQYO" alt="Hero Illustration">
-  <a href="login.html" class="cta-btn">Get Started</a>
+  <h1>Learn Skills • Complete Tasks • Earn Rewards</h1>
+  <p>Join thousands of students building their freelancing career with Zep Swipe. Complete tasks, earn ZAC points, and get verified to access the freelancer market.</p>
+  <button class="cta-btn" onclick="location.href='login.html'">Get Started</button>
 </section>
 
 <section class="features">
   <div class="feature-card">
     <h3>Learn Skills</h3>
-    <p>Interactive courses across Virtual Assistant, Content Creation, UI/UX, Tutoring, and more.</p>
+    <p>Access daily practical tasks for in-demand freelance skills.</p>
   </div>
   <div class="feature-card">
     <h3>Complete Tasks</h3>
-    <p>Daily client-ready tasks to build your portfolio and earn ZAC points.</p>
+    <p>Follow guided tasks across multiple courses and track progress.</p>
   </div>
   <div class="feature-card">
     <h3>Earn Rewards</h3>
-    <p>Accumulate ZAC and withdraw USD earnings after completing freelance jobs.</p>
+    <p>Get ZAC points for each task and unlock real USD payouts.</p>
   </div>
   <div class="feature-card">
-    <h3>Verified Network</h3>
-    <p>Become a verified freelancer to access paid jobs and join the growing Zep Swipe network.</p>
+    <h3>Verified Student Network</h3>
+    <p>Complete tasks and verification to join our freelancer marketplace.</p>
   </div>
 </section>
 
 <section class="how-it-works">
-  <h2>How It Works</h2>
+  <h2 style="text-align:center;font-family:Orbitron;color:white;">How It Works</h2>
   <div class="steps">
-    <div class="step-card">
-      <h3>1. Sign Up</h3>
-      <p>Create your Zep Swipe account and set up your profile.</p>
+    <div class="step">
+      <h4>1. Sign Up</h4>
+      <p>Create your student profile and track your learning journey.</p>
     </div>
-    <div class="step-card">
-      <h3>2. Learn & Complete Tasks</h3>
-      <p>Follow daily tasks in your chosen course to earn ZAC rewards.</p>
+    <div class="step">
+      <h4>2. Complete Tasks</h4>
+      <p>Finish daily assignments and earn ZAC points.</p>
     </div>
-    <div class="step-card">
-      <h3>3. Get Verified</h3>
-      <p>Complete 21-day tasks and pay verification to unlock freelancer access.</p>
+    <div class="step">
+      <h4>3. Get Verified & Earn</h4>
+      <p>Pay $5 after completing 21-day tasks to join the freelancer market.</p>
     </div>
   </div>
 </section>
 
 <section class="testimonials">
-  <h2>Student Success Stories</h2>
+  <h2>What Students Say</h2>
   <div class="testimonial-cards">
-    <div class="testimonial-card">
-      <img src="https://imgur.com/a/v3QtU2I" alt="Student 1">
-      <p>"Zep Swipe helped me land my first freelance gig and start earning!"</p>
-      <h4>Jane Doe</h4>
+    <div class="testimonial">
+      <img src="https://i.imgur.com/VQGwQYO.png" alt="Student 1">
+      <p>"Zep Swipe made learning practical skills fun and rewarding. I completed tasks and started freelancing quickly!"</p>
+      <strong>- Ama K.</strong>
     </div>
-    <div class="testimonial-card">
-      <img src="https://imgur.com/a/VQGwQYO" alt="Student 2">
-      <p>"Daily tasks are simple, fun, and truly prepare you for the real market."</p>
-      <h4>John Smith</h4>
+    <div class="testimonial">
+      <img src="https://i.imgur.com/v3QtU2I.png" alt="Student 2">
+      <p>"The verification badge boosted my profile and clients trust me more. Earning ZAC was motivating."</p>
+      <strong>- Kojo M.</strong>
     </div>
   </div>
 </section>
 
 <section class="rewards">
-  <h2>Rewards & Perks</h2>
-  <div class="reward-cards">
+  <h2>Rewards & Digital Currency</h2>
+  <div class="rewards-cards">
     <div class="reward-card">
-      <h3>ZAC Tokens</h3>
-      <p>Earn points for completing tasks, redeemable once freelance USD earnings are unlocked.</p>
+      <h3>ZAC Points</h3>
+      <p>Earn daily by completing tasks, 25 ZAC per day.</p>
     </div>
     <div class="reward-card">
-      <h3>Freelancer Verification</h3>
-      <p>Complete 21 days of learning and pay $5 to become a verified freelancer.</p>
+      <h3>USD Earnings</h3>
+      <p>Convert your verified work into USD withdrawable via Momo or Bank.</p>
+    </div>
+    <div class="reward-card">
+      <h3>Verified Badge</h3>
+      <p>Gain credibility and access exclusive freelance opportunities.</p>
     </div>
   </div>
 </section>
 
 <section class="faq">
-  <h2>Frequently Asked Questions</h2>
+  <h2>FAQ</h2>
   <div class="faq-item">
-    <h4>What is Zep Swipe?</h4>
-    <p>A learning & earning platform for students to gain skills, complete tasks, and earn rewards.</p>
+    <strong>How do I earn ZAC?</strong>
+    <p>Complete daily tasks in your course modules to earn 25 ZAC per task.</p>
   </div>
   <div class="faq-item">
-    <h4>How do I get verified?</h4>
-    <p>Complete 21 days of tasks in your chosen course and pay the $5 verification fee.</p>
+    <strong>How do I get verified?</strong>
+    <p>Complete all 21-day Learn & Earn tasks and pay the $5 verification fee.</p>
   </div>
   <div class="faq-item">
-    <h4>What can I earn?</h4>
-    <p>ZAC rewards for tasks and USD from freelance gigs once verified.</p>
+    <strong>How do I withdraw USD?</strong>
+    <p>Once verified, you can request withdrawals via Momo or Bank transfer.</p>
   </div>
 </section>
 
 <footer>
+  <div class="socials">
+    <a href="#" title="Facebook">📘</a>
+    <a href="#" title="Twitter">🐦</a>
+    <a href="#" title="LinkedIn">💼</a>
+    <a href="#" title="Instagram">📸</a>
+  </div>
   <p>© 2026 Zep Swipe | Books that fund real outcomes</p>
-  <p>
-    <a href="#">Terms</a> | <a href="#">Privacy</a> | <a href="#">Contact</a>
-  </p>
 </footer>
 
 </body>
