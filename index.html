@@ -22,15 +22,17 @@ body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.5;overflow-x
 header{
   display:flex;justify-content:space-between;align-items:center;
   padding:16px 24px;
-  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
-  backdrop-filter:blur(12px);
+  background:linear-gradient(120deg,#000014,#050018,#000014);
+  border-radius:16px;
+  backdrop-filter:blur(14px);
+  box-shadow:0 0 30px rgba(0,240,255,.25),0 0 40px rgba(156,77,255,.25);
+  animation:pulse 2s infinite;
 }
 header .logo{
   display:flex;align-items:center;gap:10px;
 }
 header .logo img{
   width:50px;height:50px;object-fit:contain;
-  animation:pulse 2s infinite;
 }
 header .logo span{
   font-family:Orbitron;font-size:1.5rem;
@@ -46,13 +48,37 @@ nav a{
   transition:.3s;
   cursor:pointer;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  animation:pulse 2s infinite;
   border:none;
 }
 nav a:hover{
   transform:scale(1.05);
   box-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet);
 }
+
+/* MINI PLACEHOLDERS ABOVE FEATURES */
+.mini-buttons{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  margin:30px 0 0;
+}
+.mini-buttons a{
+  font-family:Orbitron;
+  padding:10px 16px;
+  border-radius:12px;
+  text-decoration:none;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  cursor:pointer;
+  transition:.3s;
+  animation:pulse 2s infinite;
+}
+.mini-buttons a:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet);
+}
+
+/* PULSE ANIMATION */
 @keyframes pulse{
   0%,100%{transform:scale(1);}
   50%{transform:scale(1.05);}
@@ -107,6 +133,7 @@ nav a:hover{
   text-align:center;
   border:1px solid rgba(255,255,255,.12);
   transition:.3s;
+  cursor:pointer;
 }
 .feature-card:hover{
   transform:scale(1.05);
@@ -133,6 +160,7 @@ nav a:hover{
   text-align:center;
   border:1px solid rgba(255,255,255,.12);
   transition:.3s;
+  cursor:pointer;
 }
 .step:hover{
   transform:scale(1.05);
@@ -251,6 +279,12 @@ footer p{font-size:.85rem;color:var(--text-light);}
   </nav>
 </header>
 
+<!-- Mini placeholders above features -->
+<div class="mini-buttons">
+  <a href="deals.html">Browse Student Deals</a>
+  <a href="login.html">Become a Freelancer</a>
+</div>
+
 <section class="hero">
   <h1>Learn Skills • Complete Tasks • Earn Rewards</h1>
   <p>Join students building freelance careers with Zep Swipe. Complete tasks, earn ZAC points, and get verified to access the freelancer market.</p>
@@ -258,19 +292,19 @@ footer p{font-size:.85rem;color:var(--text-light);}
 </section>
 
 <section class="features">
-  <div class="feature-card">
+  <div class="feature-card" onclick="alert('Clicked Learn Skills!');">
     <h3>Learn Skills</h3>
     <p>Access practical daily tasks for in-demand freelance skills.</p>
   </div>
-  <div class="feature-card">
+  <div class="feature-card" onclick="alert('Clicked Complete Tasks!');">
     <h3>Complete Tasks</h3>
     <p>Track and finish daily tasks across multiple courses.</p>
   </div>
-  <div class="feature-card">
+  <div class="feature-card" onclick="alert('Clicked Earn Rewards!');">
     <h3>Earn Rewards</h3>
     <p>Collect ZAC points and unlock USD payouts once verified.</p>
   </div>
-  <div class="feature-card">
+  <div class="feature-card" onclick="alert('Clicked Verified Student Network!');">
     <h3>Verified Student Network</h3>
     <p>Complete all tasks and verification to join the freelancer market.</p>
   </div>
@@ -279,15 +313,15 @@ footer p{font-size:.85rem;color:var(--text-light);}
 <section class="how-it-works">
   <h2 style="text-align:center;font-family:Orbitron;color:white;">How It Works</h2>
   <div class="steps">
-    <div class="step">
+    <div class="step" onclick="alert('Step 1')">
       <h4>1. Sign Up</h4>
       <p>Create your student profile and track your learning journey.</p>
     </div>
-    <div class="step">
+    <div class="step" onclick="alert('Step 2')">
       <h4>2. Complete Tasks</h4>
       <p>Finish daily assignments and earn ZAC points.</p>
     </div>
-    <div class="step">
+    <div class="step" onclick="alert('Step 3')">
       <h4>3. Get Verified & Earn</h4>
       <p>Pay $5 after completing 21-day tasks to join the freelancer market.</p>
     </div>
@@ -305,7 +339,7 @@ footer p{font-size:.85rem;color:var(--text-light);}
     <div class="testimonial">
       <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnu969r4hfmrm1bql1pei1ckf15.jpg" alt="Student 2">
       <p>"The verification badge boosted my profile and clients trust me more. Earning ZAC was motivating."</p>
-      <strong>- Kojo M.</strong>
+      <strong>- Siyanda M.</strong>
     </div>
   </div>
 </section>
