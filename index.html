@@ -12,12 +12,11 @@
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,.08);
   --text-light:rgba(255,255,255,.85);
-  --green:#00ff94;
 }
 
 /* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.5;}
+body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.5;overflow-x:hidden;}
 
 /* HEADER */
 header{
@@ -38,10 +37,7 @@ header .logo span{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
-nav{
-  display:flex;align-items:center;gap:14px;
-}
-nav a, nav button{
+nav a{
   font-family:Orbitron;
   text-decoration:none;
   color:#fff;
@@ -49,15 +45,13 @@ nav a, nav button{
   border-radius:12px;
   transition:.3s;
   cursor:pointer;
-}
-nav a:hover, nav button:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet);
-}
-.glow-btn{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   animation:pulse 2s infinite;
   border:none;
+}
+nav a:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet);
 }
 @keyframes pulse{
   0%,100%{transform:scale(1);}
@@ -249,38 +243,36 @@ footer p{font-size:.85rem;color:var(--text-light);}
 
 <header>
   <div class="logo">
-    <img src="https://i.imgur.com/6NxhW9q.png" alt="Zep Swipe Logo">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe Logo">
     <span>Zep Swipe</span>
   </div>
   <nav>
     <a href="swipe-merchants.html">Find Jobs</a>
-    <button class="glow-btn" onclick="location.href='deals.html'">Browse Student Deals</button>
-    <button class="glow-btn" onclick="location.href='login.html'">Become a Student Freelancer</button>
   </nav>
 </header>
 
 <section class="hero">
   <h1>Learn Skills • Complete Tasks • Earn Rewards</h1>
-  <p>Join thousands of students building their freelancing career with Zep Swipe. Complete tasks, earn ZAC points, and get verified to access the freelancer market.</p>
+  <p>Join students building freelance careers with Zep Swipe. Complete tasks, earn ZAC points, and get verified to access the freelancer market.</p>
   <button class="cta-btn" onclick="location.href='login.html'">Get Started</button>
 </section>
 
 <section class="features">
   <div class="feature-card">
     <h3>Learn Skills</h3>
-    <p>Access daily practical tasks for in-demand freelance skills.</p>
+    <p>Access practical daily tasks for in-demand freelance skills.</p>
   </div>
   <div class="feature-card">
     <h3>Complete Tasks</h3>
-    <p>Follow guided tasks across multiple courses and track progress.</p>
+    <p>Track and finish daily tasks across multiple courses.</p>
   </div>
   <div class="feature-card">
     <h3>Earn Rewards</h3>
-    <p>Get ZAC points for each task and unlock real USD payouts.</p>
+    <p>Collect ZAC points and unlock USD payouts once verified.</p>
   </div>
   <div class="feature-card">
     <h3>Verified Student Network</h3>
-    <p>Complete tasks and verification to join our freelancer marketplace.</p>
+    <p>Complete all tasks and verification to join the freelancer market.</p>
   </div>
 </section>
 
@@ -306,12 +298,12 @@ footer p{font-size:.85rem;color:var(--text-light);}
   <h2>What Students Say</h2>
   <div class="testimonial-cards">
     <div class="testimonial">
-      <img src="https://i.imgur.com/VQGwQYO.png" alt="Student 1">
+      <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnu9ifbfep1lrp3a7edu361b.jpg" alt="Student 1">
       <p>"Zep Swipe made learning practical skills fun and rewarding. I completed tasks and started freelancing quickly!"</p>
       <strong>- Ama K.</strong>
     </div>
     <div class="testimonial">
-      <img src="https://i.imgur.com/v3QtU2I.png" alt="Student 2">
+      <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnu969r4hfmrm1bql1pei1ckf15.jpg" alt="Student 2">
       <p>"The verification badge boosted my profile and clients trust me more. Earning ZAC was motivating."</p>
       <strong>- Kojo M.</strong>
     </div>
@@ -327,7 +319,7 @@ footer p{font-size:.85rem;color:var(--text-light);}
     </div>
     <div class="reward-card">
       <h3>USD Earnings</h3>
-      <p>Convert your verified work into USD withdrawable via Momo or Bank.</p>
+      <p>Convert verified work into USD withdrawable via Momo or Bank.</p>
     </div>
     <div class="reward-card">
       <h3>Verified Badge</h3>
@@ -348,7 +340,7 @@ footer p{font-size:.85rem;color:var(--text-light);}
   </div>
   <div class="faq-item">
     <strong>How do I withdraw USD?</strong>
-    <p>Once verified, you can request withdrawals via Momo or Bank transfer.</p>
+    <p>Once verified, request withdrawals via Momo or Bank transfer.</p>
   </div>
 </section>
 
