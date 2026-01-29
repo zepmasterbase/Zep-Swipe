@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Create Payment Request</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --green:#00ff94;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,.08);
+  --text:rgba(255,255,255,.9);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;min-height:100vh;padding:20px;}
+
+header{
+  display:flex;align-items:center;gap:12px;
+  padding:16px 20px;border-radius:18px;
+  background:rgba(0,0,0,.55);
+  box-shadow:0 0 30px rgba(0,240,255,.25);
+  margin-bottom:25px;
+}
+header img{height:40px;}
+header h1{
+  font-family:Orbitron;
+  font-size:1.2rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+header .subtitle{font-size:.9rem;color:rgba(255,255,255,.7);margin-left:auto;}
+
+.container{
+  max-width:900px;margin:auto;
+  display:grid;gap:22px;
+}
+
+.card{
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;
+  padding:22px;
+  box-shadow:0 0 28px rgba(156,77,255,.15);
+}
+
+.card h2{
+  font-family:Orbitron;
+  font-size:1.05rem;
+  margin-bottom:12px;
+  color:var(--zep-blue);
+}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+
+input, select, textarea{
+  width:100%;padding:12px;border-radius:12px;
+  border:none;outline:none;
+  background:rgba(255,255,255,.05);
+  color:#fff;
+}
+textarea{resize:none;min-height:90px;}
+input[readonly]{opacity:.7;}
+
+.profile-box{
+  display:flex;align-items:center;gap:14px;
+}
+.profile-box img{
+  width:70px;height:70px;border-radius:50%;
+  object-fit:cover;border:2px solid var(--zep-blue);
+}
+.badge{
+  display:inline-block;
+  background:linear-gradient(90deg,var(--green),var(--zep-blue));
+  color:#050015;
+  padding:4px 10px;border-radius:999px;
+  font-size:.7rem;font-family:Orbitron;
+  margin-top:6px;
+}
+
+.breakdown{
+  background:rgba(0,0,0,.4);
+  border-radius:14px;padding:14px;
+  font-size:.9rem;
+}
+.breakdown div{display:flex;justify-content:space-between;margin-bottom:6px;}
+
+.cta-btn{
+  width:100%;padding:16px;border:none;border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;font-family:Orbitron;
+  font-size:1rem;cursor:pointer;
+  box-shadow:0 0 35px rgba(0,240,255,.45);
+  transition:.3s;
+}
+.cta-btn:hover{transform:translateY(-2px);}
+
+.lock-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.85);
+  backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  z-index:999;
+}
+.lock-card{
+  background:var(--glass);
+  padding:40px;border-radius:24px;
+  text-align:center;max-width:420px;
+  box-shadow:0 0 40px rgba(156,77,255,.4);
+}
+.lock-card h2{font-family:Orbitron;color:var(--zep-blue);}
+.lock-card button{margin-top:18px;}
+
+.modal{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;align-items:center;justify-content:center;
+  z-index:1000;
+}
+.modal-content{
+  background:var(--glass);
+  padding:30px;border-radius:22px;
+  max-width:500px;width:90%;
+  text-align:center;
+  box-shadow:0 0 40px rgba(0,240,255,.35);
+}
+.modal-content h2{font-family:Orbitron;color:var(--green);margin-bottom:10px;}
+.modal-content input{margin:12px 0;}
+.modal-content .btn-row{display:flex;gap:10px;flex-wrap:wrap;}
+.modal-content button{flex:1;}
+
+.info-box{
+  font-size:.85rem;
+  background:rgba(0,0,0,.4);
+  border-left:4px solid var(--zep-blue);
+  padding:12px;border-radius:12px;
+  color:rgba(255,255,255,.8);
+}
+@media(max-width:700px){
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe">
+  <div>
+    <h1>Create Payment Request</h1>
+    <div class="subtitle">Get paid securely for your freelance work</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Student Info -->
+  <div class="card">
+    <h2>Your Freelancer Profile</h2>
+    <div class="profile-box">
+      <img id="studentPhoto" src="https://via.placeholder.com/80">
+      <div>
+        <div id="studentName"></div>
+        <div id="studentUniversity" style="font-size:.85rem;opacity:.8;"></div>
+        <div class="badge">Verified Student</div>
+        <div style="font-size:.8rem;margin-top:4px;">Wallet ID: <span id="studentId"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client Info -->
+  <div class="card">
+    <h2>Client Information</h2>
+    <div class="grid-2">
+      <input id="clientName" placeholder="Client Full Name">
+      <input id="clientEmail" placeholder="Client Email">
+      <select id="clientCountry">
+        <option value="">Select Country</option>
+        <option>Ghana</option>
+        <option>South Africa</option>
+        <option>Nigeria</option>
+        <option>Kenya</option>
+        <option>USA</option>
+        <option>UK</option>
+        <option>Other</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Service -->
+  <div class="card">
+    <h2>Service Details</h2>
+    <div class="grid-2">
+      <input id="serviceTitle" placeholder="Service Title">
+      <select id="serviceCategory">
+        <option value="">Service Category</option>
+        <option>Virtual Assistant</option>
+        <option>Content Creation</option>
+        <option>Writing</option>
+        <option>Design</option>
+        <option>Data Entry</option>
+        <option>Tutoring</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <textarea id="serviceDescription" placeholder="Service description..."></textarea>
+    <input type="date" id="deliveryDate">
+  </div>
+
+  <!-- Pricing -->
+  <div class="card">
+    <h2>Pricing</h2>
+    <div class="grid-3">
+      <select id="currency">
+        <option>USD</option>
+        <option>ZAR</option>
+        <option>GHS</option>
+        <option>NGN</option>
+        <option>EUR</option>
+      </select>
+      <input type="number" id="amount" placeholder="Amount">
+    </div>
+
+    <div class="breakdown" style="margin-top:12px;">
+      <div><span>Platform Fee</span><span id="fee">$0.00</span></div>
+      <div><strong>Student Receives</strong><strong id="payout">$0.00</strong></div>
+    </div>
+
+    <label style="display:flex;gap:8px;margin-top:12px;font-size:.85rem;">
+      <input type="checkbox" id="escrowCheck">
+      I understand that funds will be held in escrow and released after work is submitted and approved.
+    </label>
+  </div>
+
+  <div class="info-box">
+    Zep Swipe protects both students and clients. Payments are held securely and only released after work delivery and approval.
+  </div>
+
+  <button class="cta-btn" onclick="generateInvoice()">Generate Secure Invoice</button>
+
+</div>
+
+<!-- Locked Overlay -->
+<div id="lockOverlay" class="lock-overlay" style="display:none;">
+  <div class="lock-card">
+    <h2>Verification Required</h2>
+    <p style="margin-top:10px;">
+      Verify your account to request payments and unlock global earning.
+    </p>
+    <button class="cta-btn" onclick="location.href='profile.html'">Complete Verification</button>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div id="successModal" class="modal">
+  <div class="modal-content">
+    <h2>Invoice Created Successfully</h2>
+    <p>Your secure invoice link:</p>
+    <input id="invoiceLink" readonly>
+    <div class="btn-row">
+      <button class="cta-btn" onclick="copyLink()">Copy Link</button>
+      <button class="cta-btn" onclick="openInvoice()">Open Invoice</button>
+      <button class="cta-btn" onclick="sendEmail()">Send via Email</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let users = JSON.parse(localStorage.getItem("users")) || {};
+let currentUserId = localStorage.getItem("currentUserId");
+if(!currentUserId || !users[currentUserId]) location.href="login.html";
+let user = users[currentUserId];
+
+// Verified gate
+if(!user.verified){
+  document.getElementById("lockOverlay").style.display="flex";
+}
+
+// Fill student info
+document.getElementById("studentName").innerText = user.name || "Student";
+document.getElementById("studentUniversity").innerText = user.university || "";
+document.getElementById("studentId").innerText = currentUserId;
+document.getElementById("studentPhoto").src = user.profileImage || "https://via.placeholder.com/80";
+
+// Pricing calc
+const amountInput = document.getElementById("amount");
+amountInput.addEventListener("input",()=>{
+  let amt = parseFloat(amountInput.value)||0;
+  let fee = amt * 0.05;
+  document.getElementById("fee").innerText = fee.toFixed(2);
+  document.getElementById("payout").innerText = (amt-fee).toFixed(2);
+});
+
+function generateInvoice(){
+  if(!document.getElementById("escrowCheck").checked){
+    alert("Please accept escrow terms.");
+    return;
+  }
+
+  let invoiceId = "INV"+Date.now();
+
+  let invoice = {
+    id: invoiceId,
+    studentId: currentUserId,
+    studentName: user.name,
+    university: user.university,
+    profileImage: user.profileImage,
+    clientName: clientName.value,
+    clientEmail: clientEmail.value,
+    clientCountry: clientCountry.value,
+    serviceTitle: serviceTitle.value,
+    serviceCategory: serviceCategory.value,
+    serviceDescription: serviceDescription.value,
+    deliveryDate: deliveryDate.value,
+    currency: currency.value,
+    amount: amount.value,
+    status:"Pending",
+    createdAt:new Date().toISOString()
+  };
+
+  let invoices = JSON.parse(localStorage.getItem("invoices")) || {};
+  invoices[invoiceId] = invoice;
+  localStorage.setItem("invoices",JSON.stringify(invoices));
+
+  let link = `${location.origin}/invoice.html?invoice_id=${invoiceId}`;
+  document.getElementById("invoiceLink").value = link;
+  document.getElementById("successModal").style.display="flex";
+}
+
+function copyLink(){
+  invoiceLink.select();
+  document.execCommand("copy");
+  alert("Invoice link copied!");
+}
+function openInvoice(){
+  window.open(invoiceLink.value,"_blank");
+}
+function sendEmail(){
+  window.location.href = `mailto:${clientEmail.value}?subject=Zep Swipe Invoice&body=Please complete payment using this secure link:%0A${invoiceLink.value}`;
+}
+</script>
+
+</body>
+</html>
