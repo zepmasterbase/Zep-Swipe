@@ -3,348 +3,320 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Create Payment Request</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Zep Swipe — Create Invoice</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --green:#00ff94;
-  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --bg:#050018;
   --glass:rgba(255,255,255,.08);
-  --text:rgba(255,255,255,.9);
+  --text-light:rgba(255,255,255,.85);
+  --green:#00ff94;
 }
 
+/* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;padding:20px;}
+body{background:var(--bg);color:#fff;min-height:100vh;}
 
+/* HEADER */
 header{
-  display:flex;align-items:center;gap:12px;
-  padding:16px 20px;border-radius:18px;
-  background:rgba(0,0,0,.55);
-  box-shadow:0 0 30px rgba(0,240,255,.25);
-  margin-bottom:25px;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px;margin-bottom:20px;
+  background:rgba(0,0,0,.6);
+  border-radius:12px;
+  box-shadow:0 0 20px rgba(0,240,255,.3),0 0 40px rgba(156,77,255,.3);
+  animation:pulse 2s infinite;
 }
-header img{height:40px;}
-header h1{
-  font-family:Orbitron;
-  font-size:1.2rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 20px rgba(0,240,255,.3),0 0 40px rgba(156,77,255,.3);}
+  50%{box-shadow:0 0 30px rgba(0,240,255,.5),0 0 60px rgba(156,77,255,.5);}
 }
-header .subtitle{font-size:.9rem;color:rgba(255,255,255,.7);margin-left:auto;}
+.brand{display:flex;align-items:center;gap:8px;font-family:Orbitron;font-size:1.5rem;}
+.brand img{width:40px;height:40px;}
+.logout-btn{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:38px;height:38px;color:#fff;cursor:pointer;}
 
-.container{
-  max-width:900px;margin:auto;
-  display:grid;gap:22px;
-}
+/* DASHBOARD CONTAINER */
+.container{max-width:900px;margin:auto;padding:0 16px;display:flex;flex-direction:column;gap:20px;}
 
-.card{
+/* STUDENT INFO CARD */
+.student-card{
+  display:flex;align-items:center;gap:16px;
   background:var(--glass);
+  padding:16px;border-radius:16px;
   border:1px solid rgba(255,255,255,.12);
-  border-radius:20px;
-  padding:22px;
-  box-shadow:0 0 28px rgba(156,77,255,.15);
+  box-shadow:0 0 20px rgba(0,240,255,.15),0 0 40px rgba(156,77,255,.15);
 }
+.student-card img{width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,255,255,.3);}
+.student-card .info{display:flex;flex-direction:column;}
+.verified-badge{display:flex;align-items:center;gap:8px;font-family:Orbitron;font-size:12px;padding:4px 8px;border-radius:12px;background:linear-gradient(90deg,var(--green),var(--zep-blue));color:#050015;animation:badgePulse 2s infinite;}
+@keyframes badgePulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
 
-.card h2{
-  font-family:Orbitron;
-  font-size:1.05rem;
-  margin-bottom:12px;
-  color:var(--zep-blue);
-}
+/* FORM SECTIONS */
+form{display:flex;flex-direction:column;gap:20px;}
+section{background:var(--glass);padding:16px;border-radius:16px;box-shadow:0 0 20px rgba(0,240,255,.1),0 0 40px rgba(156,77,255,.1);}
+section h3{font-family:Orbitron;margin-bottom:12px;}
+input, textarea, select{width:100%;padding:12px;border:none;border-radius:12px;background:rgba(255,255,255,.05);color:#fff;margin-bottom:10px;outline:none;}
+textarea{resize:none;height:80px;}
+select{background:rgba(255,255,255,.05);}
 
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
-
-input, select, textarea{
-  width:100%;padding:12px;border-radius:12px;
-  border:none;outline:none;
-  background:rgba(255,255,255,.05);
-  color:#fff;
-}
-textarea{resize:none;min-height:90px;}
-input[readonly]{opacity:.7;}
-
-.profile-box{
-  display:flex;align-items:center;gap:14px;
-}
-.profile-box img{
-  width:70px;height:70px;border-radius:50%;
-  object-fit:cover;border:2px solid var(--zep-blue);
-}
-.badge{
-  display:inline-block;
-  background:linear-gradient(90deg,var(--green),var(--zep-blue));
-  color:#050015;
-  padding:4px 10px;border-radius:999px;
-  font-size:.7rem;font-family:Orbitron;
-  margin-top:6px;
-}
-
-.breakdown{
-  background:rgba(0,0,0,.4);
-  border-radius:14px;padding:14px;
-  font-size:.9rem;
-}
-.breakdown div{display:flex;justify-content:space-between;margin-bottom:6px;}
-
-.cta-btn{
-  width:100%;padding:16px;border:none;border-radius:999px;
+/* BUTTONS */
+button{
+  padding:12px 16px;border:none;border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;font-family:Orbitron;
-  font-size:1rem;cursor:pointer;
-  box-shadow:0 0 35px rgba(0,240,255,.45);
-  transition:.3s;
+  color:#050015;font-family:Orbitron;cursor:pointer;
+  transition:.3s;margin-top:8px;
 }
-.cta-btn:hover{transform:translateY(-2px);}
+button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
 
-.lock-overlay{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.85);
-  backdrop-filter:blur(8px);
-  display:flex;align-items:center;justify-content:center;
-  z-index:999;
+/* MODAL */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;justify-content:center;align-items:center;z-index:1000;
 }
-.lock-card{
-  background:var(--glass);
-  padding:40px;border-radius:24px;
-  text-align:center;max-width:420px;
-  box-shadow:0 0 40px rgba(156,77,255,.4);
-}
-.lock-card h2{font-family:Orbitron;color:var(--zep-blue);}
-.lock-card button{margin-top:18px;}
-
 .modal{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.7);
-  display:none;align-items:center;justify-content:center;
-  z-index:1000;
+  background:var(--glass);padding:24px;border-radius:20px;max-width:400px;width:90%;
+  text-align:center;box-shadow:0 0 20px rgba(0,240,255,.3),0 0 40px rgba(156,77,255,.3);
 }
-.modal-content{
-  background:var(--glass);
-  padding:30px;border-radius:22px;
-  max-width:500px;width:90%;
-  text-align:center;
-  box-shadow:0 0 40px rgba(0,240,255,.35);
-}
-.modal-content h2{font-family:Orbitron;color:var(--green);margin-bottom:10px;}
-.modal-content input{margin:12px 0;}
-.modal-content .btn-row{display:flex;gap:10px;flex-wrap:wrap;}
-.modal-content button{flex:1;}
+.modal h3{margin-bottom:12px;font-family:Orbitron;}
+.modal input{user-select:all;}
+.modal button{margin-top:12px;width:100%;}
 
-.info-box{
-  font-size:.85rem;
-  background:rgba(0,0,0,.4);
-  border-left:4px solid var(--zep-blue);
-  padding:12px;border-radius:12px;
-  color:rgba(255,255,255,.8);
-}
-@media(max-width:700px){
-  .grid-2,.grid-3{grid-template-columns:1fr;}
-}
+/* LOCKED OVERLAY */
+.locked-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;justify-content:center;align-items:center;flex-direction:column;z-index:2000;text-align:center;padding:20px;}
+.locked-overlay button{margin-top:16px;}
 </style>
 </head>
-
 <body>
 
 <header>
-  <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe">
-  <div>
-    <h1>Create Payment Request</h1>
-    <div class="subtitle">Get paid securely for your freelance work</div>
+  <div class="brand">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe Logo">
+    <span>Zep Swipe</span>
   </div>
+  <button class="logout-btn" onclick="logout()">⎋</button>
 </header>
 
 <div class="container">
 
-  <!-- Student Info -->
-  <div class="card">
-    <h2>Your Freelancer Profile</h2>
-    <div class="profile-box">
-      <img id="studentPhoto" src="https://via.placeholder.com/80">
-      <div>
-        <div id="studentName"></div>
-        <div id="studentUniversity" style="font-size:.85rem;opacity:.8;"></div>
-        <div class="badge">Verified Student</div>
-        <div style="font-size:.8rem;margin-top:4px;">Wallet ID: <span id="studentId"></span></div>
-      </div>
+  <!-- LOCKED OVERLAY -->
+  <div class="locked-overlay" id="lockedOverlay">
+    <h2>Verify your account to request payments and unlock global earning</h2>
+    <button onclick="location.href='learn-earn.html'">Complete Verification</button>
+  </div>
+
+  <!-- STUDENT INFO -->
+  <div class="student-card" id="studentCard">
+    <img id="studentImg" src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnu9ifbfep1lrp3a7edu361b.jpg" alt="Student">
+    <div class="info">
+      <span id="studentName">Siyanda</span>
+      <span id="studentUniversity">University Name</span>
+      <span id="studentCountry">Country</span>
+      <div class="verified-badge" id="verifiedBadge">Verified Freelancer</div>
+      <span id="studentWallet">Wallet: 0 ZAC (~$0)</span>
     </div>
   </div>
 
-  <!-- Client Info -->
-  <div class="card">
-    <h2>Client Information</h2>
-    <div class="grid-2">
-      <input id="clientName" placeholder="Client Full Name">
-      <input id="clientEmail" placeholder="Client Email">
-      <select id="clientCountry">
+  <!-- CREATE INVOICE FORM -->
+  <form id="invoiceForm">
+    <!-- CLIENT INFO -->
+    <section>
+      <h3>Client Information</h3>
+      <input type="text" id="clientName" placeholder="Client Full Name" required>
+      <input type="email" id="clientEmail" placeholder="Client Email" required>
+      <select id="clientCountry" required>
         <option value="">Select Country</option>
-        <option>Ghana</option>
-        <option>South Africa</option>
-        <option>Nigeria</option>
-        <option>Kenya</option>
-        <option>USA</option>
-        <option>UK</option>
-        <option>Other</option>
+        <option value="Ghana">Ghana</option>
+        <option value="South Africa">South Africa</option>
+        <option value="Nigeria">Nigeria</option>
+        <option value="Kenya">Kenya</option>
+        <option value="Other">Other</option>
       </select>
-    </div>
-  </div>
+    </section>
 
-  <!-- Service -->
-  <div class="card">
-    <h2>Service Details</h2>
-    <div class="grid-2">
-      <input id="serviceTitle" placeholder="Service Title">
-      <select id="serviceCategory">
-        <option value="">Service Category</option>
-        <option>Virtual Assistant</option>
-        <option>Content Creation</option>
-        <option>Writing</option>
-        <option>Design</option>
-        <option>Data Entry</option>
-        <option>Tutoring</option>
-        <option>Other</option>
+    <!-- SERVICE DETAILS -->
+    <section>
+      <h3>Service Details</h3>
+      <input type="text" id="serviceTitle" placeholder="Service Title" required>
+      <select id="serviceCategory" required>
+        <option value="">Select Category</option>
+        <option value="Virtual Assistant">Virtual Assistant</option>
+        <option value="Content Creation">Content Creation</option>
+        <option value="Writing">Writing</option>
+        <option value="Design">Design</option>
+        <option value="Data Entry">Data Entry</option>
+        <option value="Tutoring">Tutoring</option>
+        <option value="Other">Other</option>
       </select>
-    </div>
-    <textarea id="serviceDescription" placeholder="Service description..."></textarea>
-    <input type="date" id="deliveryDate">
-  </div>
+      <textarea id="serviceDescription" placeholder="Service Description" required></textarea>
+      <input type="date" id="deliveryDate" required>
+    </section>
 
-  <!-- Pricing -->
-  <div class="card">
-    <h2>Pricing</h2>
-    <div class="grid-3">
-      <select id="currency">
-        <option>USD</option>
-        <option>ZAR</option>
-        <option>GHS</option>
-        <option>NGN</option>
-        <option>EUR</option>
+    <!-- PRICING -->
+    <section>
+      <h3>Pricing</h3>
+      <select id="currency" required>
+        <option value="USD">USD</option>
+        <option value="ZAR">ZAR</option>
+        <option value="GHS">GHS</option>
+        <option value="NGN">NGN</option>
       </select>
-      <input type="number" id="amount" placeholder="Amount">
-    </div>
+      <input type="number" id="amount" placeholder="Amount" min="1" step="0.01" required>
+      <div id="breakdown">
+        <span>Client Pays: $0</span><br>
+        <span>Platform Fee: $0</span><br>
+        <span>Student Receives: $0</span>
+      </div>
+    </section>
 
-    <div class="breakdown" style="margin-top:12px;">
-      <div><span>Platform Fee</span><span id="fee">$0.00</span></div>
-      <div><strong>Student Receives</strong><strong id="payout">$0.00</strong></div>
-    </div>
+    <!-- ESCROW TERMS -->
+    <section>
+      <input type="checkbox" id="escrowTerms" required> I understand funds will be held in escrow and released after work is submitted and approved.
+    </section>
 
-    <label style="display:flex;gap:8px;margin-top:12px;font-size:.85rem;">
-      <input type="checkbox" id="escrowCheck">
-      I understand that funds will be held in escrow and released after work is submitted and approved.
-    </label>
-  </div>
-
-  <div class="info-box">
-    Zep Swipe protects both students and clients. Payments are held securely and only released after work delivery and approval.
-  </div>
-
-  <button class="cta-btn" onclick="generateInvoice()">Generate Secure Invoice</button>
+    <button type="submit">Generate Secure Invoice</button>
+  </form>
 
 </div>
 
-<!-- Locked Overlay -->
-<div id="lockOverlay" class="lock-overlay" style="display:none;">
-  <div class="lock-card">
-    <h2>Verification Required</h2>
-    <p style="margin-top:10px;">
-      Verify your account to request payments and unlock global earning.
-    </p>
-    <button class="cta-btn" onclick="location.href='profile.html'">Complete Verification</button>
-  </div>
-</div>
-
-<!-- Success Modal -->
-<div id="successModal" class="modal">
-  <div class="modal-content">
-    <h2>Invoice Created Successfully</h2>
-    <p>Your secure invoice link:</p>
-    <input id="invoiceLink" readonly>
-    <div class="btn-row">
-      <button class="cta-btn" onclick="copyLink()">Copy Link</button>
-      <button class="cta-btn" onclick="openInvoice()">Open Invoice</button>
-      <button class="cta-btn" onclick="sendEmail()">Send via Email</button>
-    </div>
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <h3>✅ Invoice Created Successfully</h3>
+    <input type="text" id="invoiceLink" readonly>
+    <button onclick="copyLink()">Copy Link</button>
+    <button onclick="openInvoice()">Open Invoice</button>
+    <button onclick="closeModal()">Close</button>
   </div>
 </div>
 
 <script>
+/* =====================
+   USER SESSION & VERIFICATION
+===================== */
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
 if(!currentUserId || !users[currentUserId]) location.href="login.html";
-let user = users[currentUserId];
 
-// Verified gate
-if(!user.verified){
-  document.getElementById("lockOverlay").style.display="flex";
+let currentUser = users[currentUserId];
+
+// Only allow verified students
+if(!currentUser.verified){
+  document.getElementById("lockedOverlay").style.display="flex";
+  document.getElementById("invoiceForm").style.display="none";
 }
 
-// Fill student info
-document.getElementById("studentName").innerText = user.name || "Student";
-document.getElementById("studentUniversity").innerText = user.university || "";
-document.getElementById("studentId").innerText = currentUserId;
-document.getElementById("studentPhoto").src = user.profileImage || "https://via.placeholder.com/80";
+/* =====================
+   STUDENT INFO
+===================== */
+const studentImg = document.getElementById("studentImg");
+const studentName = document.getElementById("studentName");
+const studentUniversity = document.getElementById("studentUniversity");
+const studentCountry = document.getElementById("studentCountry");
+const verifiedBadge = document.getElementById("verifiedBadge");
+const studentWallet = document.getElementById("studentWallet");
 
-// Pricing calc
-const amountInput = document.getElementById("amount");
-amountInput.addEventListener("input",()=>{
-  let amt = parseFloat(amountInput.value)||0;
-  let fee = amt * 0.05;
-  document.getElementById("fee").innerText = fee.toFixed(2);
-  document.getElementById("payout").innerText = (amt-fee).toFixed(2);
-});
+function loadStudentInfo(){
+  studentImg.src = currentUser.profileImage || studentImg.src;
+  studentName.innerText = currentUser.name || "Siyanda";
+  studentUniversity.innerText = currentUser.university || "University Name";
+  studentCountry.innerText = currentUser.country || "Country";
+  verifiedBadge.style.display = currentUser.verified ? "flex" : "none";
+  studentWallet.innerText = `Wallet: ${currentUser.walletBalance || 0} ZAC (~$${((currentUser.walletBalance||0)*0.0041).toFixed(2)})`;
+}
+loadStudentInfo();
 
-function generateInvoice(){
-  if(!document.getElementById("escrowCheck").checked){
-    alert("Please accept escrow terms.");
+/* =====================
+   FORM & INVOICE CREATION
+===================== */
+const form = document.getElementById("invoiceForm");
+form.addEventListener('submit',(e)=>{
+  e.preventDefault();
+  // Validate
+  const clientName = document.getElementById("clientName").value.trim();
+  const clientEmail = document.getElementById("clientEmail").value.trim();
+  const clientCountry = document.getElementById("clientCountry").value;
+  const serviceTitle = document.getElementById("serviceTitle").value.trim();
+  const serviceCategory = document.getElementById("serviceCategory").value;
+  const serviceDesc = document.getElementById("serviceDescription").value.trim();
+  const deliveryDate = document.getElementById("deliveryDate").value;
+  const currency = document.getElementById("currency").value;
+  const amount = parseFloat(document.getElementById("amount").value);
+  const escrowChecked = document.getElementById("escrowTerms").checked;
+
+  if(!clientName||!clientEmail||!clientCountry||!serviceTitle||!serviceCategory||!serviceDesc||!deliveryDate||!currency||!amount||!escrowChecked){
+    alert("Please fill all fields and accept escrow terms.");
     return;
   }
 
-  let invoiceId = "INV"+Date.now();
-
-  let invoice = {
+  // Generate unique invoice ID
+  const invoiceId = "INV-"+Math.random().toString(36).substring(2,8).toUpperCase();
+  const invoice = {
     id: invoiceId,
     studentId: currentUserId,
-    studentName: user.name,
-    university: user.university,
-    profileImage: user.profileImage,
-    clientName: clientName.value,
-    clientEmail: clientEmail.value,
-    clientCountry: clientCountry.value,
-    serviceTitle: serviceTitle.value,
-    serviceCategory: serviceCategory.value,
-    serviceDescription: serviceDescription.value,
-    deliveryDate: deliveryDate.value,
-    currency: currency.value,
-    amount: amount.value,
-    status:"Pending",
-    createdAt:new Date().toISOString()
+    studentName: currentUser.name,
+    studentWallet: currentUser.walletBalance||0,
+    clientName, clientEmail, clientCountry,
+    serviceTitle, serviceCategory, serviceDesc, deliveryDate,
+    currency, amount,
+    status: "Pending",
+    created: new Date().toISOString()
   };
 
+  // Save to localStorage
   let invoices = JSON.parse(localStorage.getItem("invoices")) || {};
   invoices[invoiceId] = invoice;
-  localStorage.setItem("invoices",JSON.stringify(invoices));
+  localStorage.setItem("invoices", JSON.stringify(invoices));
 
-  let link = `${location.origin}/invoice.html?invoice_id=${invoiceId}`;
-  document.getElementById("invoiceLink").value = link;
-  document.getElementById("successModal").style.display="flex";
-}
+  // Show modal
+  const modal = document.getElementById("successModal");
+  const linkInput = document.getElementById("invoiceLink");
+  linkInput.value = `${location.origin}/invoice.html?invoice_id=${invoiceId}`;
+  modal.style.display = "flex";
+});
 
 function copyLink(){
-  invoiceLink.select();
+  const linkInput = document.getElementById("invoiceLink");
+  linkInput.select();
   document.execCommand("copy");
-  alert("Invoice link copied!");
+  alert("Link copied!");
 }
 function openInvoice(){
-  window.open(invoiceLink.value,"_blank");
+  const linkInput = document.getElementById("invoiceLink");
+  window.open(linkInput.value,"_blank");
 }
-function sendEmail(){
-  window.location.href = `mailto:${clientEmail.value}?subject=Zep Swipe Invoice&body=Please complete payment using this secure link:%0A${invoiceLink.value}`;
+function closeModal(){
+  document.getElementById("successModal").style.display="none";
 }
-</script>
 
+/* =====================
+   LOGOUT
+===================== */
+function logout(){
+  localStorage.removeItem("currentUserId");
+  location.href="login.html";
+}
+
+/* =====================
+   PRICING BREAKDOWN DYNAMIC
+===================== */
+const amountInput = document.getElementById("amount");
+const currencySelect = document.getElementById("currency");
+const breakdown = document.getElementById("breakdown");
+
+function updateBreakdown(){
+  const amount = parseFloat(amountInput.value)||0;
+  const fee = (amount*0.1).toFixed(2); // 10% platform fee
+  const studentReceives = (amount - fee).toFixed(2);
+  breakdown.innerHTML=`Client Pays: ${amount} ${currencySelect.value}<br>Platform Fee: ${fee} ${currencySelect.value}<br>Student Receives: ${studentReceives} ${currencySelect.value}`;
+}
+
+amountInput.addEventListener('input',updateBreakdown);
+currencySelect.addEventListener('change',updateBreakdown);
+updateBreakdown();
+
+</script>
 </body>
 </html>
