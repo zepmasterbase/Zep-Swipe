@@ -4,185 +4,227 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Wallet</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --green:#00ff94;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,.08);
   --text-light:rgba(255,255,255,.85);
+  --green:#00ff94;
 }
 
 /* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;padding:20px;}
+body{background:var(--bg);color:#fff;min-height:100vh;display:flex;justify-content:center;padding:20px;}
 
 /* HEADER */
 header{
+  width:100%;max-width:1200px;
   display:flex;justify-content:space-between;align-items:center;
   padding:18px;margin-bottom:20px;border-radius:16px;
-  background:rgba(0,0,0,.55);
-  box-shadow:0 0 30px rgba(0,240,255,.25);
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  animation:pulse 2s infinite;
 }
-header .brand{
-  display:flex;align-items:center;gap:12px;
-  font-family:Orbitron;font-size:1.5rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-header .brand img{
-  height:40px;border-radius:8px;
-}
-.logout-btn{
-  background:rgba(255,255,255,.1);border:none;border-radius:50%;
-  width:38px;height:38px;color:#fff;cursor:pointer;
-}
+@keyframes pulse{0%,100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}}
+header img{width:50px;height:50px;border-radius:8px;margin-right:12px;}
+header h1{font-family:Orbitron;font-size:1.5rem;}
 
-/* WALLET CARD */
-.wallet-card{
-  background:var(--glass);padding:22px;border-radius:20px;
-  border:1px solid rgba(255,255,255,.12);margin-bottom:18px;
-  box-shadow:0 0 28px rgba(156,77,255,.15);
+/* WALLET CARDS */
+.card{
+  background:var(--glass);
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:20px;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 0 20px rgba(0,240,255,.2);
+  max-width:900px;
+  width:100%;
 }
-.wallet-card h2{
-  font-family:Orbitron;font-size:1.2rem;margin-bottom:12px;color:var(--zep-blue);
+.card h2{margin-bottom:12px;}
+.wallet-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.wallet-row span{font-size:1rem;}
+
+/* BUTTONS */
+button{
+  cursor:pointer;
+  font-family:Orbitron;
+  transition:.3s;
 }
-.wallet-info{
-  display:flex;flex-direction:column;gap:8px;margin-bottom:12px;
-}
-.wallet-info span{font-size:.95rem;}
-.cta-btn{
+button.primary{
   width:100%;padding:14px;border:none;border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;font-family:Orbitron;cursor:pointer;
-  font-size:1rem;box-shadow:0 0 35px rgba(0,240,255,.45);
-  transition:.3s;margin-top:10px;
+  color:#050015;margin-top:10px;box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
 }
-.cta-btn:hover{transform:translateY(-2px);}
+button.primary:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+button.secondary{width:48%;background:rgba(255,255,255,.1);color:#fff;border:none;padding:12px;border-radius:999px;}
+button.secondary:hover{transform:translateY(-2px);}
 
-/* INVOICE LIST */
-.invoice-list{
-  display:flex;flex-direction:column;gap:12px;margin-top:12px;
+/* MODAL */
+.modal-bg{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
 }
-.invoice-item{
-  background:rgba(255,255,255,.05);padding:14px;border-radius:12px;
-  display:flex;justify-content:space-between;align-items:center;
-  cursor:pointer;transition:.2s;box-shadow:0 0 15px rgba(0,240,255,.15);
+.modal{
+  background:var(--glass);
+  padding:20px;
+  border-radius:16px;
+  max-width:400px;
+  width:90%;
+  text-align:center;
 }
-.invoice-item:hover{transform:scale(1.02);box-shadow:0 0 25px rgba(0,240,255,.3);}
-.invoice-item .status{
-  padding:4px 10px;border-radius:999px;font-size:.8rem;font-family:Orbitron;
-}
-.status-Pending{background:rgba(255,165,0,.3);color:#ffa500;}
-.status-Work\ Submitted{background:rgba(0,150,255,.3);color:#00aaff;}
-.status-Released{background:rgba(0,255,148,.3);color:#00ff94;}
 
-/* PROFILE SUMMARY */
-.profile-summary{
-  display:flex;align-items:center;gap:16px;margin-bottom:16px;
+/* CHART */
+#chartContainer{
+  margin-top:20px;
 }
-.profile-summary img{
-  width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,255,255,.3);
+.bar{width:12%;background:linear-gradient(180deg,var(--zep-blue),var(--zep-violet));border-radius:8px 8px 0 0;display:inline-block;margin-right:4%;position:relative;cursor:pointer;transition:.3s;}
+.bar:hover{opacity:.8;}
+.bar span{position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-size:.8rem;}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .wallet-row{flex-direction:column;align-items:flex-start;}
+  button.secondary{width:100%;margin-top:8px;}
 }
-.profile-summary div span{display:block;font-size:.85rem;color:var(--text-light);}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">
+  <div style="display:flex;align-items:center;">
     <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe Logo">
-    Zep Swipe
+    <h1>Zep Swipe</h1>
   </div>
-  <button class="logout-btn" onclick="logout()">⎋</button>
 </header>
 
-<!-- Profile Summary -->
-<div class="wallet-card profile-summary">
-  <img id="profileImg" src="https://via.placeholder.com/80">
-  <div>
-    <h3 id="studentName">-</h3>
-    <span id="studentLevel">-</span>
-    <span id="walletBalance">Wallet: 0 ZAC (~$0)</span>
+<!-- WALLET BALANCE -->
+<div class="card">
+  <h2>Wallet</h2>
+  <div class="wallet-row">
+    <span>ZAC Balance:</span>
+    <span id="zacBalance">0 ZAC</span>
+  </div>
+  <div class="wallet-row">
+    <span>USD Balance:</span>
+    <span id="usdBalance">$0</span>
   </div>
 </div>
 
-<!-- Wallet Info -->
-<div class="wallet-card">
-  <h2>Your Wallet</h2>
-  <div class="wallet-info">
-    <span id="weeklyZAC">Weekly ZAC: 0</span>
-    <span id="weeklyUSD">Weekly USD: $0</span>
-    <span id="monthlyZAC">Monthly ZAC: 0</span>
-    <span id="monthlyUSD">Monthly USD: $0</span>
-  </div>
-  <button class="cta-btn" onclick="location.href='create-invoice.html'">Create Invoice</button>
+<!-- EARNINGS CHART -->
+<div class="card">
+  <h2>Daily Learn & Earn</h2>
+  <div id="chartContainer"></div>
 </div>
 
-<!-- Invoice List -->
-<div class="wallet-card">
-  <h2>Invoices</h2>
-  <div class="invoice-list" id="invoiceList"></div>
+<!-- WITHDRAWALS -->
+<div class="card">
+  <h2>Withdraw Funds (USD Only)</h2>
+  <button class="primary" id="withdrawBtn">Withdraw USD</button>
+</div>
+
+<!-- CREATE INVOICE -->
+<div class="card">
+  <h2>Generate Payment Request</h2>
+  <button class="primary" onclick="location.href='create-invoice.html'">Create Invoice</button>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modalContent">
+    <h3 id="modalTitle">Action</h3>
+    <p id="modalMsg"></p>
+    <div id="modalActions"></div>
+    <button onclick="closeModal()">Close</button>
+  </div>
 </div>
 
 <script>
-// User session
+// USER SESSION
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
 if(!currentUserId || !users[currentUserId]) location.href="login.html";
 let currentUser = users[currentUserId];
 
-function logout(){
-  localStorage.removeItem("currentUserId");
-  location.href="login.html";
+// SIMULATE 21-DAY LEARN & EARN DAILY ZAC
+const dailyZAC = 25;
+currentUser.tasksCompleted = currentUser.tasksCompleted || 0;
+let zacBalance = currentUser.zacBalance || 0;
+for(let i=0;i<currentUser.tasksCompleted;i++){
+  zacBalance += dailyZAC;
 }
+currentUser.zacBalance = zacBalance;
 
-// Profile info
-document.getElementById("studentName").innerText = currentUser.name;
-document.getElementById("studentLevel").innerText = currentUser.level;
-document.getElementById("profileImg").src = currentUser.profileImage || "https://via.placeholder.com/80";
+// USD balance
+let usdBalance = currentUser.walletUSD || 0;
 
-// Wallet info
-function updateWallet(){
-  const zac = currentUser.walletBalance || 0;
-  const usd = (zac*0.014).toFixed(2);
-  document.getElementById("walletBalance").innerText = `Wallet: ${zac} ZAC (~$${usd})`;
-  document.getElementById("weeklyZAC").innerText = `Weekly ZAC: ${zac}`;
-  document.getElementById("weeklyUSD").innerText = `Weekly USD: $${usd}`;
-  document.getElementById("monthlyZAC").innerText = `Monthly ZAC: ${zac}`;
-  document.getElementById("monthlyUSD").innerText = `Monthly USD: $${usd}`;
-}
-updateWallet();
+// UPDATE DOM
+const zacBalanceEl = document.getElementById("zacBalance");
+const usdBalanceEl = document.getElementById("usdBalance");
+zacBalanceEl.innerText = `${currentUser.zacBalance} ZAC`;
+usdBalanceEl.innerText = `$${usdBalance.toFixed(2)}`;
 
-// Invoice list
-let invoices = JSON.parse(localStorage.getItem("invoices")) || {};
-const invoiceListEl = document.getElementById("invoiceList");
-
-function renderInvoices(){
-  invoiceListEl.innerHTML="";
-  Object.values(invoices).forEach(inv=>{
-    if(inv.studentId !== currentUserId) return;
-    const item = document.createElement("div");
-    item.className="invoice-item";
-    item.innerHTML=`<span>${inv.serviceTitle} - ${inv.clientName}</span>
-                    <span class="status status-${inv.status.replace(/\s/g,'')}">${inv.status}</span>`;
-    item.addEventListener('click',()=>{window.location.href=`invoice.html?invoice_id=${inv.id}`});
-    invoiceListEl.appendChild(item);
-  });
-}
-renderInvoices();
-
-// Listen for real-time invoice updates
-window.addEventListener('invoiceUpdated',(e)=>{
-  if(e.detail.studentId===currentUserId){
-    invoices[e.detail.id] = e.detail;
-    localStorage.setItem("invoices", JSON.stringify(invoices));
-    updateWallet();
-    renderInvoices();
+// DAILY ZAC CHART
+const chartContainer = document.getElementById("chartContainer");
+function renderChart(){
+  chartContainer.innerHTML="";
+  let days = Math.min(21,currentUser.tasksCompleted);
+  for(let i=1;i<=days;i++){
+    let b=document.createElement("div");
+    b.className="bar";
+    b.style.height="60px";
+    b.innerHTML=`<span>${dailyZAC} ZAC</span>`;
+    chartContainer.appendChild(b);
   }
+}
+renderChart();
+
+// MODAL UTILS
+const modalBg = document.getElementById("modalBg");
+const modalTitle = document.getElementById("modalTitle");
+const modalMsg = document.getElementById("modalMsg");
+const modalActions = document.getElementById("modalActions");
+function openModal(title,msg,actionsHTML=""){ modalTitle.innerText=title; modalMsg.innerText=msg; modalActions.innerHTML=actionsHTML; modalBg.style.display="flex"; }
+function closeModal(){ modalBg.style.display="none"; }
+
+// WITHDRAW FLOW
+const withdrawBtn = document.getElementById("withdrawBtn");
+withdrawBtn.addEventListener("click",()=>{
+  openModal("Withdraw USD","Select withdrawal method below:",
+    `<button class="secondary" onclick="processWithdrawal('Momo')">Pay with Momo</button>
+     <button class="secondary" onclick="processWithdrawal('Bank')">Pay to Bank</button>`);
 });
+
+function processWithdrawal(method){
+  if(usdBalance<=0){ alert("No USD available to withdraw."); return; }
+  let amount = usdBalance;
+  usdBalance=0;
+  currentUser.walletUSD=usdBalance;
+  users[currentUserId]=currentUser;
+  localStorage.setItem("users",JSON.stringify(users));
+  usdBalanceEl.innerText=`$${usdBalance.toFixed(2)}`;
+  openModal("✅ Withdrawal Successful",`$${amount} sent via ${method}.`);
+}
+
+// CONNECT INVOICE.HTML PAYMENTS
+window.addEventListener("storage",()=>{
+  currentUser=users[currentUserId];
+  usdBalance=currentUser.walletUSD||0;
+  usdBalanceEl.innerText=`$${usdBalance.toFixed(2)}`;
+});
+
+// SAVE CHANGES
+users[currentUserId]=currentUser;
+localStorage.setItem("users",JSON.stringify(users));
 </script>
+
 </body>
 </html>
