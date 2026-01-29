@@ -2,378 +2,162 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Zep Swipe Invoice • Secure Student Payments</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+<title>Zep Swipe — Invoice</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#050b1a;
-  --card:#0c1430;
-  --primary:#00e5ff;
-  --accent:#1eff8e;
-  --danger:#ff5c5c;
-  --text:#eaf0ff;
-  --muted:#9aa6d6;
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --green:#00ff94;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,.08);
+  --text:rgba(255,255,255,.9);
 }
-
-*{box-sizing:border-box;font-family:Inter,sans-serif;}
-body{
-  margin:0;
-  background:radial-gradient(circle at top,#0a1240,#020716);
-  color:var(--text);
-  min-height:100vh;
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;min-height:100vh;padding:20px;}
+header{
+  display:flex;align-items:center;gap:12px;padding:16px 20px;border-radius:18px;
+  background:rgba(0,0,0,.55);
+  box-shadow:0 0 30px rgba(0,240,255,.25);
+  margin-bottom:25px;
 }
-
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:24px;
+header img{height:40px;}
+header h1{
+  font-family:Orbitron;
+  font-size:1.2rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-
-/* HEADER */
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:linear-gradient(135deg,#050b2a,#020716);
-  padding:18px 24px;
-  border-radius:18px;
-  box-shadow:0 0 30px rgba(0,229,255,.15);
-}
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.logo img{width:44px;height:44px;border-radius:10px;}
-.logo h1{
-  font-size:1.4rem;
-  letter-spacing:.5px;
-}
-
-.trust{
-  text-align:right;
-  font-size:.85rem;
-}
-.trust .badge{
-  background:linear-gradient(90deg,var(--accent),#00ffcc);
-  color:#001b12;
-  padding:6px 12px;
-  border-radius:999px;
-  font-weight:600;
-  display:inline-block;
-}
-
-/* CARD */
 .card{
-  background:var(--card);
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.12);
   border-radius:20px;
-  padding:24px;
-  margin-top:24px;
-  box-shadow:0 15px 50px rgba(0,0,0,.4);
-  border:1px solid rgba(255,255,255,.06);
+  padding:22px;
+  box-shadow:0 0 28px rgba(156,77,255,.15);
+  margin-bottom:20px;
 }
-
-.section-title{
-  font-size:.9rem;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:var(--muted);
+.card h2{
+  font-family:Orbitron;
+  font-size:1rem;
   margin-bottom:12px;
+  color:var(--zep-blue);
 }
-
-/* STATUS */
 .status-badge{
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:.8rem;
-  font-weight:600;
+  display:inline-block;
+  background:rgba(0,240,255,.2);
+  color:#fff;
+  padding:6px 12px;border-radius:999px;
+  font-family:Orbitron;
+  font-size:.75rem;
+  margin-bottom:10px;
 }
-.status-pending{background:#ffaa0022;color:#ffcc66;}
-.status-escrow{background:#00e5ff22;color:#7fe9ff;}
-.status-submitted{background:#9c7cff22;color:#cbb7ff;}
-.status-released{background:#1eff8e22;color:#1eff8e;}
-
-/* GRID */
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-@media(max-width:800px){
-  .grid-2,.grid-3{grid-template-columns:1fr;}
-}
-
-/* PROFILE */
-.profile{
-  display:flex;gap:14px;align-items:center;
-}
-.profile img{
-  width:64px;height:64px;border-radius:50%;
-  border:2px solid var(--primary);
-}
-.verified{
-  color:var(--accent);
-  font-size:.8rem;
-  font-weight:600;
-}
-
-/* AMOUNT */
-.amount-box{
-  background:linear-gradient(135deg,#08143a,#040a1f);
-  border-radius:16px;
-  padding:18px;
+.cta-btn{
+  width:100%;padding:16px;border:none;border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;font-family:Orbitron;
+  font-size:1rem;cursor:pointer;
+  box-shadow:0 0 35px rgba(0,240,255,.45);
+  transition:.3s;
   margin-top:12px;
 }
-.amount-row{
-  display:flex;justify-content:space-between;margin:8px 0;
+.cta-btn:hover{transform:translateY(-2px);}
+.info-box{
+  font-size:.85rem;
+  background:rgba(0,0,0,.4);
+  border-left:4px solid var(--zep-blue);
+  padding:12px;border-radius:12px;
+  color:rgba(255,255,255,.8);
 }
-.total{
-  font-size:1.2rem;
-  font-weight:700;
-  color:var(--accent);
-}
-
-/* ESCROW INFO */
-.escrow-info{
-  background:#07142f;
-  border-left:4px solid var(--primary);
-  padding:14px;
-  border-radius:10px;
-  font-size:.9rem;
-  color:var(--muted);
-}
-
-/* BUTTONS */
-.primary-btn{
-  width:100%;
-  margin-top:20px;
-  padding:16px;
-  font-size:1rem;
-  font-weight:700;
-  border:none;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--primary),#5b6cff);
-  color:#001024;
-  cursor:pointer;
-  box-shadow:0 0 25px rgba(0,229,255,.3);
-}
-.primary-btn:hover{transform:scale(1.02);}
-
-.actions{
-  display:flex;
-  gap:12px;
-  margin-top:14px;
-}
-.actions button{
-  flex:1;
-  padding:12px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.15);
-  background:#0a1433;
-  color:#fff;
-  cursor:pointer;
-}
-.actions button:hover{
-  box-shadow:0 0 15px rgba(0,229,255,.25);
-}
-
-/* FOOTER */
-.footer{
-  margin-top:40px;
-  text-align:center;
-  font-size:.8rem;
-  color:var(--muted);
-}
-.footer a{color:var(--primary);text-decoration:none;}
 </style>
 </head>
 <body>
 
-<div class="container">
+<header>
+  <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe">
+  <h1>Invoice</h1>
+</header>
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="logo">
-      <img src="https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe">
-      <h1>Zep Swipe</h1>
-    </div>
-    <div class="trust">
-      <div>Secure Student Payments</div>
-      <div class="badge">Verified Student • Escrow Protected</div>
-    </div>
-  </div>
+<div class="card">
+  <h2>Invoice Summary</h2>
+  <div><strong>Invoice ID:</strong> <span id="invoiceId">-</span></div>
+  <div><strong>Status:</strong> <span id="invoiceStatus" class="status-badge">-</span></div>
+  <div><strong>Client:</strong> <span id="clientName">-</span></div>
+  <div><strong>Service:</strong> <span id="serviceTitle">-</span></div>
+  <div class="info-box" id="escrowInfo">Funds are held securely in escrow. Payment will be released after work submission and approval.</div>
+  <button id="approveBtn" class="cta-btn">Approve & Release Funds</button>
+</div>
 
-  <!-- INVOICE SUMMARY -->
-  <div class="card">
-    <div class="grid-3">
-      <div>
-        <div class="section-title">Invoice ID</div>
-        <div id="invoiceId">ZS-INV-102948</div>
-      </div>
-      <div>
-        <div class="section-title">Status</div>
-        <span id="statusBadge" class="status-badge status-pending">Pending</span>
-      </div>
-      <div>
-        <div class="section-title">Dates</div>
-        <div>Issued: <span id="issueDate"></span></div>
-        <div>Due: <span id="dueDate"></span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- STUDENT + CLIENT -->
-  <div class="card grid-2">
-    <div>
-      <div class="section-title">Student Freelancer</div>
-      <div class="profile">
-        <img src="https://i.imgur.com/8Km9tLL.png" alt="Profile">
-        <div>
-          <strong id="studentName">Siyanda M.</strong><br>
-          <small id="studentUni">University of Johannesburg</small><br>
-          <span class="verified">✔ Verified Student</span><br>
-          <small>Wallet ID: <span id="walletId">@zep-siyanda</span></small>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div class="section-title">Client</div>
-      <div>
-        <div><strong id="clientName">Client Name</strong></div>
-        <div id="clientEmail">client@email.com</div>
-        <div id="clientCountry">Country</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SERVICE -->
-  <div class="card">
-    <div class="section-title">Service Details</div>
-    <div><strong id="serviceTitle">UI/UX Design for Mobile App</strong></div>
-    <p id="serviceDesc" style="color:var(--muted);margin-top:8px;">
-      Design and prototype 5 core mobile app screens with modern UI and UX best practices.
-    </p>
-    <div class="grid-3" style="margin-top:10px;">
-      <div>Delivery: <strong id="deliveryDate">2026-02-10</strong></div>
-      <div>Scope: <strong id="scope">5 Screens + Prototype</strong></div>
-      <div>Currency: 
-        <select id="currency">
-          <option>USD</option>
-          <option>ZAR</option>
-          <option>GHS</option>
-          <option>NGN</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <!-- AMOUNTS -->
-  <div class="card">
-    <div class="section-title">Amount Breakdown</div>
-    <div class="amount-box">
-      <div class="amount-row">
-        <span>Subtotal</span>
-        <span id="subtotal">$500.00</span>
-      </div>
-      <div class="amount-row">
-        <span>Zep Swipe Fee</span>
-        <span id="fee">$25.00</span>
-      </div>
-      <div class="amount-row total">
-        <span>Total Due</span>
-        <span id="total">$525.00</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ESCROW INFO -->
-  <div class="card escrow-info">
-    Funds are held securely in escrow. Payment is only released to the student after work is submitted and approved.
-  </div>
-
-  <!-- PRIMARY CTA -->
-  <button class="primary-btn" onclick="initiatePayment()">
-    Pay Securely (Card • Mobile Money • Bank)
-  </button>
-
-  <!-- SECONDARY ACTIONS -->
-  <div class="actions">
-    <button id="submitWorkBtn" onclick="submitWork()">Submit Work</button>
-    <button id="releaseBtn" onclick="releaseFunds()">Approve & Release Funds</button>
-  </div>
-
-  <!-- FOOTER -->
-  <div class="footer">
-    Support: support@zepswipe.com • 
-    <a href="#">Terms & Escrow Policy</a><br>
-    🔒 Secure Payments • 🌍 Global • 🛡️ Fraud Protected
-  </div>
-
+<div class="card">
+  <h2>Student Wallet</h2>
+  <div><strong>Name:</strong> <span id="studentName">-</span></div>
+  <div><strong>Wallet Balance:</strong> <span id="walletBalance">0 ZAC (~$0)</span></div>
 </div>
 
 <script>
-/* BASIC UI LOGIC */
-const role = localStorage.getItem("invoiceRole") || "client"; // client or student
-let status = localStorage.getItem("invoiceStatus") || "Pending";
+let users = JSON.parse(localStorage.getItem("users")) || {};
+let currentUserId = localStorage.getItem("currentUserId");
+if(!currentUserId || !users[currentUserId]) location.href="login.html";
+let currentUser = users[currentUserId];
 
-function setDates(){
-  const today = new Date();
-  document.getElementById("issueDate").innerText = today.toISOString().split('T')[0];
-  const due = new Date(today); due.setDate(due.getDate()+7);
-  document.getElementById("dueDate").innerText = due.toISOString().split('T')[0];
+let invoices = JSON.parse(localStorage.getItem("invoices")) || {};
+const urlParams = new URLSearchParams(window.location.search);
+const invoiceId = urlParams.get("invoice_id");
+if(!invoiceId || !invoices[invoiceId]){
+  alert("Invoice not found");
+  location.href="student-dashboard.html";
 }
-setDates();
+let invoice = invoices[invoiceId];
 
-function updateStatusUI(){
-  const badge = document.getElementById("statusBadge");
-  badge.className = "status-badge";
+// Populate invoice info
+document.getElementById("invoiceId").innerText = invoice.id;
+document.getElementById("invoiceStatus").innerText = invoice.status;
+document.getElementById("clientName").innerText = invoice.clientName;
+document.getElementById("serviceTitle").innerText = invoice.serviceTitle;
+document.getElementById("studentName").innerText = currentUser.name;
 
-  if(status==="Pending"){
-    badge.classList.add("status-pending");
-    badge.innerText = "Pending";
+function updateWallet(){
+  const zac = currentUser.walletBalance || 0;
+  const usd = (zac*0.014).toFixed(2);
+  document.getElementById("walletBalance").innerText = `${zac} ZAC (~$${usd})`;
+}
+updateWallet();
+
+// Approve & Release Funds (simulate client approval)
+document.getElementById("approveBtn").addEventListener('click',()=>{
+  if(invoice.status==="Work Submitted"){
+    invoice.status="Released";
+    currentUser.walletBalance = (currentUser.walletBalance || 0) + (invoice.amountZAC || 0);
+    users[currentUserId] = currentUser;
+    localStorage.setItem("users", JSON.stringify(users));
+    invoices[invoiceId] = invoice;
+    localStorage.setItem("invoices", JSON.stringify(invoices));
+    document.getElementById("invoiceStatus").innerText = invoice.status;
+    updateWallet();
+    alert("Funds released to student wallet!");
+  } else {
+    alert("Cannot release funds. Work not submitted yet.");
   }
-  if(status==="Escrow"){
-    badge.classList.add("status-escrow");
-    badge.innerText = "Paid (In Escrow)";
+});
+
+// Listen for real-time submission from submit-work.html
+window.addEventListener('invoiceUpdated',(e)=>{
+  if(e.detail.id === invoiceId){
+    invoice = e.detail;
+    document.getElementById("invoiceStatus").innerText = invoice.status;
+
+    // Auto-release if previously Paid/Escrow
+    if(invoice.status==="Work Submitted"){
+      // Auto credit student wallet
+      currentUser.walletBalance = (currentUser.walletBalance || 0) + (invoice.amountZAC || 0);
+      users[currentUserId] = currentUser;
+      localStorage.setItem("users", JSON.stringify(users));
+      updateWallet();
+      alert("Work submitted! Funds added to wallet.");
+    }
   }
-  if(status==="Submitted"){
-    badge.classList.add("status-submitted");
-    badge.innerText = "Work Submitted";
-  }
-  if(status==="Released"){
-    badge.classList.add("status-released");
-    badge.innerText = "Released";
-  }
-
-  document.getElementById("submitWorkBtn").style.display = role==="student" ? "block":"none";
-  document.getElementById("releaseBtn").style.display = role==="client" ? "block":"none";
-}
-
-updateStatusUI();
-
-function initiatePayment(){
-  alert("Payment initiated. Funds will be held in escrow.");
-  status="Escrow";
-  localStorage.setItem("invoiceStatus",status);
-  updateStatusUI();
-}
-
-function submitWork(){
-  alert("Work submitted successfully.");
-  status="Submitted";
-  localStorage.setItem("invoiceStatus",status);
-  updateStatusUI();
-}
-
-function releaseFunds(){
-  alert("Funds released to student wallet.");
-  status="Released";
-  localStorage.setItem("invoiceStatus",status);
-  updateStatusUI();
-}
+});
 </script>
-
 </body>
 </html>
