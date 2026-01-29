@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Submit Work</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --green:#00ff94;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,.08);
+  --text:rgba(255,255,255,.9);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;min-height:100vh;padding:20px;}
+
+header{
+  display:flex;align-items:center;gap:12px;
+  padding:16px 20px;border-radius:18px;
+  background:rgba(0,0,0,.55);
+  box-shadow:0 0 30px rgba(0,240,255,.25);
+  margin-bottom:25px;
+}
+header img{height:40px;}
+header h1{
+  font-family:Orbitron;
+  font-size:1.2rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.container{
+  max-width:800px;margin:auto;
+  display:grid;gap:22px;
+}
+
+.card{
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;
+  padding:22px;
+  box-shadow:0 0 28px rgba(156,77,255,.15);
+}
+
+.card h2{
+  font-family:Orbitron;
+  font-size:1rem;
+  margin-bottom:14px;
+  color:var(--zep-blue);
+}
+
+input, textarea{
+  width:100%;padding:12px;border-radius:12px;
+  border:none;outline:none;
+  background:rgba(255,255,255,.05);
+  color:#fff;
+}
+textarea{resize:none;min-height:100px;}
+
+.cta-btn{
+  width:100%;padding:16px;border:none;border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;font-family:Orbitron;
+  font-size:1rem;cursor:pointer;
+  box-shadow:0 0 35px rgba(0,240,255,.45);
+  transition:.3s;
+  margin-top:12px;
+}
+.cta-btn:hover{transform:translateY(-2px);}
+
+.status-badge{
+  display:inline-block;
+  background:rgba(0,240,255,.2);
+  color:#fff;
+  padding:6px 12px;border-radius:999px;
+  font-family:Orbitron;
+  font-size:.75rem;
+  margin-bottom:10px;
+}
+
+.modal{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;align-items:center;justify-content:center;
+  z-index:1000;
+}
+.modal-content{
+  background:var(--glass);
+  padding:30px;border-radius:22px;
+  max-width:500px;width:90%;
+  text-align:center;
+  box-shadow:0 0 40px rgba(0,240,255,.35);
+}
+.modal-content h2{font-family:Orbitron;color:var(--green);margin-bottom:12px;}
+.modal-content button{padding:12px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;margin-top:10px;cursor:pointer;}
+
+.info-box{
+  font-size:.85rem;
+  background:rgba(0,0,0,.4);
+  border-left:4px solid var(--zep-blue);
+  padding:12px;border-radius:12px;
+  color:rgba(255,255,255,.8);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe">
+  <h1>Submit Completed Work</h1>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>Invoice Status: <span id="invoiceStatus" class="status-badge">Loading...</span></h2>
+    <div><strong>Invoice ID:</strong> <span id="invoiceId">-</span></div>
+    <div><strong>Client:</strong> <span id="clientName">-</span></div>
+    <div><strong>Service:</strong> <span id="serviceTitle">-</span></div>
+  </div>
+
+  <div class="card">
+    <h2>Upload Completed Work</h2>
+    <textarea id="workNotes" placeholder="Describe your completed work..."></textarea>
+    <input type="file" id="workFile" accept=".zip,.pdf,.doc,.docx,.txt" style="margin-top:10px;">
+    <button class="cta-btn" onclick="submitWork()">Submit Work</button>
+  </div>
+
+  <div class="info-box">
+    Funds are held securely in escrow. Once you submit your work and the client approves, your payout will be released automatically to your wallet.
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div id="successModal" class="modal">
+  <div class="modal-content">
+    <h2>Work Submitted!</h2>
+    <p>Your client will review and approve the work. Funds will be released to your wallet once approved.</p>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+let users = JSON.parse(localStorage.getItem("users")) || {};
+let currentUserId = localStorage.getItem("currentUserId");
+if(!currentUserId || !users[currentUserId]) location.href="login.html";
+let user = users[currentUserId];
+
+// Get invoice ID from URL
+const urlParams = new URLSearchParams(window.location.search);
+const invoiceId = urlParams.get("invoice_id");
+const invoices = JSON.parse(localStorage.getItem("invoices")) || {};
+const invoice = invoices[invoiceId];
+
+// Verify access
+if(!invoice){
+  alert("Invoice not found");
+  location.href="student-dashboard.html";
+}
+if(!user.verified){
+  alert("You must be a verified freelancer to submit work");
+  location.href="profile.html";
+}
+
+// Fill invoice details
+document.getElementById("invoiceId").innerText = invoice.id;
+document.getElementById("clientName").innerText = invoice.clientName;
+document.getElementById("serviceTitle").innerText = invoice.serviceTitle;
+document.getElementById("invoiceStatus").innerText = invoice.status;
+
+// Only allow submit if status is Paid/Escrow
+if(invoice.status !== "Paid" && invoice.status !== "Escrow"){
+  document.querySelector(".cta-btn").disabled = true;
+  document.querySelector(".cta-btn").innerText = "Cannot submit yet";
+  document.querySelector(".cta-btn").style.opacity = 0.6;
+}
+
+// Submit work function
+function submitWork(){
+  const notes = document.getElementById("workNotes").value.trim();
+  const fileInput = document.getElementById("workFile");
+  if(!notes && fileInput.files.length===0){
+    alert("Please provide work description or upload a file.");
+    return;
+  }
+
+  // Save submission info in invoice object
+  invoice.workSubmitted = {
+    notes: notes,
+    file: fileInput.files.length>0 ? URL.createObjectURL(fileInput.files[0]) : null,
+    submittedAt: new Date().toISOString()
+  };
+
+  // Update invoice status to Work Submitted
+  invoice.status = "Work Submitted";
+  invoices[invoiceId] = invoice;
+  localStorage.setItem("invoices", JSON.stringify(invoices));
+
+  // Show modal
+  document.getElementById("successModal").style.display="flex";
+
+  // Update invoice.html dynamically if open
+  window.dispatchEvent(new CustomEvent('invoiceUpdated', {detail: invoice}));
+}
+
+// Modal close
+function closeModal(){
+  document.getElementById("successModal").style.display="none";
+}
+</script>
+
+</body>
+</html>
