@@ -4,320 +4,210 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Wallet</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,.08);
-  --text-light:rgba(255,255,255,.85);
+  --bg:#050018;
+  --glass:rgba(255,255,255,0.08);
   --green:#00ff94;
-  --red:#ff4d6d;
+  --text-light:rgba(255,255,255,.85);
 }
 
 /* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;}
+body{background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-direction:column;}
 
 /* HEADER */
 header{
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  display:flex;justify-content:space-between;align-items:center;
   padding:16px;
-  margin-bottom:16px;
-  background:rgba(0,0,0,.7);
+  background:radial-gradient(circle at center, rgba(0,240,255,.1), rgba(156,77,255,.1));
   backdrop-filter:blur(14px);
-  animation:glowPulse 2s infinite;
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  animation:headerPulse 2s infinite;
 }
-header .logo{
-  display:flex;align-items:center;gap:10px;
+@keyframes headerPulse{
+  0%{box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
+  50%{box-shadow:0 0 25px var(--zep-blue),0 0 50px var(--zep-violet);}
+  100%{box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
 }
-header .logo img{height:40px;}
-header .logo span{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-header button{padding:10px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));cursor:pointer;transition:.3s;}
-header button:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand img{width:50px;height:50px;}
+.brand span{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
-@keyframes glowPulse{
-  0%,100%{box-shadow:0 0 10px var(--zep-blue),0 0 20px var(--zep-violet);}
-  50%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
-}
+/* CONTAINER */
+.container{max-width:900px;margin:24px auto;padding:16px;display:flex;flex-direction:column;gap:20px;}
 
-/* WALLET CARD */
-.wallet-card{
-  width:95%;
-  max-width:600px;
-  background:var(--glass);
-  border-radius:20px;
-  padding:24px;
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 0 36px rgba(156,77,255,.2);
-  display:flex;flex-direction:column;gap:18px;
-}
-.profile-summary{display:flex;align-items:center;gap:16px;}
-.profile-summary img{width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
-.profile-summary div span{display:block;color:var(--text-light);}
-.profile-summary .verified{background:linear-gradient(90deg,var(--green),var(--zep-blue));padding:4px 10px;border-radius:12px;font-size:12px;margin-top:4px;display:inline-block;}
+/* CARD */
+.card{background:var(--glass);padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.12);box-shadow:0 0 20px rgba(0,240,255,.1),0 0 30px rgba(156,77,255,.1);}
+.card h3{font-family:Orbitron;margin-bottom:12px;}
 
-.wallet-balance{
-  text-align:center;
-  font-family:Orbitron;
-  font-size:1.3rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
+/* WALLET BALANCE */
+.wallet-balance{display:flex;justify-content:space-between;align-items:center;font-size:1.2rem;margin-bottom:12px;}
+.wallet-balance span{font-family:Orbitron;}
 
-.earnings-graph{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:8px;
-  height:150px;
-  padding:0 10px;
-}
-.bar{
-  flex:1;
-  background:linear-gradient(180deg,var(--zep-blue),var(--zep-violet));
-  border-radius:8px 8px 0 0;
-  animation:barPulse 1.5s infinite;
-  position:relative;
-}
-.bar:hover::after{
-  content: attr(data-value);
-  position:absolute;
-  top:-24px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:12px;
-  background:rgba(0,0,0,.8);
-  padding:2px 6px;
-  border-radius:6px;
-}
+/* BUTTONS */
+button{padding:12px 20px;border:none;border-radius:999px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:.3s;margin-top:10px;}
+button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
+button.secondary{background:rgba(255,255,255,0.1);color:#fff;}
 
-@keyframes barPulse{
-  0%,100%{opacity:.7;}
-  50%{opacity:1;}
-}
-
-.actions{display:flex;gap:12px;justify-content:center;margin-top:12px;}
-.actions button{flex:1;padding:12px;border:none;border-radius:999px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));cursor:pointer;transition:.3s;}
-.actions button:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
-
-/* LEARN & EARN PROGRESS */
-.progress-container{
-  width:100%;height:16px;background:rgba(255,255,255,0.1);
-  border-radius:12px;overflow:hidden;margin-top:10px;
-}
-.progress-bar{
-  height:100%;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  width:0%;transition:width .5s ease;
-  border-radius:12px;
-  animation:progressPulse 2s infinite;
-}
-@keyframes progressPulse{0%,100%{opacity:.7;}50%{opacity:1;}}
-
-/* TRANSACTION HISTORY */
-.transactions{
-  margin-top:18px;
-  width:100%;
-}
-.transaction{display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid rgba(255,255,255,.1);}
-.transaction span{font-size:14px;}
-.transaction .type{font-weight:600;}
-.transaction .zac{color:var(--zep-violet);}
-.transaction .usd{color:var(--zep-blue);}
+/* CHART */
+#chartContainer{background:rgba(255,255,255,.05);padding:12px;border-radius:12px;margin-top:12px;}
+.bar{height:20px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));margin-bottom:6px;border-radius:6px;transition:width .4s ease;}
 
 /* MODAL */
-.modal-bg{
-  display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);justify-content:center;align-items:center;z-index:1000;
-}
-.modal{
-  background:var(--glass);padding:24px;border-radius:20px;max-width:400px;width:90%;text-align:center;position:relative;
-}
-.modal h3{margin-bottom:12px;font-family:Orbitron;}
-.modal button{margin-top:12px;padding:10px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));cursor:pointer;transition:.3s;}
-.modal button:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
-.modal .close{position:absolute;top:10px;right:10px;font-size:18px;background:none;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1000;}
+.modal{background:var(--glass);padding:20px;border-radius:18px;max-width:400px;width:90%;text-align:center;box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+.modal button{margin-top:12px;}
 
 /* RESPONSIVE */
-@media(max-width:480px){.wallet-card{padding:18px;} .actions{flex-direction:column;}}
+@media(max-width:600px){.wallet-balance{flex-direction:column;align-items:flex-start;}}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">
-    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe Logo">
+  <div class="brand">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Logo">
     <span>Zep Swipe</span>
   </div>
-  <button onclick="location.href='create-invoice.html'">Create Invoice</button>
 </header>
 
-<div class="wallet-card">
-  <div class="profile-summary">
-    <img id="profileImg" src="https://via.placeholder.com/80" alt="Profile">
-    <div>
-      <span id="studentName">Student Name</span>
-      <span id="studentUniversity">University</span>
-      <span id="studentID">@walletID</span>
-      <span id="verifiedBadge" class="verified" style="display:none;">Verified</span>
+<div class="container">
+
+  <!-- WALLET BALANCE -->
+  <div class="card">
+    <h3>Wallet</h3>
+    <div class="wallet-balance">
+      <span>ZAC Balance: <strong id="zacBalance">0</strong> ZAC (~$0.00)</span>
+      <span>USD Balance: <strong id="usdBalance">$0.00</strong></span>
     </div>
+    <button id="dailyTaskBtn">Daily Task Complete +25 ZAC</button>
+    <button id="withdrawBtn">Withdraw USD</button>
+    <div id="chartContainer"></div>
   </div>
 
-  <div class="wallet-balance">
-    <span id="usdBalance">$0.00</span> | <span id="zacBalance">0 ZAC (~$0.00)</span>
-  </div>
-
-  <div class="earnings-graph" id="earningsGraph"></div>
-
-  <div class="progress-container">
-    <div class="progress-bar" id="learnProgress"></div>
-  </div>
-  <span id="learnProgressText" style="text-align:center;display:block;margin-top:4px;">Learn & Earn Progress: 0/21 Days</span>
-
-  <div class="actions">
-    <button onclick="openWithdrawModal('momo')">Withdraw USD (Momo)</button>
-    <button onclick="openWithdrawModal('bank')">Withdraw USD (Bank)</button>
-    <button onclick="location.href='invoice.html'">View Invoices</button>
-  </div>
-
-  <div class="transactions" id="transactions"></div>
 </div>
 
-<!-- WITHDRAW MODAL -->
-<div class="modal-bg" id="withdrawModal">
-  <div class="modal">
-    <span class="close" onclick="closeWithdrawModal()">×</span>
-    <h3>Withdraw USD</h3>
-    <div id="withdrawForm">
-      <label id="withdrawTypeLabel"></label><br>
-      <input type="text" id="recipientName" placeholder="Recipient Name"><br>
-      <input type="text" id="recipientNumber" placeholder="Phone / Account Number"><br>
-      <input type="text" id="bankName" placeholder="Bank Name (for bank transfer)"><br>
-      <input type="text" id="bankCode" placeholder="Bank Code / SWIFT"><br>
-      <input type="number" id="withdrawAmount" placeholder="Amount USD"><br>
-      <button onclick="submitWithdraw()">Confirm Withdrawal</button>
-    </div>
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent">
+    <p id="modalText">Processing...</p>
+    <button onclick="closeModal()">Close</button>
   </div>
 </div>
 
 <script>
-// ================== USER SESSION ==================
+// USERS
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
 if(!currentUserId || !users[currentUserId]) location.href="login.html";
 let currentUser = users[currentUserId];
 
-// Load profile info
-const profileImg = document.getElementById("profileImg");
-const studentName = document.getElementById("studentName");
-const studentUniversity = document.getElementById("studentUniversity");
-const studentID = document.getElementById("studentID");
-const verifiedBadge = document.getElementById("verifiedBadge");
-profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
-studentName.innerText = currentUser.name || "Siyanda";
-studentUniversity.innerText = currentUser.university || "University";
-studentID.innerText = currentUser.walletID || "@walletID";
-if(currentUser.verified) verifiedBadge.style.display="inline-block";
+// Simulated ZAC & USD
+const ZAC_VALUE = 0.0041;
+currentUser.zacBalance = currentUser.zacBalance || 0;
+currentUser.usdBalance = currentUser.usdBalance || 0;
 
-// ================== ZAC ACCRUAL ==================
-const ZAC_RATE = 0.0041;
-currentUser.tasksCompleted = currentUser.tasksCompleted || 0;
-let zacBalance = currentUser.zacBalance || currentUser.tasksCompleted*25;
-let usdBalance = currentUser.walletBalance || 0;
+// DOM
+const zacBalance = document.getElementById("zacBalance");
+const usdBalance = document.getElementById("usdBalance");
+const dailyTaskBtn = document.getElementById("dailyTaskBtn");
+const withdrawBtn = document.getElementById("withdrawBtn");
+const chartContainer = document.getElementById("chartContainer");
+const modalOverlay = document.getElementById("modalOverlay");
+const modalText = document.getElementById("modalText");
 
-// Update balances
-function updateBalances(){
-  document.getElementById("zacBalance").innerText = `${zacBalance} ZAC (~$${(zacBalance*ZAC_RATE).toFixed(2)})`;
-  document.getElementById("usdBalance").innerText = `$${usdBalance.toFixed(2)}`;
-  // Update Learn & Earn progress bar
-  const progressPercent = Math.min((currentUser.tasksCompleted/21)*100,100);
-  document.getElementById("learnProgress").style.width = progressPercent+"%";
-  document.getElementById("learnProgressText").innerText = `Learn & Earn Progress: ${currentUser.tasksCompleted}/21 Days`;
+// MODAL
+function showModal(text){modalText.innerText=text;modalOverlay.style.display="flex";}
+function closeModal(){modalOverlay.style.display="none";}
+
+// RENDER BALANCES
+function renderBalances(){
+  zacBalance.innerText = currentUser.zacBalance;
+  usdBalance.innerText = `$${currentUser.usdBalance.toFixed(2)}`;
+  renderChart();
 }
-updateBalances();
+renderBalances();
 
-// Simulate daily ZAC reward (for demo, increment every 3s)
-setInterval(()=>{
-  if(currentUser.tasksCompleted<21){
-    currentUser.tasksCompleted++;
-    zacBalance += 25;
-    users[currentUserId] = currentUser;
-    localStorage.setItem("users",JSON.stringify(users));
-    updateBalances();
-    addTransaction(`Day ${currentUser.tasksCompleted} Learn & Earn`, 25, 'zac');
-  }
-},3000);
-
-// ================== TRANSACTION HISTORY ==================
-const transactionsDiv = document.getElementById("transactions");
-function addTransaction(desc, amount, type){
-  const tr = document.createElement("div");
-  tr.className="transaction";
-  tr.innerHTML=`<span class="type">${desc}</span><span class="${type}">${type==='usd'?`$${amount.toFixed(2)}`:`${amount} ZAC`}</span>`;
-  transactionsDiv.prepend(tr);
-}
-updateBalances();
-
-// ================== EARNINGS GRAPH ==================
-const earningsGraph = document.getElementById("earningsGraph");
-function updateGraph(){
-  earningsGraph.innerHTML="";
-  let weekly = [usdBalance*0.2, usdBalance*0.3, usdBalance*0.5, usdBalance*0.4, usdBalance*0.6, usdBalance*0.2, usdBalance*0.7];
-  weekly.forEach(v=>{
-    const b = document.createElement("div");
+// CHART
+function renderChart(){
+  chartContainer.innerHTML="";
+  for(let i=0;i<currentUser.zacHistory?.length || 0;i++){
+    const b=document.createElement("div");
     b.className="bar";
-    b.style.height = Math.min(v*50,100)+"%";
-    b.setAttribute("data-value","$"+v.toFixed(2));
-    earningsGraph.appendChild(b);
-  });
+    b.style.width=(currentUser.zacHistory[i]*ZAC_VALUE*1000)+"px"; // visual scale
+    b.title=`Day ${i+1}: ${currentUser.zacHistory[i]} ZAC`;
+    chartContainer.appendChild(b);
+  }
 }
-updateGraph();
 
-// ================== WITHDRAW MODAL ==================
-const withdrawModal = document.getElementById("withdrawModal");
-const withdrawTypeLabel = document.getElementById("withdrawTypeLabel");
-let currentWithdrawType="";
-function openWithdrawModal(type){
-  currentWithdrawType=type;
-  withdrawModal.style.display="flex";
-  withdrawTypeLabel.innerText = type==="momo"?"Momo Phone Number":"Bank Account Details";
-  // Only bank fields required if type=bank
-  document.getElementById("bankName").style.display = type==="bank"?"block":"none";
-  document.getElementById("bankCode").style.display = type==="bank"?"block":"none";
-}
-function closeWithdrawModal(){withdrawModal.style.display="none";}
-
-// ================== SUBMIT WITHDRAWAL ==================
-function submitWithdraw(){
-  const name=document.getElementById("recipientName").value.trim();
-  const number=document.getElementById("recipientNumber").value.trim();
-  const bankName=document.getElementById("bankName").value.trim();
-  const bankCode=document.getElementById("bankCode").value.trim();
-  let amount=parseFloat(document.getElementById("withdrawAmount").value);
-
-  if(!name||!number||isNaN(amount)||amount<=0){
-    alert("Please fill all required fields correctly");return;
-  }
-  if(currentWithdrawType==="bank" && (!bankName||!bankCode)){
-    alert("Please provide bank name and code");return;
-  }
-  if(amount>usdBalance){
-    alert("Insufficient balance");return;
-  }
-
-  usdBalance-=amount;
-  users[currentUserId].walletBalance=usdBalance;
+// DAILY TASK
+dailyTaskBtn.addEventListener("click",()=>{
+  currentUser.zacBalance +=25;
+  if(!currentUser.zacHistory) currentUser.zacHistory=[];
+  currentUser.zacHistory.push(25);
+  users[currentUserId]=currentUser;
   localStorage.setItem("users",JSON.stringify(users));
-  addTransaction(`Withdrawal to ${currentWithdrawType==='momo'?'Momo':'Bank'}`, amount, 'usd');
-  updateBalances();
-  alert(`Withdrawal request for $${amount.toFixed(2)} submitted successfully!`);
-  closeWithdrawModal();
-}
+  renderBalances();
+});
 
+// WITHDRAW USD
+withdrawBtn.addEventListener("click",()=>{
+  showModal("Choose withdrawal method...");
+  modalContent.innerHTML=`
+    <h3>Select Withdrawal Method</h3>
+    <button id="momoBtn">MTN Momo</button>
+    <button id="bankBtn">Bank Transfer</button>
+    <button onclick="closeModal()">Cancel</button>
+  `;
+  document.getElementById("momoBtn").addEventListener("click",()=>{
+    closeModal();
+    showModal("Processing Momo Withdrawal...");
+    setTimeout(()=>{
+      if(currentUser.usdBalance>0){
+        alert(`$${currentUser.usdBalance.toFixed(2)} withdrawn via MTN Momo!`);
+        currentUser.usdBalance=0;
+        users[currentUserId]=currentUser;
+        localStorage.setItem("users",JSON.stringify(users));
+        renderBalances();
+      } else {alert("No USD balance to withdraw.");}
+      closeModal();
+    },1500);
+  });
+  document.getElementById("bankBtn").addEventListener("click",()=>{
+    closeModal();
+    showModal("Processing Bank Withdrawal...");
+    setTimeout(()=>{
+      if(currentUser.usdBalance>0){
+        alert(`$${currentUser.usdBalance.toFixed(2)} withdrawn via Bank!`);
+        currentUser.usdBalance=0;
+        users[currentUserId]=currentUser;
+        localStorage.setItem("users",JSON.stringify(users));
+        renderBalances();
+      } else {alert("No USD balance to withdraw.");}
+      closeModal();
+    },1500);
+  });
+});
+
+// LISTEN FOR INVOICE RELEASED FUNDS
+window.addEventListener("storage",()=>{
+  users=JSON.parse(localStorage.getItem("users"));
+  currentUser=users[currentUserId];
+  renderBalances();
+});
+
+// SIMULATE MARKETPLACE PAYMENT
+function addMarketplacePayment(amountUSD){
+  currentUser.usdBalance += amountUSD;
+  users[currentUserId]=currentUser;
+  localStorage.setItem("users",JSON.stringify(users));
+  renderBalances();
+}
 </script>
+
 </body>
 </html>
