@@ -14,6 +14,7 @@
   --glass:rgba(255,255,255,.08);
   --text-light:rgba(255,255,255,.85);
   --green:#00ff94;
+  --red:#ff4d4d;
 }
 
 /* RESET */
@@ -32,41 +33,84 @@ header{
   background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
   backdrop-filter:blur(14px);
 }
-.brand{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.brand{
+  display:flex;align-items:center;gap:8px;font-family:Orbitron;font-size:1.6rem;
+}
+.brand img{width:40px;height:40px;border-radius:8px;}
+.brand span{
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
 .home-btn{
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   border:none;border-radius:50%;
   width:50px;height:50px;cursor:pointer;
-  font-size:20px;
-  color:#050015;
+  font-size:20px;color:#050015;
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
-  display:flex;align-items:center;justify-content:center;
-  transition:.3s;
+  display:flex;align-items:center;justify-content:center;transition:.3s;
 }
 .home-btn:hover{transform:scale(1.1);}
 
 /* PROFILE CARD */
 .profile-container{
-  max-width:450px;
-  width:100%;
+  max-width:500px;width:100%;
   background:var(--glass);
-  border-radius:20px;
-  padding:25px;
+  border-radius:24px;
+  padding:30px;
   border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 0 36px rgba(156,77,255,.2);
-  display:flex;flex-direction:column;gap:18px;
+  box-shadow:0 0 48px rgba(156,77,255,.25);
+  display:flex;flex-direction:column;gap:22px;
 }
 
-/* PROFILE IMAGE */
+/* PROFILE HEADER */
+.profile-header{
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:20px;
+}
 .profile-image{
   width:130px;height:130px;border-radius:50%;
   border:3px solid rgba(255,255,255,.3);
-  margin:0 auto;
-  object-fit:cover;
-  cursor:pointer;
+  object-fit:cover;cursor:pointer;
   transition:.3s;
 }
 .profile-image:hover{transform:scale(1.05);box-shadow:0 0 25px var(--zep-blue),0 0 45px var(--zep-violet);}
+.profile-details{
+  display:flex;flex-direction:column;gap:4px;
+}
+.profile-details h2{margin:0;font-family:Orbitron;font-size:1.4rem;}
+.profile-details p{margin:0;font-size:0.95rem;color:rgba(255,255,255,.7);}
+
+/* VERIFIED BADGE */
+.verified-badge{
+  display:flex;align-items:center;gap:8px;
+  justify-content:center;font-family:Orbitron;font-size:14px;
+  background:linear-gradient(90deg,var(--green),var(--zep-blue));
+  padding:6px 12px;border-radius:12px;color:#050015;margin-top:8px;
+  animation:badgePulse 2s infinite;
+}
+@keyframes badgePulse{0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);}}
+
+/* PROFILE COMPLETION */
+.progress-container{
+  width:100%;height:14px;background:rgba(255,255,255,0.1);
+  border-radius:12px;overflow:hidden;margin-bottom:10px;display:none;
+}
+.progress-bar{
+  height:100%;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  width:0%;transition:width .4s ease;border-radius:12px;
+  animation:progressPulse 2s infinite;
+}
+@keyframes progressPulse{0%,100%{opacity:0.7;}50%{opacity:1;}}
+#completionText{display:none;text-align:center;margin-bottom:10px;}
+
+/* BUTTONS */
+button{
+  padding:14px;border:none;border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;width:100%;
+}
+button:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
+#verifyBtn{display:block;margin-top:10px;background:linear-gradient(90deg,var(--green),var(--zep-blue));}
 
 /* INPUTS */
 .profile-container input[type="text"], 
@@ -76,80 +120,53 @@ header{
 }
 input::placeholder{color:rgba(255,255,255,0.6);}
 
-/* SAVE BUTTON */
-.profile-container button{
-  width:100%;padding:14px;border:none;border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
-}
-.profile-container button:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
-
-/* VERIFIED BADGE */
-.verified-badge{
-  display:flex;align-items:center;gap:8px;
-  justify-content:center;
-  font-family:Orbitron;font-size:14px;
-  background:linear-gradient(90deg,var(--green),var(--zep-blue));
-  padding:6px 12px;border-radius:12px;
-  color:#050015;margin:auto;
-  animation:badgePulse 2s infinite;
-}
-@keyframes badgePulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.05);}
-  100%{transform:scale(1);}
-}
-
-/* PROGRESS BAR */
-.progress-container{
-  width:100%;height:14px;background:rgba(255,255,255,0.1);
-  border-radius:12px;overflow:hidden;margin-bottom:10px;
-}
-.progress-bar{
-  height:100%;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  width:0%;transition:width .4s ease;
-  border-radius:12px;
-  animation:progressPulse 2s infinite;
-}
-@keyframes progressPulse{0%,100%{opacity:0.7;}50%{opacity:1;}}
-
-/* VERIFICATION BUTTON */
-#verifyBtn{display:none;margin-top:10px;background:linear-gradient(90deg,var(--green),var(--zep-blue));}
-
 /* RESPONSIVE */
-@media(max-width:480px){.profile-container{padding:18px;width:100%;}}
+@media(max-width:480px){
+  .profile-container{padding:20px;width:100%;}
+  .profile-header{flex-direction:column;align-items:center;}
+  .profile-details{text-align:center;}
+}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">Zep Swipe</div>
+  <div class="brand"><img src="https://via.placeholder.com/40" alt="Logo"><span>Zep Swipe</span></div>
   <button class="home-btn" title="Home" onclick="location.href='student-dashboard.html'">🏠</button>
 </header>
 
 <div class="profile-container">
-  <img src="https://via.placeholder.com/130" alt="Profile Image" class="profile-image" id="profileImg">
-  <input type="file" id="imgUpload" accept="image/*" style="display:none">
-  
-  <input type="text" id="name" placeholder="Full Name">
-  <input type="email" id="email" placeholder="Email">
-  <input type="text" id="university" placeholder="University">
-  <input type="text" id="country" placeholder="Country">
-  <input type="text" id="city" placeholder="City">
-  <input type="text" id="level" placeholder="Level (e.g., Beginner Freelancer)">
+  <div class="profile-header">
+    <img src="https://via.placeholder.com/130" alt="Profile Image" class="profile-image" id="profileImg">
+    <div class="profile-details">
+      <h2 id="displayName">Siyanda</h2>
+      <p id="displayUniversity">University Name</p>
+      <p id="displayCountry">Country</p>
+      <div id="verifiedBadge" class="verified-badge" style="display:none;">✔ Verified Freelancer</div>
+    </div>
+  </div>
 
   <div class="progress-container">
     <div class="progress-bar" id="profileProgress"></div>
   </div>
-  <span id="completionText" style="text-align:center;display:block;">Profile Completion: 0%</span>
+  <span id="completionText">Profile Completion: 0%</span>
 
-  <div id="verifiedBadge" class="verified-badge" style="display:none;">✔ Verified Freelancer</div>
-  <button id="verifyBtn" onclick="payForVerification()">Pay $5 for Freelancer Verification</button>
+  <button id="verifyBtn" onclick="payForVerification()">Pay $15 to Become Verified Freelancer</button>
 
-  <button onclick="saveProfile()">Save Profile</button>
+  <div style="margin-top:20px;">
+    <input type="text" id="name" placeholder="Full Name">
+    <input type="email" id="email" placeholder="Email">
+    <input type="text" id="university" placeholder="University">
+    <input type="text" id="country" placeholder="Country">
+    <input type="text" id="city" placeholder="City">
+    <input type="text" id="level" placeholder="Level (e.g., Beginner Freelancer)">
+  </div>
+
+  <button onclick="saveProfile()" style="margin-top:15px;">Save Profile</button>
 </div>
 
 <script>
+// Load existing users
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
 if(!currentUserId || !users[currentUserId]) location.href="login.html";
@@ -168,6 +185,9 @@ const profileProgress = document.getElementById("profileProgress");
 const completionText = document.getElementById("completionText");
 const verifiedBadge = document.getElementById("verifiedBadge");
 const verifyBtn = document.getElementById("verifyBtn");
+const displayName = document.getElementById("displayName");
+const displayUniversity = document.getElementById("displayUniversity");
+const displayCountry = document.getElementById("displayCountry");
 
 // Load user info
 function loadUser(){
@@ -178,12 +198,17 @@ function loadUser(){
   countryInput.value = currentUser.country || "";
   cityInput.value = currentUser.city || "";
   levelInput.value = currentUser.level || "Beginner Freelancer";
+
+  displayName.textContent = currentUser.name || "Siyanda";
+  displayUniversity.textContent = currentUser.university || "University Name";
+  displayCountry.textContent = currentUser.country || "Country";
+
   updateCompletion();
   updateVerifiedBadge();
 }
 loadUser();
 
-// Upload profile image
+// Profile image upload
 profileImg.addEventListener('click',()=>imgUpload.click());
 imgUpload.addEventListener('change',(e)=>{
   const file = e.target.files[0];
@@ -199,7 +224,7 @@ imgUpload.addEventListener('change',(e)=>{
   }
 });
 
-// Save profile info
+// Save profile
 function saveProfile(){
   currentUser.name = nameInput.value.trim() || currentUser.name;
   currentUser.email = emailInput.value.trim() || currentUser.email;
@@ -207,47 +232,59 @@ function saveProfile(){
   currentUser.country = countryInput.value.trim() || currentUser.country;
   currentUser.city = cityInput.value.trim() || currentUser.city;
   currentUser.level = levelInput.value.trim() || currentUser.level;
+
   users[currentUserId] = currentUser;
   localStorage.setItem("users",JSON.stringify(users));
   alert("Profile saved successfully!");
+
+  displayName.textContent = currentUser.name || "Siyanda";
+  displayUniversity.textContent = currentUser.university || "University Name";
+  displayCountry.textContent = currentUser.country || "Country";
+
   updateCompletion();
   updateVerifiedBadge();
 }
 
-// Profile Completion
+// Profile completion logic
 function updateCompletion(){
+  if(!currentUser.verified){
+    profileProgress.parentElement.style.display = "none";
+    completionText.style.display = "none";
+    return;
+  }
+
+  profileProgress.parentElement.style.display = "block";
+  completionText.style.display = "block";
+
   let filled = 0;
-  [nameInput,emailInput,universityInput,countryInput,cityInput,levelInput].forEach(i=>{if(i.value.trim()!=="") filled++;});
+  [nameInput,emailInput,universityInput,countryInput,cityInput,levelInput].forEach(i=>{
+    if(i.value.trim()!=="") filled++;
+  });
   let percent = Math.round((filled/6)*100);
   profileProgress.style.width = percent+"%";
   completionText.innerText = `Profile Completion: ${percent}%`;
-  // Show verify button only if 21-day Learn & Earn complete and not verified
-  if(currentUser.tasksCompleted>=21 && !currentUser.verified){
-    verifyBtn.style.display = "block";
-  } else {
-    verifyBtn.style.display = "none";
-  }
 }
 
-// Verified Badge
+// Verified badge logic
 function updateVerifiedBadge(){
   if(currentUser.verified){
     verifiedBadge.style.display = "flex";
     verifyBtn.style.display = "none";
+    updateCompletion();
   } else {
     verifiedBadge.style.display = "none";
+    verifyBtn.style.display = "block";
   }
 }
 
-// Mock Flutterwave Payment Integration
+// Mock payment for verification
 function payForVerification(){
-  // Replace with actual Flutterwave integration
-  let confirmPayment = confirm("Pay $5 for Freelancer Verification?");
+  let confirmPayment = confirm("Pay $15 to become a verified freelancer?");
   if(confirmPayment){
     currentUser.verified = true;
     users[currentUserId] = currentUser;
     localStorage.setItem("users",JSON.stringify(users));
-    alert("Payment successful! You are now verified.");
+    alert("You are now a verified freelancer!");
     updateVerifiedBadge();
   }
 }
@@ -257,5 +294,6 @@ function payForVerification(){
   i.addEventListener('input',updateCompletion);
 });
 </script>
+
 </body>
 </html>
