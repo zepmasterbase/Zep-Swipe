@@ -14,16 +14,21 @@
   --glass:rgba(255,255,255,0.08);
   --green:#00ff94;
   --text-light:rgba(255,255,255,.85);
+  --orange:#ff8c00;
 }
 
 /* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-direction:column;}
+body{background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px;}
 
 /* HEADER */
 header{
   display:flex;justify-content:space-between;align-items:center;
-  padding:16px;background:radial-gradient(circle at center, rgba(0,240,255,.1), rgba(156,77,255,.1));
+  width:100%;
+  padding:16px;
+  margin-bottom:20px;
+  border-radius:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.1), rgba(156,77,255,.1));
   backdrop-filter:blur(14px);
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
   animation:headerPulse 2s infinite;
@@ -36,43 +41,43 @@ header{
 .brand{display:flex;align-items:center;gap:12px;}
 .brand img{width:50px;height:50px;}
 .brand span{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.logout-btn{border:none;background:rgba(255,255,255,.1);border-radius:50%;width:38px;height:38px;color:#fff;cursor:pointer;font-size:20px;}
+.logout-btn{padding:8px 12px;background:var(--green);border:none;border-radius:999px;color:#050015;cursor:pointer;font-family:Orbitron;}
 
 /* CONTAINER */
-.container{max-width:1100px;margin:24px auto;padding:16px;display:flex;flex-direction:column;gap:24px;}
+.container{max-width:900px;width:100%;display:flex;flex-direction:column;gap:20px;}
 
-/* STUDENT CARD */
-.student-card{
-  display:flex;align-items:center;gap:16px;
-  background:var(--glass);padding:16px;border-radius:18px;border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 0 20px rgba(0,240,255,.1),0 0 30px rgba(156,77,255,.1);
+/* PROFILE CARD */
+.profile-card{
+  display:flex;align-items:center;gap:16px;padding:16px;background:var(--glass);border-radius:18px;border:1px solid rgba(255,255,255,.12);
 }
-.student-card img{width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,255,255,.3);}
-.student-card div span{display:block;color:var(--text-light);}
+.profile-card img{width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,255,255,.3);}
+.profile-info{display:flex;flex-direction:column;}
+.profile-info span.name{font-family:Orbitron;font-size:1.2rem;}
+.profile-info span.uni,country{font-size:0.85rem;color:var(--text-light);}
 
-/* WALLET BALANCE */
-.wallet-card{
-  background:var(--glass);padding:16px;border-radius:18px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 0 20px rgba(0,240,255,.1),0 0 30px rgba(156,77,255,.1);
+/* BALANCE CARDS */
+.balance-card{
+  display:flex;justify-content:space-between;align-items:center;padding:16px;background:var(--glass);border-radius:18px;border:1px solid rgba(255,255,255,.12);
+  font-family:Orbitron;font-size:1.1rem;
+  gap:20px;
 }
-.wallet-card div{display:flex;flex-direction:column;gap:4px;}
-.wallet-card h3{font-family:Orbitron;margin-bottom:6px;}
-
-/* BUTTONS */
-button{padding:12px 20px;border:none;border-radius:999px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:.3s;}
-button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
-.daily-task{background:linear-gradient(90deg,var(--green),var(--zep-blue));margin-top:10px;}
+.balance-value{font-size:1.6rem;}
 
 /* CHART */
-#chartContainer{background:var(--glass);padding:16px;border-radius:18px;border:1px solid rgba(255,255,255,.12);}
-canvas{width:100%!important;}
+#zacChart{width:100%;height:220px;margin-top:12px;}
 
-/* MODAL */
+/* DAILY TASK BUTTON */
+#dailyTaskBtn{align-self:flex-start;padding:10px 16px;border:none;border-radius:999px;background:var(--zep-blue);color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;margin-top:10px;}
+#dailyTaskBtn:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
+
+/* WITHDRAW MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1000;}
 .modal{background:var(--glass);padding:20px;border-radius:18px;max-width:400px;width:90%;text-align:center;box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
-.modal button{margin-top:12px;}
+.modal input, .modal select{width:100%;padding:10px;margin-top:8px;border-radius:12px;border:none;background:rgba(255,255,255,0.05);color:#fff;}
+.modal button{margin-top:12px;width:100%;}
 
 /* RESPONSIVE */
-@media(max-width:600px){.student-card{flex-direction:column;align-items:center;}.wallet-card{flex-direction:column;align-items:flex-start;}}
+@media(max-width:600px){.profile-card{flex-direction:column;align-items:flex-start;}}
 </style>
 </head>
 <body>
@@ -82,189 +87,177 @@ canvas{width:100%!important;}
     <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Logo">
     <span>Zep Swipe</span>
   </div>
-  <button class="logout-btn" onclick="logout()">⎋</button>
+  <button class="logout-btn" onclick="logout()">Logout</button>
 </header>
 
 <div class="container">
 
-  <!-- STUDENT CARD -->
-  <div class="student-card">
-    <img id="studentImg" src="https://via.placeholder.com/80" alt="Profile">
-    <div>
-      <h3 id="studentName">Siyanda</h3>
-      <span id="studentUniversity">University XYZ</span>
-      <span id="studentCountry">South Africa</span>
+  <!-- PROFILE -->
+  <div class="profile-card">
+    <img id="profileImg" src="https://via.placeholder.com/80">
+    <div class="profile-info">
+      <span class="name" id="studentName">Siyanda</span>
+      <span class="uni" id="studentUniversity">University XYZ</span>
+      <span class="country" id="studentCountry">South Africa</span>
     </div>
   </div>
 
-  <!-- WALLET BALANCE -->
-  <div class="wallet-card">
-    <div>
-      <h3>Wallet Balance</h3>
-      <span id="walletUSD">$0.00 USD</span>
-      <span id="walletZAC">0 ZAC (~$0.00)</span>
-    </div>
-    <div>
-      <button onclick="openWithdrawalModal()">Withdraw USD</button>
-      <button class="daily-task" onclick="completeDailyTask()">Daily Task Complete +25 ZAC</button>
-    </div>
+  <!-- BALANCE CARDS -->
+  <div class="balance-card">
+    <span>ZAC Balance:</span>
+    <span class="balance-value" id="zacBalance">0</span>
+    <span>≈ $<span id="zacUSD">0.00</span></span>
   </div>
 
-  <!-- ZAC CHART -->
-  <div id="chartContainer">
-    <h3>Learn & Earn: 21-Day ZAC Progress</h3>
-    <canvas id="zacChart"></canvas>
+  <div class="balance-card">
+    <span>USD Balance:</span>
+    <span class="balance-value" id="usdBalance">0.00</span>
+    <button onclick="openWithdrawModal()">Withdraw</button>
   </div>
+
+  <!-- DAILY TASK BUTTON -->
+  <button id="dailyTaskBtn">Daily Task Complete (+25 ZAC)</button>
+
+  <!-- CHART -->
+  <canvas id="zacChart"></canvas>
+
+  <!-- CREATE INVOICE BUTTON -->
+  <button onclick="location.href='create-invoice.html'">Create Invoice</button>
 
 </div>
 
-<!-- WITHDRAWAL MODAL -->
-<div class="modal-overlay" id="withdrawModal">
-  <div class="modal">
-    <h3>Withdraw USD</h3>
-    <label for="withdrawAmount">Amount:</label>
-    <input type="number" id="withdrawAmount" placeholder="USD" style="width:80%;padding:10px;margin:10px 0;border-radius:12px;border:none;">
-    <label for="method">Method:</label>
-    <select id="method" style="width:80%;padding:10px;margin:10px 0;border-radius:12px;border:none;">
-      <option value="momo">MTN Mobile Money</option>
-      <option value="bank">Bank Transfer</option>
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <h3>Withdraw Funds</h3>
+    <label for="method">Select Method:</label>
+    <select id="method">
+      <option value="momo">MTN Momo</option>
+      <option value="bank">Bank</option>
     </select>
-    <button onclick="confirmWithdrawal()">Confirm Withdrawal</button>
-    <button onclick="closeWithdrawalModal()" class="secondary">Cancel</button>
+    <input type="text" id="recipient" placeholder="Phone or Account Number">
+    <input type="number" id="amount" placeholder="Amount USD">
+    <button onclick="processWithdrawal()">Confirm Withdrawal</button>
+    <button onclick="closeModal()">Cancel</button>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-// ======================
-// SESSION & USER DATA
-// ======================
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
 if(!currentUserId || !users[currentUserId]) location.href="login.html";
 let currentUser = users[currentUserId];
 
-// Initialize Wallet if missing
-currentUser.walletBalance = currentUser.walletBalance || 0;
-currentUser.zacBalance = currentUser.zacBalance || 0;
-currentUser.zacHistory = currentUser.zacHistory || Array(21).fill(0); // 21 days
-localStorage.setItem("users",JSON.stringify(users));
+// Simulate 21-day ZAC history
+let zacHistory = currentUser.zacHistory || Array(21).fill(0);
 
 // DOM Elements
-const studentImg = document.getElementById("studentImg");
+const profileImg = document.getElementById("profileImg");
 const studentName = document.getElementById("studentName");
 const studentUniversity = document.getElementById("studentUniversity");
 const studentCountry = document.getElementById("studentCountry");
-const walletUSD = document.getElementById("walletUSD");
-const walletZAC = document.getElementById("walletZAC");
-const zacChartEl = document.getElementById("zacChart");
+const zacBalanceEl = document.getElementById("zacBalance");
+const zacUSDEl = document.getElementById("zacUSD");
+const usdBalanceEl = document.getElementById("usdBalance");
+const dailyTaskBtn = document.getElementById("dailyTaskBtn");
+const modalOverlay = document.getElementById("modalOverlay");
+const amountInput = document.getElementById("amount");
+const methodSelect = document.getElementById("method");
+
+// Initialize
+profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
+studentName.innerText = currentUser.name || "Siyanda";
+studentUniversity.innerText = currentUser.university || "University XYZ";
+studentCountry.innerText = currentUser.country || "South Africa";
+
+currentUser.walletBalance = currentUser.walletBalance || 0;
+currentUser.zacBalance = currentUser.zacBalance || zacHistory.reduce((a,b)=>a+b,0);
+
+const ZAC_VALUE = 0.0041;
+
+// Update balances
+function updateBalances(){
+  zacBalanceEl.innerText = currentUser.zacBalance;
+  zacUSDEl.innerText = (currentUser.zacBalance*ZAC_VALUE).toFixed(2);
+  usdBalanceEl.innerText = currentUser.walletBalance.toFixed(2);
+}
+updateBalances();
+
+// Daily Task Simulation
+dailyTaskBtn.addEventListener("click",()=>{
+  currentUser.zacBalance += 25;
+  zacHistory.push(25);
+  if(zacHistory.length>21) zacHistory.shift();
+  currentUser.zacHistory = zacHistory;
+  users[currentUserId] = currentUser;
+  localStorage.setItem("users",JSON.stringify(users));
+  updateBalances();
+  updateChart();
+});
+
+// Chart
+const ctx = document.getElementById('zacChart').getContext('2d');
+let zacChart = new Chart(ctx,{
+  type:'bar',
+  data:{
+    labels:Array.from({length:21},(_,i)=>`Day ${i+1}`),
+    datasets:[{
+      label:'ZAC Earned',
+      data: zacHistory,
+      backgroundColor:'rgba(0,240,255,0.6)',
+      borderRadius:6
+    }]
+  },
+  options:{
+    responsive:true,
+    plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:true}}
+  }
+});
+
+function updateChart(){
+  zacChart.data.datasets[0].data = zacHistory;
+  zacChart.update();
+}
+
+// Modal
+function openWithdrawModal(){
+  modalOverlay.style.display="flex";
+}
+function closeModal(){
+  modalOverlay.style.display="none";
+}
+function processWithdrawal(){
+  const method = methodSelect.value;
+  const amount = parseFloat(amountInput.value);
+  if(amount>currentUser.walletBalance || amount<=0){
+    alert("Invalid amount.");
+    return;
+  }
+  currentUser.walletBalance -= amount;
+  users[currentUserId] = currentUser;
+  localStorage.setItem("users",JSON.stringify(users));
+  alert(`Withdrawal of $${amount.toFixed(2)} via ${method==='momo'?'MTN Momo':'Bank'} processed!`);
+  updateBalances();
+  closeModal();
+}
 
 // Logout
-function logout(){localStorage.removeItem("currentUserId");location.href="login.html";}
-
-// ======================
-// RENDER STUDENT INFO
-// ======================
-function renderStudent(){
-  studentImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
-  studentName.innerText = currentUser.name;
-  studentUniversity.innerText = currentUser.university || "University XYZ";
-  studentCountry.innerText = currentUser.country || "South Africa";
-  updateWalletDisplay();
-}
-renderStudent();
-
-// ======================
-// WALLET DISPLAY
-// ======================
-const ZAC_USD = 0.0041;
-function updateWalletDisplay(){
-  walletZAC.innerText = `${currentUser.zacBalance} ZAC (~$${(currentUser.zacBalance*ZAC_USD).toFixed(2)})`;
-  walletUSD.innerText = `$${currentUser.walletBalance.toFixed(2)} USD`;
-  updateChart();
+function logout(){
+  localStorage.removeItem("currentUserId");
+  location.href="login.html";
 }
 
-// ======================
-// DAILY TASK SIMULATION
-// ======================
-function completeDailyTask(){
-  // Add 25 ZAC to today
-  let dayIndex = currentUser.zacHistory.findIndex(v=>v===0);
-  if(dayIndex===-1) dayIndex = currentUser.zacHistory.length-1; // if full
-  currentUser.zacHistory[dayIndex] += 25;
-  currentUser.zacBalance += 25;
-  users[currentUserId] = currentUser;
-  localStorage.setItem("users",JSON.stringify(users));
-  updateWalletDisplay();
-}
-
-// ======================
-// ZAC CHART
-// ======================
-let zacChart;
-function updateChart(){
-  const labels = Array.from({length:21},(_,i)=>`Day ${i+1}`);
-  const data = currentUser.zacHistory.map(z=>z*ZAC_USD);
-  if(zacChart){zacChart.data.datasets[0].data = data; zacChart.update();return;}
-  zacChart = new Chart(zacChartEl,{
-    type:'line',
-    data:{
-      labels,
-      datasets:[{
-        label:'USD Equivalent',
-        data,
-        borderColor:'#00f0ff',
-        backgroundColor:'rgba(0,240,255,0.2)',
-        fill:true,
-        tension:0.3,
-        pointRadius:5
-      }]
-    },
-    options:{
-      responsive:true,
-      plugins:{legend:{display:false}},
-      scales:{y:{beginAtZero:true}}
-    }
-  });
-}
-
-// ======================
-// USD WITHDRAWAL MODAL
-// ======================
-const withdrawModal = document.getElementById("withdrawModal");
-function openWithdrawalModal(){withdrawModal.style.display="flex";}
-function closeWithdrawalModal(){withdrawModal.style.display="none";}
-function confirmWithdrawal(){
-  const amt = parseFloat(document.getElementById("withdrawAmount").value);
-  const method = document.getElementById("method").value;
-  if(isNaN(amt) || amt<=0){alert("Enter a valid amount");return;}
-  if(amt>currentUser.walletBalance){alert("Insufficient balance");return;}
-  currentUser.walletBalance -= amt;
-  users[currentUserId] = currentUser;
-  localStorage.setItem("users",JSON.stringify(users));
-  alert(`Withdrawal of $${amt} via ${method==="momo"?"MTN Mobile Money":"Bank Transfer"} successful!`);
-  closeWithdrawalModal();
-  updateWalletDisplay();
-}
-
-// ======================
-// REAL-TIME INVOICE PAYMENT SYNC
-// ======================
-// Simulate listening for invoice release funds
-function checkInvoiceFunds(){
-  let invoices = JSON.parse(localStorage.getItem("invoices")) || [];
-  invoices.filter(inv=>inv.studentId===currentUserId && inv.status==="Released")
-    .forEach(inv=>{
-      currentUser.walletBalance += inv.total;
-      inv.status = "Credited";
-    });
-  users[currentUserId] = currentUser;
-  localStorage.setItem("users",JSON.stringify(users));
-  localStorage.setItem("invoices",JSON.stringify(invoices));
-  updateWalletDisplay();
-}
-setInterval(checkInvoiceFunds,3000); // every 3s simulate real-time sync
-
+// Real-time update from invoice.html simulation
+// Listen for storage changes (funds released)
+window.addEventListener('storage', (e)=>{
+  if(e.key==='users'){
+    users = JSON.parse(localStorage.getItem('users'));
+    currentUser = users[currentUserId];
+    updateBalances();
+  }
+});
 </script>
 </body>
 </html>
