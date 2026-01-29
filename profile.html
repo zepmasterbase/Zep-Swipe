@@ -14,8 +14,6 @@
   --glass:rgba(255,255,255,.08);
   --text-light:rgba(255,255,255,.85);
   --green:#00ff94;
-  --yellow:#ffd700;
-  --pulse:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
   --card-radius:20px;
 }
 
@@ -23,17 +21,16 @@
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
 body{background:var(--bg);color:#fff;min-height:100vh;display:flex;justify-content:center;padding:20px 0;}
 
-/* HEADER */
+/* HEADER TOP */
 header{
   width:90%;
-  max-width:1200px;
+  max-width:900px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:16px;
+  padding:16px 20px;
   border-radius:16px;
-  background:rgba(0,0,0,0.3);
-  box-shadow: var(--pulse);
+  background:rgba(0,0,0,0.4);
   margin-bottom:20px;
 }
 .brand{
@@ -44,13 +41,12 @@ header{
 .home-btn{
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   border:none;border-radius:50%;
-  width:50px;height:50px;cursor:pointer;
+  width:45px;height:45px;cursor:pointer;
   font-size:20px;color:#050015;
-  box-shadow:var(--pulse);
   display:flex;align-items:center;justify-content:center;
   transition:.3s;
 }
-.home-btn:hover{transform:scale(1.1);}
+.home-btn:hover{transform:scale(1.05);}
 
 /* PROFILE CARD */
 .profile-container{
@@ -60,8 +56,7 @@ header{
   border-radius:var(--card-radius);
   padding:25px;
   border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 0 36px rgba(156,77,255,.2);
-  display:flex;flex-direction:column;gap:18px;
+  display:flex;flex-direction:column;gap:20px;
   margin:auto;
 }
 
@@ -73,32 +68,30 @@ header{
 }
 .profile-image{
   width:120px;height:120px;border-radius:50%;
-  border:3px solid rgba(255,255,255,.3);
+  border:2px solid rgba(255,255,255,.3);
   object-fit:cover;cursor:pointer;
   transition:.3s;
 }
-.profile-image:hover{transform:scale(1.05);box-shadow:0 0 25px var(--zep-blue),0 0 45px var(--zep-violet);}
-.student-details h3{margin-bottom:4px;}
-.student-details span{display:block;font-size:.85rem;color:var(--text-light);}
-.verified-badge{display:flex;align-items:center;gap:8px;font-family:Orbitron;font-size:14px;background:linear-gradient(90deg,var(--green),var(--zep-blue));padding:6px 12px;border-radius:12px;color:#050015;animation:badgePulse 2s infinite;margin-top:6px;}
-@keyframes badgePulse{0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);}}
+.student-details h3{margin-bottom:4px;font-size:1.3rem;}
+.student-details span{display:block;font-size:.9rem;color:var(--text-light);}
+.verified-badge{display:flex;align-items:center;gap:6px;font-family:Orbitron;font-size:13px;background:linear-gradient(90deg,var(--green),var(--zep-blue));padding:5px 10px;border-radius:12px;color:#050015;margin-top:4px;}
 
 /* TASKS TRACKER */
 .tasks-container{
   display:grid;grid-template-columns:repeat(7,1fr);
-  gap:10px;margin:10px 0;
+  gap:8px;margin:10px 0;
 }
 .task-day{
-  height:40px;display:flex;align-items:center;justify-content:center;
-  border-radius:12px;background:rgba(255,255,255,.05);
+  height:36px;display:flex;align-items:center;justify-content:center;
+  border-radius:10px;background:rgba(255,255,255,.05);
   color:var(--text-light);cursor:pointer;
-  transition:.3s;
+  transition:.2s;
+  font-size:.8rem;
 }
 .task-day.completed{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  box-shadow:var(--pulse);
 }
-.task-day:hover{transform:scale(1.1);}
+.task-day:hover{transform:scale(1.05);}
 
 /* PROFILE FORM */
 .profile-form input[type="text"], 
@@ -112,18 +105,21 @@ header{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;margin-top:6px;
 }
-.profile-form button:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
+.profile-form button:hover{transform:translateY(-1px);box-shadow:0 0 20px rgba(156,77,255,.3);}
 
 /* VERIFY BUTTON */
-#verifyBtn{display:none;margin-top:12px;background:linear-gradient(90deg,var(--green),var(--zep-blue));}
+#verifyBtn{display:none;margin-top:12px;background:linear-gradient(90deg,var(--green),var(--zep-blue));padding:12px;font-size:1rem;}
 
 /* PROGRESS BAR */
-.progress-container{width:100%;height:14px;background:rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;margin-bottom:10px;}
-.progress-bar{height:100%;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));width:0%;transition:width .4s ease;border-radius:12px;animation:progressPulse 2s infinite;}
-@keyframes progressPulse{0%,100%{opacity:0.7;}50%{opacity:1;}}
+.progress-container{width:100%;height:12px;background:rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;margin-bottom:6px;}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));width:0%;transition:width .4s ease;border-radius:12px;}
 
 /* RESPONSIVE */
-@media(max-width:480px){.profile-container{padding:18px;width:95%;}.tasks-container{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:480px){
+  .profile-container{padding:18px;width:95%;}
+  .tasks-container{grid-template-columns:repeat(3,1fr);}
+  .student-info{flex-direction:column;align-items:center;text-align:center;}
+}
 </style>
 </head>
 <body>
@@ -133,7 +129,7 @@ header{
     <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe Logo">
     Zep Swipe
   </div>
-  <button class="home-btn" title="Home" onclick="location.href='student-dashboard.html'">🏠</button>
+  <button class="home-btn" title="Home" onclick="location.href='wallet.html'">🏠</button>
 </header>
 
 <div class="profile-container">
@@ -150,9 +146,9 @@ header{
 
   <!-- 21-day Learn & Earn tasks tracker -->
   <div>
-    <h4 style="text-align:center;margin-bottom:8px;">21-Day Learn & Earn Progress</h4>
+    <h4 style="text-align:center;margin-bottom:6px;">21-Day Learn & Earn Progress</h4>
     <div class="tasks-container" id="tasksContainer"></div>
-    <span id="tasksCompletedText" style="text-align:center;display:block;margin-top:6px;"></span>
+    <span id="tasksCompletedText" style="text-align:center;display:block;margin-top:4px;"></span>
   </div>
 
   <!-- Profile form -->
@@ -292,6 +288,7 @@ function updateVerifiedBadge(){
     if(currentUser.tasksCompleted>=21){
       verifyBtn.style.display = "block";
       verifyAmount.innerText = getLocalAmount(15);
+      verifyBtn.disabled = false;
     } else {
       verifyBtn.style.display = "block";
       verifyBtn.disabled = true;
