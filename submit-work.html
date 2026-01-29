@@ -10,210 +10,212 @@
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --green:#00ff94;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,.08);
-  --text:rgba(255,255,255,.9);
+  --text-light:rgba(255,255,255,.85);
+  --green:#00ff94;
 }
 
+/* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;padding:20px;}
+body{background:var(--bg);color:#fff;min-height:100vh;display:flex;justify-content:center;padding:20px;}
 
+/* HEADER */
 header{
-  display:flex;align-items:center;gap:12px;
-  padding:16px 20px;border-radius:18px;
-  background:rgba(0,0,0,.55);
-  box-shadow:0 0 30px rgba(0,240,255,.25);
-  margin-bottom:25px;
+  width:100%;max-width:1200px;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px;margin-bottom:20px;border-radius:16px;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  animation:pulse 2s infinite;
 }
-header img{height:40px;}
-header h1{
-  font-family:Orbitron;
-  font-size:1.2rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
+@keyframes pulse{0%,100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}}
+header img{width:50px;height:50px;border-radius:8px;margin-right:12px;}
+header h1{font-family:Orbitron;font-size:1.5rem;}
 
-.container{
-  max-width:800px;margin:auto;
-  display:grid;gap:22px;
-}
-
+/* CARD */
 .card{
   background:var(--glass);
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:20px;
   border:1px solid rgba(255,255,255,.12);
-  border-radius:20px;
-  padding:22px;
-  box-shadow:0 0 28px rgba(156,77,255,.15);
+  box-shadow:0 0 20px rgba(0,240,255,.2);
+  max-width:900px;
+  width:100%;
 }
+.card h2{margin-bottom:12px;}
 
-.card h2{
-  font-family:Orbitron;
-  font-size:1rem;
-  margin-bottom:14px;
-  color:var(--zep-blue);
+/* INPUTS */
+input[type="file"],textarea,select,input[type="text"]{
+  width:100%;padding:12px;margin-bottom:12px;border-radius:12px;border:none;background:rgba(255,255,255,0.05);color:#fff;outline:none;
 }
+textarea{height:100px;resize:none;}
 
-input, textarea{
-  width:100%;padding:12px;border-radius:12px;
-  border:none;outline:none;
-  background:rgba(255,255,255,.05);
-  color:#fff;
-}
-textarea{resize:none;min-height:100px;}
-
-.cta-btn{
-  width:100%;padding:16px;border:none;border-radius:999px;
+/* BUTTONS */
+button.primary{
+  width:100%;padding:14px;border:none;border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;font-family:Orbitron;
-  font-size:1rem;cursor:pointer;
-  box-shadow:0 0 35px rgba(0,240,255,.45);
-  transition:.3s;
-  margin-top:12px;
+  color:#050015;margin-top:10px;box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
+  cursor:pointer;font-family:Orbitron;
 }
-.cta-btn:hover{transform:translateY(-2px);}
+button.primary:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
 
-.status-badge{
-  display:inline-block;
-  background:rgba(0,240,255,.2);
-  color:#fff;
-  padding:6px 12px;border-radius:999px;
-  font-family:Orbitron;
-  font-size:.75rem;
-  margin-bottom:10px;
-}
-
-.modal{
-  position:fixed;inset:0;
+/* MODAL */
+.modal-bg{
+  display:none;
+  position:fixed;
+  inset:0;
   background:rgba(0,0,0,.7);
-  display:none;align-items:center;justify-content:center;
+  justify-content:center;
+  align-items:center;
   z-index:1000;
 }
-.modal-content{
+.modal{
   background:var(--glass);
-  padding:30px;border-radius:22px;
-  max-width:500px;width:90%;
+  padding:20px;
+  border-radius:16px;
+  max-width:400px;
+  width:90%;
   text-align:center;
-  box-shadow:0 0 40px rgba(0,240,255,.35);
 }
-.modal-content h2{font-family:Orbitron;color:var(--green);margin-bottom:12px;}
-.modal-content button{padding:12px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;margin-top:10px;cursor:pointer;}
 
-.info-box{
-  font-size:.85rem;
-  background:rgba(0,0,0,.4);
-  border-left:4px solid var(--zep-blue);
-  padding:12px;border-radius:12px;
-  color:rgba(255,255,255,.8);
+/* STUDENT INFO */
+.student-info{
+  display:flex;align-items:center;gap:16px;margin-bottom:12px;
+}
+.student-info img{width:70px;height:70px;border-radius:50%;border:2px solid rgba(255,255,255,.3);}
+.student-info div{display:flex;flex-direction:column;}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .student-info{flex-direction:column;align-items:flex-start;}
 }
 </style>
 </head>
-
 <body>
 
 <header>
-  <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe">
-  <h1>Submit Completed Work</h1>
+  <div style="display:flex;align-items:center;">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe Logo">
+    <h1>Zep Swipe</h1>
+  </div>
 </header>
 
-<div class="container">
+<div class="card">
+  <h2>Submit Completed Work</h2>
 
-  <div class="card">
-    <h2>Invoice Status: <span id="invoiceStatus" class="status-badge">Loading...</span></h2>
-    <div><strong>Invoice ID:</strong> <span id="invoiceId">-</span></div>
-    <div><strong>Client:</strong> <span id="clientName">-</span></div>
-    <div><strong>Service:</strong> <span id="serviceTitle">-</span></div>
+  <div id="lockedOverlay" style="display:none;text-align:center;padding:20px;background:rgba(0,0,0,.5);border-radius:12px;">
+    <h3>Verify your account to submit work and get paid</h3>
+    <button class="primary" onclick="location.href='profile.html'">Complete Verification</button>
   </div>
 
-  <div class="card">
-    <h2>Upload Completed Work</h2>
-    <textarea id="workNotes" placeholder="Describe your completed work..."></textarea>
-    <input type="file" id="workFile" accept=".zip,.pdf,.doc,.docx,.txt" style="margin-top:10px;">
-    <button class="cta-btn" onclick="submitWork()">Submit Work</button>
-  </div>
+  <div id="workForm">
+    <div class="student-info">
+      <img id="studentImg" src="https://via.placeholder.com/70">
+      <div>
+        <strong id="studentName">Student Name</strong>
+        <span id="studentUniversity">University</span>
+        <span id="verifiedBadge" style="display:none;color:#0f0;">✔ Verified</span>
+      </div>
+    </div>
 
-  <div class="info-box">
-    Funds are held securely in escrow. Once you submit your work and the client approves, your payout will be released automatically to your wallet.
-  </div>
+    <label for="invoiceSelect">Select Invoice</label>
+    <select id="invoiceSelect"></select>
 
+    <label for="workFile">Upload Your Work</label>
+    <input type="file" id="workFile" accept="image/*,application/pdf,.zip">
+
+    <label for="submissionNotes">Notes or Submission Link</label>
+    <textarea id="submissionNotes" placeholder="Add links or notes for your client"></textarea>
+
+    <button class="primary" onclick="submitWork()">Submit Work</button>
+  </div>
 </div>
 
-<!-- Modal -->
-<div id="successModal" class="modal">
-  <div class="modal-content">
-    <h2>Work Submitted!</h2>
-    <p>Your client will review and approve the work. Funds will be released to your wallet once approved.</p>
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3 id="modalTitle">Action</h3>
+    <p id="modalMsg"></p>
     <button onclick="closeModal()">Close</button>
   </div>
 </div>
 
 <script>
+// USER SESSION
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
 if(!currentUserId || !users[currentUserId]) location.href="login.html";
-let user = users[currentUserId];
+let currentUser = users[currentUserId];
 
-// Get invoice ID from URL
-const urlParams = new URLSearchParams(window.location.search);
-const invoiceId = urlParams.get("invoice_id");
-const invoices = JSON.parse(localStorage.getItem("invoices")) || {};
-const invoice = invoices[invoiceId];
-
-// Verify access
-if(!invoice){
-  alert("Invoice not found");
-  location.href="student-dashboard.html";
-}
-if(!user.verified){
-  alert("You must be a verified freelancer to submit work");
-  location.href="profile.html";
+// CHECK VERIFICATION
+const workForm = document.getElementById("workForm");
+const lockedOverlay = document.getElementById("lockedOverlay");
+if(!currentUser.verified){
+  workForm.style.display="none";
+  lockedOverlay.style.display="block";
 }
 
-// Fill invoice details
-document.getElementById("invoiceId").innerText = invoice.id;
-document.getElementById("clientName").innerText = invoice.clientName;
-document.getElementById("serviceTitle").innerText = invoice.serviceTitle;
-document.getElementById("invoiceStatus").innerText = invoice.status;
+// LOAD STUDENT INFO
+document.getElementById("studentImg").src = currentUser.profileImage || "https://via.placeholder.com/70";
+document.getElementById("studentName").innerText = currentUser.name || "";
+document.getElementById("studentUniversity").innerText = currentUser.university || "";
+if(currentUser.verified) document.getElementById("verifiedBadge").style.display="inline";
 
-// Only allow submit if status is Paid/Escrow
-if(invoice.status !== "Paid" && invoice.status !== "Escrow"){
-  document.querySelector(".cta-btn").disabled = true;
-  document.querySelector(".cta-btn").innerText = "Cannot submit yet";
-  document.querySelector(".cta-btn").style.opacity = 0.6;
-}
+// LOAD UNPAID INVOICES
+let invoices = JSON.parse(localStorage.getItem("invoices")) || [];
+let unpaidInvoices = invoices.filter(inv => inv.studentId===currentUserId && inv.status==="Paid (In Escrow)");
+const invoiceSelect = document.getElementById("invoiceSelect");
+unpaidInvoices.forEach(inv=>{
+  let opt = document.createElement("option");
+  opt.value=inv.id;
+  opt.innerText=`${inv.serviceTitle} - $${inv.amount}`;
+  invoiceSelect.appendChild(opt);
+});
 
-// Submit work function
+// MODAL UTILS
+const modalBg = document.getElementById("modalBg");
+const modalTitle = document.getElementById("modalTitle");
+const modalMsg = document.getElementById("modalMsg");
+function openModal(title,msg){ modalTitle.innerText=title; modalMsg.innerText=msg; modalBg.style.display="flex"; }
+function closeModal(){ modalBg.style.display="none"; }
+
+// SUBMIT WORK
 function submitWork(){
-  const notes = document.getElementById("workNotes").value.trim();
+  const selectedInvoiceId = invoiceSelect.value;
+  if(!selectedInvoiceId){ alert("Please select an invoice"); return; }
+  const notes = document.getElementById("submissionNotes").value;
   const fileInput = document.getElementById("workFile");
-  if(!notes && fileInput.files.length===0){
-    alert("Please provide work description or upload a file.");
-    return;
-  }
-
-  // Save submission info in invoice object
-  invoice.workSubmitted = {
-    notes: notes,
-    file: fileInput.files.length>0 ? URL.createObjectURL(fileInput.files[0]) : null,
-    submittedAt: new Date().toISOString()
+  const file = fileInput.files[0];
+  let submission = {
+    invoiceId:selectedInvoiceId,
+    notes:notes,
+    fileName:file?file.name:"No file uploaded",
+    date:new Date().toLocaleString()
   };
 
-  // Update invoice status to Work Submitted
-  invoice.status = "Work Submitted";
-  invoices[invoiceId] = invoice;
-  localStorage.setItem("invoices", JSON.stringify(invoices));
+  // SAVE SUBMISSION TO INVOICE
+  invoices = invoices.map(inv=>{
+    if(inv.id===selectedInvoiceId){
+      inv.status="Work Submitted";
+      inv.submission=submission;
 
-  // Show modal
-  document.getElementById("successModal").style.display="flex";
+      // AUTO RELEASE FUNDS TO WALLET
+      currentUser.walletUSD = (currentUser.walletUSD||0)+inv.amount;
+      users[currentUserId]=currentUser;
+      localStorage.setItem("users",JSON.stringify(users));
 
-  // Update invoice.html dynamically if open
-  window.dispatchEvent(new CustomEvent('invoiceUpdated', {detail: invoice}));
-}
-
-// Modal close
-function closeModal(){
-  document.getElementById("successModal").style.display="none";
+      openModal("✅ Work Submitted",`Funds $${inv.amount} released to your wallet!`);
+    }
+    return inv;
+  });
+  localStorage.setItem("invoices",JSON.stringify(invoices));
+  
+  // Update invoiceSelect
+  invoiceSelect.remove(invoiceSelect.selectedIndex);
+  document.getElementById("submissionNotes").value="";
+  fileInput.value="";
 }
 </script>
 
