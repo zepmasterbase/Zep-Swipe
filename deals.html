@@ -13,12 +13,13 @@
   --glass:rgba(255,255,255,.08);
   --text-light:rgba(255,255,255,.85);
   --green:#00ff94;
-  --card-glow:rgba(156,77,255,.3);
+  --gray:#555;
 }
 
 /* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
 body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.4;}
+h2{text-align:center;font-family:Orbitron;margin:20px 0;}
 
 /* HEADER */
 header{
@@ -26,193 +27,202 @@ header{
   justify-content:space-between;
   align-items:center;
   padding:16px 20px;
-  max-width:1200px;
-  margin:auto;
+  background:rgba(0,0,0,0.2);
+  backdrop-filter:blur(12px);
   border-radius:12px;
-  background:rgba(0,0,0,0.15);
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  margin:0 10px 20px;
 }
-.brand{
-  font-family:Orbitron;
-  font-size:1.6rem;
-  display:flex;
-  align-items:center;
-}
-.brand img{height:40px;margin-right:10px;}
+.brand{font-family:Orbitron;font-size:1.6rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .home-btn{
+  width:50px;height:50px;border-radius:50%;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  border:none;border-radius:50%;
-  width:50px;height:50px;
-  cursor:pointer;font-size:20px;color:#050015;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 12px var(--zep-blue),0 0 25px var(--zep-violet);
-  transition:transform .3s,box-shadow .3s;
+  cursor:pointer;font-size:24px;color:#050015;
+  box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
+  transition:.3s;
 }
 .home-btn:hover{transform:scale(1.1);}
 
-/* CONTAINER */
-.container{padding:20px;max-width:1200px;margin:auto;}
-h2{text-align:center;font-family:Orbitron;margin-bottom:20px;}
+/* FILTERS */
+.filter-container{display:flex;justify-content:center;gap:10px;margin-bottom:20px;}
+.filter-container select{padding:8px 12px;border-radius:12px;border:none;background:rgba(255,255,255,.05);color:#fff;}
 
 /* DEAL CARDS */
-.deals-list{display:grid;grid-template-columns:1fr;gap:16px;}
-@media(min-width:600px){.deals-list{grid-template-columns:1fr 1fr;}}
+.container{display:grid;grid-template-columns:1fr;gap:16px;max-width:1200px;margin:auto;padding:0 10px;}
+@media(min-width:600px){.container{grid-template-columns:1fr 1fr;}}
+@media(min-width:900px){.container{grid-template-columns:1fr 1fr 1fr;}}
 .deal-card{
-  background:var(--glass);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.12);
-  display:flex;flex-direction:column;gap:8px;transition:.3s;position:relative;
+  background:var(--glass);
+  border-radius:16px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,.12);
+  display:flex;flex-direction:column;gap:8px;
+  transition:.3s;
 }
-.deal-card:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--card-glow);}
-.deal-card h3{font-size:1.2rem;margin-bottom:4px;}
-.deal-card p{font-size:.95rem;color:var(--text-light);}
-.deal-meta{font-size:.8rem;color:var(--text-light);display:flex;justify-content:space-between;align-items:center;}
+.deal-card:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(0,240,255,.2),0 0 30px rgba(156,77,255,.2);}
+.deal-card h3{font-family:Orbitron;margin-bottom:4px;}
+.deal-card p{color:var(--text-light);font-size:.9rem;}
+.deal-meta{display:flex;justify-content:space-between;font-size:.8rem;color:var(--text-light);}
 .badge{padding:4px 8px;border-radius:999px;font-size:.75rem;font-weight:600;text-transform:uppercase;}
 .badge.active{background:var(--green);color:#050015;}
-.badge.locked{background:#aaa;color:#050015;}
+.badge.locked{background:var(--gray);color:#050015;}
 
 /* MODAL */
-.modal{
-  position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);
-  display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;
-  transition:opacity .3s ease;
-}
-.modal.active{visibility:visible;opacity:1;}
-.modal-content{
-  background:var(--glass);padding:20px;border-radius:16px;max-width:400px;width:90%;position:relative;
-  box-shadow:0 0 30px var(--zep-violet);
-}
-.modal-content h3{margin-bottom:12px;}
-.modal-content p{margin-bottom:12px;color:var(--text-light);}
-.modal-content .code{font-family:Orbitron;font-size:1.3rem;color:var(--green);margin:12px 0;text-align:center;}
-.modal-content button{
-  padding:12px 18px;border:none;border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;font-family:Orbitron;cursor:pointer;width:100%;transition:.3s;
-}
-.modal-content button:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
-.modal-close{
-  position:absolute;top:10px;right:10px;cursor:pointer;font-size:20px;color:#fff;
-}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1000;}
+.modal{background:var(--glass);padding:20px;border-radius:18px;max-width:400px;width:90%;text-align:center;box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+.modal h3{margin-bottom:12px;font-family:Orbitron;}
+.modal p{margin-bottom:12px;}
+.modal button{padding:10px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;}
+.modal button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
 
-/* LOCKED MESSAGE */
-.locked-message{
-  text-align:center;margin:20px 0;font-size:0.95rem;color:var(--text-light);
-}
-.locked-message button{
-  margin-top:10px;padding:10px 16px;border:none;border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
-}
-.locked-message button:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+/* LOCKED MESSAGE MODAL */
+.locked-card{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.locked-card h3{font-family:Orbitron;}
+.locked-card p{color:var(--text-light);text-align:center;}
+.locked-card button{width:200px;}
+
+/* COUNTDOWN */
+.countdown{font-size:.8rem;color:var(--green);margin-top:4px;}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">
-    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Logo">
-    Zep Swipe
-  </div>
-  <button class="home-btn" title="Home" onclick="location.href='student-dashboard.html'">🏠</button>
+  <div class="brand">Zep Swipe</div>
+  <div class="home-btn" title="Home" onclick="location.href='student-dashboard.html'">🏠</div>
 </header>
 
-<div class="container">
-  <h2>Student Deals Marketplace</h2>
-  <div id="dealsContainer" class="deals-list"></div>
-
-  <div class="locked-message" id="lockedMessage" style="display:none;">
-    Verify your account and complete Day 5 tasks to unlock deals.
-    <br>
-    <button onclick="location.href='learn-earn.html'">Go to Learn & Earn</button>
-  </div>
+<div class="filter-container">
+  <label for="daySelect">Pick Day:</label>
+  <select id="daySelect"></select>
 </div>
 
-<!-- MODAL -->
-<div class="modal" id="dealModal">
-  <div class="modal-content">
-    <span class="modal-close" id="modalClose">&times;</span>
-    <h3 id="modalStore"></h3>
-    <p id="modalDesc"></p>
-    <p class="code" id="modalCode"></p>
-    <p>Expires in 3 days</p>
-    <button id="redeemBtn">Redeem Now</button>
+<div class="container" id="dealsContainer"></div>
+
+<!-- Redeem / Locked Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent">
+    <div id="modalInner"></div>
+    <button onclick="closeModal()">Close</button>
   </div>
 </div>
 
 <script>
-// Mock current user
-let currentUser = JSON.parse(localStorage.getItem("currentUser")) || {verified:false,tasksCompleted:0,name:"Siyanda"};
-// Redirect if not verified or tasks <5
-if(!currentUser.verified || currentUser.tasksCompleted < 5){
-  window.location.href="learn-earn.html";
-}
+// ---------- USERS & VERIFICATION ----------
+let users = JSON.parse(localStorage.getItem("users")) || {};
+let currentUserId = localStorage.getItem("currentUserId");
+if(!currentUserId || !users[currentUserId]) location.href="login.html";
+let currentUser = users[currentUserId];
 
-// Mock deals with lat/lng
-const studentDeals = [
-  {id:1,business:"Cafe Mocha",desc:"Free coffee with any snack",lat: -1.2921, lng:36.8219},
-  {id:2,business:"Tech Store",desc:"10% off student laptops",lat: -1.2925,lng:36.8222},
-  {id:3,business:"BookWorld",desc:"Buy 1 Get 1 free textbook",lat:-1.293,lng:36.823},
-  {id:4,business:"CinemaX",desc:"Student tickets $5",lat:-1.294,lng:36.824},
-  {id:5,business:"GymPlus",desc:"Free 1-week trial",lat:-1.295,lng:36.825},
+// ---------- MOCK DEALS ----------
+let deals = JSON.parse(localStorage.getItem("merchantDeals")) || [
+  {id:1,name:"Cafe Mocha",desc:"Free coffee with any snack",day:"Mon",lat:-1.2921,lon:36.8219},
+  {id:2,name:"Tech Store",desc:"10% off student laptops",day:"Tue",lat:-1.2900,lon:36.8200},
+  {id:3,name:"BookWorld",desc:"Buy 1 Get 1 free textbook",day:"Wed",lat:-1.3000,lon:36.8100},
+  {id:4,name:"CinemaX",desc:"Student tickets $5",day:"Thu",lat:-1.2950,lon:36.8150},
+  {id:5,name:"GymPlus",desc:"Free 1-week trial",day:"Fri",lat:-1.2850,lon:36.8250}
 ];
 
-const dealsContainer = document.getElementById("dealsContainer");
-const modal = document.getElementById("dealModal");
-const modalClose = document.getElementById("modalClose");
-const modalStore = document.getElementById("modalStore");
-const modalDesc = document.getElementById("modalDesc");
-const modalCode = document.getElementById("modalCode");
-const redeemBtn = document.getElementById("redeemBtn");
-
-// Haversine formula for distance in miles
-function getDistance(lat1, lon1, lat2, lon2){
-  const R = 3958.8; // Radius in miles
-  const dLat = (lat2-lat1)*Math.PI/180;
-  const dLon = (lon2-lon1)*Math.PI/180;
-  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
-  const c = 2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  return R*c;
-}
-
-// Get student location
-navigator.geolocation.getCurrentPosition(pos=>{
-  const userLat = pos.coords.latitude;
-  const userLng = pos.coords.longitude;
-  dealsContainer.innerHTML="";
-
-  studentDeals.forEach(deal=>{
-    const distance = getDistance(userLat,userLng,deal.lat,deal.lng);
-    if(distance>20) return; // filter >20 miles
-
-    const card = document.createElement("div");
-    card.className="deal-card";
-    card.innerHTML = `
-      <h3>${deal.business}</h3>
-      <p>${deal.desc}</p>
-      <div class="deal-meta">Distance: ${distance.toFixed(1)} mi</div>
-      <button onclick="openModal(${deal.id})">Generate Code</button>
-    `;
-    dealsContainer.appendChild(card);
-  });
-},err=>{
-  alert("Location access is required to view nearby deals.");
+// ---------- DAYS ----------
+const days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const daySelect = document.getElementById("daySelect");
+days.forEach(d=>{
+  let opt=document.createElement("option");
+  opt.value=d; opt.text=d;
+  daySelect.appendChild(opt);
 });
+daySelect.value=days[new Date().getDay()];
 
-// Modal functions
-function openModal(dealId){
-  const deal = studentDeals.find(d=>d.id===dealId);
-  modalStore.innerText = deal.business;
-  modalDesc.innerText = deal.desc;
-  // Unique code per student + deal
-  const code = `ZEP-${currentUser.name.substring(0,3).toUpperCase()}-${deal.id}-${Date.now().toString().slice(-4)}`;
-  modalCode.innerText = code;
-  redeemBtn.onclick = ()=>{
-    alert(`Redeemed: ${code} at ${deal.business}`);
-    modal.classList.remove("active");
-  };
-  modal.classList.add("active");
+// ---------- MODAL ----------
+const modalOverlay = document.getElementById("modalOverlay");
+const modalInner = document.getElementById("modalInner");
+function showModal(content){modalInner.innerHTML=content;modalOverlay.style.display="flex";}
+function closeModal(){modalOverlay.style.display="none";}
+
+// ---------- Haversine DISTANCE ----------
+function distance(lat1,lon1,lat2,lon2){
+  const R=6371;
+  const dLat=(lat2-lat1)*Math.PI/180;
+  const dLon=(lon2-lon1)*Math.PI/180;
+  const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+  const c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  return R*c; // km
 }
-modalClose.onclick = ()=>{modal.classList.remove("active");};
-window.onclick = e=>{if(e.target===modal) modal.classList.remove("active");};
+
+// ---------- REDEEM HISTORY ----------
+let redeemHistory = currentUser.redeemHistory || {}; // {dealId:code}
+
+// ---------- LOCK CHECK ----------
+if(!currentUser.verified || currentUser.tasksCompleted < 5){
+  showModal(`<div class="locked-card">
+      <h3>Deals Locked!</h3>
+      <p>Complete 5-day Learn & Earn tasks and verify your account to unlock deals.</p>
+      <button onclick="location.href='learn-earn.html'">Go to Learn & Earn</button>
+    </div>`);
+} else {
+  renderDeals();
+}
+
+// ---------- RENDER DEALS ----------
+function renderDeals(){
+  const container = document.getElementById("dealsContainer");
+  container.innerHTML="";
+  const selectedDay = daySelect.value;
+
+  // Get user location
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const uLat = pos.coords.latitude;
+    const uLon = pos.coords.longitude;
+
+    deals.forEach(deal=>{
+      const dist = distance(uLat,uLon,deal.lat,deal.lon);
+      if(deal.day!==selectedDay || dist>16.09) return; // 16.09 km ≈ 10 miles
+
+      const card = document.createElement("div");
+      card.className="deal-card";
+
+      let countdownId = "countdown"+deal.id;
+      card.innerHTML=`
+        <h3>${deal.name}</h3>
+        <p>${deal.desc}</p>
+        <div class="deal-meta">${deal.day} · ${dist.toFixed(1)} km away</div>
+        <div class="countdown" id="${countdownId}"></div>
+        <button onclick="redeemDeal(${deal.id})">Redeem</button>
+      `;
+      container.appendChild(card);
+
+      // Countdown: 3 days per deal from now
+      const expiry = new Date().getTime()+3*24*60*60*1000;
+      const countdownEl=document.getElementById(countdownId);
+      setInterval(()=>{
+        const diff = expiry - new Date().getTime();
+        if(diff<0){countdownEl.innerText="Expired"; return;}
+        const h=Math.floor(diff/3600000);
+        const m=Math.floor((diff%3600000)/60000);
+        const s=Math.floor((diff%60000)/1000);
+        countdownEl.innerText=`Expires in: ${h}h ${m}m ${s}s`;
+      },1000);
+    });
+  },()=>alert("Enable location for filtering deals within 10 miles."));
+}
+
+// ---------- REDEEM FUNCTION ----------
+function redeemDeal(dealId){
+  if(redeemHistory[dealId]){
+    showModal(`<p>Already redeemed! Code: <strong>${redeemHistory[dealId]}</strong></p>`);
+    return;
+  }
+  const code = `ZEP-${currentUserId}-${dealId}-${Date.now()}`;
+  redeemHistory[dealId] = code;
+  currentUser.redeemHistory = redeemHistory;
+  users[currentUserId] = currentUser;
+  localStorage.setItem("users",JSON.stringify(users));
+  showModal(`<p>Redeem Code Generated!</p><p>Use in-store within 3 days:</p><strong>${code}</strong>`);
+}
+
+// ---------- DAY FILTER CHANGE ----------
+daySelect.addEventListener("change",renderDeals);
+
 </script>
 </body>
 </html>
