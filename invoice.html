@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Invoice</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --bg:#050018;
-  --glass:rgba(255,255,255,0.08);
+  --glass:rgba(255,255,255,.08);
   --green:#00ff94;
   --red:#ff4d4d;
   --white:#ffffff;
@@ -28,12 +28,6 @@ header{
   background:radial-gradient(circle at center, rgba(0,240,255,.1), rgba(156,77,255,.1));
   backdrop-filter:blur(14px);
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
-  animation:headerPulse 2s infinite;
-}
-@keyframes headerPulse{
-  0%{box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
-  50%{box-shadow:0 0 25px var(--zep-blue),0 0 50px var(--zep-violet);}
-  100%{box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
 }
 .brand{display:flex;align-items:center;gap:12px;}
 .brand img{width:50px;height:50px;}
@@ -100,19 +94,24 @@ button.secondary{background:rgba(255,255,255,0.1);color:#fff;}
   <!-- INVOICE SUMMARY -->
   <div class="card">
     <h3>Invoice #<span id="invoiceId">INV-12345</span> <span id="statusBadge" class="status-badge pending">Pending</span></h3>
-    <div>Issue Date: <span id="issueDate">2026-01-29</span> | Due Date: <span id="dueDate">2026-02-05</span></div>
+    <div>Issue Date: <span id="issueDate"></span> | Due Date: <span id="dueDate"></span></div>
   </div>
 
   <!-- STUDENT DETAILS -->
   <div class="card">
     <h3>Student Freelancer</h3>
     <div class="details">
-      <div><img id="studentImg" src="https://via.placeholder.com/80" alt="Profile"><br><strong id="studentName">Siyanda</strong><br><span id="studentUniversity">University XYZ</span><br><span class="verified-badge" id="verifiedBadge">✔ Verified</span><br>Wallet ID: <span id="walletId">ZEP-001</span></div>
+      <div>
+        <img id="studentImg" src="" alt="Profile">
+        <br><strong id="studentName"></strong>
+        <br><span id="studentUniversity"></span>
+        <br><span class="verified-badge" id="verifiedBadge">✔ Verified</span>
+        <br>Wallet ID: <span id="walletId"></span>
+      </div>
       <div>
         <h4>Client Details</h4>
-        <span id="clientName">John Doe</span><br>
-        <span id="clientEmail">johndoe@example.com</span><br>
-        <span id="clientCountry">USA</span>
+        <span id="clientName"></span><br>
+        <span id="clientCountry"></span>
       </div>
     </div>
   </div>
@@ -120,17 +119,17 @@ button.secondary{background:rgba(255,255,255,0.1);color:#fff;}
   <!-- SERVICE DETAILS -->
   <div class="card service">
     <h3>Service Details</h3>
-    <div>Title: <span id="serviceTitle">Website Design</span></div>
-    <textarea id="serviceDesc" rows="4" readonly>Design a modern landing page for a fintech platform.</textarea>
-    <div>Delivery Date: <span id="deliveryDate">2026-02-03</span></div>
+    <div>Title: <span id="serviceTitle"></span></div>
+    <textarea id="serviceDesc" rows="4" readonly></textarea>
+    <div>Delivery Date: <span id="deliveryDate"></span></div>
   </div>
 
   <!-- AMOUNT BREAKDOWN -->
   <div class="card amounts">
     <h3>Amount Breakdown (USD)</h3>
-    <div><span>Subtotal:</span><span id="subtotal">$500</span></div>
-    <div><span>Platform Fee (5%):</span><span id="fee">$25</span></div>
-    <div><strong>Total Due:</strong><strong id="total">$525</strong></div>
+    <div><span>Subtotal:</span><span id="subtotal"></span></div>
+    <div><span>Platform Fee (5%):</span><span id="fee"></span></div>
+    <div><strong>Total Due:</strong><strong id="total"></strong></div>
   </div>
 
   <!-- ESCROW INFO -->
@@ -153,25 +152,37 @@ button.secondary{background:rgba(255,255,255,0.1);color:#fff;}
 </div>
 
 <script>
-// Simulated Data & Roles
+// Users & Wallet
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
-let currentUser = users[currentUserId] || {name:"Siyanda", walletBalance:0, profileImage:"https://via.placeholder.com/80"};
+let currentUser = users[currentUserId] || {name:"Siyanda", walletBalance:0, profileImage:"https://via.placeholder.com/80", verified:true};
+
+// Get job ID from URL or localStorage (applied job from swipe-merchant)
+let appliedJobId = localStorage.getItem("appliedJobId");
+let appliedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || {};
+let jobInvoice = appliedJobs[appliedJobId] || null;
+
+// If no applied job, redirect
+if(!appliedJobId || !jobInvoice){
+  alert("No applied job found. Redirecting to marketplace.");
+  location.href="swipe-merchant.html";
+}
+
+// Invoice Data
 let invoice = {
   id: "INV-"+Math.floor(Math.random()*90000+10000),
-  status: "Pending", // Pending, Escrow, Submitted, Released
-  subtotal: 500,
-  fee: 25,
-  total: 525,
+  status: jobInvoice.status || "Pending", 
+  subtotal: jobInvoice.pay || 100,
+  fee: Math.round((jobInvoice.pay||100)*0.05),
+  total: (jobInvoice.pay||100) + Math.round((jobInvoice.pay||100)*0.05),
   studentId: currentUserId,
-  clientName: "John Doe",
-  clientEmail: "johndoe@example.com",
-  clientCountry: "USA",
-  serviceTitle: "Website Design",
-  serviceDesc: "Design a modern landing page for a fintech platform.",
-  deliveryDate: "2026-02-03",
-  issueDate: "2026-01-29",
-  dueDate: "2026-02-05"
+  clientName: jobInvoice.clientName,
+  clientCountry: jobInvoice.clientCountry,
+  serviceTitle: jobInvoice.title,
+  serviceDesc: jobInvoice.desc,
+  deliveryDate: jobInvoice.deliveryDate || new Date().toISOString().slice(0,10),
+  issueDate: new Date().toISOString().slice(0,10),
+  dueDate: new Date(Date.now()+7*24*3600*1000).toISOString().slice(0,10)
 };
 
 // DOM Elements
@@ -183,7 +194,6 @@ const studentUniversity = document.getElementById("studentUniversity");
 const verifiedBadge = document.getElementById("verifiedBadge");
 const walletId = document.getElementById("walletId");
 const clientName = document.getElementById("clientName");
-const clientEmail = document.getElementById("clientEmail");
 const clientCountry = document.getElementById("clientCountry");
 const serviceTitle = document.getElementById("serviceTitle");
 const serviceDesc = document.getElementById("serviceDesc");
@@ -196,7 +206,7 @@ const releaseBtn = document.getElementById("releaseBtn");
 const modalOverlay = document.getElementById("modalOverlay");
 const modalText = document.getElementById("modalText");
 
-// Render Invoice
+// Render invoice
 function renderInvoice(){
   invoiceId.innerText = invoice.id;
   statusBadge.innerText = invoice.status;
@@ -207,7 +217,6 @@ function renderInvoice(){
   verifiedBadge.style.display = currentUser.verified ? "inline-block" : "none";
   walletId.innerText = "ZEP-"+currentUserId;
   clientName.innerText = invoice.clientName;
-  clientEmail.innerText = invoice.clientEmail;
   clientCountry.innerText = invoice.clientCountry;
   serviceTitle.innerText = invoice.serviceTitle;
   serviceDesc.value = invoice.serviceDesc;
@@ -216,7 +225,6 @@ function renderInvoice(){
   fee.innerText = "$"+invoice.fee;
   total.innerText = "$"+invoice.total;
 
-  // Show/hide buttons
   if(invoice.status==="Pending"){
     payBtn.style.display = "inline-block";
     releaseBtn.style.display = "none";
@@ -230,7 +238,7 @@ function renderInvoice(){
 }
 renderInvoice();
 
-// Modal Functions
+// Modal
 function showModal(text){
   modalText.innerText = text;
   modalOverlay.style.display="flex";
@@ -239,30 +247,34 @@ function closeModal(){
   modalOverlay.style.display="none";
 }
 
-// Payment Flow
+// Payment flow
 payBtn.addEventListener("click",()=>{
   showModal("Processing Payment...");
   setTimeout(()=>{
     invoice.status="Escrow";
+    jobInvoice.status="Escrow";
+    appliedJobs[appliedJobId] = jobInvoice;
+    localStorage.setItem("appliedJobs",JSON.stringify(appliedJobs));
     renderInvoice();
-    showModal("Payment successfully sent to escrow!");
-    // Simulate adding USD to wallet after release
+    showModal("Payment sent to escrow!");
   },1500);
 });
 
-// Release Funds Flow
+// Release Funds flow
 releaseBtn.addEventListener("click",()=>{
   showModal("Releasing funds to student wallet...");
   setTimeout(()=>{
     invoice.status="Released";
-    renderInvoice();
-    currentUser.walletBalance += invoice.total; // Credit USD to wallet
+    jobInvoice.status="Released";
+    currentUser.walletBalance += invoice.total;
     users[currentUserId] = currentUser;
+    appliedJobs[appliedJobId] = jobInvoice;
     localStorage.setItem("users",JSON.stringify(users));
-    showModal("Funds released! Student wallet updated.");
+    localStorage.setItem("appliedJobs",JSON.stringify(appliedJobs));
+    renderInvoice();
+    showModal("Funds released! Wallet updated.");
   },1500);
 });
 </script>
-
 </body>
 </html>
