@@ -3,33 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Freelancer Marketplace</title>
+<title>Zep Swipe — Student Job Marketplace</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,0.08);
+  --glass:rgba(255,255,255,.08);
   --text-light:rgba(255,255,255,.85);
+  --green:#00ff94;
 }
 
+/* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden;}
-a{text-decoration:none;color:inherit;}
+body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.4;}
 
+/* HEADER */
 header{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:16px 20px;max-width:1200px;margin:10px auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 20px;
+  background:rgba(0,0,0,0.2);
   border-radius:12px;
-  background:rgba(0,0,0,0.15);
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
-  animation:pulse 2s infinite;
-}
-@keyframes pulse{
-  0%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
-  50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}
-  100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+  max-width:1200px;
+  margin:auto;
+  margin-bottom:20px;
 }
 .brand{
   font-family:Orbitron;
@@ -38,145 +38,225 @@ header{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-nav a{margin-left:20px;font-weight:500;}
-nav a:hover{color:var(--zep-blue);}
-
-.filters{display:flex;flex-wrap:wrap;gap:12px;padding:20px;justify-content:center;}
-.filters select{
-  padding:8px 12px;border-radius:12px;border:none;
-  background:rgba(255,255,255,0.1);color:#fff;
+.home-btn{
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  border:none;
+  border-radius:50%;
+  width:50px;height:50px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:24px;
+  color:#050015;
+  cursor:pointer;
+  transition:.3s;
+}
+.home-btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
 }
 
-.jobs-container{
-  display:grid;grid-template-columns:1fr;gap:16px;padding:20px;
+/* CONTAINER */
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
 }
-@media(min-width:600px){.jobs-container{grid-template-columns:1fr 1fr;}}
-@media(min-width:900px){.jobs-container{grid-template-columns:1fr 1fr 1fr;}}
+
+/* TITLE */
+h2{text-align:center;font-family:Orbitron;margin-bottom:20px;}
+
+/* JOB CARDS */
+.jobs-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+}
+@media(min-width:600px){
+  .jobs-grid{grid-template-columns:1fr 1fr;}
+}
 
 .job-card{
   background:var(--glass);
   border-radius:16px;
   padding:16px;
-  position:relative;
   border:1px solid rgba(255,255,255,.12);
-}
-.job-card h3{font-size:1.1rem;}
-.job-card p{font-size:.9rem;color:var(--text-light);}
-.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
-.tags span{
-  background:rgba(156,77,255,0.2);
-  padding:2px 6px;border-radius:8px;font-size:.75rem;
-}
-
-.locked-overlay{
-  position:absolute;inset:0;
-  background:rgba(0,0,0,0.85);
-  backdrop-filter:blur(6px);
-  display:flex;flex-direction:column;
-  justify-content:center;align-items:center;
-  text-align:center;
-  border-radius:16px;
-}
-.locked-overlay button{
-  margin-top:10px;
-  padding:10px 18px;
-  border:none;border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  font-family:Orbitron;
+  transition:.3s;
   cursor:pointer;
 }
+.job-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 20px rgba(156,77,255,.3);
+}
+.job-card h3{font-size:1.2rem;margin-bottom:6px;}
+.job-card p{color:var(--text-light);font-size:.9rem;}
+.job-card .meta{
+  display:flex;justify-content:space-between;
+  font-size:.8rem;color:var(--text-light);
+  margin-top:6px;
+}
 
-#lockedModal{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,0.85);
-  backdrop-filter:blur(8px);
+/* MODAL */
+.modal-bg{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.75);
   display:none;
-  justify-content:center;align-items:center;
-  flex-direction:column;
-  z-index:1000;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
 }
-#lockedModal.active{display:flex;}
+.modal{
+  background:var(--bg);
+  padding:24px;
+  border-radius:16px;
+  max-width:500px;
+  width:90%;
+  position:relative;
+  box-shadow:0 0 36px rgba(156,77,255,.3);
+}
+.modal h3{margin-bottom:12px;font-family:Orbitron;}
+.modal p{margin-bottom:12px;color:var(--text-light);}
+.close-btn{
+  position:absolute;top:12px;right:12px;
+  background:none;border:none;color:#fff;font-size:20px;cursor:pointer;
+}
+.apply-btn{
+  padding:12px 20px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--green),var(--zep-blue));
+  color:#050015;
+  font-family:Orbitron;
+  cursor:pointer;
+  transition:.3s;
+}
+.apply-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 20px var(--green),0 0 36px var(--zep-blue);
+}
 
-footer{
+/* LOCKED MESSAGE */
+.locked-message{
   text-align:center;
-  padding:20px;
+  margin:20px 0;
+  font-size:0.95rem;
   color:var(--text-light);
-  border-top:1px solid rgba(255,255,255,.1);
 }
+.locked-message button{
+  margin-top:10px;
+  padding:10px 16px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  font-family:Orbitron;
+  cursor:pointer;
+  transition:.3s;
+}
+.locked-message button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+}
+
 </style>
 </head>
 <body>
 
 <header>
   <div class="brand">Zep Swipe</div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="learn-earn.html">Learn & Earn</a>
-    <a style="color:var(--zep-blue)">Marketplace</a>
-    <a href="profile.html">Profile</a>
-  </nav>
+  <button class="home-btn" title="Home" onclick="location.href='student-dashboard.html'">🏠</button>
 </header>
 
-<section class="filters">
-  <select><option>Filter by Skill</option></select>
-  <select><option>Filter by Payout</option></select>
-  <select><option>Sort by</option></select>
-</section>
-
-<section class="jobs-container" id="jobsContainer"></section>
-
-<div id="lockedModal">
-  <h2>Unlock Jobs by Becoming a Verified Freelancer</h2>
-  <p>Complete your verification to access all freelance opportunities.</p>
-  <button onclick="handleGetVerified()">Get Verified</button>
+<div class="container">
+  <h2>Job Marketplace</h2>
+  <div id="jobsContainer" class="jobs-grid"></div>
 </div>
 
-<footer>© 2026 Zep Swipe. All Rights Reserved.</footer>
+<!-- Job Modal -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="jobModal">
+    <button class="close-btn" onclick="closeModal()">×</button>
+    <h3 id="modalJobTitle"></h3>
+    <p id="modalJobDesc"></p>
+    <p><strong>Category:</strong> <span id="modalJobCategory"></span></p>
+    <p><strong>Pay:</strong> $<span id="modalJobPay"></span> USD</p>
+    <button class="apply-btn" id="modalApplyBtn">Apply</button>
+  </div>
+</div>
 
 <script>
-// SAFE USER READ (NO OVERWRITE)
-const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-const isLoggedIn = currentUser && currentUser.loggedIn === true;
-const isVerified = isLoggedIn && currentUser.verified === true;
+// Get current user
+const currentUser = JSON.parse(localStorage.getItem("currentUser")) || {verified:false,tasksCompleted:0};
 
-// REDIRECT LOGIC
-function handleGetVerified(){
-  if(!isLoggedIn){
-    window.location.href = 'login.html';
-    return;
-  }
-  if(!isVerified){
-    window.location.href = 'learn-earn.html';
-  }
+// Redirect if not verified or day 5 not complete
+if(!currentUser.verified || currentUser.tasksCompleted<5){
+  alert("You must be verified and complete Day 5 task to access the marketplace.");
+  location.href="learn-earn.html";
 }
 
-// JOB DATA
-const jobs=[
-  {title:"Logo Design",company:"Brandify",tags:["Design","Logo"]},
-  {title:"Web Development",company:"TechCorp",tags:["Frontend"]},
-  {title:"Social Media Marketing",company:"SocialBee",tags:["Marketing"]}
+// Mock job listings
+const jobs = [
+  {id:1,title:"UX/UI Designer",desc:"Design a mobile app interface for a fintech startup.",category:"UX/UI Design",pay:150,client:"Zep Tech"},
+  {id:2,title:"Online Tutor",desc:"Tutor students in Mathematics online.",category:"Online Tutor",pay:100,client:"EduCorp"},
+  {id:3,title:"Virtual Assistant",desc:"Assist with admin tasks remotely.",category:"Virtual Assistant",pay:80,client:"BizSolutions"},
+  {id:4,title:"Content Creator",desc:"Create short videos for social media marketing.",category:"Content Creator",pay:120,client:"MediaX"},
+  {id:5,title:"Blog Writer",desc:"Write articles about tech and finance.",category:"Blog Writer",pay:90,client:"TechWrite"},
+  {id:6,title:"Voice Over Artist",desc:"Record professional voiceovers.",category:"Voice Over",pay:75,client:"SoundHouse"},
+  {id:7,title:"Data Entry Specialist",desc:"Input data for client databases.",category:"Data Entry",pay:60,client:"DataCorp"},
 ];
 
-const container=document.getElementById('jobsContainer');
+// Render jobs
+const container = document.getElementById("jobsContainer");
 jobs.forEach(job=>{
-  const card=document.createElement('div');
-  card.className='job-card';
+  const card = document.createElement("div");
+  card.className="job-card";
   card.innerHTML=`
     <h3>${job.title}</h3>
-    <p>${job.company}</p>
-    <div class="tags">${job.tags.map(t=>`<span>${t}</span>`).join('')}</div>
-    ${!isVerified?`<div class="locked-overlay">
-      <h3>Locked</h3>
-      <button onclick="handleGetVerified()">Get Verified</button>
-    </div>`:''}
+    <p>${job.desc.substring(0,60)}...</p>
+    <div class="meta"><span>${job.category}</span><span>Pay: $${job.pay}</span></div>
   `;
+  card.addEventListener('click',()=>openModal(job));
   container.appendChild(card);
 });
 
-// GLOBAL MODAL
-if(!isVerified){
-  setTimeout(()=>document.getElementById('lockedModal').classList.add('active'),400);
+// Modal functions
+const modalBg = document.getElementById("modalBg");
+const modalJobTitle = document.getElementById("modalJobTitle");
+const modalJobDesc = document.getElementById("modalJobDesc");
+const modalJobCategory = document.getElementById("modalJobCategory");
+const modalJobPay = document.getElementById("modalJobPay");
+const modalApplyBtn = document.getElementById("modalApplyBtn");
+
+function openModal(job){
+  modalJobTitle.innerText = job.title;
+  modalJobDesc.innerText = job.desc;
+  modalJobCategory.innerText = job.category;
+  modalJobPay.innerText = job.pay;
+  modalBg.style.display="flex";
+
+  // Check if already applied
+  let appliedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || {};
+  const key = `user${currentUser.id}_job${job.id}`;
+  if(appliedJobs[key]){
+    modalApplyBtn.disabled = true;
+    modalApplyBtn.innerText="Already Applied";
+  } else {
+    modalApplyBtn.disabled = false;
+    modalApplyBtn.innerText="Apply";
+  }
+
+  modalApplyBtn.onclick = ()=>{
+    // Unique application per student-job
+    appliedJobs[key]={jobId:job.id,date:new Date().toISOString()};
+    localStorage.setItem("appliedJobs",JSON.stringify(appliedJobs));
+    modalApplyBtn.disabled = true;
+    modalApplyBtn.innerText="Applied ✅";
+    alert("You have successfully applied for this job!");
+    closeModal();
+  }
 }
+
+function closeModal(){modalBg.style.display="none";}
 </script>
 
 </body>
