@@ -5,257 +5,201 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Wallet</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
-
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --bg:#050018;
-  --glass:rgba(255,255,255,0.08);
+  --glass:rgba(255,255,255,.08);
   --green:#00ff94;
+  --purple:#9c4dff;
+  --yellow:#ffcc00;
   --text-light:rgba(255,255,255,.85);
-  --orange:#ff8c00;
 }
 
 /* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px;}
+body{background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-direction:column;}
 
 /* HEADER */
 header{
-  display:flex;justify-content:space-between;align-items:center;
-  width:100%;
-  padding:16px;
-  margin-bottom:20px;
-  border-radius:16px;
+  display:flex;justify-content:space-between;align-items:center;padding:16px;
   background:radial-gradient(circle at center, rgba(0,240,255,.1), rgba(156,77,255,.1));
   backdrop-filter:blur(14px);
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
-  animation:headerPulse 2s infinite;
 }
-@keyframes headerPulse{
-  0%{box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
-  50%{box-shadow:0 0 25px var(--zep-blue),0 0 50px var(--zep-violet);}
-  100%{box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
+.brand{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;cursor:pointer;}
+.home-btn{
+  width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;cursor:pointer;color:#050015;
+  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  transition:.3s;
 }
-.brand{display:flex;align-items:center;gap:12px;}
-.brand img{width:50px;height:50px;}
-.brand span{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.logout-btn{padding:8px 12px;background:var(--green);border:none;border-radius:999px;color:#050015;cursor:pointer;font-family:Orbitron;}
+.home-btn:hover{transform:scale(1.1);}
 
 /* CONTAINER */
-.container{max-width:900px;width:100%;display:flex;flex-direction:column;gap:20px;}
-
-/* PROFILE CARD */
-.profile-card{
-  display:flex;align-items:center;gap:16px;padding:16px;background:var(--glass);border-radius:18px;border:1px solid rgba(255,255,255,.12);
-}
-.profile-card img{width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,255,255,.3);}
-.profile-info{display:flex;flex-direction:column;}
-.profile-info span.name{font-family:Orbitron;font-size:1.2rem;}
-.profile-info span.uni,country{font-size:0.85rem;color:var(--text-light);}
+.container{max-width:1000px;margin:20px auto;padding:16px;display:flex;flex-direction:column;gap:20px;}
 
 /* BALANCE CARDS */
-.balance-card{
-  display:flex;justify-content:space-between;align-items:center;padding:16px;background:var(--glass);border-radius:18px;border:1px solid rgba(255,255,255,.12);
-  font-family:Orbitron;font-size:1.1rem;
-  gap:20px;
-}
-.balance-value{font-size:1.6rem;}
+.balance-card{background:var(--glass);padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;align-items:center;box-shadow:0 0 20px rgba(0,240,255,.1);}
+.balance-card h3{font-family:Orbitron;}
+.balance-amount{font-family:Orbitron;font-size:1.6rem;}
 
-/* CHART */
-#zacChart{width:100%;height:220px;margin-top:12px;}
+/* BUTTONS */
+button{padding:12px 20px;border:none;border-radius:999px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:.3s;}
+button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
+.create-invoice-btn{align-self:flex-start;margin-top:10px;}
 
-/* DAILY TASK BUTTON */
-#dailyTaskBtn{align-self:flex-start;padding:10px 16px;border:none;border-radius:999px;background:var(--zep-blue);color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;margin-top:10px;}
-#dailyTaskBtn:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
+/* ZAC CHART */
+#zacChartContainer{background:var(--glass);padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.12);}
 
-/* WITHDRAW MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1000;}
-.modal{background:var(--glass);padding:20px;border-radius:18px;max-width:400px;width:90%;text-align:center;box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
-.modal input, .modal select{width:100%;padding:10px;margin-top:8px;border-radius:12px;border:none;background:rgba(255,255,255,0.05);color:#fff;}
-.modal button{margin-top:12px;width:100%;}
+/* NOTIFICATIONS */
+.notification-center{background:var(--glass);padding:16px;border-radius:18px;border:1px solid rgba(255,255,255,.12);max-height:300px;overflow-y:auto;}
+.notification{padding:10px;border-radius:12px;margin-bottom:8px;cursor:pointer;transition:.2s;display:flex;justify-content:space-between;align-items:center;}
+.notification:hover{background:rgba(255,255,255,.1);}
+.notification.pending{border-left:4px solid var(--yellow);}
+.notification.escrow{border-left:4px solid var(--zep-blue);}
+.notification.submitted{border-left:4px solid var(--purple);}
+.notification.released{border-left:4px solid var(--green);}
 
 /* RESPONSIVE */
-@media(max-width:600px){.profile-card{flex-direction:column;align-items:flex-start;}}
+@media(max-width:600px){.balance-card{flex-direction:column;align-items:flex-start;gap:12px;}}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">
-    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Logo">
-    <span>Zep Swipe</span>
-  </div>
-  <button class="logout-btn" onclick="logout()">Logout</button>
+  <div class="brand" onclick="location.href='student-dashboard.html'">Zep Swipe</div>
+  <button class="home-btn" onclick="location.href='student-dashboard.html'">🏠</button>
 </header>
 
 <div class="container">
 
-  <!-- PROFILE -->
-  <div class="profile-card">
-    <img id="profileImg" src="https://via.placeholder.com/80">
-    <div class="profile-info">
-      <span class="name" id="studentName">Siyanda</span>
-      <span class="uni" id="studentUniversity">University XYZ</span>
-      <span class="country" id="studentCountry">South Africa</span>
+  <!-- BALANCES -->
+  <div class="balance-card">
+    <div>
+      <h3>USD Wallet</h3>
+      <p class="balance-amount" id="usdBalance">$0.00</p>
+    </div>
+    <div>
+      <h3>ZAC Wallet</h3>
+      <p class="balance-amount" id="zacBalance">0 ZAC</p>
     </div>
   </div>
 
-  <!-- BALANCE CARDS -->
-  <div class="balance-card">
-    <span>ZAC Balance:</span>
-    <span class="balance-value" id="zacBalance">0</span>
-    <span>≈ $<span id="zacUSD">0.00</span></span>
-  </div>
-
-  <div class="balance-card">
-    <span>USD Balance:</span>
-    <span class="balance-value" id="usdBalance">0.00</span>
-    <button onclick="openWithdrawModal()">Withdraw</button>
-  </div>
-
   <!-- DAILY TASK BUTTON -->
-  <button id="dailyTaskBtn">Daily Task Complete (+25 ZAC)</button>
+  <button onclick="completeDailyTask()">Complete Daily Task +25 ZAC</button>
 
-  <!-- CHART -->
-  <canvas id="zacChart"></canvas>
+  <!-- CREATE INVOICE -->
+  <button class="create-invoice-btn" onclick="location.href='create-invoice.html'">Create Invoice</button>
 
-  <!-- CREATE INVOICE BUTTON -->
-  <button onclick="location.href='create-invoice.html'">Create Invoice</button>
-
-</div>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal" id="modal">
-    <h3>Withdraw Funds</h3>
-    <label for="method">Select Method:</label>
-    <select id="method">
-      <option value="momo">MTN Momo</option>
-      <option value="bank">Bank</option>
-    </select>
-    <input type="text" id="recipient" placeholder="Phone or Account Number">
-    <input type="number" id="amount" placeholder="Amount USD">
-    <button onclick="processWithdrawal()">Confirm Withdrawal</button>
-    <button onclick="closeModal()">Cancel</button>
+  <!-- ZAC CHART -->
+  <div id="zacChartContainer">
+    <canvas id="zacChart"></canvas>
   </div>
+
+  <!-- NOTIFICATION CENTER -->
+  <div class="notification-center">
+    <h3>Notifications</h3>
+    <div id="notificationsList"></div>
+  </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+// Initialize Users & Current
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
 if(!currentUserId || !users[currentUserId]) location.href="login.html";
 let currentUser = users[currentUserId];
 
-// Simulate 21-day ZAC history
-let zacHistory = currentUser.zacHistory || Array(21).fill(0);
-
-// DOM Elements
-const profileImg = document.getElementById("profileImg");
-const studentName = document.getElementById("studentName");
-const studentUniversity = document.getElementById("studentUniversity");
-const studentCountry = document.getElementById("studentCountry");
-const zacBalanceEl = document.getElementById("zacBalance");
-const zacUSDEl = document.getElementById("zacUSD");
+// ZAC & USD Balances
 const usdBalanceEl = document.getElementById("usdBalance");
-const dailyTaskBtn = document.getElementById("dailyTaskBtn");
-const modalOverlay = document.getElementById("modalOverlay");
-const amountInput = document.getElementById("amount");
-const methodSelect = document.getElementById("method");
+const zacBalanceEl = document.getElementById("zacBalance");
 
-// Initialize
-profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
-studentName.innerText = currentUser.name || "Siyanda";
-studentUniversity.innerText = currentUser.university || "University XYZ";
-studentCountry.innerText = currentUser.country || "South Africa";
+// Notifications
+let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
 
-currentUser.walletBalance = currentUser.walletBalance || 0;
-currentUser.zacBalance = currentUser.zacBalance || zacHistory.reduce((a,b)=>a+b,0);
-
-const ZAC_VALUE = 0.0041;
-
-// Update balances
-function updateBalances(){
-  zacBalanceEl.innerText = currentUser.zacBalance;
-  zacUSDEl.innerText = (currentUser.zacBalance*ZAC_VALUE).toFixed(2);
-  usdBalanceEl.innerText = currentUser.walletBalance.toFixed(2);
+// Render Wallet
+function renderWallet(){
+  usdBalanceEl.innerText = `$${currentUser.walletBalance?.toFixed(2)||0}`;
+  zacBalanceEl.innerText = `${currentUser.zacBalance||0} ZAC`;
 }
-updateBalances();
+renderWallet();
 
-// Daily Task Simulation
-dailyTaskBtn.addEventListener("click",()=>{
-  currentUser.zacBalance += 25;
-  zacHistory.push(25);
-  if(zacHistory.length>21) zacHistory.shift();
-  currentUser.zacHistory = zacHistory;
+// Daily Task + ZAC
+function completeDailyTask(){
+  currentUser.zacBalance = (currentUser.zacBalance||0)+25;
   users[currentUserId] = currentUser;
   localStorage.setItem("users",JSON.stringify(users));
-  updateBalances();
+
+  addNotification({type:"submitted",text:"Daily Learn & Earn task completed +25 ZAC",invoiceId:null});
   updateChart();
-});
+  renderWallet();
+}
 
 // Chart
 const ctx = document.getElementById('zacChart').getContext('2d');
 let zacChart = new Chart(ctx,{
-  type:'bar',
-  data:{
-    labels:Array.from({length:21},(_,i)=>`Day ${i+1}`),
-    datasets:[{
-      label:'ZAC Earned',
-      data: zacHistory,
-      backgroundColor:'rgba(0,240,255,0.6)',
-      borderRadius:6
-    }]
-  },
-  options:{
-    responsive:true,
-    plugins:{legend:{display:false}},
-    scales:{y:{beginAtZero:true}}
-  }
+  type:'line',
+  data:{labels:[],datasets:[{label:'Daily ZAC',data:[],backgroundColor:'rgba(0,255,148,0.2)',borderColor:'var(--green)',borderWidth:2,tension:0.3}]},
+  options:{scales:{y:{beginAtZero:true}}}
 });
-
 function updateChart(){
-  zacChart.data.datasets[0].data = zacHistory;
+  if(!currentUser.zacHistory) currentUser.zacHistory=[];
+  currentUser.zacHistory.push({day:new Date().toLocaleDateString(),zac:currentUser.zacBalance});
+  users[currentUserId]=currentUser;
+  localStorage.setItem("users",JSON.stringify(users));
+
+  zacChart.data.labels = currentUser.zacHistory.map(e=>e.day);
+  zacChart.data.datasets[0].data = currentUser.zacHistory.map(e=>e.zac);
   zacChart.update();
 }
 
-// Modal
-function openWithdrawModal(){
-  modalOverlay.style.display="flex";
+// Notifications
+const notificationsList = document.getElementById("notificationsList");
+function renderNotifications(){
+  notificationsList.innerHTML="";
+  notifications.forEach((n,i)=>{
+    const div = document.createElement("div");
+    div.className=`notification ${n.type}`;
+    div.innerHTML=`<span>${n.text}</span>`;
+    if(n.invoiceId) div.onclick=()=>{window.location.href=`invoice.html?invoice_id=${n.invoiceId}`;};
+    notificationsList.appendChild(div);
+  });
 }
-function closeModal(){
-  modalOverlay.style.display="none";
+function addNotification(n){
+  notifications.push(n);
+  localStorage.setItem("notifications",JSON.stringify(notifications));
+  renderNotifications();
 }
-function processWithdrawal(){
-  const method = methodSelect.value;
-  const amount = parseFloat(amountInput.value);
-  if(amount>currentUser.walletBalance || amount<=0){
-    alert("Invalid amount.");
-    return;
+renderNotifications();
+
+// Live Wallet Update from Invoices
+window.addEventListener("storage",(e)=>{
+  if(e.key && e.key.startsWith("invoice_")){
+    const inv = JSON.parse(e.newValue);
+    if(inv.status==="Released" && inv.studentId===currentUserId){
+      currentUser.walletBalance = (currentUser.walletBalance||0)+inv.total;
+      users[currentUserId]=currentUser;
+      localStorage.setItem("users",JSON.stringify(users));
+      addNotification({type:"released",text:`Invoice ${inv.id} funds released!`,invoiceId:inv.id});
+      renderWallet();
+    }
   }
-  currentUser.walletBalance -= amount;
-  users[currentUserId] = currentUser;
-  localStorage.setItem("users",JSON.stringify(users));
-  alert(`Withdrawal of $${amount.toFixed(2)} via ${method==='momo'?'MTN Momo':'Bank'} processed!`);
-  updateBalances();
-  closeModal();
-}
+});
 
-// Logout
-function logout(){
-  localStorage.removeItem("currentUserId");
-  location.href="login.html";
-}
-
-// Real-time update from invoice.html simulation
-// Listen for storage changes (funds released)
-window.addEventListener('storage', (e)=>{
-  if(e.key==='users'){
-    users = JSON.parse(localStorage.getItem('users'));
-    currentUser = users[currentUserId];
-    updateBalances();
+// Initial demo invoice notifications
+Object.keys(localStorage).forEach(k=>{
+  if(k.startsWith("invoice_")){
+    const inv = JSON.parse(localStorage.getItem(k));
+    if(inv.studentId===currentUserId){
+      const colorType = inv.status.toLowerCase();
+      addNotification({type:colorType,text:`Invoice ${inv.id} status: ${inv.status}`,invoiceId:inv.id});
+    }
   }
 });
 </script>
