@@ -10,10 +10,10 @@
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,0.08);
+  --glass:rgba(255,255,255,.08);
   --text-light:rgba(255,255,255,.85);
-  --badge-green:#00ff9d;
-  --badge-gray:#aaa;
+  --green:#00ff94;
+  --card-glow:rgba(156,77,255,.3);
 }
 
 /* RESET */
@@ -31,169 +31,188 @@ header{
   border-radius:12px;
   background:rgba(0,0,0,0.15);
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
-  animation:pulse 2s infinite;
-}
-@keyframes pulse{
-  0%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
-  50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}
-  100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
 }
 .brand{
   font-family:Orbitron;
   font-size:1.6rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  display:flex;
+  align-items:center;
 }
-.login-icon{
-  width:50px;height:50px;border-radius:50%;
+.brand img{height:40px;margin-right:10px;}
+.home-btn{
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  border:none;border-radius:50%;
+  width:50px;height:50px;
+  cursor:pointer;font-size:20px;color:#050015;
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:22px;transition:transform .3s,box-shadow .3s;
+  box-shadow:0 0 12px var(--zep-blue),0 0 25px var(--zep-violet);
+  transition:transform .3s,box-shadow .3s;
 }
-.login-icon:hover{transform:scale(1.1);box-shadow:0 0 12px var(--zep-blue),0 0 25px var(--zep-violet);}
+.home-btn:hover{transform:scale(1.1);}
 
+/* CONTAINER */
 .container{padding:20px;max-width:1200px;margin:auto;}
-h2{font-family:Orbitron;margin-bottom:16px;text-align:center;}
+h2{text-align:center;font-family:Orbitron;margin-bottom:20px;}
 
+/* DEAL CARDS */
 .deals-list{display:grid;grid-template-columns:1fr;gap:16px;}
 @media(min-width:600px){.deals-list{grid-template-columns:1fr 1fr;}}
-
 .deal-card{
   background:var(--glass);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.12);
-  display:flex;flex-direction:column;gap:8px;transition:.3s;
+  display:flex;flex-direction:column;gap:8px;transition:.3s;position:relative;
 }
-.deal-card:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(156,77,255,.3);}
+.deal-card:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--card-glow);}
+.deal-card h3{font-size:1.2rem;margin-bottom:4px;}
+.deal-card p{font-size:.95rem;color:var(--text-light);}
+.deal-meta{font-size:.8rem;color:var(--text-light);display:flex;justify-content:space-between;align-items:center;}
+.badge{padding:4px 8px;border-radius:999px;font-size:.75rem;font-weight:600;text-transform:uppercase;}
+.badge.active{background:var(--green);color:#050015;}
+.badge.locked{background:#aaa;color:#050015;}
 
-.deal-card h3{font-size:1.1rem;margin-bottom:4px;}
-.deal-card p{font-size:.9rem;color:var(--text-light);}
-.deal-card .meta{font-size:.8rem;color:var(--text-light);display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
-.badge{
-  padding:4px 8px;border-radius:999px;font-size:.75rem;font-weight:600;
-  text-transform:uppercase;
+/* MODAL */
+.modal{
+  position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);
+  display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;
+  transition:opacity .3s ease;
 }
-.badge.active{background:var(--badge-green);color:#050015;}
-.badge.locked{background:var(--badge-gray);color:#050015;}
+.modal.active{visibility:visible;opacity:1;}
+.modal-content{
+  background:var(--glass);padding:20px;border-radius:16px;max-width:400px;width:90%;position:relative;
+  box-shadow:0 0 30px var(--zep-violet);
+}
+.modal-content h3{margin-bottom:12px;}
+.modal-content p{margin-bottom:12px;color:var(--text-light);}
+.modal-content .code{font-family:Orbitron;font-size:1.3rem;color:var(--green);margin:12px 0;text-align:center;}
+.modal-content button{
+  padding:12px 18px;border:none;border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;font-family:Orbitron;cursor:pointer;width:100%;transition:.3s;
+}
+.modal-content button:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
+.modal-close{
+  position:absolute;top:10px;right:10px;cursor:pointer;font-size:20px;color:#fff;
+}
 
+/* LOCKED MESSAGE */
 .locked-message{
-  text-align:center;
-  margin:20px 0;
-  font-size:0.95rem;
-  color:var(--text-light);
+  text-align:center;margin:20px 0;font-size:0.95rem;color:var(--text-light);
 }
 .locked-message button{
-  margin-top:10px;
-  padding:10px 16px;
-  border:none;
-  border-radius:999px;
+  margin-top:10px;padding:10px 16px;border:none;border-radius:999px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  font-family:Orbitron;
-  cursor:pointer;
-  transition:.3s;
+  color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
 }
 .locked-message button:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
-
-.footer-link{
-  text-align:center;
-  margin:30px 0;
-  font-size:.9rem;
-}
-.footer-link a{
-  color:var(--zep-blue);
-  text-decoration:none;
-  font-weight:600;
-}
-.footer-link a:hover{text-decoration:underline;}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">Zep Swipe</div>
-  <div class="login-icon" onclick="location.href='login.html'" title="Login">⎋</div>
+  <div class="brand">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Logo">
+    Zep Swipe
+  </div>
+  <button class="home-btn" title="Home" onclick="location.href='student-dashboard.html'">🏠</button>
 </header>
 
 <div class="container">
   <h2>Student Deals Marketplace</h2>
   <div id="dealsContainer" class="deals-list"></div>
 
-  <div class="footer-link">
-    Are you a merchant? <a href="merchant-landing.html">List your student deal →</a>
+  <div class="locked-message" id="lockedMessage" style="display:none;">
+    Verify your account and complete Day 5 tasks to unlock deals.
+    <br>
+    <button onclick="location.href='learn-earn.html'">Go to Learn & Earn</button>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="dealModal">
+  <div class="modal-content">
+    <span class="modal-close" id="modalClose">&times;</span>
+    <h3 id="modalStore"></h3>
+    <p id="modalDesc"></p>
+    <p class="code" id="modalCode"></p>
+    <p>Expires in 3 days</p>
+    <button id="redeemBtn">Redeem Now</button>
   </div>
 </div>
 
 <script>
 // Mock current user
-const currentUser = JSON.parse(localStorage.getItem("currentUser")) || {tasksCompleted:2}; // change tasksCompleted to test
+let currentUser = JSON.parse(localStorage.getItem("currentUser")) || {verified:false,tasksCompleted:0,name:"Siyanda"};
+// Redirect if not verified or tasks <5
+if(!currentUser.verified || currentUser.tasksCompleted < 5){
+  window.location.href="learn-earn.html";
+}
 
-// Mock deals
+// Mock deals with lat/lng
 const studentDeals = [
-  {id:1,business:"Cafe Mocha",desc:"Free coffee with any snack",day:"Mon",location:"In-store",expiryMinutes:180},
-  {id:2,business:"Tech Store",desc:"10% off student laptops",day:"Tue",location:"Online",expiryMinutes:240},
-  {id:3,business:"BookWorld",desc:"Buy 1 Get 1 free textbook",day:"Wed",location:"In-store",expiryMinutes:120},
-  {id:4,business:"CinemaX",desc:"Student tickets $5",day:"Thu",location:"In-store",expiryMinutes:360},
-  {id:5,business:"GymPlus",desc:"Free 1-week trial",day:"Fri",location:"Online",expiryMinutes:300},
+  {id:1,business:"Cafe Mocha",desc:"Free coffee with any snack",lat: -1.2921, lng:36.8219},
+  {id:2,business:"Tech Store",desc:"10% off student laptops",lat: -1.2925,lng:36.8222},
+  {id:3,business:"BookWorld",desc:"Buy 1 Get 1 free textbook",lat:-1.293,lng:36.823},
+  {id:4,business:"CinemaX",desc:"Student tickets $5",lat:-1.294,lng:36.824},
+  {id:5,business:"GymPlus",desc:"Free 1-week trial",lat:-1.295,lng:36.825},
 ];
 
-// Render deals
-const container = document.getElementById("dealsContainer");
-const today = new Date().getDay(); // 0=Sun, 1=Mon ...
+const dealsContainer = document.getElementById("dealsContainer");
+const modal = document.getElementById("dealModal");
+const modalClose = document.getElementById("modalClose");
+const modalStore = document.getElementById("modalStore");
+const modalDesc = document.getElementById("modalDesc");
+const modalCode = document.getElementById("modalCode");
+const redeemBtn = document.getElementById("redeemBtn");
 
-studentDeals.forEach(deal=>{
-  const card = document.createElement("div");
-  card.className="deal-card";
+// Haversine formula for distance in miles
+function getDistance(lat1, lon1, lat2, lon2){
+  const R = 3958.8; // Radius in miles
+  const dLat = (lat2-lat1)*Math.PI/180;
+  const dLon = (lon2-lon1)*Math.PI/180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+  const c = 2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R*c;
+}
 
-  // Locked check: needs 3 tasks
-  if(currentUser.tasksCompleted < 3){
+// Get student location
+navigator.geolocation.getCurrentPosition(pos=>{
+  const userLat = pos.coords.latitude;
+  const userLng = pos.coords.longitude;
+  dealsContainer.innerHTML="";
+
+  studentDeals.forEach(deal=>{
+    const distance = getDistance(userLat,userLng,deal.lat,deal.lng);
+    if(distance>20) return; // filter >20 miles
+
+    const card = document.createElement("div");
+    card.className="deal-card";
     card.innerHTML = `
       <h3>${deal.business}</h3>
       <p>${deal.desc}</p>
-      <div class="meta">
-        <span>${deal.day} · ${deal.location}</span>
-        <span class="badge locked">Locked</span>
-      </div>
+      <div class="deal-meta">Distance: ${distance.toFixed(1)} mi</div>
+      <button onclick="openModal(${deal.id})">Generate Code</button>
     `;
-    container.appendChild(card);
-  } else {
-    const countdownId = "countdown"+deal.id;
-    card.innerHTML = `
-      <h3>${deal.business}</h3>
-      <p>${deal.desc}</p>
-      <div class="meta">
-        <span>${deal.day} · ${deal.location}</span>
-        <span class="badge active">Active Today</span>
-      </div>
-      <div style="margin-top:6px;font-size:.8rem;" id="${countdownId}">Expires in: --:--:--</div>
-    `;
-    container.appendChild(card);
-
-    // Countdown timer
-    const expiryTime = new Date().getTime() + deal.expiryMinutes*60000;
-    const countdownEl = document.getElementById(countdownId);
-    setInterval(()=>{
-      const now = new Date().getTime();
-      let diff = expiryTime - now;
-      if(diff<0){countdownEl.innerText="Deal expired"; return;}
-      const h = Math.floor(diff/3600000);
-      const m = Math.floor((diff%3600000)/60000);
-      const s = Math.floor((diff%60000)/1000);
-      countdownEl.innerText=`Expires in: ${h}h ${m}m ${s}s`;
-    },1000);
-  }
+    dealsContainer.appendChild(card);
+  });
+},err=>{
+  alert("Location access is required to view nearby deals.");
 });
 
-// Show locked message if less than 3 tasks
-if(currentUser.tasksCompleted<3){
-  const lockedMsg = document.createElement("div");
-  lockedMsg.className="locked-message";
-  lockedMsg.innerHTML = `
-    Complete 3 tasks on <strong>Learn & Earn</strong> to unlock today's deals
-    <br><button onclick="location.href='learn-earn.html'">Go to Learn & Earn</button>
-  `;
-  container.prepend(lockedMsg);
+// Modal functions
+function openModal(dealId){
+  const deal = studentDeals.find(d=>d.id===dealId);
+  modalStore.innerText = deal.business;
+  modalDesc.innerText = deal.desc;
+  // Unique code per student + deal
+  const code = `ZEP-${currentUser.name.substring(0,3).toUpperCase()}-${deal.id}-${Date.now().toString().slice(-4)}`;
+  modalCode.innerText = code;
+  redeemBtn.onclick = ()=>{
+    alert(`Redeemed: ${code} at ${deal.business}`);
+    modal.classList.remove("active");
+  };
+  modal.classList.add("active");
 }
+modalClose.onclick = ()=>{modal.classList.remove("active");};
+window.onclick = e=>{if(e.target===modal) modal.classList.remove("active");};
 </script>
-
 </body>
 </html>
