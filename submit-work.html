@@ -5,12 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Submit Work</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
-
 <style>
 :root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --bg:#050018;
   --glass:rgba(255,255,255,.08);
   --text-light:rgba(255,255,255,.85);
   --green:#00ff94;
@@ -18,205 +17,165 @@
 
 /* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;display:flex;justify-content:center;padding:20px;}
+body{background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-direction:column;}
 
 /* HEADER */
 header{
-  width:100%;max-width:1200px;
   display:flex;justify-content:space-between;align-items:center;
-  padding:18px;margin-bottom:20px;border-radius:16px;
-  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  padding:16px;
+  background:radial-gradient(circle at center, rgba(0,240,255,.1), rgba(156,77,255,.1));
+  backdrop-filter:blur(14px);
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
-  animation:pulse 2s infinite;
 }
-@keyframes pulse{0%,100%{box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}50%{box-shadow:0 0 30px var(--zep-blue),0 0 60px var(--zep-violet);}}
-header img{width:50px;height:50px;border-radius:8px;margin-right:12px;}
-header h1{font-family:Orbitron;font-size:1.5rem;}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer;}
+.brand img{width:50px;height:50px;}
+.brand span{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.header-title{font-family:Orbitron;font-size:1.2rem;color:var(--text-light);}
+
+/* CONTAINER */
+.container{max-width:900px;margin:24px auto;padding:16px;display:flex;flex-direction:column;gap:20px;}
+h2{font-family:Orbitron;text-align:center;margin-bottom:12px;}
 
 /* CARD */
-.card{
-  background:var(--glass);
-  border-radius:16px;
-  padding:20px;
-  margin-bottom:20px;
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 0 20px rgba(0,240,255,.2);
-  max-width:900px;
-  width:100%;
-}
-.card h2{margin-bottom:12px;}
+.card{background:var(--glass);padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.12);box-shadow:0 0 20px rgba(0,240,255,.1),0 0 30px rgba(156,77,255,.1);}
+.card h3{font-family:Orbitron;margin-bottom:12px;}
+.card p{color:var(--text-light);}
 
-/* INPUTS */
-input[type="file"],textarea,select,input[type="text"]{
-  width:100%;padding:12px;margin-bottom:12px;border-radius:12px;border:none;background:rgba(255,255,255,0.05);color:#fff;outline:none;
-}
-textarea{height:100px;resize:none;}
+/* DETAILS */
+.details{display:flex;flex-wrap:wrap;gap:16px;}
+.details div{flex:1 1 200px;}
+.details img{width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,255,255,.3);}
+
+/* STATUS BADGE */
+.status-badge{padding:6px 12px;border-radius:12px;font-family:Orbitron;font-size:0.85rem;display:inline-block;}
+.pending{background:rgba(255,165,0,.8);color:#050015;}
+.escrow{background:rgba(0,240,255,.8);color:#050015;}
+.submitted{background:rgba(156,77,255,.8);color:#050015;}
+.released{background:var(--green);color:#050015;}
 
 /* BUTTONS */
-button.primary{
-  width:100%;padding:14px;border:none;border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;margin-top:10px;box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
-  cursor:pointer;font-family:Orbitron;
-}
-button.primary:hover{transform:translateY(-2px);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+button{padding:12px 20px;border:none;border-radius:999px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:.3s;margin-top:10px;}
+button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
+button.secondary{background:rgba(255,255,255,0.1);color:#fff;}
 
 /* MODAL */
-.modal-bg{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
-  justify-content:center;
-  align-items:center;
-  z-index:1000;
-}
-.modal{
-  background:var(--glass);
-  padding:20px;
-  border-radius:16px;
-  max-width:400px;
-  width:90%;
-  text-align:center;
-}
-
-/* STUDENT INFO */
-.student-info{
-  display:flex;align-items:center;gap:16px;margin-bottom:12px;
-}
-.student-info img{width:70px;height:70px;border-radius:50%;border:2px solid rgba(255,255,255,.3);}
-.student-info div{display:flex;flex-direction:column;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1000;}
+.modal{background:var(--glass);padding:20px;border-radius:18px;max-width:400px;width:90%;text-align:center;box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+.modal button{margin-top:12px;}
 
 /* RESPONSIVE */
-@media(max-width:600px){
-  .student-info{flex-direction:column;align-items:flex-start;}
-}
+@media(max-width:600px){.details{flex-direction:column;}}
 </style>
 </head>
 <body>
 
 <header>
-  <div style="display:flex;align-items:center;">
-    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe Logo">
-    <h1>Zep Swipe</h1>
+  <div class="brand" onclick="location.href='student-dashboard.html'">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Logo">
+    <span>Zep Swipe</span>
   </div>
+  <div class="header-title">Submit Your Completed Work</div>
 </header>
 
-<div class="card">
-  <h2>Submit Completed Work</h2>
-
-  <div id="lockedOverlay" style="display:none;text-align:center;padding:20px;background:rgba(0,0,0,.5);border-radius:12px;">
-    <h3>Verify your account to submit work and get paid</h3>
-    <button class="primary" onclick="location.href='profile.html'">Complete Verification</button>
-  </div>
-
-  <div id="workForm">
-    <div class="student-info">
-      <img id="studentImg" src="https://via.placeholder.com/70">
-      <div>
-        <strong id="studentName">Student Name</strong>
-        <span id="studentUniversity">University</span>
-        <span id="verifiedBadge" style="display:none;color:#0f0;">✔ Verified</span>
-      </div>
-    </div>
-
-    <label for="invoiceSelect">Select Invoice</label>
-    <select id="invoiceSelect"></select>
-
-    <label for="workFile">Upload Your Work</label>
-    <input type="file" id="workFile" accept="image/*,application/pdf,.zip">
-
-    <label for="submissionNotes">Notes or Submission Link</label>
-    <textarea id="submissionNotes" placeholder="Add links or notes for your client"></textarea>
-
-    <button class="primary" onclick="submitWork()">Submit Work</button>
-  </div>
+<div class="container">
+  <h2>Active Invoices</h2>
+  <div id="invoicesContainer"></div>
 </div>
 
 <!-- MODAL -->
-<div class="modal-bg" id="modalBg">
+<div class="modal-overlay" id="modalOverlay">
   <div class="modal">
-    <h3 id="modalTitle">Action</h3>
-    <p id="modalMsg"></p>
+    <p id="modalText">Processing...</p>
     <button onclick="closeModal()">Close</button>
   </div>
 </div>
 
 <script>
-// USER SESSION
+// Load users and current user
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
-if(!currentUserId || !users[currentUserId]) location.href="login.html";
+if(!currentUserId || !users[currentUserId]){
+  alert("No student logged in! Redirecting...");
+  location.href="login.html";
+}
 let currentUser = users[currentUserId];
 
-// CHECK VERIFICATION
-const workForm = document.getElementById("workForm");
-const lockedOverlay = document.getElementById("lockedOverlay");
-if(!currentUser.verified){
-  workForm.style.display="none";
-  lockedOverlay.style.display="block";
-}
-
-// LOAD STUDENT INFO
-document.getElementById("studentImg").src = currentUser.profileImage || "https://via.placeholder.com/70";
-document.getElementById("studentName").innerText = currentUser.name || "";
-document.getElementById("studentUniversity").innerText = currentUser.university || "";
-if(currentUser.verified) document.getElementById("verifiedBadge").style.display="inline";
-
-// LOAD UNPAID INVOICES
-let invoices = JSON.parse(localStorage.getItem("invoices")) || [];
-let unpaidInvoices = invoices.filter(inv => inv.studentId===currentUserId && inv.status==="Paid (In Escrow)");
-const invoiceSelect = document.getElementById("invoiceSelect");
-unpaidInvoices.forEach(inv=>{
-  let opt = document.createElement("option");
-  opt.value=inv.id;
-  opt.innerText=`${inv.serviceTitle} - $${inv.amount}`;
-  invoiceSelect.appendChild(opt);
-});
-
-// MODAL UTILS
-const modalBg = document.getElementById("modalBg");
-const modalTitle = document.getElementById("modalTitle");
-const modalMsg = document.getElementById("modalMsg");
-function openModal(title,msg){ modalTitle.innerText=title; modalMsg.innerText=msg; modalBg.style.display="flex"; }
-function closeModal(){ modalBg.style.display="none"; }
-
-// SUBMIT WORK
-function submitWork(){
-  const selectedInvoiceId = invoiceSelect.value;
-  if(!selectedInvoiceId){ alert("Please select an invoice"); return; }
-  const notes = document.getElementById("submissionNotes").value;
-  const fileInput = document.getElementById("workFile");
-  const file = fileInput.files[0];
-  let submission = {
-    invoiceId:selectedInvoiceId,
-    notes:notes,
-    fileName:file?file.name:"No file uploaded",
-    date:new Date().toLocaleString()
-  };
-
-  // SAVE SUBMISSION TO INVOICE
-  invoices = invoices.map(inv=>{
-    if(inv.id===selectedInvoiceId){
-      inv.status="Work Submitted";
-      inv.submission=submission;
-
-      // AUTO RELEASE FUNDS TO WALLET
-      currentUser.walletUSD = (currentUser.walletUSD||0)+inv.amount;
-      users[currentUserId]=currentUser;
-      localStorage.setItem("users",JSON.stringify(users));
-
-      openModal("✅ Work Submitted",`Funds $${inv.amount} released to your wallet!`);
+// Fetch all invoices for student
+function getStudentInvoices(){
+  let invoices = [];
+  for(let key in localStorage){
+    if(key.startsWith("invoice_")){
+      let inv = JSON.parse(localStorage.getItem(key));
+      if(inv.studentId === currentUserId){
+        invoices.push(inv);
+      }
     }
-    return inv;
-  });
-  localStorage.setItem("invoices",JSON.stringify(invoices));
-  
-  // Update invoiceSelect
-  invoiceSelect.remove(invoiceSelect.selectedIndex);
-  document.getElementById("submissionNotes").value="";
-  fileInput.value="";
+  }
+  return invoices;
 }
+
+// Render invoices dynamically
+function renderInvoices(){
+  const container = document.getElementById("invoicesContainer");
+  container.innerHTML = "";
+  const invoices = getStudentInvoices();
+  if(invoices.length === 0){
+    container.innerHTML = "<p style='text-align:center;color:var(--text-light)'>No active invoices yet. Go create one!</p>";
+    return;
+  }
+  invoices.forEach(inv=>{
+    const card = document.createElement("div");
+    card.className="card";
+    card.innerHTML = `
+      <h3>${inv.serviceTitle} - $${inv.payoutUSD}</h3>
+      <div class="details">
+        <div>
+          <img src="${currentUser.profileImage || 'https://via.placeholder.com/80'}" alt="Profile">
+          <p><strong>${currentUser.name}</strong></p>
+          <p>${currentUser.university || 'University XYZ'}</p>
+        </div>
+        <div>
+          <p>Client: ${inv.clientName}</p>
+          <p>Status: <strong class="status-badge ${inv.status.toLowerCase()}">${inv.status}</strong></p>
+          <p>Delivery Date: ${inv.deliveryDate}</p>
+        </div>
+      </div>
+      <button ${inv.status!=="Escrow"?"disabled":""} onclick="submitWork('${inv.id}')">Submit Work</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// Modal functions
+const modalOverlay = document.getElementById("modalOverlay");
+const modalText = document.getElementById("modalText");
+function showModal(text){modalText.innerText=text; modalOverlay.style.display="flex";}
+function closeModal(){modalOverlay.style.display="none";}
+
+// Submit work function
+function submitWork(invoiceId){
+  showModal("Submitting work...");
+  setTimeout(()=>{
+    let invoice = JSON.parse(localStorage.getItem("invoice_" + invoiceId));
+    if(!invoice) return alert("Invoice not found!");
+
+    // Update invoice
+    invoice.status="Submitted";
+    invoice.escrowStatus="ready_to_release";
+    localStorage.setItem("invoice_" + invoiceId, JSON.stringify(invoice));
+
+    // Auto release funds to wallet
+    currentUser.walletBalance = (currentUser.walletBalance || 0) + invoice.payoutUSD;
+    users[currentUserId] = currentUser;
+    localStorage.setItem("users",JSON.stringify(users));
+
+    showModal(`Work submitted! $${invoice.payoutUSD} released to your wallet.`);
+    renderInvoices();
+  },1200);
+}
+
+// Initial render
+renderInvoices();
 </script>
 
 </body>
