@@ -204,6 +204,29 @@ const courses = {
     "Mock tutoring",
     "Student feedback",
     "Live session"
+  ],
+  "Student Travel Agent 🌍":[
+    "Day 1: Record intro video + submit to Zora + link to Zep Swipe",
+    "Local sightseeing research & create mini itinerary",
+    "Customer service basics for travelers",
+    "Learn to promote local experiences online",
+    "Simulate booking & payment workflow",
+    "Cultural tips for international visitors",
+    "Create a guide for 1 popular local spot",
+    "Photography & content creation for tours",
+    "Travel safety checklist & prep",
+    "Practice virtual tour with peers",
+    "Marketing your services on Zep Swipe",
+    "Local transport & logistics planning",
+    "Design sample travel package",
+    "Roleplay traveler interaction",
+    "Collect feedback & improve tour plan",
+    "Pricing & payment method setup (Card / Momo)",
+    "List your first real tour offer",
+    "Promote offer to 5 friends",
+    "Receive first payment & submit proof",
+    "Prepare for next 3 tours",
+    "Final evaluation & verified Travel Agent badge"
   ]
 };
 
@@ -269,12 +292,31 @@ function renderTasks(){
   }
 }
 
+/* ======================
+   COMPLETE TASK
+====================== */
 function completeTask(day){
   if(user.learnEarn.completed.includes(day)) return;
 
   user.learnEarn.completed.push(day);
   user.tasksCompleted = user.learnEarn.completed.length;
   user.walletBalance = (user.walletBalance||0)+25;
+
+  // If Student Travel Agent final day, trigger verification
+  if(user.learnEarn.course==="Student Travel Agent 🌍" && day===21){
+    alert("🎉 Congrats! You completed the Student Travel Agent course. You are now eligible for verification.");
+
+    const userLocation = user.country || "GH"; // default Ghana
+    if(userLocation==="GH"){
+      alert("Pay $15 via Momo or Card using Paystack.");
+      // TODO: Add Paystack + Momo API integration
+    } else {
+      alert("Pay $15 via Card (Paystack).");
+      // TODO: Add Paystack API integration
+    }
+
+    user.verified = true;
+  }
 
   users[currentUserId]=user;
   localStorage.setItem("users",JSON.stringify(users));
