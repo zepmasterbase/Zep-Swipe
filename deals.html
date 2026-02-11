@@ -14,6 +14,7 @@
   --text-light:rgba(255,255,255,.85);
   --green:#00ff94;
   --gray:#555;
+  --carousel-height:180px;
 }
 
 /* RESET */
@@ -43,9 +44,49 @@ header{
 }
 .home-btn:hover{transform:scale(1.1);}
 
-/* FILTERS */
-.filter-container{display:flex;justify-content:center;gap:10px;margin-bottom:20px;}
-.filter-container select{padding:8px 12px;border-radius:12px;border:none;background:rgba(255,255,255,.05);color:#fff;}
+/* CAROUSEL */
+.carousel{
+  position:relative;
+  overflow:hidden;
+  max-width:1200px;
+  margin:0 auto 20px;
+  height:var(--carousel-height);
+  border-radius:16px;
+}
+.carousel-track{
+  display:flex;
+  transition:transform 0.5s ease-in-out;
+}
+.carousel-item{
+  min-width:100%;
+  flex-shrink:0;
+  height:var(--carousel-height);
+  border-radius:16px;
+  background-size:cover;
+  background-position:center;
+  position:relative;
+}
+.carousel-item::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.5), transparent 70%);
+  border-radius:16px;
+}
+.carousel-item h3{
+  position:absolute;bottom:10px;left:16px;
+  font-family:Orbitron;font-size:1.2rem;color:#fff;
+  z-index:2;
+}
+
+/* CATEGORY FILTERS */
+.filter-container{display:flex;justify-content:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.filter-container button{
+  padding:8px 14px;border-radius:999px;border:none;
+  background:rgba(255,255,255,.05);color:#fff;cursor:pointer;
+  transition:.3s;font-family:Orbitron;
+}
+.filter-container button.active{background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;box-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet);}
+.filter-container button:hover{transform:scale(1.05);}
 
 /* DEAL CARDS */
 .container{display:grid;grid-template-columns:1fr;gap:16px;max-width:1200px;margin:auto;padding:0 10px;}
@@ -58,8 +99,10 @@ header{
   border:1px solid rgba(255,255,255,.12);
   display:flex;flex-direction:column;gap:8px;
   transition:.3s;
+  position:relative;
 }
-.deal-card:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(0,240,255,.2),0 0 30px rgba(156,77,255,.2);}
+.deal-card:hover{transform:translateY(-3px);box-shadow:0 0 25px var(--zep-blue),0 0 40px var(--zep-violet);}
+.deal-card img{width:100%;border-radius:12px;height:120px;object-fit:cover;}
 .deal-card h3{font-family:Orbitron;margin-bottom:4px;}
 .deal-card p{color:var(--text-light);font-size:.9rem;}
 .deal-meta{display:flex;justify-content:space-between;font-size:.8rem;color:var(--text-light);}
@@ -72,14 +115,10 @@ header{
 .modal{background:var(--glass);padding:20px;border-radius:18px;max-width:400px;width:90%;text-align:center;box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
 .modal h3{margin-bottom:12px;font-family:Orbitron;}
 .modal p{margin-bottom:12px;}
-.modal button{padding:10px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;}
+.modal button{
+  padding:10px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;cursor:pointer;transition:.3s;
+}
 .modal button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
-
-/* LOCKED MESSAGE MODAL */
-.locked-card{display:flex;flex-direction:column;align-items:center;gap:12px;}
-.locked-card h3{font-family:Orbitron;}
-.locked-card p{color:var(--text-light);text-align:center;}
-.locked-card button{width:200px;}
 
 /* COUNTDOWN */
 .countdown{font-size:.8rem;color:var(--green);margin-top:4px;}
@@ -92,18 +131,27 @@ header{
   <div class="home-btn" title="Home" onclick="location.href='student-dashboard.html'">🏠</div>
 </header>
 
-<div class="filter-container">
-  <label for="daySelect">Pick Day:</label>
-  <select id="daySelect"></select>
+<!-- FEATURED CAROUSEL -->
+<div class="carousel" id="featuredCarousel">
+  <div class="carousel-track" id="carouselTrack"></div>
 </div>
 
+<!-- CATEGORY FILTERS -->
+<div class="filter-container">
+  <button class="active" data-category="all">All</button>
+  <button data-category="Food">🍔 Food</button>
+  <button data-category="Coffee">☕ Coffee</button>
+  <button data-category="Fitness">🏋️ Fitness</button>
+  <button data-category="Tech">💻 Tech</button>
+</div>
+
+<!-- DEAL CARDS -->
 <div class="container" id="dealsContainer"></div>
 
-<!-- Redeem / Locked Modal -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal" id="modalContent">
     <div id="modalInner"></div>
-    <button onclick="closeModal()">Close</button>
   </div>
 </div>
 
@@ -116,28 +164,23 @@ let currentUser = users[currentUserId];
 
 // ---------- MOCK DEALS ----------
 let deals = JSON.parse(localStorage.getItem("merchantDeals")) || [
-  {id:1,name:"Cafe Mocha",desc:"Free coffee with any snack",day:"Mon",lat:-1.2921,lon:36.8219},
-  {id:2,name:"Tech Store",desc:"10% off student laptops",day:"Tue",lat:-1.2900,lon:36.8200},
-  {id:3,name:"BookWorld",desc:"Buy 1 Get 1 free textbook",day:"Wed",lat:-1.3000,lon:36.8100},
-  {id:4,name:"CinemaX",desc:"Student tickets $5",day:"Thu",lat:-1.2950,lon:36.8150},
-  {id:5,name:"GymPlus",desc:"Free 1-week trial",day:"Fri",lat:-1.2850,lon:36.8250}
+  {id:1,name:"KFC Campus",desc:"Buy 1 Get 1 free chicken bucket",category:"Food",day:"Mon",lat:-1.2921,lon:36.8219,img:"https://i.ibb.co/2s1TVjv/kfc.jpg",campus:"Main Campus"},
+  {id:2,name:"Cafe Mocha",desc:"Free coffee with any snack",category:"Coffee",day:"Mon",lat:-1.2925,lon:36.8205,img:"https://i.ibb.co/2s1TVjv/cafe.jpg",campus:"Main Campus"},
+  {id:3,name:"Tech Store",desc:"10% off student laptops",category:"Tech",day:"Tue",lat:-1.2900,lon:36.8200,img:"https://i.ibb.co/1zq1zM2/tech.jpg",campus:"Tech Park"},
+  {id:4,name:"BookWorld",desc:"Buy 1 Get 1 free textbook",category:"Tech",day:"Wed",lat:-1.3000,lon:36.8100,img:"https://i.ibb.co/ZmQHcmB/books.jpg",campus:"Library"},
+  {id:5,name:"GymPlus",desc:"Free 1-week trial",category:"Fitness",day:"Fri",lat:-1.2850,lon:36.8250,img:"https://i.ibb.co/7b1yRZ9/gym.jpg",campus:"Sports Complex"},
+  {id:6,name:"Starbucks",desc:"50% off frappuccino",category:"Coffee",day:"Thu",lat:-1.2910,lon:36.8230,img:"https://i.ibb.co/xMzrV5X/starbucks.jpg",campus:"Main Campus"}
 ];
 
 // ---------- DAYS ----------
 const days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-const daySelect = document.getElementById("daySelect");
-days.forEach(d=>{
-  let opt=document.createElement("option");
-  opt.value=d; opt.text=d;
-  daySelect.appendChild(opt);
-});
-daySelect.value=days[new Date().getDay()];
+const daySelect = document.createElement("select"); // optional for extra day filter
 
 // ---------- MODAL ----------
 const modalOverlay = document.getElementById("modalOverlay");
 const modalInner = document.getElementById("modalInner");
 function showModal(content){modalInner.innerHTML=content;modalOverlay.style.display="flex";}
-function closeModal(){modalOverlay.style.display="none";}
+modalOverlay.addEventListener("click",()=>modalOverlay.style.display="none");
 
 // ---------- Haversine DISTANCE ----------
 function distance(lat1,lon1,lat2,lon2){
@@ -150,52 +193,55 @@ function distance(lat1,lon1,lat2,lon2){
 }
 
 // ---------- REDEEM HISTORY ----------
-let redeemHistory = currentUser.redeemHistory || {}; // {dealId:code}
+let redeemHistory = currentUser.redeemHistory || {};
 
 // ---------- LOCK CHECK ----------
 if(!currentUser.verified || currentUser.tasksCompleted < 5){
-  showModal(`<div class="locked-card">
+  showModal(`<div style="text-align:center;">
       <h3>Deals Locked!</h3>
       <p>Complete 5-day Learn & Earn tasks and verify your account to unlock deals.</p>
       <button onclick="location.href='learn-earn.html'">Go to Learn & Earn</button>
     </div>`);
 } else {
-  renderDeals();
+  renderDeals("all");
+  renderCarousel();
 }
 
-// ---------- RENDER DEALS ----------
-function renderDeals(){
-  const container = document.getElementById("dealsContainer");
-  container.innerHTML="";
-  const selectedDay = daySelect.value;
+// ---------- RENDER DEAL CARDS ----------
+const dealsContainer=document.getElementById("dealsContainer");
+const filterButtons=document.querySelectorAll(".filter-container button");
+filterButtons.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    filterButtons.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    renderDeals(btn.dataset.category);
+  });
+});
 
-  // Get user location
+function renderDeals(category){
+  dealsContainer.innerHTML="";
   navigator.geolocation.getCurrentPosition(pos=>{
-    const uLat = pos.coords.latitude;
-    const uLon = pos.coords.longitude;
-
+    const uLat=pos.coords.latitude,uLon=pos.coords.longitude;
     deals.forEach(deal=>{
+      if(category!=="all" && deal.category!==category) return;
       const dist = distance(uLat,uLon,deal.lat,deal.lon);
-      if(deal.day!==selectedDay || dist>16.09) return; // 16.09 km ≈ 10 miles
-
-      const card = document.createElement("div");
+      const card=document.createElement("div");
       card.className="deal-card";
-
-      let countdownId = "countdown"+deal.id;
       card.innerHTML=`
+        <img src="${deal.img}" alt="${deal.name}">
         <h3>${deal.name}</h3>
         <p>${deal.desc}</p>
-        <div class="deal-meta">${deal.day} · ${dist.toFixed(1)} km away</div>
-        <div class="countdown" id="${countdownId}"></div>
+        <div class="deal-meta">${deal.day} · ${dist.toFixed(1)} km away · 📍 ${deal.campus}</div>
+        <div class="countdown" id="countdown${deal.id}"></div>
         <button onclick="redeemDeal(${deal.id})">Redeem</button>
       `;
-      container.appendChild(card);
+      dealsContainer.appendChild(card);
 
-      // Countdown: 3 days per deal from now
-      const expiry = new Date().getTime()+3*24*60*60*1000;
-      const countdownEl=document.getElementById(countdownId);
+      // Countdown: 3 days per deal
+      const expiry=new Date().getTime()+3*24*60*60*1000;
+      const countdownEl=document.getElementById(`countdown${deal.id}`);
       setInterval(()=>{
-        const diff = expiry - new Date().getTime();
+        const diff=expiry-new Date().getTime();
         if(diff<0){countdownEl.innerText="Expired"; return;}
         const h=Math.floor(diff/3600000);
         const m=Math.floor((diff%3600000)/60000);
@@ -203,7 +249,7 @@ function renderDeals(){
         countdownEl.innerText=`Expires in: ${h}h ${m}m ${s}s`;
       },1000);
     });
-  },()=>alert("Enable location for filtering deals within 10 miles."));
+  },()=>alert("Enable location to filter deals nearby."));
 }
 
 // ---------- REDEEM FUNCTION ----------
@@ -212,16 +258,31 @@ function redeemDeal(dealId){
     showModal(`<p>Already redeemed! Code: <strong>${redeemHistory[dealId]}</strong></p>`);
     return;
   }
-  const code = `ZEP-${currentUserId}-${dealId}-${Date.now()}`;
-  redeemHistory[dealId] = code;
-  currentUser.redeemHistory = redeemHistory;
-  users[currentUserId] = currentUser;
+  const code=`ZEP-${currentUserId}-${dealId}-${Date.now()}`;
+  redeemHistory[dealId]=code;
+  currentUser.redeemHistory=redeemHistory;
+  users[currentUserId]=currentUser;
   localStorage.setItem("users",JSON.stringify(users));
   showModal(`<p>Redeem Code Generated!</p><p>Use in-store within 3 days:</p><strong>${code}</strong>`);
 }
 
-// ---------- DAY FILTER CHANGE ----------
-daySelect.addEventListener("change",renderDeals);
+// ---------- FEATURED CAROUSEL ----------
+const carouselTrack=document.getElementById("carouselTrack");
+function renderCarousel(){
+  const featured=deals.slice(0,3); // top 3 featured
+  featured.forEach(d=>{
+    const div=document.createElement("div");
+    div.className="carousel-item";
+    div.style.backgroundImage=`url(${d.img})`;
+    div.innerHTML=`<h3>${d.name}</h3>`;
+    carouselTrack.appendChild(div);
+  });
+  let index=0;
+  setInterval(()=>{
+    index=(index+1)%featured.length;
+    carouselTrack.style.transform=`translateX(-${index*100}%)`;
+  },4000);
+}
 
 </script>
 </body>
