@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Employer Landing</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --zep-blue:#00f0ff;
@@ -13,251 +14,379 @@
   --glass:rgba(255,255,255,0.05);
   --text-light:#ccc;
   --text-dark:#f5f5f5;
-  --button-bg:#1c1c2e;
 }
 
 /* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
 body{background:var(--bg);color:var(--text-dark);min-height:100vh;line-height:1.5;}
 
-/* HEADER */
+/* HEADER — PREMIUM CLEAN */
 header{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:16px 24px;
-  background:#0d0d27;
-  position:sticky;top:0;z-index:100;
-  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 28px;
+  background:#07071a;
+  position:sticky;
+  top:0;
+  z-index:100;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  backdrop-filter:blur(8px);
 }
-header .logo{
-  display:flex;align-items:center;gap:12px;
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
-header .logo img{width:50px;height:50px;object-fit:contain;}
-header .logo span{
+
+.logo img{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid rgba(255,255,255,0.15);
+  box-shadow:0 0 12px rgba(0,240,255,0.25);
+}
+
+.logo span{
   font-family:Orbitron;
-  font-size:1.6rem;
+  font-size:1.5rem;
+  letter-spacing:.5px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
+
 .header-btn{
-  padding:10px 20px;border-radius:999px;border:none;
+  padding:10px 22px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.15);
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;font-family:Orbitron;
-  cursor:pointer;transition:.3s;
+  color:#050015;
+  font-family:Orbitron;
+  cursor:pointer;
+  transition:.3s;
 }
+
 .header-btn:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet);
+  transform:translateY(-1px);
+  box-shadow:0 0 18px var(--zep-blue);
 }
 
 /* HERO */
 .hero{
-  display:flex;flex-direction:column;align-items:center;text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
   padding:100px 20px 60px;
 }
+
 .hero h1{
   font-family:Orbitron;
   font-size:2.7rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
   margin-bottom:16px;
 }
+
 .hero p{
-  font-size:1.2rem;max-width:650px;margin-bottom:30px;color:var(--text-light);
+  font-size:1.2rem;
+  max-width:650px;
+  margin-bottom:30px;
+  color:var(--text-light);
 }
-.hero .cta-group{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
-.hero .cta-group button{
-  padding:14px 28px;font-family:Orbitron;font-size:1rem;border:none;border-radius:999px;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:.3s;
+
+.cta-group{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+
+.cta-group button{
+  padding:14px 28px;
+  font-family:Orbitron;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  cursor:pointer;
+  transition:.3s;
 }
-.hero .cta-group button:hover{
+
+.cta-group button:hover{
   transform:scale(1.05);
-  box-shadow:0 0 25px var(--zep-blue),0 0 45px var(--zep-violet);
+  box-shadow:0 0 25px var(--zep-blue);
 }
 
 /* CAROUSEL */
 .carousel-container{position:relative;max-width:1000px;margin:50px auto;}
-.carousel-container h2{text-align:center;font-family:Orbitron;color:var(--text-dark);margin-bottom:20px;}
+.carousel-container h2{text-align:center;font-family:Orbitron;margin-bottom:20px;}
+
 .carousel{display:flex;overflow-x:auto;scroll-behavior:smooth;gap:20px;padding-bottom:10px;}
 .carousel::-webkit-scrollbar{display:none;}
+
 .carousel-item{
-  flex:0 0 280px;background:var(--glass);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.1);
-  transition:.3s;cursor:pointer;color:var(--text-light);
+  flex:0 0 280px;
+  background:var(--glass);
+  border-radius:16px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,.1);
+  transition:.3s;
+  color:var(--text-light);
 }
-.carousel-item:hover{transform:scale(1.05);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+
+.carousel-item:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px var(--zep-blue);
+}
+
 .carousel-item img{width:100%;border-radius:12px;margin-bottom:12px;}
-.carousel-item h4{margin-bottom:6px;}
-.carousel-item p{font-size:.95rem;}
+
 .carousel-nav{
-  position:absolute;top:50%;width:100%;display:flex;justify-content:space-between;transform:translateY(-50%);
+  position:absolute;
+  top:50%;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  transform:translateY(-50%);
 }
+
 .carousel-btn{
-  background:var(--zep-blue);color:#fff;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;transition:.3s;font-size:20px;
+  background:var(--zep-blue);
+  color:#fff;
+  border:none;
+  border-radius:50%;
+  width:40px;
+  height:40px;
+  cursor:pointer;
 }
-.carousel-btn:hover{transform:scale(1.1);box-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet);}
 
 /* FEATURES */
 .features{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;
-  padding:40px 20px;max-width:1200px;margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  padding:40px 20px;
+  max-width:1200px;
+  margin:auto;
 }
+
 .feature-card{
-  background:var(--glass);border-radius:16px;padding:20px;text-align:center;
-  border:1px solid rgba(255,255,255,.05);transition:.3s;cursor:pointer;color:var(--text-light);
+  background:var(--glass);
+  border-radius:16px;
+  padding:20px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.05);
+  transition:.3s;
 }
-.feature-card:hover{transform:scale(1.05);box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+
+.feature-card:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px var(--zep-blue);
+}
+
 .feature-card h3{font-family:Orbitron;margin-bottom:12px;}
-.feature-card p{font-size:.95rem;}
 
 /* HOW IT WORKS */
 .how-it-works{background:rgba(255,255,255,.02);padding:50px 20px;}
-.how-it-works h2{text-align:center;font-family:Orbitron;margin-bottom:30px;color:var(--text-dark);}
+.how-it-works h2{text-align:center;font-family:Orbitron;margin-bottom:30px;}
+
 .steps{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:1000px;margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  max-width:1000px;
+  margin:auto;
 }
+
 .step{
-  background:var(--glass);border-radius:16px;padding:20px;text-align:center;border:1px solid rgba(255,255,255,.05);
-  transition:.3s;cursor:pointer;color:var(--text-light);
+  background:var(--glass);
+  border-radius:16px;
+  padding:20px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.05);
+  transition:.3s;
 }
-.step:hover{transform:scale(1.05);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
-.step h4{font-family:Orbitron;margin-bottom:10px;}
-.step p{font-size:.95rem;}
+
+.step:hover{transform:scale(1.05);box-shadow:0 0 15px var(--zep-blue);}
 
 /* TESTIMONIALS */
 .testimonials{padding:60px 20px;text-align:center;}
+
 .testimonials h2{
-  font-family:Orbitron;margin-bottom:30px;
+  font-family:Orbitron;
+  margin-bottom:30px;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-.testimonial-cards{display:flex;overflow-x:auto;gap:20px;padding-bottom:10px;}
+
+.testimonial-cards{display:flex;overflow-x:auto;gap:20px;}
 .testimonial-cards::-webkit-scrollbar{display:none;}
+
 .testimonial{
-  flex:0 0 280px;background:var(--glass);border-radius:16px;padding:20px;border:1px solid rgba(255,255,255,.05);transition:.3s;color:var(--text-light);}
-.testimonial img{width:60px;height:60px;border-radius:50%;margin-bottom:10px;object-fit:cover;}
+  flex:0 0 280px;
+  background:var(--glass);
+  border-radius:16px;
+  padding:20px;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.testimonial img{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  margin-bottom:10px;
+}
 
 /* FOOTER */
-footer{background:var(--glass);padding:30px 20px;text-align:center;border-top:1px solid rgba(255,255,255,.1);}
+footer{
+  background:var(--glass);
+  padding:30px 20px;
+  text-align:center;
+  border-top:1px solid rgba(255,255,255,.1);
+}
+
 footer .socials{display:flex;justify-content:center;gap:20px;margin-bottom:20px;}
-footer .socials a{color:var(--text-light);font-size:20px;transition:.3s;}
-footer .socials a:hover{transform:scale(1.2);color:var(--zep-blue);}
+
 footer p{font-size:.85rem;color:var(--text-light);}
 
-/* MEDIA */
-@media(max-width:480px){.hero h1{font-size:2rem;}.steps{grid-template-columns:1fr;}}
+@media(max-width:480px){
+.hero h1{font-size:2rem;}
+.steps{grid-template-columns:1fr;}
+}
 </style>
 </head>
+
 <body>
 
 <header>
   <div class="logo">
-    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe Logo">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png" alt="Zep Swipe Logo">
     <span>Zep Swipe</span>
   </div>
-  <button class="header-btn" onclick="location.href='employer-auth.html?mode=register'">Login / Register</button>
+
+  <button class="header-btn" onclick="location.href='employer-auth.html?mode=register'">
+    Login / Register
+  </button>
 </header>
 
 <section class="hero">
-  <h1>Hire Skilled Student Freelancers, Fast & Easy</h1>
-  <p>Post tasks, connect with verified students, and manage payments effortlessly with Zep Swipe.</p>
-  <div class="cta-group">
-    <button onclick="location.href='employer-auth.html?mode=login'">Login</button>
-    <button onclick="location.href='employer-auth.html?mode=register'">Register</button>
-  </div>
+<h1>Hire Skilled Student Freelancers, Fast & Easy</h1>
+<p>Post tasks, connect with verified students, and manage payments effortlessly with Zep Swipe.</p>
+
+<div class="cta-group">
+<button onclick="location.href='employer-auth.html?mode=login'">Login</button>
+<button onclick="location.href='employer-auth.html?mode=register'">Register</button>
+</div>
 </section>
 
 <section class="carousel-container">
-  <h2>Featured Gigs</h2>
-  <div class="carousel" id="featuredCarousel">
-    <div class="carousel-item">
-      <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhlfcnhq6ba14kq2natde125h15.jpg" alt="Web Designer">
-      <h4>Web Designer</h4>
-      <p>Hire a student to build your landing page or website fast.</p>
-    </div>
-    <div class="carousel-item">
-      <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhleiiousq2oij1fj6f0n5kc1b.jpg" alt="Voice Over">
-      <h4>Voice Over</h4>
-      <p>Get professional voiceovers for ads, videos, or podcasts.</p>
-    </div>
-    <div class="carousel-item">
-      <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhlfm69j1r1k17mn1mraopgjtj1h.jpg" alt="Student Travel Agent">
-      <h4>Student Travel Agent</h4>
-      <p>Hire an organized, friendly, and knowledgeable student to guide your campus or city tour.🌍🗺️.</p>
-    </div>
-  </div>
-  <div class="carousel-nav">
-    <button class="carousel-btn" onclick="scrollCarousel(-1)">‹</button>
-    <button class="carousel-btn" onclick="scrollCarousel(1)">›</button>
-  </div>
+<h2>Featured Gigs</h2>
+
+<div class="carousel" id="featuredCarousel">
+
+<div class="carousel-item">
+<img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhlfcnhq6ba14kq2natde125h15.jpg">
+<h4>Web Designer</h4>
+<p>Hire a student to build your landing page or website fast.</p>
+</div>
+
+<div class="carousel-item">
+<img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhleiiousq2oij1fj6f0n5kc1b.jpg">
+<h4>Voice Over</h4>
+<p>Get professional voiceovers for ads, videos, or podcasts.</p>
+</div>
+
+<div class="carousel-item">
+<img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhlfm69j1r1k17mn1mraopgjtj1h.jpg">
+<h4>Student Travel Agent</h4>
+<p>Hire an organized, friendly, and knowledgeable student to guide your campus or city tour.</p>
+</div>
+
+</div>
+
+<div class="carousel-nav">
+<button class="carousel-btn" onclick="scrollCarousel(-1)">‹</button>
+<button class="carousel-btn" onclick="scrollCarousel(1)">›</button>
+</div>
 </section>
 
 <section class="features">
-  <div class="feature-card">
-    <h3>Verified Freelancers</h3>
-    <p>Hire students who completed their Learn & Earn tasks and verification.</p>
-  </div>
-  <div class="feature-card">
-    <h3>Track Payments & Tasks</h3>
-    <p>Manage your gigs, approve work, and release payments seamlessly.</p>
-  </div>
-  <div class="feature-card">
-    <h3>Flexible Hiring</h3>
-    <p>Short-term gigs or long-term projects – pay only for verified work.</p>
-  </div>
-  <div class="feature-card">
-    <h3>Affordable Solutions</h3>
-    <p>Connect with student freelancers at reasonable, campus-friendly rates.</p>
-  </div>
+<div class="feature-card">
+<h3>Verified Freelancers</h3>
+<p>Hire students who completed their Learn & Earn tasks and verification.</p>
+</div>
+
+<div class="feature-card">
+<h3>Track Payments & Tasks</h3>
+<p>Manage your gigs, approve work, and release payments seamlessly.</p>
+</div>
+
+<div class="feature-card">
+<h3>Flexible Hiring</h3>
+<p>Short-term gigs or long-term projects – pay only for verified work.</p>
+</div>
+
+<div class="feature-card">
+<h3>Affordable Solutions</h3>
+<p>Connect with student freelancers at reasonable, campus-friendly rates.</p>
+</div>
 </section>
 
 <section class="how-it-works">
-  <h2>How It Works</h2>
-  <div class="steps">
-    <div class="step">
-      <h4>1. Post Your Gig</h4>
-      <p>Share your task requirements and deadlines.</p>
-    </div>
-    <div class="step">
-      <h4>2. Connect With Students</h4>
-      <p>Review verified profiles and select your freelancer.</p>
-    </div>
-    <div class="step">
-      <h4>3. Approve & Pay</h4>
-      <p>Track task completion and release payment safely.</p>
-    </div>
-  </div>
+<h2>How It Works</h2>
+
+<div class="steps">
+<div class="step">
+<h4>1. Post Your Gig</h4>
+<p>Share your task requirements and deadlines.</p>
+</div>
+
+<div class="step">
+<h4>2. Connect With Students</h4>
+<p>Review verified profiles and select your freelancer.</p>
+</div>
+
+<div class="step">
+<h4>3. Approve & Pay</h4>
+<p>Track task completion and release payment safely.</p>
+</div>
+</div>
 </section>
 
 <section class="testimonials">
-  <h2>What Employers Say</h2>
-  <div class="testimonial-cards">
-    <div class="testimonial">
-      <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhlg4vek11s6p6i22grqtc15.jpg" alt="Aisha K.">
-      <p>"I love how I can track tasks and only pay verified work. Student freelancers are reliable!"</p>
-      <strong>- Aisha K.</strong>
-    </div>
-    <div class="testimonial">
-      <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhlg56pd25319vhis8d0c107t1b.jpg" alt="John M.">
-      <p>"Zep Swipe connected me to skilled students quickly. Tasks were completed professionally!"</p>
-      <strong>- John M.</strong>
-    </div>
-  </div>
+<h2>What Employers Say</h2>
+
+<div class="testimonial-cards">
+<div class="testimonial">
+<img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhlg4vek11s6p6i22grqtc15.jpg">
+<p>"I love how I can track tasks and only pay verified work. Student freelancers are reliable!"</p>
+<strong>- Aisha K.</strong>
+</div>
+
+<div class="testimonial">
+<img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhlg56pd25319vhis8d0c107t1b.jpg">
+<p>"Zep Swipe connected me to skilled students quickly. Tasks were completed professionally!"</p>
+<strong>- John M.</strong>
+</div>
+</div>
 </section>
 
 <footer>
-  <div class="socials">
-    <a href="#" title="Facebook">📘</a>
-    <a href="#" title="Twitter">🐦</a>
-    <a href="#" title="LinkedIn">💼</a>
-    <a href="#" title="Instagram">📸</a>
-  </div>
-  <p>© 2026 Zep Swipe | Bridging Students & Opportunities</p>
+<div class="socials">
+<a href="#">📘</a>
+<a href="#">🐦</a>
+<a href="#">💼</a>
+<a href="#">📸</a>
+</div>
+
+<p>© 2026 Zep Swipe | Bridging Students & Opportunities</p>
 </footer>
 
 <script>
 const carousel=document.getElementById("featuredCarousel");
 function scrollCarousel(direction){
-  carousel.scrollBy({left:direction*300,behavior:'smooth'});
+carousel.scrollBy({left:direction*300,behavior:'smooth'});
 }
 </script>
 
