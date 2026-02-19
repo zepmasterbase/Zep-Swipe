@@ -4,243 +4,256 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Employer Dashboard</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
-
 :root{
-  --blue:#00f0ff;
-  --violet:#9c4dff;
-  --bg:#050018;
-  --glass:rgba(255,255,255,.06);
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,0.08);
+  --text-light:rgba(255,255,255,.85);
+  --green:#00ff94;
+  --yellow:#ffc107;
+  --purple:#9c4dff;
 }
 
+/* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:radial-gradient(circle at top,#07002a,#000);color:white;}
+body{background:var(--bg);color:#fff;min-height:100vh;line-height:1.4;padding-bottom:50px;}
+button{border:none;border-radius:999px;padding:8px 14px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:.3s;}
+button:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(156,77,255,.45);}
 
-.container{display:flex;min-height:100vh;}
-
-/* SIDEBAR */
-
-.sidebar{
-  width:240px;
-  background:rgba(0,0,0,.6);
-  backdrop-filter:blur(20px);
-  padding:24px;
-  border-right:1px solid rgba(255,255,255,.08);
-}
-
-.logo{
-  font-family:Orbitron;
-  font-size:1.3rem;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  margin-bottom:30px;
-}
-
-.nav a{
-  display:block;
-  padding:10px;
-  border-radius:10px;
-  color:white;
-  text-decoration:none;
-  margin-bottom:8px;
-  transition:.2s;
-}
-
-.nav a:hover{background:var(--glass);}
-
-/* MAIN */
-
-.main{flex:1;padding:28px;}
-
-.header{
+/* HEADER */
+header{
   display:flex;
   justify-content:space-between;
-  margin-bottom:24px;
+  align-items:center;
+  padding:16px 24px;
+  background:rgba(0,0,0,.2);
+  border-radius:12px;
+  backdrop-filter:blur(12px);
 }
-
-.analytics{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:16px;
-  margin-bottom:24px;
+.brand{display:flex;align-items:center;gap:12px;font-family:Orbitron;font-size:1.5rem;}
+.brand img{width:50px;height:50px;border-radius:50%;object-fit:cover;}
+.brand span{background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.header-right{display:flex;align-items:center;gap:14px;}
+.logout-btn{
+  background:linear-gradient(90deg,#00f0ff,#9c4dff);
+  border:none;border-radius:50%;
+  width:42px;height:42px;font-size:18px;
+  color:#050015;cursor:pointer;position:relative;
+  transition:.3s;
 }
-
-.card{
-  background:var(--glass);
-  padding:18px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.08);
+.logout-btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 20px #00f0ff,0 0 40px #9c4dff;
 }
-
-.card h3{font-size:.9rem;color:#aaa;}
-.card p{font-size:1.6rem;font-family:Orbitron;}
-
-.section-title{
-  font-family:Orbitron;
-  margin-bottom:10px;
+.logout-btn::after{
+  content:"Logout";
+  position:absolute;top:50px;left:50%;transform:translateX(-50%);
+  background:var(--glass);padding:4px 8px;border-radius:6px;font-size:0.75rem;opacity:0;transition:.3s;
+  pointer-events:none;
 }
+.logout-btn:hover::after{opacity:1;}
+.notifications{position:relative;cursor:pointer;font-size:18px;}
+.notifications span{position:absolute;top:-6px;right:-6px;background:red;color:#fff;border-radius:50%;padding:2px 6px;font-size:12px;}
 
-/* JOB LIST */
+/* DASHBOARD */
+.dashboard{padding:20px;max-width:1200px;margin:auto;display:flex;flex-direction:column;gap:24px;}
 
-.jobs{
-  display:grid;
-  gap:14px;
-}
+/* QUICK ACTION CARDS */
+.quick-cards{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:20px;}
+@media(min-width:600px){.quick-cards{grid-template-columns:repeat(3,1fr);}}
+.card{background:var(--glass);border-radius:16px;padding:20px;box-shadow:0 0 24px rgba(156,77,255,.2);display:flex;flex-direction:column;gap:12px;}
+.card h3{font-family:Orbitron;font-size:1.1rem;}
+.card button{margin-top:auto;width:fit-content;align-self:flex-start;}
 
-.job{
-  background:var(--glass);
-  padding:16px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.08);
-}
+/* FILTER SECTION */
+.filter-section{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.filter-section button{background:rgba(255,255,255,.05);color:var(--text-light);font-family:Orbitron;font-size:0.9rem;transition:.3s;}
+.filter-section button:hover{background:rgba(0,240,255,.15);}
 
-.job h4{font-family:Orbitron;margin-bottom:6px;}
+/* JOBS LIST */
+.jobs-container{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:600px){.jobs-container{grid-template-columns:1fr 1fr;}}
+.job-card{background:var(--glass);padding:16px;border-radius:16px;border:1px solid rgba(255,255,255,.12);display:flex;flex-direction:column;gap:10px;transition:.3s;}
+.job-card:hover{box-shadow:0 0 20px rgba(0,240,255,.2),0 0 40px rgba(156,77,255,.2);}
+.job-card h4{font-family:Orbitron;font-size:1rem;display:flex;justify-content:space-between;align-items:center;}
+.applicants{margin-top:10px;padding-left:12px;}
+.applicant-card{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.05);padding:8px;border-radius:8px;margin-bottom:6px;font-size:0.9rem;}
+.status-badge{padding:4px 10px;border-radius:12px;font-size:0.75rem;font-family:Orbitron;display:inline-block;}
+.pending{background:var(--yellow);color:#050015;}
+.escrow{background:var(--zep-blue);color:#050015;}
+.submitted{background:var(--purple);color:#050015;}
+.released{background:var(--green);color:#050015;}
 
-.actions button{
-  margin-right:6px;
-  padding:6px 10px;
-  border-radius:999px;
-  border:none;
-  cursor:pointer;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
-  color:#000;
-  font-weight:600;
-}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1000;}
+.modal{background:var(--glass);padding:20px;border-radius:18px;max-width:400px;width:90%;text-align:center;box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);}
+.modal button{margin-top:12px;width:fit-content;}
 
-/* ACTIVITY */
-
-.activity{
-  margin-top:24px;
-}
-
-.activity-item{
-  padding:10px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  color:#ccc;
-}
-
+/* RESPONSIVE */
+@media(max-width:480px){.quick-cards{grid-template-columns:1fr;}.jobs-container{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<div class="container">
-
-<!-- SIDEBAR -->
-
-<div class="sidebar">
-  <div class="logo">Zep Swipe</div>
-
-  <div class="nav">
-    <a href="#">Dashboard</a>
-    <a href="#">Post Job</a>
-    <a href="#">Applicants</a>
-    <a href="#">Payments</a>
-    <a href="#">Deals</a>
-    <a href="#">Settings</a>
+<header>
+  <div class="brand">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png" alt="Zep Swipe Logo">
+    <span>Zep Swipe</span>
   </div>
+  <div class="header-right">
+    <div class="notifications" onclick="toggleNotifications()">
+      🔔 <span id="notifCount">0</span>
+    </div>
+    <button class="logout-btn" onclick="logout()">⎋</button>
+  </div>
+</header>
+
+<div class="dashboard">
+
+  <!-- QUICK ACTIONS -->
+  <div class="quick-cards">
+    <div class="card">
+      <h3>Post a Job</h3>
+      <button onclick="location.href='create-gig.html'">➕ Create Job</button>
+    </div>
+    <div class="card">
+      <h3>Create Student Deal</h3>
+      <button onclick="location.href='merchant-deal-form.html'">➕ Create Deal</button>
+    </div>
+    <div class="card">
+      <h3>View Invoices</h3>
+      <button onclick="viewAllInvoices()">💰 All Invoices</button>
+    </div>
+  </div>
+
+  <!-- FILTER -->
+  <div class="filter-section">
+    <button onclick="filterJobs('all')">All Jobs</button>
+    <button onclick="filterJobs('Open')">Open</button>
+    <button onclick="filterJobs('Approved')">Approved</button>
+    <button onclick="filterJobs('Paid')">Paid</button>
+  </div>
+
+  <!-- JOBS LIST -->
+  <div id="jobsContainer" class="jobs-container"></div>
+
 </div>
 
-<!-- MAIN -->
-
-<div class="main">
-
-<div class="header">
-  <h2>Employer Dashboard</h2>
-  <button onclick="logout()">Logout</button>
-</div>
-
-<!-- ANALYTICS -->
-
-<div class="analytics">
-  <div class="card">
-    <h3>Active Jobs</h3>
-    <p id="activeJobs">0</p>
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent">
+    <p id="modalText">Processing...</p>
+    <button onclick="closeModal()">Close</button>
   </div>
-  <div class="card">
-    <h3>Total Hires</h3>
-    <p id="hires">0</p>
-  </div>
-  <div class="card">
-    <h3>Total Spend</h3>
-    <p id="spend">$0</p>
-  </div>
-  <div class="card">
-    <h3>Invoices</h3>
-    <p id="invoiceCount">0</p>
-  </div>
-</div>
-
-<h3 class="section-title">Your Jobs</h3>
-
-<div id="jobs" class="jobs"></div>
-
-<div class="activity">
-  <h3 class="section-title">Recent Activity</h3>
-  <div id="activityList"></div>
-</div>
-
-</div>
 </div>
 
 <script>
-
+// ===== SESSION CHECK =====
 let currentEmployer = JSON.parse(localStorage.getItem("currentEmployer"));
-if(!currentEmployer) location.href="employer-auth.html";
+if(!currentEmployer) window.location.href="employer-auth.html";
 
+// ===== JOBS & INVOICES =====
 let jobs = JSON.parse(localStorage.getItem("jobs")) || [];
 let invoices = JSON.parse(localStorage.getItem("invoices")) || [];
 let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
 
+// ===== DOM =====
+const jobsContainer = document.getElementById("jobsContainer");
+const modalOverlay = document.getElementById("modalOverlay");
+const modalText = document.getElementById("modalText");
+const notifCount = document.getElementById("notifCount");
+
+// ===== FUNCTIONS =====
 function logout(){
   localStorage.removeItem("currentEmployer");
-  location.href="employer-auth.html";
+  window.location.href="employer-auth.html";
 }
 
-/* ANALYTICS */
+// MODAL
+function showModal(text){ modalText.innerText=text; modalOverlay.style.display="flex"; }
+function closeModal(){ modalOverlay.style.display="none"; }
 
-document.getElementById("activeJobs").innerText =
-  jobs.filter(j=>j.status==="Open").length;
+// NOTIFICATIONS
+function toggleNotifications(){
+  if(notifications.length===0) return alert("No notifications.");
+  let notifStr="";
+  notifications.forEach((n,i)=>{ notifStr+=`${i+1}. ${n.text}\n`; });
+  alert(notifStr);
+}
 
-document.getElementById("invoiceCount").innerText = invoices.length;
+// RENDER JOBS
+function renderJobs(filter='all'){
+  jobsContainer.innerHTML="";
+  jobs.forEach((job, idx)=>{
+    if(filter!=='all' && job.status!==filter) return;
+    const jobCard=document.createElement("div"); jobCard.className="job-card";
+    jobCard.innerHTML=`<h4>${job.title} <span class="status-badge ${job.status.toLowerCase()}">${job.status}</span></h4>
+      <div>Type: ${job.type} | $${job.rate}/hr</div>
+      <div class="applicants"></div>`;
+    jobsContainer.appendChild(jobCard);
 
-let totalSpend = invoices.reduce((sum,i)=>sum+Number(i.total||0),0);
-document.getElementById("spend").innerText = "$"+totalSpend.toFixed(2);
+    const applicantsDiv=jobCard.querySelector(".applicants");
+    if(job.applicants && job.applicants.length>0){
+      job.applicants.forEach((app, aidx)=>{
+        const card=document.createElement("div"); card.className="applicant-card";
+        card.innerHTML=`<span>${app.name} (${app.level})</span>
+          <button onclick="approveStudent(${idx},${aidx})">Approve & Generate Invoice</button>`;
+        applicantsDiv.appendChild(card);
+      });
+    } else { applicantsDiv.innerHTML="<span style='color:#aaa'>No applicants yet.</span>"; }
+  });
+}
 
-/* JOB RENDER */
+// APPROVE STUDENT & GENERATE INVOICE
+function approveStudent(jobIdx, appIdx){
+  const job=jobs[jobIdx];
+  const student=job.applicants[appIdx];
+  if(!student.verified){
+    return showModal("Student must be verified to generate invoice.");
+  }
+  // Create invoice
+  const invoiceId="INV-"+Math.floor(Math.random()*90000+10000);
+  const invoice={
+    id:invoiceId,
+    studentId:student.id,
+    employerId:currentEmployer.id,
+    jobId:job.id,
+    status:"Pending",
+    subtotal:job.rate*10, 
+    fee:(job.rate*10*0.05).toFixed(2),
+    total:(job.rate*10*1.05).toFixed(2),
+    issueDate:new Date().toISOString().slice(0,10),
+    dueDate:new Date(Date.now()+7*24*60*60*1000).toISOString().slice(0,10)
+  };
+  invoices.push(invoice);
+  localStorage.setItem("invoices",JSON.stringify(invoices));
 
-const jobsDiv = document.getElementById("jobs");
+  // Add notification
+  notifications.push({text:`Invoice ${invoice.id} generated for ${student.name} on job "${job.title}"`});
+  localStorage.setItem("notifications",JSON.stringify(notifications));
+  notifCount.innerText=notifications.length;
 
-jobs.forEach(job=>{
-  let el=document.createElement("div");
-  el.className="job";
+  showModal(`Invoice ${invoice.id} created successfully!`);
+  renderJobs();
+}
 
-  el.innerHTML=`
-    <h4>${job.title}</h4>
-    <p>Status: ${job.status}</p>
-    <div class="actions">
-      <button>View Applicants</button>
-      <button>Manage</button>
-    </div>
-  `;
+// VIEW ALL INVOICES
+function viewAllInvoices(){
+  if(invoices.length===0){ showModal("No invoices yet."); return;}
+  let str="All Invoices:\n";
+  invoices.forEach(inv=>str+=`• ${inv.id} | ${inv.status} | Job: ${inv.jobId}\n`);
+  alert(str);
+}
 
-  jobsDiv.appendChild(el);
-});
+// FILTER JOBS
+function filterJobs(type){ renderJobs(type); }
 
-/* ACTIVITY */
-
-const activity=document.getElementById("activityList");
-
-notifications.slice().reverse().forEach(n=>{
-  let item=document.createElement("div");
-  item.className="activity-item";
-  item.innerText=n.text;
-  activity.appendChild(item);
-});
-
+// INITIAL RENDER
+renderJobs();
+notifCount.innerText=notifications.length;
 </script>
 
 </body>
