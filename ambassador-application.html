@@ -3,33 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Zep Swipe — Ambassador Application</title>
+<title>Zep Swipe — Campus Ambassador</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
 :root{
-  --zep-blue:#00f0ff;
-  --zep-violet:#9c4dff;
+  --zep-blue:#00eaff;
+  --zep-purple:#8b5cf6;
   --bg:#050018;
   --glass:rgba(255,255,255,0.06);
-  --text-light:#cfcfe6;
+  --text:#eaeaf0;
 }
 
-/* RESET */
 *{
+  box-sizing:border-box;
   margin:0;
   padding:0;
-  box-sizing:border-box;
   font-family:Poppins,sans-serif;
 }
 
 body{
-  background:radial-gradient(circle at top,#0b0033,#020010);
-  color:white;
-  min-height:100vh;
+  background:radial-gradient(circle at 20% 10%, #0b0033, #02000a);
+  color:var(--text);
+  line-height:1.6;
 }
 
 /* HEADER */
@@ -38,13 +36,9 @@ header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:16px 24px;
-  background:rgba(0,0,0,0.5);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,0.08);
-  position:sticky;
-  top:0;
-  z-index:100;
+  padding:18px 24px;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(10px);
 }
 
 .logo{
@@ -54,146 +48,272 @@ header{
 }
 
 .logo img{
-  width:42px;
-  height:42px;
+  width:44px;
+  height:44px;
   border-radius:50%;
-  object-fit:cover;
 }
 
 .logo span{
   font-family:Orbitron;
   font-size:1.4rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 
 .home-btn{
-  padding:10px 18px;
+  padding:8px 16px;
   border-radius:999px;
-  border:none;
+  border:1px solid rgba(255,255,255,0.2);
+  background:transparent;
+  color:#fff;
   cursor:pointer;
-  font-family:Orbitron;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;
-  transition:.3s;
-}
-
-.home-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 18px var(--zep-blue);
 }
 
 /* HERO */
 
 .hero{
-  text-align:center;
-  padding:70px 20px 30px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center;
+  padding:80px 24px;
+  max-width:1200px;
+  margin:auto;
 }
 
 .hero h1{
   font-family:Orbitron;
-  font-size:2.4rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  font-size:2.5rem;
+  margin-bottom:16px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  margin-bottom:14px;
 }
 
 .hero p{
-  color:var(--text-light);
-  max-width:650px;
+  margin-bottom:24px;
+  color:#cfcfe8;
+}
+
+.cta{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.cta button{
+  padding:12px 22px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
+  color:#050015;
+}
+
+.visual{
+  background:radial-gradient(circle, rgba(0,234,255,0.15), transparent);
+  height:260px;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.2rem;
+  color:#aaa;
+}
+
+/* SECTION */
+
+section{
+  padding:60px 24px;
+  max-width:1200px;
   margin:auto;
 }
 
-/* FORM CARD */
-
-.form-container{
-  max-width:1100px;
-  margin:40px auto;
-  padding:0 20px 60px;
+.section-title{
+  text-align:center;
+  font-family:Orbitron;
+  font-size:1.8rem;
+  margin-bottom:40px;
 }
 
-.form-card{
+/* CARDS */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+
+.card{
   background:var(--glass);
-  border-radius:20px;
   padding:20px;
-  border:1px solid rgba(255,255,255,0.08);
-  box-shadow:0 0 40px rgba(0,240,255,0.08);
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,0.1);
+  transition:.3s;
 }
 
-iframe{
-  width:100%;
-  height:900px;
-  border:none;
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 0 30px rgba(139,92,246,0.3);
+}
+
+/* CHECKLIST */
+
+.checklist{
+  display:grid;
+  gap:14px;
+  max-width:700px;
+  margin:auto;
+}
+
+.check{
+  background:var(--glass);
+  padding:14px;
   border-radius:12px;
+}
+
+/* REWARDS */
+
+.rewards{
+  background:var(--glass);
+  padding:30px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.1);
+  max-width:700px;
+  margin:auto;
+}
+
+/* SOCIAL PROOF */
+
+.testimonial{
+  max-width:600px;
+  margin:auto;
+  text-align:center;
+  color:#cfcfe8;
+}
+
+/* APPLY SECTION */
+
+.apply{
+  text-align:center;
+}
+
+.apply-card{
+  background:var(--glass);
+  padding:40px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.1);
+  max-width:600px;
+  margin:auto;
+}
+
+.apply button{
+  margin-top:20px;
+  padding:14px 28px;
+  border:none;
+  border-radius:999px;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
+  cursor:pointer;
+  color:#050015;
 }
 
 /* FOOTER */
 
 footer{
+  padding:40px 20px;
   text-align:center;
-  padding:30px 20px;
-  color:#9aa0c5;
-  font-size:.9rem;
-  border-top:1px solid rgba(255,255,255,0.08);
+  border-top:1px solid rgba(255,255,255,0.1);
+  color:#aaa;
 }
 
 /* MOBILE */
 
-@media(max-width:600px){
-
-.hero h1{
-  font-size:1.8rem;
-}
-
-iframe{
-  height:1000px;
-}
-
+@media(max-width:800px){
+  .hero{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
 }
 
 </style>
 </head>
-
 <body>
 
 <header>
-
   <div class="logo">
-    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png" alt="Zep Swipe Logo">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png">
     <span>Zep Swipe</span>
   </div>
-
   <button class="home-btn" onclick="location.href='index.html'">Home</button>
-
 </header>
 
 <section class="hero">
-
-  <h1>Become a Campus Ambassador 🚀</h1>
-
-  <p>
-    Join Zep Swipe’s founding ambassador program. Help students access opportunities,
-    build leadership skills, and shape the future of work on your campus.
-  </p>
-
+  <div>
+    <h1>🚀 Become a Zep Swipe Campus Ambassador</h1>
+    <p>Lead innovation on your campus. Earn rewards. Build leadership. Help students access real opportunities.</p>
+    <div class="cta">
+      <button onclick="window.open('https://forms.gle/mbN2fQiEY2i7f8QC9')">Apply Now</button>
+      <button onclick="document.getElementById('learn').scrollIntoView()">Learn More</button>
+    </div>
+  </div>
+  <div class="visual">Campus • Community • Growth</div>
 </section>
 
-<section class="form-container">
-
-  <div class="form-card">
-
-    <iframe src="https://forms.gle/mbN2fQiEY2i7f8QC9"></iframe>
-
+<section id="learn">
+  <div class="section-title">Why Join</div>
+  <div class="grid">
+    <div class="card">⭐ Earn while you study</div>
+    <div class="card">⭐ Leadership experience</div>
+    <div class="card">⭐ Exclusive perks & badges</div>
+    <div class="card">⭐ Early access to gigs</div>
+    <div class="card">⭐ Build your network</div>
+    <div class="card">⭐ Shape student work future</div>
   </div>
+</section>
 
+<section>
+  <div class="section-title">What You’ll Do</div>
+  <div class="checklist">
+    <div class="check">✅ Promote Zep Swipe on campus</div>
+    <div class="check">✅ Help students sign up</div>
+    <div class="check">✅ Share opportunities</div>
+    <div class="check">✅ Gather feedback</div>
+    <div class="check">✅ Host mini info sessions</div>
+  </div>
+</section>
+
+<section>
+  <div class="section-title">Ambassador Rewards</div>
+  <div class="rewards">
+    💰 Performance bonuses<br><br>
+    🎓 Certificate of leadership<br><br>
+    🌍 Featured on Zep Swipe community<br><br>
+    🚀 Priority access to paid gigs<br><br>
+    🏆 Founding ambassador badge
+  </div>
+</section>
+
+<section>
+  <div class="section-title">Community Voices</div>
+  <div class="testimonial">
+    “Being an ambassador helped me build skills and earn on campus.”
+    <br><br>— Student Ambassador
+  </div>
+</section>
+
+<section class="apply">
+  <div class="apply-card">
+    <h2>Apply in 2 minutes</h2>
+    <p>We’ll review and get back to you soon. Limited spots per campus.</p>
+    <button onclick="window.open('https://forms.gle/mbN2fQiEY2i7f8QC9')">👉 Apply Now</button>
+  </div>
 </section>
 
 <footer>
-
-  © 2026 Zep Swipe — Building Africa’s Future of Work
-
+  Zep Swipe — Empowering students with real opportunities.
 </footer>
 
 </body>
