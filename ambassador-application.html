@@ -3,336 +3,284 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe Ambassador Program</title>
-
+<title>Zep Swipe — Campus Ambassador Application</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
 <style>
-
 :root{
-  --blue:#00e5ff;
-  --violet:#8b5cf6;
-  --bg:#050516;
-  --glass:rgba(255,255,255,0.06);
-  --text:#eaeaf0;
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg-dark:#050018;
+  --glass:rgba(255,255,255,0.05);
+  --text-light:#eee;
+  --text-dark:#fff;
+  --green:#00ff94;
+  --yellow:#ffc107;
+  --purple:#9c4dff;
 }
 
+/* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+body{background:var(--bg-dark);color:var(--text-light);min-height:100vh;line-height:1.5;scroll-behavior:smooth;}
+a{text-decoration:none;color:inherit;}
 
-body{
-  background:radial-gradient(circle at 20% 10%, #0a0a2a, #030312);
-  color:var(--text);
-  overflow-x:hidden;
-}
-
-/* Animated glow */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:radial-gradient(circle at 30% 40%, rgba(0,229,255,.15), transparent 40%),
-             radial-gradient(circle at 70% 60%, rgba(139,92,246,.15), transparent 40%);
-  animation:moveGlow 12s infinite alternate ease-in-out;
-  z-index:-1;
-}
-
-@keyframes moveGlow{
-  from{transform:translateY(-20px);}
-  to{transform:translateY(20px);}
-}
-
-/* Header */
+/* HEADER */
 header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 28px;
-  background:rgba(0,0,0,.6);
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 24px;
+  background:rgba(10,10,30,.85);
   backdrop-filter:blur(12px);
+  position:sticky;top:0;z-index:1000;
 }
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.logo img{
-  width:46px;
-  height:46px;
-  border-radius:50%;
-}
-
-.logo span{
+.logo-container{display:flex;align-items:center;gap:12px;}
+.logo-container img{width:50px;height:50px;border-radius:50%;object-fit:cover;}
+.logo-container span{
   font-family:Orbitron;
-  font-size:1.3rem;
+  font-size:1.6rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-
 .home-btn{
-  padding:10px 18px;
+  padding:8px 20px;
   border-radius:999px;
-  border:none;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
-  color:#000;
-}
-
-/* Sections */
-section{
-  padding:70px 20px;
-  max-width:1100px;
-  margin:auto;
-}
-
-/* Hero */
-.hero{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:40px;
-  align-items:center;
-}
-
-.hero h1{
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   font-family:Orbitron;
-  font-size:2.5rem;
-  margin-bottom:16px;
-}
-
-.hero p{
-  opacity:.85;
-  margin-bottom:22px;
-}
-
-.cta{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
-.cta button{
-  padding:14px 24px;
-  border:none;
-  border-radius:999px;
+  color:#050015;
   cursor:pointer;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
-  color:#000;
-  font-weight:600;
-}
-
-/* Enhanced Campus Network Visual */
-.hero-visual{
-  position:relative;
-  height:300px;
-  border-radius:20px;
-  background:linear-gradient(135deg, rgba(0,229,255,.2), rgba(139,92,246,.2));
-  backdrop-filter:blur(10px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-
-.network-node{
-  position:absolute;
-  width:12px;
-  height:12px;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
-  border-radius:50%;
-  animation:floatNodes 6s infinite alternate ease-in-out;
-}
-
-.network-node:nth-child(1){top:20%; left:30%;}
-.network-node:nth-child(2){top:50%; left:60%;}
-.network-node:nth-child(3){top:70%; left:40%;}
-.network-node:nth-child(4){top:30%; left:70%;}
-.network-node:nth-child(5){top:60%; left:20%;}
-
-@keyframes floatNodes{
-  0%{transform:translateY(0px) scale(1);}
-  50%{transform:translateY(-12px) scale(1.2);}
-  100%{transform:translateY(0px) scale(1);}
-}
-
-/* Cards */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-}
-
-.card{
-  background:var(--glass);
-  border-radius:18px;
-  padding:20px;
   transition:.3s;
 }
+.home-btn:hover{transform:scale(1.05);box-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet);}
 
-.card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 0 20px rgba(0,229,255,.25);
+/* HERO */
+.hero{
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:100px 20px 60px;position:relative;
+  background:radial-gradient(circle at top left, #0f0c3c, #050018);
+  overflow:hidden;
+}
+.hero h1{
+  font-family:Orbitron;
+  font-size:2.8rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:16px;
+}
+.hero p{
+  font-size:1.2rem;
+  max-width:650px;
+  margin-bottom:30px;
+  color:var(--text-light);
+}
+.hero .cta-group{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+.hero .cta-group button{
+  padding:14px 28px;font-family:Orbitron;font-size:1rem;border:none;border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:.3s;
+}
+.hero .cta-group button:hover{transform:scale(1.05);box-shadow:0 0 25px var(--zep-blue),0 0 45px var(--zep-violet);}
+
+/* Animated particles background */
+.particle{
+  position:absolute;
+  width:10px;height:10px;
+  background:var(--zep-blue);
+  border-radius:50%;
+  opacity:0.6;
+  animation: float 10s infinite;
+}
+@keyframes float{
+  0%{transform:translateY(0) translateX(0);}
+  50%{transform:translateY(-200px) translateX(100px);}
+  100%{transform:translateY(0) translateX(0);}
 }
 
-/* Timeline */
-.list{
+/* BENEFITS CARDS */
+.benefits{
   display:grid;
-  gap:12px;
+  grid-template-columns:1fr;
+  gap:20px;
+  max-width:1200px;
+  margin:40px auto;
+  padding:0 20px;
 }
-
-/* Rewards */
-.highlight{
+@media(min-width:768px){.benefits{grid-template-columns:repeat(3,1fr);}}
+.benefit-card{
   background:var(--glass);
-  border-radius:18px;
-  padding:24px;
-}
-
-/* Testimonial */
-.testimonial{
-  background:var(--glass);
-  border-radius:18px;
+  border-radius:16px;
   padding:24px;
   text-align:center;
+  border:1px solid rgba(255,255,255,.1);
+  transition:.3s;
+}
+.benefit-card:hover{transform:scale(1.05);box-shadow:0 0 30px var(--zep-blue),0 0 40px var(--zep-violet);}
+.benefit-card h3{font-family:Orbitron;margin-bottom:12px;}
+.benefit-card p{font-size:.95rem;}
+
+/* WHAT YOU’LL DO */
+.roles{
+  max-width:900px;margin:40px auto;padding:0 20px;
+}
+.roles h2{text-align:center;font-family:Orbitron;margin-bottom:20px;color:var(--text-light);}
+.role-list{list-style:none;padding-left:0;}
+.role-list li{
+  padding:12px 0;font-size:1rem;
+  display:flex;align-items:center;gap:10px;
+}
+.role-list li::before{
+  content:'✅';
+  color:var(--green);
 }
 
-/* Apply section */
-.apply-box{
-  background:var(--glass);
-  padding:40px;
-  border-radius:22px;
-  text-align:center;
+/* REWARDS SECTION */
+.rewards{
+  max-width:1000px;margin:40px auto;padding:0 20px;display:grid;grid-template-columns:1fr;gap:20px;
 }
+@media(min-width:768px){.rewards{grid-template-columns:repeat(2,1fr);}}
+.reward-card{
+  background:var(--glass);padding:20px;border-radius:16px;text-align:center;
+  border:1px solid rgba(255,255,255,.1);transition:.3s;
+}
+.reward-card:hover{transform:scale(1.03);box-shadow:0 0 20px var(--zep-blue),0 0 35px var(--zep-violet);}
+.reward-card h4{font-family:Orbitron;margin-bottom:10px;}
+.reward-card p{font-size:.95rem;}
 
+/* SOCIAL PROOF / TESTIMONIALS */
+.testimonials{padding:40px 20px;text-align:center;}
+.testimonials h2{
+  font-family:Orbitron;
+  margin-bottom:20px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.testimonial-cards{display:flex;overflow-x:auto;gap:20px;padding-bottom:10px;}
+.testimonial-cards::-webkit-scrollbar{display:none;}
+.testimonial-card{flex:0 0 280px;background:var(--glass);border-radius:16px;padding:20px;border:1px solid rgba(255,255,255,.1);}
+.testimonial-card p{font-style:italic;margin-bottom:12px;}
+.testimonial-card strong{display:block;text-align:right;}
+
+/* APPLY SECTION */
+.apply-section{
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:60px 20px;
+}
+.apply-section h2{font-family:Orbitron;font-size:2rem;margin-bottom:12px;}
+.apply-section p{margin-bottom:24px;}
 .apply-btn{
-  margin-top:16px;
-  padding:16px 32px;
-  border-radius:999px;
-  border:none;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
-  color:#000;
-  font-size:1.1rem;
-  cursor:pointer;
+  padding:18px 36px;font-family:Orbitron;font-size:1.1rem;
+  border:none;border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;cursor:pointer;
+  transition:.3s;
 }
+.apply-btn:hover{transform:scale(1.05);box-shadow:0 0 25px var(--zep-blue),0 0 45px var(--zep-violet);}
 
-/* Footer */
+/* FOOTER */
 footer{
-  text-align:center;
-  padding:40px 20px;
-  opacity:.7;
+  padding:40px 20px;text-align:center;background:rgba(0,0,0,.6);
+  color:var(--text-light);
 }
+footer .socials{display:flex;justify-content:center;gap:20px;margin-bottom:20px;}
+footer .socials a{color:var(--text-light);font-size:20px;transition:.3s;}
+footer .socials a:hover{color:var(--zep-blue);transform:scale(1.2);}
+footer p{font-size:.85rem;}
 
-/* Responsive */
-@media(max-width:768px){
-  .hero{
-    grid-template-columns:1fr;
-  }
+/* MEDIA */
+@media(max-width:480px){
+  .hero h1{font-size:2rem;}
+  .benefits{grid-template-columns:1fr;}
+  .rewards{grid-template-columns:1fr;}
 }
-
 </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo">
-    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png">
+  <div class="logo-container">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png" alt="Zep Swipe Logo">
     <span>Zep Swipe</span>
   </div>
-  <button class="home-btn" onclick="location.href='index.html'">Home</button>
+  <button class="home-btn" onclick="location.href='index.html'">🏠 Home</button>
 </header>
 
 <section class="hero">
-
-<div>
-<h1>🚀 Become a Zep Swipe Campus Ambassador</h1>
-<p>Lead innovation on your campus. Earn rewards. Build leadership. Help students access real opportunities.</p>
-
-<div class="cta">
-<button onclick="window.open('https://forms.gle/mbN2fQiEY2i7f8QC9','_blank')">Apply Now</button>
-<button onclick="document.getElementById('learn').scrollIntoView()">Learn More</button>
-</div>
-
-</div>
-
-<div class="hero-visual">
-  <!-- Floating nodes for network effect -->
-  <div class="network-node"></div>
-  <div class="network-node"></div>
-  <div class="network-node"></div>
-  <div class="network-node"></div>
-  <div class="network-node"></div>
-</div>
-
+  <h1>🚀 Become a Zep Swipe Campus Ambassador</h1>
+  <p>Lead innovation on your campus. Earn rewards. Build leadership. Help students access real opportunities.</p>
+  <div class="cta-group">
+    <button onclick="window.open('https://forms.gle/mbN2fQiEY2i7f8QC9','_blank')">Apply Now</button>
+    <button onclick="window.scrollTo({top:600, behavior:'smooth'})">Learn More</button>
+  </div>
+  <!-- floating particles -->
+  <div class="particle" style="top:10%;left:20%;width:12px;height:12px;"></div>
+  <div class="particle" style="top:50%;left:80%;width:8px;height:8px;"></div>
+  <div class="particle" style="top:30%;left:60%;width:10px;height:10px;"></div>
 </section>
 
-<section id="learn">
-
-<h2 style="font-family:Orbitron;margin-bottom:20px;">Why Join</h2>
-
-<div class="grid">
-
-<div class="card">⭐ Earn while you study</div>
-<div class="card">⭐ Leadership experience</div>
-<div class="card">⭐ Exclusive perks & badges</div>
-<div class="card">⭐ Early access to gigs</div>
-<div class="card">⭐ Build your network</div>
-<div class="card">⭐ Shape student work future</div>
-
-</div>
-
+<section class="benefits">
+  <div class="benefit-card">⭐ Earn while you study</div>
+  <div class="benefit-card">🎓 Leadership experience</div>
+  <div class="benefit-card">🏆 Exclusive perks & badges</div>
+  <div class="benefit-card">🚀 Early access to gigs</div>
+  <div class="benefit-card">🌐 Build your network</div>
+  <div class="benefit-card">💡 Shape the future of student work</div>
 </section>
 
-<section>
-
-<h2 style="font-family:Orbitron;margin-bottom:20px;">What You’ll Do</h2>
-
-<div class="list">
-<div>✅ Promote Zep Swipe on campus</div>
-<div>✅ Help students sign up</div>
-<div>✅ Share opportunities</div>
-<div>✅ Gather feedback</div>
-<div>✅ Host info sessions</div>
-</div>
-
+<section class="roles">
+  <h2>What You’ll Do</h2>
+  <ul class="role-list">
+    <li>Promote Zep Swipe on campus</li>
+    <li>Help students sign up</li>
+    <li>Share opportunities</li>
+    <li>Gather feedback</li>
+    <li>Host mini info sessions</li>
+  </ul>
 </section>
 
-<section>
-
-<h2 style="font-family:Orbitron;margin-bottom:20px;">Ambassador Rewards</h2>
-
-<div class="highlight">
-💰 Performance bonuses<br><br>
-🎓 Leadership certificate<br><br>
-🌍 Community spotlight<br><br>
-🚀 Priority gigs<br><br>
-🏆 Founding badge
-</div>
-
+<section class="rewards">
+  <div class="reward-card">
+    <h4>💰 Performance bonuses</h4>
+    <p>Earn rewards for every student you onboard and tasks completed.</p>
+  </div>
+  <div class="reward-card">
+    <h4>🎓 Certificate of leadership</h4>
+    <p>Showcase your impact with an official Zep Swipe ambassador certificate.</p>
+  </div>
+  <div class="reward-card">
+    <h4>🌍 Featured on community</h4>
+    <p>Be highlighted in our student ambassador network and social channels.</p>
+  </div>
+  <div class="reward-card">
+    <h4>🏆 Founding ambassador badge</h4>
+    <p>Special recognition for early ambassadors with exclusive perks.</p>
+  </div>
 </section>
 
-<section>
-
-<div class="testimonial">
-“Being an ambassador helped me build skills and earn on campus.”<br><br>
-— Student Ambassador
-</div>
-
+<section class="testimonials">
+  <h2>Ambassador Success Stories</h2>
+  <div class="testimonial-cards">
+    <div class="testimonial-card">
+      <p>“Being an ambassador helped me build skills and earn on campus.”</p>
+      <strong>— Student Ambassador</strong>
+    </div>
+    <div class="testimonial-card">
+      <p>“I got my first gigs and earned real rewards while helping others!”</p>
+      <strong>— Student Ambassador</strong>
+    </div>
+  </div>
 </section>
 
-<section>
-
-<div class="apply-box">
-
-<h2 style="font-family:Orbitron;">Apply in 2 minutes</h2>
-<p>We’ll review and get back to you soon. Limited spots per campus.</p>
-
-<button class="apply-btn" onclick="window.open('https://forms.gle/mbN2fQiEY2i7f8QC9','_blank')">
-👉 Apply Now
-</button>
-
-</div>
-
+<section class="apply-section">
+  <h2>Apply in 2 Minutes</h2>
+  <p>We’ll review your application and get back to you soon. Limited spots per campus!</p>
+  <button class="apply-btn" onclick="window.open('https://forms.gle/mbN2fQiEY2i7f8QC9','_blank')">👉 Apply Now</button>
 </section>
 
 <footer>
-<p>Zep Swipe — Unlocking opportunities for students</p>
+  <div class="socials">
+    <a href="#">📘</a>
+    <a href="#">🐦</a>
+    <a href="#">💼</a>
+    <a href="#">📸</a>
+  </div>
+  <p>© 2026 Zep Swipe | Bridging Students & Opportunities</p>
 </footer>
 
 </body>
