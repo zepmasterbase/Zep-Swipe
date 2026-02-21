@@ -1,211 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zep Swipe — Campus Ambassador Program</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Zep Swipe — Ambassador Application</title>
 
-  <style>
-    :root{
-      --zep-blue:#00f0ff;
-      --zep-violet:#9c4dff;
-      --bg:radial-gradient(circle at 30% 10%, #050018 0%, #00000c 100%);
-      --glass:rgba(255,255,255,0.06);
-    }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Poppins,sans-serif;
-      background:var(--bg);
-      color:#fff;
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:flex-start;
-      padding:24px;
-    }
+<style>
 
-    /* HEADER */
-    .header{
-      position:fixed;
-      top:18px;
-      left:50%;
-      transform:translateX(-50%);
-      width:calc(100% - 48px);
-      max-width:760px;
-      padding:14px 18px;
-      border-radius:18px;
-      background:var(--glass);
-      border:1px solid rgba(255,255,255,.12);
-      backdrop-filter:blur(18px);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      box-shadow:0 0 40px rgba(0,240,255,.25);
-      animation:pulse 3.5s infinite alternate;
-      z-index:10;
-    }
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --bg:#050018;
+  --glass:rgba(255,255,255,0.06);
+  --text-light:#cfcfe6;
+}
 
-    @keyframes pulse{
-      from{box-shadow:0 0 22px rgba(0,240,255,.2)}
-      to{box-shadow:0 0 60px rgba(156,77,255,.45)}
-    }
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Poppins,sans-serif;
+}
 
-    .brand{
-      font-family:Orbitron;
-      font-size:1.4rem;
-      background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
+body{
+  background:radial-gradient(circle at top,#0b0033,#020010);
+  color:white;
+  min-height:100vh;
+}
 
-    .home-btn{
-      width:42px;
-      height:42px;
-      border-radius:50%;
-      border:none;
-      cursor:pointer;
-      background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-      color:#050015;
-      font-size:18px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      box-shadow:0 0 22px rgba(0,240,255,.45);
-      transition:.2s;
-    }
+/* HEADER */
 
-    .home-btn:hover{
-      transform:scale(1.08);
-    }
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 24px;
+  background:rgba(0,0,0,0.5);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
 
-    /* CARD */
-    .card{
-      margin-top:120px;
-      max-width:620px;
-      width:100%;
-      padding:36px 28px;
-      border-radius:24px;
-      background:var(--glass);
-      border:1px solid rgba(255,255,255,.12);
-      backdrop-filter:blur(18px);
-      box-shadow:0 0 60px rgba(0,240,255,.18);
-      text-align:center;
-    }
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
 
-    .subtitle{
-      font-size:14px;
-      opacity:.85;
-      margin-bottom:22px;
-    }
+.logo img{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  object-fit:cover;
+}
 
-    .highlight{
-      margin:18px 0;
-      padding:16px;
-      border-radius:16px;
-      background:rgba(0,0,0,.45);
-      border:1px solid rgba(0,240,255,.35);
-      font-size:14px;
-      line-height:1.6;
-    }
+.logo span{
+  font-family:Orbitron;
+  font-size:1.4rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-    ul{
-      text-align:left;
-      max-width:460px;
-      margin:18px auto 22px;
-      padding-left:18px;
-      font-size:14px;
-      opacity:.9;
-    }
+.home-btn{
+  padding:10px 18px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  transition:.3s;
+}
 
-    ul li{
-      margin-bottom:8px;
-    }
+.home-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 18px var(--zep-blue);
+}
 
-    .instructions{
-      font-size:13px;
-      opacity:.85;
-      margin:22px auto 14px;
-      max-width:460px;
-      line-height:1.6;
-    }
+/* HERO */
 
-    .apply-btn{
-      display:inline-block;
-      margin-top:6px;
-      padding:14px 30px;
-      border-radius:999px;
-      font-family:Orbitron;
-      font-size:13px;
-      font-weight:700;
-      text-decoration:none;
-      background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-      color:#050015;
-      box-shadow:0 0 30px rgba(0,240,255,.45);
-      transition:.25s;
-    }
+.hero{
+  text-align:center;
+  padding:70px 20px 30px;
+}
 
-    .apply-btn:hover{
-      transform:translateY(-2px);
-      box-shadow:0 0 48px rgba(156,77,255,.7);
-    }
+.hero h1{
+  font-family:Orbitron;
+  font-size:2.4rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:14px;
+}
 
-    .footer{
-      margin-top:26px;
-      font-size:12px;
-      opacity:.55;
-    }
-  </style>
+.hero p{
+  color:var(--text-light);
+  max-width:650px;
+  margin:auto;
+}
+
+/* FORM CARD */
+
+.form-container{
+  max-width:1100px;
+  margin:40px auto;
+  padding:0 20px 60px;
+}
+
+.form-card{
+  background:var(--glass);
+  border-radius:20px;
+  padding:20px;
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 0 40px rgba(0,240,255,0.08);
+}
+
+iframe{
+  width:100%;
+  height:900px;
+  border:none;
+  border-radius:12px;
+}
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  padding:30px 20px;
+  color:#9aa0c5;
+  font-size:.9rem;
+  border-top:1px solid rgba(255,255,255,0.08);
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+.hero h1{
+  font-size:1.8rem;
+}
+
+iframe{
+  height:1000px;
+}
+
+}
+
+</style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="brand">Zep Swipe</div>
-    <button class="home-btn" onclick="location.href='index.html'" title="Home">⌂</button>
+<header>
+
+  <div class="logo">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png" alt="Zep Swipe Logo">
+    <span>Zep Swipe</span>
   </div>
 
-  <!-- CONTENT CARD -->
-  <div class="card">
-    <div class="subtitle">Campus Ambassador Program</div>
+  <button class="home-btn" onclick="location.href='index.html'">Home</button>
 
-    <div class="highlight">
-      Help students learn by doing, publish public proof of work on Zora,  
-      earn on-chain rewards, and graduate into paid freelancing.
-    </div>
+</header>
 
-    <ul>
-      <li>🎓 Onboard real university students</li>
-      <li>🧠 Guide them through the 21-day skill challenge</li>
-      <li>🌍 Build a student creator economy on-chain</li>
-      <li>💸 Earn rewards based on real progress & impact</li>
-    </ul>
+<section class="hero">
 
-    <div class="instructions">
-      This is an impact-driven role for students who care about skill-building,  
-      community, and helping others grow.  
-      <br><br>
-      Apply below — shortlisted candidates will be contacted.
-    </div>
+  <h1>Become a Campus Ambassador 🚀</h1>
 
-    <a
-      href="https://forms.gle/VQvmePa6y6Xa9thS9"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="apply-btn"
-    >
-      Apply as Campus Ambassador →
-    </a>
+  <p>
+    Join Zep Swipe’s founding ambassador program. Help students access opportunities,
+    build leadership skills, and shape the future of work on your campus.
+  </p>
 
-    <div class="footer">
-      Zep Swipe · Student-First Creator Economy · Built in Africa, usable globally
-    </div>
+</section>
+
+<section class="form-container">
+
+  <div class="form-card">
+
+    <iframe src="https://forms.gle/mbN2fQiEY2i7f8QC9"></iframe>
+
   </div>
+
+</section>
+
+<footer>
+
+  © 2026 Zep Swipe — Building Africa’s Future of Work
+
+</footer>
 
 </body>
 </html>
