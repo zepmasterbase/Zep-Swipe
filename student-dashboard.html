@@ -13,12 +13,11 @@
   --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,.08);
-  --text-light:rgba(255,255,255,.85);
   --verified-green:#39ff14;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden;}
+body{background:var(--bg);color:#fff;min-height:100vh;}
 
 header{
   display:flex;justify-content:space-between;align-items:center;
@@ -29,23 +28,20 @@ header{
 
 .brand{
   display:flex;align-items:center;gap:10px;
-  font-family:Orbitron;font-size:1.4rem;
+  font-family:Orbitron;font-size:1.5rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 
 .brand img{
-  width:34px;
+  width:34px;height:34px;border-radius:8px;
 }
 
 .logout-btn{
   background:rgba(255,255,255,.1);
   border:none;border-radius:50%;
   width:38px;height:38px;color:#fff;
-  cursor:pointer;transition:.3s;
-}
-.logout-btn:hover{
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  cursor:pointer;
 }
 
 .dashboard{
@@ -66,15 +62,15 @@ header{
 
 .section h3{
   font-family:Orbitron;
-  margin-bottom:14px;
+  margin-bottom:12px;
 }
 
-/* PROFILE */
 .profile-summary{
   display:flex;
-  gap:16px;
   align-items:center;
-  flex-wrap:wrap;
+  gap:16px;
+  background:linear-gradient(90deg,rgba(0,240,255,.1),rgba(156,77,255,.1));
+  border-radius:16px;
 }
 
 .profile-summary img{
@@ -82,46 +78,41 @@ header{
   border:2px solid rgba(255,255,255,.3);
 }
 
-.profile-info h3{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
+.profile-info span{font-size:.9rem;}
 
 .verified-badge{
   width:16px;height:16px;
   background:var(--verified-green);
   border-radius:50%;
+  display:inline-block;
   box-shadow:0 0 8px var(--verified-green);
 }
 
 /* WALLET GLOW */
 .wallet-glow{
-  animation:walletGlow 1s ease;
+  animation:walletPulse 1.5s ease;
 }
-@keyframes walletGlow{
-  0%{text-shadow:0 0 0px transparent;}
-  50%{text-shadow:0 0 12px var(--zep-blue);}
-  100%{text-shadow:0 0 0px transparent;}
+@keyframes walletPulse{
+  0%{text-shadow:0 0 0px var(--zep-blue);}
+  50%{text-shadow:0 0 20px var(--zep-blue);}
+  100%{text-shadow:0 0 0px var(--zep-blue);}
 }
 
-/* READINESS METER */
-.meter{
-  margin-top:12px;
+/* FREELANCER SCORE */
+.score-meter{
+  height:20px;
+  border-radius:12px;
   background:rgba(255,255,255,.1);
-  border-radius:30px;
   overflow:hidden;
-  height:18px;
+  margin-top:8px;
 }
-
-.meter-fill{
+.score-fill{
   height:100%;
   width:0%;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  transition:1s ease;
+  transition:width 1s ease;
 }
 
-/* GRAPH */
 .graph-box{
   display:flex;
   align-items:flex-end;
@@ -133,7 +124,7 @@ header{
   flex:1;
   background:linear-gradient(180deg,var(--zep-blue),var(--zep-violet));
   border-radius:8px 8px 0 0;
-  transition:.3s;
+  position:relative;
 }
 
 .actions{
@@ -143,32 +134,14 @@ header{
 }
 
 .actions button{
-  border:none;border-radius:16px;padding:18px;
+  border:none;border-radius:16px;
+  padding:18px;
   font-family:Orbitron;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  cursor:pointer;color:#050015;
-  font-weight:600;font-size:.9rem;
-  transition:.3s;
-}
-.actions button:hover{
-  transform:translateY(-4px);
-}
-
-#zepAIButton{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  width:60px;height:60px;
-  border-radius:50%;
-  border:none;
-  font-size:24px;
   cursor:pointer;
-  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  animation:pulse 2s infinite;
-}
-@keyframes pulse{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.1);}
+  color:#050015;
+  font-weight:600;
+  font-size:.95rem;
 }
 
 @media(max-width:480px){
@@ -176,12 +149,11 @@ header{
 }
 </style>
 </head>
-
 <body>
 
 <header>
   <div class="brand">
-    <img src="logo.png">
+    <img src="logo.png" alt="Zep Swipe Logo">
     Zep Swipe
   </div>
   <button class="logout-btn" onclick="logout()">⎋</button>
@@ -189,124 +161,150 @@ header{
 
 <div class="dashboard">
 
-<div class="section profile-summary">
-  <img id="profileImg" src="">
-  <div class="profile-info">
-    <h3 id="studentName">Student <span id="verifiedBadge" style="display:none;" class="verified-badge"></span></h3>
-    <div id="studentLevel">Beginner Freelancer</div>
-    <div id="completionText">Profile Completion: 0%</div>
-    <div id="walletBalance">Wallet: 0 ZAC (~$0)</div>
+  <!-- PROFILE SUMMARY -->
+  <div class="section profile-summary">
+    <img id="profileImg" src="https://via.placeholder.com/80">
+    <div class="profile-info">
+      <h3 id="studentName">
+        Student Name 
+        <span id="verifiedBadge" style="display:none;" class="verified-badge"></span>
+      </h3>
+      <span id="studentLevel">Beginner Freelancer</span><br>
+      <span id="completionText">Profile Completion: 0%</span><br>
+      <span id="walletBalance">Wallet: 0 ZAC (~$0)</span>
 
-    <div style="margin-top:10px;">Freelancer Readiness Score</div>
-    <div class="meter">
-      <div class="meter-fill" id="readinessFill"></div>
+      <div style="margin-top:10px;">
+        <strong>Freelancer Readiness Score</strong>
+        <div class="score-meter">
+          <div class="score-fill" id="scoreFill"></div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="section">
-  <h3>Weekly Earnings</h3>
-  <div class="graph-box" id="weeklyGraph"></div>
-</div>
+  <!-- WEEKLY EARNINGS -->
+  <div class="section">
+    <h3>Weekly Earnings</h3>
+    <div class="graph-box" id="weeklyGraph"></div>
+  </div>
 
-<div class="section actions">
-  <button onclick="location.href='learn-earn.html'">📚 Earn & Verify</button>
-  <button onclick="location.href='swipe-merchants.html'">💼 Jobs</button>
-  <button onclick="location.href='wallet.html'">💰 Wallet</button>
-  <button onclick="location.href='profile.html'">👤 Profile</button>
-  <button onclick="location.href='deals.html'">🎉 Deals</button>
-</div>
+  <!-- QUICK ACTIONS -->
+  <div class="section actions">
+    <button onclick="location.href='learn-earn.html'">📚 Earn & Verify</button>
+    <button onclick="location.href='swipe-merchants.html'">💼 Jobs</button>
+    <button onclick="location.href='wallet.html'">💰 Wallet</button>
+    <button onclick="location.href='profile.html'">👤 Profile</button>
+    <button onclick="location.href='deals.html'">🎉 Deals Day</button>
+  </div>
 
 </div>
-
-<button id="zepAIButton" onclick="location.href='zep-ai.html'">🤖</button>
 
 <script>
+
+// ================= SESSION SAFE =================
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
-if(!currentUserId || !users[currentUserId]) location.href="login.html";
+
+if(!currentUserId || !users[currentUserId]){
+  location.href="login.html";
+}
+
 let currentUser = users[currentUserId];
 
+// ================= LOGOUT =================
 function logout(){
   localStorage.removeItem("currentUserId");
   location.href="login.html";
 }
 
-const profileImg = document.getElementById("profileImg");
-const studentName = document.getElementById("studentName");
-const studentLevel = document.getElementById("studentLevel");
-const completionText = document.getElementById("completionText");
-const walletBalance = document.getElementById("walletBalance");
-const verifiedBadge = document.getElementById("verifiedBadge");
-const readinessFill = document.getElementById("readinessFill");
+// ================= PROFILE =================
+document.getElementById("profileImg").src = currentUser.profileImage || "https://via.placeholder.com/80";
+document.getElementById("studentName").childNodes[0].nodeValue = currentUser.name || "Student Name";
+document.getElementById("studentLevel").innerText = currentUser.level || "Beginner Freelancer";
 
-profileImg.src = currentUser.profileImage || "https://via.placeholder.com/80";
-studentName.innerText = currentUser.name || "Student";
-studentLevel.innerText = currentUser.level || "Beginner Freelancer";
-
-function calculateCompletion(){
-  const learnData = currentUser.learnEarnProgress || {};
-  let totalTasks = 0;
-  let completed = 0;
-
-  Object.values(learnData).forEach(course=>{
-    totalTasks += 21;
-    completed += course.completedDays?.length || 0;
-  });
-
-  const percent = totalTasks ? Math.round((completed/totalTasks)*100) : 0;
-  currentUser.profileCompletion = percent;
-  return percent;
+if(currentUser.verified){
+  document.getElementById("verifiedBadge").style.display="inline-block";
 }
+
+// ================= LIVE WALLET SYNC =================
+let lastBalance = 0;
 
 function updateWalletLive(){
-  let newBalance = currentUser.walletBalance || 0;
-  walletBalance.innerText = `Wallet: ${newBalance} ZAC (~$${(newBalance*0.014).toFixed(2)})`;
 
-  if(window.lastBalance && newBalance > window.lastBalance){
-    walletBalance.classList.add("wallet-glow");
-    setTimeout(()=>walletBalance.classList.remove("wallet-glow"),1000);
+  // Wallet structure safe fallback
+  const wallet = currentUser.wallet || {};
+  const zac = wallet.zac || 0;
+  const usd = wallet.usd || (zac * 0.014);
+
+  document.getElementById("walletBalance").innerText =
+    `Wallet: ${zac} ZAC (~$${usd.toFixed(2)})`;
+
+  // Glow animation when balance increases
+  if(zac > lastBalance){
+    const walletEl = document.getElementById("walletBalance");
+    walletEl.classList.add("wallet-glow");
+    setTimeout(()=>walletEl.classList.remove("wallet-glow"),1500);
   }
-  window.lastBalance = newBalance;
+
+  lastBalance = zac;
 }
 
-function calculateReadiness(){
-  const completion = currentUser.profileCompletion || 0;
-  const verified = currentUser.verified ? 20 : 0;
-  const walletPower = Math.min((currentUser.walletBalance||0)/10,20);
-  const score = Math.min(completion + verified + walletPower,100);
-  readinessFill.style.width = score + "%";
-}
+// Auto sync every 2 seconds
+setInterval(()=>{
+  users = JSON.parse(localStorage.getItem("users")) || {};
+  currentUser = users[currentUserId];
+  if(currentUser){
+    updateWalletLive();
+  }
+},2000);
 
-function updateDashboard(){
-  let percent = calculateCompletion();
-  completionText.innerText = `Profile Completion: ${percent}%`;
-  if(percent >= 80) {
-    verifiedBadge.style.display = "inline-block";
+updateWalletLive();
+
+// ================= PROFILE COMPLETION FROM LEARN & EARN =================
+function calculateCompletion(){
+
+  const courses = currentUser.learnEarn || {};
+  let totalDays = 0;
+  let completedDays = 0;
+
+  Object.values(courses).forEach(course=>{
+    totalDays += 21;
+    completedDays += (course.completedDays || 0);
+  });
+
+  const percent = totalDays ? Math.floor((completedDays/totalDays)*100) : 0;
+
+  document.getElementById("completionText").innerText =
+    `Profile Completion: ${percent}%`;
+
+  document.getElementById("scoreFill").style.width = percent + "%";
+
+  // Auto level upgrade
+  if(percent >= 80){
+    currentUser.level = "Verified Global Freelancer";
     currentUser.verified = true;
+    document.getElementById("verifiedBadge").style.display="inline-block";
+  }else if(percent >= 40){
+    currentUser.level = "Intermediate Freelancer";
   }
-  updateWalletLive();
-  calculateReadiness();
+
   users[currentUserId] = currentUser;
   localStorage.setItem("users", JSON.stringify(users));
 }
 
-updateDashboard();
+calculateCompletion();
 
-window.addEventListener("storage", ()=>{
-  users = JSON.parse(localStorage.getItem("users")) || {};
-  currentUser = users[currentUserId];
-  updateDashboard();
-});
-
+// ================= WEEKLY GRAPH =================
 const weeklyGraph = document.getElementById("weeklyGraph");
-const earnings = currentUser.earningsHistory || [5,10,15,8,20,12,25];
+const earnings = currentUser.earningsHistory || [5,12,8,20,10,15,25];
+
 earnings.forEach(val=>{
   const bar = document.createElement("div");
   bar.className="graph-bar";
-  bar.style.height = val*4 + "px";
+  bar.style.height=(val*4)+"px";
   weeklyGraph.appendChild(bar);
 });
+
 </script>
 
 </body>
