@@ -24,14 +24,6 @@ header{display:flex;justify-content:space-between;align-items:center;padding:16p
 .profile{display:flex;align-items:center;gap:14px;background:var(--glass);padding:14px;border-radius:14px;}
 .profile img{width:70px;height:70px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
 .profile h3{font-family:Orbitron;margin-bottom:2px;}
-.dashboard-overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:16px;}
-.dashboard-course{background:var(--glass);padding:16px;border-radius:14px;position:relative;transition:.3s;}
-.dashboard-course h4{margin-bottom:6px;}
-.verified-badge{position:absolute;top:10px;right:10px;color:var(--green);font-weight:700;}
-.progress-bar{height:12px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:6px;}
-.progress-fill{height:100%;border-radius:999px;background:var(--green);width:0%;transition:.5s;}
-.zac-bar{height:12px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:6px;}
-.zac-fill{height:100%;border-radius:999px;background:var(--yellow);width:0%;transition:.5s;}
 .courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
 .course{background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));border-radius:18px;border:1px solid rgba(255,255,255,.12);padding:18px;cursor:pointer;position:relative;overflow:hidden;transition:transform .3s, box-shadow .3s;animation: pulseBG 2s infinite alternate;}
 .course:hover{transform:translateY(-6px);box-shadow:0 0 30px var(--blue),0 0 50px var(--violet);}
@@ -41,13 +33,21 @@ header{display:flex;justify-content:space-between;align-items:center;padding:16p
 .task{background:rgba(255,255,255,.05);padding:14px;border-radius:14px;margin-bottom:12px;position:relative;}
 .task.completed{opacity:.6;}
 .task button{margin-top:10px;padding:10px 14px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--violet));color:#050015;font-family:Orbitron;}
+.progress-bar{height:12px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:6px;}
+.progress-fill{height:100%;border-radius:999px;background:var(--green);width:0%;transition:.5s;}
+.zac-bar{height:12px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:6px;}
+.zac-fill{height:100%;border-radius:999px;background:var(--yellow);width:0%;transition:.5s;}
 .freelancer-score{background:var(--glass);padding:16px;border-radius:18px;text-align:center;margin-top:12px;}
+.dashboard-progress{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;}
+.dashboard-course{flex:1 1 260px;background:var(--glass);padding:14px;border-radius:14px;position:relative;transition:.3s;}
+.dashboard-course h4{margin-bottom:6px;}
+.verified-badge{position:absolute;top:10px;right:10px;color:var(--green);font-weight:700;}
 .modal-bg{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:999;}
 .modal{background:var(--glass);padding:24px;border-radius:16px;max-width:400px;width:90%;position:relative;}
 .modal input{width:100%;padding:10px;border-radius:10px;border:none;margin-bottom:12px;}
 .modal button{padding:10px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--violet));color:#050015;font-family:Orbitron;cursor:pointer;}
 .modal .close-btn{position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;font-weight:700;color:#fff;}
-@media(max-width:600px){.profile{flex-direction:column;text-align:center;}.courses{grid-template-columns:1fr;}.dashboard-overview{grid-template-columns:1fr;}}
+@media(max-width:600px){.profile{flex-direction:column;text-align:center;}.courses{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -66,9 +66,6 @@ header{display:flex;justify-content:space-between;align-items:center;padding:16p
       <span id="studentUniversity"></span>
     </div>
   </div>
-
-  <!-- DASHBOARD OVERVIEW -->
-  <div class="dashboard-overview" id="dashboardOverview"></div>
 
   <div class="courses" id="courseList"></div>
 
@@ -103,8 +100,56 @@ profileImg.src=user.profileImage||"https://via.placeholder.com/80";
 document.getElementById('studentName').innerText=user.name;
 document.getElementById('studentUniversity').innerText=user.university||"";
 
-// ======= COURSES & TASKS (same 21 realistic tasks as before) =======
-const coursesData = {/* same as previous 8 courses with 21 tasks */};
+// ======= COURSES & TASKS =======
+const coursesData = {
+  "Virtual Assistant":[
+    "Intro video on Zora","Organize inbox & schedule","Client research report","Scheduling tool demo",
+    "Admin workflow task","Draft client emails","Communication demo","Daily task tracking",
+    "Virtual meeting setup","Project tracking","Calendar organization","Project documentation",
+    "Workflow charts","Automated reminders","Client request simulation","Time management task",
+    "Follow-up emails","Conflict resolution task","Weekly report","Portfolio compilation","Final verification"
+  ],
+  "Data Entry":[
+    "Intro video on Zora","Spreadsheet example","CRM data entry","Data cleanup","Accuracy test","Validation report",
+    "Pivot table","CSV import/export","Data formatting","Report generation","Data analysis","Database update",
+    "Multiple sheets","Data visualization","Portfolio compilation","Final verification","Reporting demo","Automation task",
+    "Pre-final assessment","Final evaluation","Final verification"
+  ],
+  "Student Travel Agent 🌍":[
+    "Intro video","Destination research","Tour package design","Booking workflow","Customer service simulation",
+    "Promotion task","Collect feedback","Pricing/payment demo","Photography & content","Safety checklist",
+    "Transport planning","Roleplay client","Marketing campaign","Travel guide","Mini-event design","Booking management",
+    "Offer promotion","Booking results","Portfolio compilation","Pre-final assessment","Final verification"
+  ],
+  "Graphic Design Foundation":[
+    "Intro video","Logo design","Business card mockup","Poster design","Social media banner","Typography task",
+    "Color palette","Illustration","UI elements","Icon set","Flyer design","Brand identity","Infographic","Web banner",
+    "Mood board","Digital illustration","Layout project","Packaging design","Portfolio compilation","Pre-final assessment","Final verification"
+  ],
+  "Web & No-Code Development":[
+    "Intro video","Homepage mockup","Multi-page website","Form integration","Responsive layout","Interactive buttons",
+    "Deploy site","Blog page","Portfolio project","Landing page","API integration","CSS styling","Web animation","No-code app",
+    "Landing page optimization","User testing","Debugging","Navigation","Portfolio dashboard","Pre-final assessment","Final verification"
+  ],
+  "AI & Prompt Engineering":[
+    "Intro video","Prompt examples","Fine-tuning","AI content generation","Results analysis","Prompt optimization",
+    "Multi-step prompt","Creative output","Model evaluation","AI workflow","Document process","Share insights",
+    "Portfolio AI","Scenario testing","AI design","Automation workflow","Chatbot example","AI content","Portfolio compilation",
+    "Pre-final assessment","Final verification"
+  ],
+  "Digital Marketing & Ads":[
+    "Intro video","Social media ad","Google Ads mockup","Campaign planning","Email newsletter","Analytics report",
+    "SEO optimization","Content calendar","Ad copywriting","Brand awareness","Influencer plan","Marketing strategy",
+    "Landing page optimization","Paid ads review","Social media post","A/B testing","Marketing funnel","Campaign summary",
+    "Portfolio compilation","Pre-final assessment","Final verification"
+  ],
+  "Remote Customer Support":[
+    "Intro video","Support ticket simulation","Client email demo","Knowledge base article","Live chat demo","Email response",
+    "Customer satisfaction report","Troubleshooting","CRM demo","Feedback collection","Escalation scenario","Support process",
+    "Team coordination","Training module","Call simulation","Time management","Resolve complex issues","Report analysis",
+    "Portfolio compilation","Pre-final assessment","Final verification"
+  ]
+};
 
 // Initialize user.learnEarn
 if(!user.learnEarn){
@@ -113,36 +158,12 @@ if(!user.learnEarn){
   localStorage.setItem("users",JSON.stringify(users));
 }
 
-// ======= DASHBOARD RENDER =======
-function renderDashboard(){
-  const dash=document.getElementById("dashboardOverview");
-  dash.innerHTML="";
-  Object.keys(coursesData).forEach(course=>{
-    const compDays=user.learnEarn.completed.filter(c=>c.course===course).length;
-    const progress=Math.floor((compDays/21)*100);
-    const zac=compDays*25;
-    const verified=user.learnEarn.verifiedCourses.includes(course);
-    const div=document.createElement("div");
-    div.className="dashboard-course";
-    div.innerHTML=`
-      <h4>${course}</h4>
-      ${verified?'<span class="verified-badge">✔ Verified</span>':""}
-      <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
-      <div class="zac-bar"><div class="zac-fill" style="width:${(zac/525)*100}%"></div></div>
-      <span>ZAC: ${zac}</span>
-      <span>Progress: ${progress}%</span>
-    `;
-    dash.appendChild(div);
-  });
-}
-renderDashboard();
-
-// ======= RENDER COURSES & TASKS SAME AS PREVIOUS CODE =======
+// ======= RENDER COURSES =======
+const courseList=document.getElementById("courseList");
 let currentCourse=null;
 let selectedDay=null;
 let modalDay=null;
 
-const courseList=document.getElementById("courseList");
 function renderCourses(){
   courseList.innerHTML="";
   Object.keys(coursesData).forEach(course=>{
@@ -166,7 +187,6 @@ function selectCourse(course){
   users[currentUserId]=user;
   localStorage.setItem("users",JSON.stringify(users));
   renderTasks();
-  renderDashboard();
 }
 
 // ======= RENDER TASKS =======
@@ -215,12 +235,22 @@ function renderTasks(){
   });
 }
 
-// ======= MODAL & LINK SUBMISSION =======
-function openModal(day){modalDay=day;document.getElementById("modalBg").style.display="flex";}
-function closeModal(){modalDay=null;document.getElementById("taskLinkInput").value="";document.getElementById("modalBg").style.display="none";}
+// ======= MODAL =======
+function openModal(day){
+  modalDay=day;
+  document.getElementById("modalBg").style.display="flex";
+}
+function closeModal(){
+  modalDay=null;
+  document.getElementById("taskLinkInput").value="";
+  document.getElementById("modalBg").style.display="none";
+}
+
+// ======= CONFIRM ZORA LINK & REWARD ZAC =======
 function confirmLink(){
   const link=document.getElementById("taskLinkInput").value.trim();
   if(!link){alert("Please paste your Zora link."); return;}
+  // simple validation
   if(!link.startsWith("http")){alert("Invalid link."); return;}
 
   user.learnEarn.completed.push({course:currentCourse,day:modalDay,time:Date.now()});
@@ -229,16 +259,16 @@ function confirmLink(){
 
   if(modalDay===21 && !user.learnEarn.verifiedCourses.includes(currentCourse)){
     user.learnEarn.verifiedCourses.push(currentCourse);
-    alert("🎉 Final day completed! Verified freelancer for "+currentCourse+" ✅");
-    // TODO: Paystack/Momo integration here based on location
+    alert("🎉 Final day completed! You are now a verified freelancer for "+currentCourse);
+    // TODO: Integrate Paystack/Momo here based on user location
   }
 
   users[currentUserId]=user;
   localStorage.setItem("users",JSON.stringify(users));
   closeModal();
   renderTasks();
-  renderDashboard();
 }
+
 </script>
 </body>
 </html>
