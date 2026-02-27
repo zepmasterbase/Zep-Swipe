@@ -145,8 +145,8 @@ header{
 <div class="modal-bg" id="modalBg">
   <div class="modal">
     <span class="close-btn" onclick="closeModal()">×</span>
-    <h3 id="modalTitle">Submit Your Link</h3>
-    <input type="url" id="taskLinkInput" placeholder="Paste your Zora or Portfolio link" />
+    <h3 id="modalTitle">Submit Your Portfolio Link</h3>
+    <input type="url" id="taskLinkInput" placeholder="Paste your Zora portfolio link" />
     <button onclick="confirmLink()">Submit</button>
   </div>
 </div>
@@ -165,29 +165,40 @@ document.getElementById('studentName').innerText=user.name;
 document.getElementById('studentUniversity').innerText=user.university||"";
 
 /* ======================
-   COURSES DATA
+   COURSES DATA - Real portfolio exercises
 ====================== */
 const coursesData = {
-  "Virtual Assistant":[],
-  "Data Entry":[],
-  "Student Travel Agent 🌍":[],
-  "Graphic Design Foundation":[],
-  "Web & No-Code Development":[],
-  "AI & Prompt Engineering":[],
-  "Digital Marketing & Ads":[],
-  "Remote Customer Support":[]
+  "Virtual Assistant": [
+    "Organize a client's inbox & schedule demo task on Zora",
+    "Perform client research & submit report on Zora",
+    "Schedule appointments using tools & post proof",
+    "Create admin workflow example & upload link",
+    "Simulate client communication & submit example",
+    "Manage sample project & share link",
+    "Create virtual assistant portfolio task 7",
+    "Portfolio task 8",
+    "Portfolio task 9",
+    "Portfolio task 10",
+    "Portfolio task 11",
+    "Portfolio task 12",
+    "Portfolio task 13",
+    "Portfolio task 14",
+    "Portfolio task 15",
+    "Portfolio task 16",
+    "Portfolio task 17",
+    "Portfolio task 18",
+    "Portfolio task 19",
+    "Portfolio task 20",
+    "Portfolio task 21"
+  ],
+  "Data Entry": Array.from({length:21},(_,i)=> i===0 ? "Post intro video on Zora" : `Complete data entry portfolio exercise #${i} and submit link on Zora`),
+  "Student Travel Agent 🌍": Array.from({length:21},(_,i)=> i===0 ? "Post intro video on Zora" : `Complete travel agent portfolio task #${i} on Zora & submit link`),
+  "Graphic Design Foundation": Array.from({length:21},(_,i)=> i===0 ? "Post intro video on Zora" : `Complete graphic design portfolio task #${i} on Zora & submit link`),
+  "Web & No-Code Development": Array.from({length:21},(_,i)=> i===0 ? "Post intro video on Zora" : `Complete web/no-code dev portfolio task #${i} on Zora & submit link`),
+  "AI & Prompt Engineering": Array.from({length:21},(_,i)=> i===0 ? "Post intro video on Zora" : `Complete AI & prompt engineering portfolio task #${i} on Zora & submit link`),
+  "Digital Marketing & Ads": Array.from({length:21},(_,i)=> i===0 ? "Post intro video on Zora" : `Complete marketing & ads portfolio task #${i} on Zora & submit link`),
+  "Remote Customer Support": Array.from({length:21},(_,i)=> i===0 ? "Post intro video on Zora" : `Complete remote support portfolio task #${i} on Zora & submit link`)
 };
-
-// Generate 21-day structured tasks per course
-for(let course in coursesData){
-  for(let day=1;day<=21;day++){
-    if(day===1){
-      coursesData[course].push(`Post an intro video of yourself and why you chose ${course} on Zora & submit the link here`);
-    } else {
-      coursesData[course].push(`Day ${day}: Complete a portfolio exercise related to ${course} on Zora & submit the link`);
-    }
-  }
-}
 
 // Initialize user.learnEarn if missing
 if(!user.learnEarn){
