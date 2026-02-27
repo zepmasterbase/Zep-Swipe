@@ -4,21 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Learn & Earn</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500,600&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --blue:#00f0ff;
   --violet:#9c4dff;
-  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,.08);
   --green:#00ff94;
   --yellow:#ffcc00;
-  --light:#fff;
+  --red:#ff4c4c;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,.08);
 }
 
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:var(--light);min-height:100vh;display:flex;flex-direction:column;}
+body{background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-direction:column;}
 
 /* HEADER */
 header{
@@ -37,11 +38,12 @@ header{
 }
 
 /* CONTAINER */
-.container{max-width:1100px;margin:auto;padding:16px;display:flex;flex-direction:column;gap:22px;}
+.container{max-width:1200px;margin:auto;padding:16px;display:flex;flex-direction:column;gap:22px;}
 
 /* PROFILE */
 .profile{
-  display:flex;align-items:center;gap:14px;background:var(--glass);padding:14px;border-radius:14px;flex-wrap:wrap;
+  display:flex;align-items:center;gap:14px;background:var(--glass);padding:14px;border-radius:14px;
+  flex-wrap:wrap;
 }
 .profile img{width:70px;height:70px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
 .profile h3{font-family:Orbitron;}
@@ -49,41 +51,45 @@ header{
 .profile .stats div{margin-bottom:4px;}
 
 /* PORTFOLIO DASHBOARD */
-.portfolio{background:var(--glass);padding:16px;border-radius:18px;margin-bottom:20px;}
-.portfolio h3{font-family:Orbitron;margin-bottom:10px;}
-.portfolio .course-progress{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.portfolio .progress-bar{flex:1;height:12px;background:rgba(255,255,255,.1);border-radius:6px;margin:0 10px;overflow:hidden;}
-.portfolio .progress-fill{height:100%;background:var(--green);width:0%;transition:.5s;}
-.portfolio .verified-badge{color:var(--green);font-weight:600;}
+.portfolio{background:var(--glass);padding:16px;border-radius:18px;margin-bottom:20px;overflow:hidden;}
+.portfolio h3{font-family:Orbitron;margin-bottom:10px;text-align:center;}
+.portfolio .course-progress{margin-bottom:12px;}
+.portfolio .progress-label{display:flex;justify-content:space-between;font-size:0.9rem;margin-bottom:4px;}
+.portfolio .progress-bar{width:100%;height:12px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;}
+.portfolio .progress-fill{height:100%;width:0%;border-radius:6px;transition:width 0.8s ease;}
+.portfolio .verified-badge{font-weight:600;margin-left:6px;}
 
-/* COURSES GRID */
+/* COURSES */
 .courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;}
-.course{background:var(--glass);padding:18px;border-radius:18px;border:1px solid rgba(255,255,255,.12);cursor:pointer;transition:.3s;position:relative;}
-.course:hover{transform:translateY(-6px);box-shadow:0 0 25px var(--blue),0 0 40px var(--violet);}
+.course{background:var(--glass);padding:18px;border-radius:18px;border:1px solid rgba(255,255,255,.12);cursor:pointer;transition:.5s transform, .5s box-shadow;position:relative;}
+.course:hover{transform:translateY(-8px);box-shadow:0 0 30px var(--blue),0 0 50px var(--violet);}
 .course h4{font-family:Orbitron;margin-bottom:6px;}
 .course span{font-size:.85rem;opacity:.8;}
 
 /* TASKS */
 .tasks{background:var(--glass);padding:18px;border-radius:18px;}
-.task{background:rgba(255,255,255,.05);padding:14px;border-radius:14px;margin-bottom:12px;position:relative;}
-.task.completed{opacity:.5;}
+.task{background:rgba(255,255,255,.05);padding:14px;border-radius:14px;margin-bottom:12px;position:relative;transition:.4s transform, .4s box-shadow;}
+.task:hover{transform:translateY(-4px);box-shadow:0 0 15px var(--blue),0 0 25px var(--violet);}
+.task.completed{opacity:.6;}
 .task.locked{opacity:.4;}
 .task button{margin-top:10px;padding:10px 14px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--violet));cursor:pointer;font-family:Orbitron;}
 .task .timer{font-size:.8rem;color:var(--yellow);margin-top:6px;}
+
+/* FREELANCER READINESS SCORE */
+.score-container{background:var(--glass);padding:16px;border-radius:18px;margin-bottom:20px;text-align:center;}
+.score-container h3{margin-bottom:10px;font-family:Orbitron;}
+.score-bar{width:80%;height:20px;background:rgba(255,255,255,.1);border-radius:10px;margin:auto;overflow:hidden;}
+.score-fill{height:100%;width:0%;border-radius:10px;background:linear-gradient(90deg,var(--blue),var(--green));transition:width 1s ease;}
+.score-text{margin-top:6px;font-weight:600;}
 
 /* ZAC */
 .zac{text-align:center;font-family:Orbitron;color:var(--green);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
 
 /* RESPONSIVE */
-@media(max-width:600px){
-  .profile{flex-direction:column;text-align:center}
-  .profile .stats{text-align:center;margin-left:0;}
-  .courses{grid-template-columns:1fr;}
-}
+@media(max-width:600px){.profile{flex-direction:column;text-align:center}.profile .stats{text-align:center;margin-left:0;}}
 </style>
 </head>
-
 <body>
 
 <header>
@@ -105,6 +111,13 @@ header{
       <div id="verifiedBadge"></div>
       <div id="completionPercent"></div>
     </div>
+  </div>
+
+  <!-- FREELANCER READINESS -->
+  <div class="score-container">
+    <h3>Freelancer Readiness Score</h3>
+    <div class="score-bar"><div class="score-fill" id="readinessFill"></div></div>
+    <div class="score-text" id="readinessText">0%</div>
   </div>
 
   <!-- PORTFOLIO DASHBOARD -->
@@ -133,17 +146,10 @@ if(!currentUserId || !users[currentUserId]) location.href="login.html";
 let user = users[currentUserId];
 
 // Initialize Learn & Earn if not exists
-const courseNames = [
-  "Virtual Assistant","Data Entry","Student Travel Agent 🌍",
-  "Graphic Design Foundation","Web & No-Code Development",
-  "AI & Prompt Engineering","Digital Marketing & Ads","Remote Customer Support"
-];
-
 if(!user.learnEarn){
   user.learnEarn = {};
-  courseNames.forEach(course=>user.learnEarn[course]={
-    completed:[], lastCompleted:null, zac:0, verified:false
-  });
+  const allCourses=["Virtual Assistant","Data Entry","Student Travel Agent 🌍","Graphic Design Foundation","Web & No-Code Development","AI & Prompt Engineering","Digital Marketing & Ads","Remote Customer Support"];
+  allCourses.forEach(c=>user.learnEarn[c]={completed:[],lastCompleted:null,zac:0,verified:false});
   localStorage.setItem("users",JSON.stringify(users));
 }
 
@@ -155,58 +161,17 @@ document.getElementById("studentName").innerText = user.name;
 document.getElementById("studentUniversity").innerText = user.university || "";
 
 /* ======================
-   COURSES DATA
+   COURSES DATA (21 Tasks Each)
 ====================== */
 const coursesData = {
-  "Virtual Assistant":[
-    "Inbox & calendar management","Client research","Scheduling tools","Admin workflow","Client simulation",
-    "Email handling","Client communication","Time tracking","Task prioritization","Automation basics",
-    "Document templates","Project workflow","Calendar optimization","Client reporting","Efficiency hacks",
-    "Advanced scheduling","Client negotiation","Portfolio project 1","Portfolio project 2","Portfolio review","Final evaluation"
-  ],
-  "Data Entry":[
-    "Spreadsheet basics","CRM tools","Accuracy training","Speed drills","Client simulation",
-    "Database cleanup","Data validation","Form automation","Reporting","Analytics basics",
-    "Record management","Data visualization","Client project 1","Client project 2","Portfolio compilation",
-    "Error minimization","Workflow optimization","Portfolio review","Final assessment","Verified Data Entry badge"
-  ],
-  "Student Travel Agent 🌍":[
-    "Record intro video + submit to Zora + link","Local sightseeing research","Customer service basics",
-    "Promote local experiences online","Simulate booking workflow","Cultural tips","Guide for 1 spot",
-    "Photography & content","Travel safety checklist","Virtual tour practice","Marketing services","Transport planning",
-    "Design sample package","Roleplay traveler","Collect feedback","Pricing & payment setup","List first tour",
-    "Promote to 5 friends","Receive first payment","Prepare next 3 tours","Final evaluation & verified badge"
-  ],
-  "Graphic Design Foundation":[
-    "Design principles","Color theory","Typography basics","Branding","UI graphics",
-    "Wireframes","Logo design","Illustration basics","Portfolio project 1","Portfolio project 2",
-    "Social media graphics","Mock client project","Photo editing","Infographic design","Presentation design",
-    "Portfolio compilation","Advanced typography","Design review","Final assessment","Verified Designer badge","Extra bonus task"
-  ],
-  "Web & No-Code Development":[
-    "HTML basics","CSS basics","JS intro","Landing page project","Responsive design",
-    "Forms & interactivity","No-code platform intro","Database integration","Portfolio project 1","Portfolio project 2",
-    "API integration","Dynamic pages","Client mini-project","UI review","Advanced styling",
-    "Portfolio compilation","Final assessment","Verified Developer badge","Bonus integration","Extra bonus project","Capstone project"
-  ],
-  "AI & Prompt Engineering":[
-    "AI fundamentals","Prompt design basics","Experiment with ChatGPT","Prompt optimization","AI in workflow",
-    "Case study","Portfolio project 1","Portfolio project 2","Advanced prompts","Automation scripts",
-    "Content generation","Analysis project","Portfolio compilation","Review","Optimization techniques",
-    "Client mini-project","Evaluation","Verified AI badge","Final assessment","Capstone project","Extra task"
-  ],
-  "Digital Marketing & Ads":[
-    "Intro to marketing","Content strategy","Social media ads","SEO basics","Email campaigns",
-    "Analytics review","Campaign creation","Audience targeting","Portfolio project 1","Portfolio project 2",
-    "Ad optimization","Client mini-project","Marketing report","A/B testing","Conversion tracking",
-    "Portfolio compilation","Final assessment","Verified Marketer badge","Capstone project","Bonus campaign"
-  ],
-  "Remote Customer Support":[
-    "Intro to customer support","CRM basics","Live chat","Email support","Issue resolution",
-    "Soft skills","Client scenario practice","Ticket management","Portfolio project 1","Portfolio project 2",
-    "Customer satisfaction review","Feedback analysis","Advanced tools","Communication review","Workflow optimization",
-    "Portfolio compilation","Final assessment","Verified Support badge","Capstone project","Bonus task"
-  ]
+  "Virtual Assistant":[/* 21 tasks */ "Inbox & calendar management","Client research","Scheduling tools","Admin workflow","Client simulation","Email handling","Client communication","Time tracking","Task prioritization","Automation basics","Document templates","Project workflow","Calendar optimization","Client reporting","Efficiency hacks","Advanced scheduling","Client negotiation","Portfolio project 1","Portfolio project 2","Portfolio review","Final evaluation"],
+  "Data Entry":[/* 21 tasks */"Spreadsheet basics","CRM tools","Accuracy training","Speed drills","Client simulation","Database cleanup","Data validation","Form automation","Reporting","Analytics basics","Record management","Data visualization","Client project 1","Client project 2","Portfolio compilation","Error minimization","Workflow optimization","Portfolio review","Final assessment","Verified Data Entry badge","Extra bonus task"],
+  "Student Travel Agent 🌍":[/* 21 tasks */"Record intro video + submit to Zora + link","Local sightseeing research","Customer service basics","Promote local experiences online","Simulate booking workflow","Cultural tips","Guide for 1 spot","Photography & content","Travel safety checklist","Virtual tour practice","Marketing services","Transport planning","Design sample package","Roleplay traveler","Collect feedback","Pricing & payment setup","List first tour","Promote to 5 friends","Receive first payment","Prepare next 3 tours","Final evaluation & verified badge"],
+  "Graphic Design Foundation":[/* 21 tasks */"Design principles","Color theory","Typography basics","Branding","UI graphics","Wireframes","Logo design","Illustration basics","Portfolio project 1","Portfolio project 2","Social media graphics","Mock client project","Photo editing","Infographic design","Presentation design","Portfolio compilation","Advanced typography","Design review","Final assessment","Verified Designer badge","Extra bonus task"],
+  "Web & No-Code Development":[/* 21 tasks */"HTML basics","CSS basics","JS intro","Landing page project","Responsive design","Forms & interactivity","No-code platform intro","Database integration","Portfolio project 1","Portfolio project 2","API integration","Dynamic pages","Client mini-project","UI review","Advanced styling","Portfolio compilation","Final assessment","Verified Developer badge","Bonus integration","Extra bonus project","Capstone project"],
+  "AI & Prompt Engineering":[/* 21 tasks */"AI fundamentals","Prompt design basics","Experiment with ChatGPT","Prompt optimization","AI in workflow","Case study","Portfolio project 1","Portfolio project 2","Advanced prompts","Automation scripts","Content generation","Analysis project","Portfolio compilation","Review","Optimization techniques","Client mini-project","Evaluation","Verified AI badge","Final assessment","Capstone project","Extra task"],
+  "Digital Marketing & Ads":[/* 21 tasks */"Intro to marketing","Content strategy","Social media ads","SEO basics","Email campaigns","Analytics review","Campaign creation","Audience targeting","Portfolio project 1","Portfolio project 2","Ad optimization","Client mini-project","Marketing report","A/B testing","Conversion tracking","Portfolio compilation","Final assessment","Verified Marketer badge","Capstone project","Bonus campaign"],
+  "Remote Customer Support":[/* 21 tasks */"Intro to customer support","CRM basics","Live chat","Email support","Issue resolution","Soft skills","Client scenario practice","Ticket management","Portfolio project 1","Portfolio project 2","Customer satisfaction review","Feedback analysis","Advanced tools","Communication review","Workflow optimization","Portfolio compilation","Final assessment","Verified Support badge","Capstone project","Bonus task"]
 };
 
 /* ======================
@@ -218,7 +183,7 @@ function renderCourses(){
   Object.keys(coursesData).forEach(course=>{
     const div=document.createElement("div");
     div.className="course";
-    const completed=user.learnEarn[course].completed.length;
+    let completed=user.learnEarn[course].completed.length;
     div.innerHTML=`<h4>${course}</h4><span>${completed}/21 Tasks Completed</span>`;
     div.onclick=()=>selectCourse(course);
     courseList.appendChild(div);
@@ -232,17 +197,25 @@ renderCourses();
 function renderPortfolio(){
   const portfolio=document.getElementById("portfolioDashboard");
   portfolio.innerHTML="<h3>Portfolio Progress</h3>";
+  let totalTasks=0, completedTasks=0;
   Object.keys(coursesData).forEach(course=>{
-    const progress = (user.learnEarn[course].completed.length/21*100).toFixed(0);
+    const courseTotal=21;
+    const courseCompleted=user.learnEarn[course].completed.length;
+    totalTasks+=courseTotal; completedTasks+=courseCompleted;
+    const progress=(courseCompleted/courseTotal*100).toFixed(0);
     const div=document.createElement("div");
     div.className="course-progress";
+    let color=progress<50?'var(--red)':progress<80?'var(--yellow)':'var(--green)';
     div.innerHTML=`
-      <span>${course}</span>
-      <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
-      <span class="verified-badge">${user.learnEarn[course].verified?"✔ Verified":""}</span>
+      <div class="progress-label"><span>${course}</span><span>${progress}% ${user.learnEarn[course].verified?"✔":""}</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${progress}%;background:${color}"></div></div>
     `;
     portfolio.appendChild(div);
   });
+  // Update Freelancer Readiness
+  const readiness=(completedTasks/totalTasks*100).toFixed(0);
+  document.getElementById("readinessFill").style.width=readiness+"%";
+  document.getElementById("readinessText").innerText=readiness+"%";
 }
 renderPortfolio();
 
@@ -250,19 +223,15 @@ renderPortfolio();
    COURSE SELECTION & TASKS
 ====================== */
 let currentCourse=null;
-function selectCourse(course){
-  currentCourse=course;
-  renderTasks();
-}
+function selectCourse(course){currentCourse=course; renderTasks();}
 
 const taskSection=document.getElementById("taskSection");
 const tasksContainer=document.getElementById("tasksContainer");
 function renderTasks(){
-  if(!currentCourse) return;
   taskSection.style.display="block";
   document.getElementById("courseTitle").innerText=currentCourse;
   tasksContainer.innerHTML="";
-  const today = new Date();
+  const today=new Date();
   const courseData=user.learnEarn[currentCourse];
   coursesData[currentCourse].forEach((taskText,index)=>{
     const day=index+1;
@@ -273,7 +242,7 @@ function renderTasks(){
     div.className="task"+(completed?" completed":"");
     let locked=false;
     if(day>1 && nextUnlock){
-      if(today < nextUnlock && !completed){
+      if(today<nextUnlock && !completed){
         locked=true; div.classList.add("locked");
         const diff=Math.floor((nextUnlock-today)/1000);
         const hrs=Math.floor(diff/3600); const mins=Math.floor((diff%3600)/60); const secs=diff%60;
@@ -287,7 +256,7 @@ function renderTasks(){
       btn.onclick=()=>submitTask(day);
       div.appendChild(btn);
     }
-    if(completed) div.innerHTML+=`<span style="color:#00ff94">✔ Completed</span>`;
+    if(completed){div.innerHTML+=`<span style="color:#00ff94">✔ Completed</span>`;}
     tasksContainer.appendChild(div);
   });
 }
@@ -298,28 +267,31 @@ function renderTasks(){
 function submitTask(day){
   const courseData=user.learnEarn[currentCourse];
   if(courseData.completed.includes(day)) return;
+
   if(day===1){
-    const zoraLink = prompt("Paste your Zora.co link for verification:");
-    if(!zoraLink || !zoraLink.includes("zora.co")){
-      alert("Invalid Zora link. Submit valid Zora link to complete Day 1.");
-      return;
-    }
+    const zoraLink=prompt("Paste your Zora.co link for verification:");
+    if(!zoraLink || !zoraLink.includes("zora.co")){alert("Invalid Zora link."); return;}
   }
+
   courseData.completed.push(day);
   courseData.lastCompleted=new Date();
-  courseData.zac = (courseData.zac||0)+25;
+  courseData.zac=(courseData.zac||0)+25;
+
+  // Auto verify Student Travel Agent final day
   if(currentCourse==="Student Travel Agent 🌍" && day===21){
-    alert("🎉 Completed Student Travel Agent. $15 verification pending. Final badge unlocked.");
+    alert("🎉 Completed Student Travel Agent. Eligible for verification ($15 payment).");
     courseData.verified=true;
   }
+
   users[currentUserId]=user;
   localStorage.setItem("users",JSON.stringify(users));
+
   document.getElementById("zacCounter").innerText="ZAC: "+Object.values(user.learnEarn).reduce((a,b)=>a.zac+a,0);
   renderTasks(); renderPortfolio(); renderCourses();
 }
 
 /* ======================
-   AUTO REFRESH TIMER
+   TIMER UPDATE
 ====================== */
 setInterval(()=>{if(currentCourse) renderTasks();},1000);
 </script>
