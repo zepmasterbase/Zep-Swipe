@@ -14,7 +14,6 @@
   --text-light:rgba(255,255,255,.85);
   --verified-green:#39ff14;
   --wallet-glow:#00ff94;
-  --card-gradient:linear-gradient(135deg, rgba(0,240,255,0.1), rgba(156,77,255,0.1));
 }
 
 /* RESET */
@@ -51,74 +50,134 @@ header{
 
 /* DASHBOARD LAYOUT */
 .dashboard{padding:16px;display:flex;flex-direction:column;gap:22px;max-width:1200px;margin:auto;}
-.section{background:var(--glass);border-radius:20px;padding:18px;border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(6px);}
-.section h3{font-family:Orbitron;margin-bottom:14px;}
+.section{background:var(--glass);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.12);}
+.section h3{font-family:Orbitron;margin-bottom:12px;}
 
 /* PROFILE */
 .profile-summary{
   display:flex;align-items:center;gap:16px;
-  background:var(--card-gradient);
-  padding:18px;border-radius:20px;
-  border:1px solid rgba(255,255,255,.12);
-  flex-wrap:wrap;
+  background:linear-gradient(90deg,rgba(0,240,255,.1),rgba(156,77,255,.1));
+  padding:16px;
+  border-radius:16px;
 }
 .profile-summary img{
   width:80px;height:80px;border-radius:50%;
   border:2px solid rgba(255,255,255,.3);
 }
-.profile-info{flex:1;display:flex;flex-direction:column;gap:6px;}
-.profile-info h3{margin:0;display:flex;align-items:center;gap:8px;font-size:1.25rem;}
-.profile-info span{font-size:.9rem;color:var(--text-light);}
+.profile-info h3{margin:0;display:flex;align-items:center;gap:8px;}
+.profile-info span{font-size:.85rem;color:var(--text-light);}
 .verified-badge{
-  width:18px;height:18px;background:var(--verified-green);border-radius:50%;
-  display:inline-block;box-shadow:0 0 8px var(--verified-green);
+  width:18px;height:18px;
+  background:var(--verified-green);
+  border-radius:50%;
+  display:inline-block;
+  box-shadow:0 0 8px var(--verified-green);
 }
 
 /* FREELANCER READINESS METER */
 .readiness-meter{
-  margin-top:4px;height:14px;width:100%;background:rgba(255,255,255,.1);
-  border-radius:999px;overflow:hidden;box-shadow:inset 0 0 4px rgba(0,0,0,.3);
+  margin-top:8px;
+  height:12px;
+  width:100%;
+  background:rgba(255,255,255,.1);
+  border-radius:999px;
+  overflow:hidden;
 }
 .readiness-fill{
-  height:100%;border-radius:999px;background:var(--wallet-glow);width:0%;transition:.6s;
+  height:100%;
+  border-radius:999px;
+  background:var(--wallet-glow);
+  width:0%;
+  transition:.6s;
 }
+
+/* HORIZONTAL CARD PLACEHOLDER SECTION */
+.horizontal-cards{
+  display:flex;
+  overflow-x:auto;
+  gap:16px;
+  padding-bottom:8px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156,77,255,.4) transparent;
+}
+.horizontal-cards::-webkit-scrollbar{height:8px;}
+.horizontal-cards::-webkit-scrollbar-track{background:transparent;}
+.horizontal-cards::-webkit-scrollbar-thumb{background:rgba(156,77,255,.4);border-radius:4px;}
+
+.card{
+  flex:0 0 220px;
+  background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+  padding:14px;
+  transition:transform .3s, box-shadow .3s;
+}
+.card:hover{transform:translateY(-4px);box-shadow:0 0 20px var(--zep-blue),0 0 30px var(--zep-violet);}
+.card h4{margin-bottom:6px;font-family:Orbitron;}
+.card p{font-size:.85rem;color:var(--text-light);line-height:1.2;}
 
 /* WEEKLY GRAPH */
 .graph-box{
   position:relative;height:180px;border-radius:14px;
-  background:var(--card-gradient);overflow:hidden;cursor:pointer;
-  display:flex;align-items:flex-end;gap:8px;padding:16px;flex-wrap:nowrap;
-  box-shadow:0 0 12px rgba(0,0,0,.4);
+  background:linear-gradient(135deg,rgba(0,240,255,.08),rgba(156,77,255,.08));
+  overflow:hidden;cursor:pointer;
+  display:flex;align-items:flex-end;gap:8px;padding:16px;
 }
 .graph-bar{
-  flex:1; margin:0 5px; border-radius:8px 8px 0 0;
-  position:relative; animation:pulseBar 2s infinite;
-  cursor:pointer; transition:.3s;
+  flex:1;
+  margin:0 4px;
   background:linear-gradient(180deg,var(--zep-blue),var(--zep-violet));
+  border-radius:8px 8px 0 0;
+  position:relative;
+  animation:pulseBar 2s infinite;
+  cursor:pointer;
+  transition:.3s;
 }
+.graph-bar:hover{transform:scaleY(1.1);}
 .graph-bar span{
-  position:absolute;top:-22px;left:50%;transform:translateX(-50%);
-  font-size:.75rem;color:var(--text-light);display:none;white-space:nowrap;
-  background:rgba(0,0,0,.6);padding:2px 6px;border-radius:6px;
+  position:absolute;
+  top:-22px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:.75rem;
+  color:var(--text-light);
+  display:none;
+  white-space:nowrap;
+  background:rgba(0,0,0,.6);
+  padding:2px 6px;
+  border-radius:6px;
 }
 .graph-bar:hover span{display:block;}
 @keyframes pulseBar{0%,100%{opacity:.7;}50%{opacity:1;}}
 
 /* QUICK ACTIONS */
 .actions{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:16px;
 }
 .actions button{
-  border:none;border-radius:20px;padding:18px;font-family:Orbitron;
-  background:var(--card-gradient);cursor:pointer;color:#050015;
-  font-weight:600;font-size:.95rem;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  transition:.3s;box-shadow:0 0 12px var(--zep-blue),0 0 24px var(--zep-violet);
+  border:none;border-radius:16px;padding:18px;
+  font-family:Orbitron;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  cursor:pointer;
+  color:#050015;
+  font-weight:600;
+  font-size:.95rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  transition:.3s;
+  box-shadow:0 0 12px var(--zep-blue),0 0 24px var(--zep-violet);
 }
 .actions button:hover{
   transform:translateY(-4px);
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
 }
-.actions button span{font-size:1.8rem;margin-bottom:6px;}
+.actions button span{
+  font-size:1.8rem;margin-bottom:6px;
+}
 
 /* FLOATING ZEP AI BUTTON */
 #zepAIButton{
@@ -128,15 +187,17 @@ header{
   width:60px;height:60px;cursor:pointer;
   font-size:24px;display:flex;justify-content:center;align-items:center;color:#050015;
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
-  animation:orbPulse 2s infinite; z-index:1000;
+  animation:orbPulse 2s infinite;
+  z-index:1000;
 }
 @keyframes orbPulse{0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
 
 /* RESPONSIVE */
-@media(max-width:480px){
+@media(max-width:600px){
   .profile-summary{flex-direction:column;align-items:center;text-align:center;}
+  .horizontal-cards{gap:12px;}
+  .card{flex:0 0 180px;}
   .actions{grid-template-columns:1fr;}
-  .graph-box{overflow-x:auto;}
 }
 </style>
 </head>
@@ -157,10 +218,18 @@ header{
     <img id="profileImg" src="https://via.placeholder.com/80">
     <div class="profile-info">
       <h3 id="studentName">Student Name <span id="verifiedBadge" class="verified-badge" style="display:none;"></span></h3>
-      <span id="studentLevel">Beginner Freelancer</span>
+      <span id="studentLevel">Beginner Freelancer</span><br>
       <span id="completionText">Profile Completion: 0%</span>
       <div class="readiness-meter"><div id="readinessFill" class="readiness-fill"></div></div>
       <span id="walletBalance">Wallet: 0 ZAC (~$0)</span>
+    </div>
+  </div>
+
+  <!-- HORIZONTAL CARDS -->
+  <div class="section">
+    <h3>Courses & Progress</h3>
+    <div class="horizontal-cards" id="horizontalCards">
+      <!-- JS will populate cards -->
     </div>
   </div>
 
@@ -181,7 +250,6 @@ header{
 
 </div>
 
-<!-- FLOATING ZEP AI BUTTON -->
 <button id="zepAIButton" title="Zep AI Mentor" onclick="location.href='zep-ai.html'">🤖</button>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -194,12 +262,11 @@ let currentUserId = localStorage.getItem("currentUserId");
 if(!currentUserId || !users[currentUserId]) location.href="login.html";
 let user = users[currentUserId];
 
+// default balances
 if(user.walletBalance===undefined) user.walletBalance=0;
 if(user.zacBalance===undefined) user.zacBalance=0;
 
-// =======================
-// ELEMENTS
-// =======================
+// elements
 const profileImg = document.getElementById("profileImg");
 const studentName = document.getElementById("studentName");
 const studentLevel = document.getElementById("studentLevel");
@@ -207,9 +274,10 @@ const completionText = document.getElementById("completionText");
 const walletBalance = document.getElementById("walletBalance");
 const verifiedBadge = document.getElementById("verifiedBadge");
 const readinessFill = document.getElementById("readinessFill");
+const horizontalCards = document.getElementById("horizontalCards");
 const weeklyGraph = document.getElementById("weeklyGraph");
 
-// PROFILE
+// profile
 profileImg.src = user.profileImage || "https://via.placeholder.com/80";
 studentName.innerText = user.name || "Student Name";
 studentLevel.innerText = user.level || "Beginner Freelancer";
@@ -218,7 +286,21 @@ readinessFill.style.width = `${user.freelancerReadiness || 0}%`;
 walletBalance.innerText = `Wallet: ${user.zacBalance || 0} ZAC (~$${((user.walletBalance||0)*0.014).toFixed(2)})`;
 if(user.verified) verifiedBadge.style.display="inline-block";
 
+// =======================
+// Horizontal course cards
+// =======================
+let courses = ["Virtual Assistant","Data Entry","Travel Agent","Graphic Design","Web Dev","AI & Prompt","Digital Marketing","Remote Support"];
+horizontalCards.innerHTML="";
+courses.forEach(course=>{
+  const card = document.createElement("div");
+  card.className="card";
+  card.innerHTML=`<h4>${course}</h4><p>Progress: ${Math.floor(Math.random()*100)}%</p><p>ZAC Earned: ${Math.floor(Math.random()*525)}</p>`;
+  horizontalCards.appendChild(card);
+});
+
+// =======================
 // WEEKLY GRAPH
+// =======================
 let earnings = user.earningsHistory || [0,10,5,15,8,12,20];
 weeklyGraph.innerHTML="";
 earnings.forEach((val)=>{
@@ -229,23 +311,26 @@ earnings.forEach((val)=>{
   weeklyGraph.appendChild(bar);
 });
 
-// WALLET GLOW
+// =======================
+// LIVE WALLET UPDATE & GLOW ANIMATION
+// =======================
 function updateWallet(zacChange){
-  if(zacChange){
+  if(zacChange) {
     walletBalance.style.transition="all 0.6s ease";
-    walletBalance.style.textShadow=`0 0 12px var(--wallet-glow),0 0 24px var(--wallet-glow)`;
+    walletBalance.style.textShadow=`0 0 12px var(--wallet-glow), 0 0 24px var(--wallet-glow)`;
     setTimeout(()=>walletBalance.style.textShadow="none",800);
   }
   walletBalance.innerText = `Wallet: ${user.zacBalance || 0} ZAC (~$${((user.walletBalance||0)*0.014).toFixed(2)})`;
 }
 updateWallet();
 
+// =======================
 // LOGOUT
+// =======================
 function logout(){
   localStorage.removeItem("currentUserId");
   location.href="login.html";
 }
 </script>
-
 </body>
 </html>
