@@ -11,9 +11,11 @@
   --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,.08);
+  --glass-strong:rgba(255,255,255,.12);
   --text-light:rgba(255,255,255,.85);
   --verified-green:#39ff14;
   --wallet-glow:#00ff94;
+  --card-hover-shadow:0 0 20px var(--zep-blue),0 0 30px var(--zep-violet);
 }
 
 /* RESET */
@@ -22,46 +24,63 @@ body{background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-directio
 
 /* HEADER */
 header{
-  display:flex;justify-content:space-between;align-items:center;padding:18px;margin:16px;border-radius:16px;
-  background:radial-gradient(circle at center, rgba(0,240,255,.2), rgba(156,77,255,.2));
-  backdrop-filter:blur(14px);
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 24px;
+  border-radius:16px;
+  background:linear-gradient(90deg,rgba(0,240,255,.15),rgba(156,77,255,.15));
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.08);
 }
 .brand{
-  display:flex;align-items:center;gap:10px;cursor:pointer;
+  display:flex;align-items:center;gap:12px;cursor:pointer;
 }
-.brand img{width:44px;height:44px;object-fit:contain;}
+.brand img{
+  width:48px;height:48px;object-fit:contain;
+}
 .brand span{
-  font-family:Orbitron;font-size:1.5rem;
+  font-family:Orbitron;
+  font-size:1.6rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 .logout-btn{
-  background:rgba(255,255,255,.1);border:none;border-radius:50%;
-  width:38px;height:38px;color:#fff;cursor:pointer;transition:.3s;
+  background:rgba(255,255,255,.1);
+  border:none;border-radius:50%;
+  width:40px;height:40px;color:#fff;cursor:pointer;
+  transition:.3s;
 }
 .logout-btn:hover{
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  box-shadow:0 0 12px var(--zep-blue),0 0 24px var(--zep-violet);
+  box-shadow:0 0 14px var(--zep-blue),0 0 28px var(--zep-violet);
 }
 
 /* DASHBOARD LAYOUT */
-.dashboard{padding:16px;display:flex;flex-direction:column;gap:22px;max-width:1200px;margin:auto;}
-.section{background:var(--glass);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.12);}
-.section h3{font-family:Orbitron;margin-bottom:12px;}
+.dashboard{
+  padding:20px;display:flex;flex-direction:column;gap:24px;max-width:1200px;margin:auto;
+}
+.section{
+  background:var(--glass);
+  border-radius:18px;
+  padding:20px;
+  border:1px solid var(--glass-strong);
+  transition:.3s;
+}
+.section h3{
+  font-family:Orbitron;margin-bottom:14px;
+  font-size:1.3rem;
+}
 
-/* PROFILE */
+/* PROFILE SUMMARY */
 .profile-summary{
-  display:flex;align-items:center;gap:16px;
+  display:flex;align-items:center;gap:18px;
   background:linear-gradient(90deg,rgba(0,240,255,.1),rgba(156,77,255,.1));
-  padding:16px;
-  border-radius:16px;
+  padding:18px;border-radius:18px;
 }
 .profile-summary img{
-  width:80px;height:80px;border-radius:50%;
-  border:2px solid rgba(255,255,255,.3);
+  width:88px;height:88px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;
 }
-.profile-info h3{margin:0;display:flex;align-items:center;gap:8px;}
-.profile-info span{font-size:.85rem;color:var(--text-light);}
+.profile-info h3{margin:0;display:flex;align-items:center;gap:8px;font-size:1.25rem;}
+.profile-info span{font-size:.88rem;color:var(--text-light);}
 .verified-badge{
   width:18px;height:18px;
   background:var(--verified-green);
@@ -69,21 +88,15 @@ header{
   display:inline-block;
   box-shadow:0 0 8px var(--verified-green);
 }
-
-/* FREELANCER READINESS METER */
+/* FREELANCER READINESS */
 .readiness-meter{
-  margin-top:8px;height:12px;width:100%;
-  background:rgba(255,255,255,.1);
-  border-radius:999px;
-  overflow:hidden;
+  margin-top:8px;height:14px;width:100%;background:rgba(255,255,255,.1);border-radius:999px;overflow:hidden;
 }
 .readiness-fill{
-  height:100%;border-radius:999px;
-  background:var(--wallet-glow);
-  width:0%;transition:.6s;
+  height:100%;border-radius:999px;background:var(--wallet-glow);width:0%;transition:.6s;
 }
 
-/* HORIZONTAL CARDS GRID */
+/* COURSES GRID */
 .horizontal-cards{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -91,44 +104,39 @@ header{
 }
 .card{
   background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));
-  border-radius:16px;border:1px solid rgba(255,255,255,.12);
-  padding:16px;transition:transform .3s, box-shadow .3s;
+  border-radius:18px;border:1px solid rgba(255,255,255,.12);
+  padding:16px;
+  transition:transform .3s, box-shadow .3s;
 }
-.card:hover{transform:translateY(-4px);box-shadow:0 0 20px var(--zep-blue),0 0 30px var(--zep-violet);}
-.card h4{margin-bottom:6px;font-family:Orbitron;}
-.card p{font-size:.85rem;color:var(--text-light);line-height:1.3;}
+.card:hover{transform:translateY(-4px);box-shadow:var(--card-hover-shadow);}
+.card h4{margin-bottom:6px;font-family:Orbitron;font-size:1.1rem;}
+.card p{font-size:.85rem;color:var(--text-light);line-height:1.4;}
 
 /* WEEKLY GRAPH */
 .graph-box{
-  position:relative;height:180px;border-radius:14px;
+  position:relative;height:180px;border-radius:16px;
   background:linear-gradient(135deg,rgba(0,240,255,.08),rgba(156,77,255,.08));
-  overflow:hidden;cursor:pointer;
-  display:flex;align-items:flex-end;gap:8px;padding:16px;
+  overflow:hidden;display:flex;align-items:flex-end;gap:8px;padding:16px;cursor:pointer;
 }
 .graph-bar{
-  flex:1;margin:0 4px;
-  background:linear-gradient(180deg,var(--zep-blue),var(--zep-violet));
-  border-radius:8px 8px 0 0;position:relative;
-  animation:pulseBar 2s infinite;cursor:pointer;transition:.3s;
+  flex:1;margin:0 5px;background:linear-gradient(180deg,var(--zep-blue),var(--zep-violet));
+  border-radius:8px 8px 0 0;position:relative;animation:pulseBar 2s infinite;cursor:pointer;transition:.3s;
 }
 .graph-bar:hover{transform:scaleY(1.1);}
 .graph-bar span{
-  position:absolute;top:-22px;left:50%;
-  transform:translateX(-50%);
+  position:absolute;top:-22px;left:50%;transform:translateX(-50%);
   font-size:.75rem;color:var(--text-light);
-  display:none;white-space:nowrap;background:rgba(0,0,0,.6);
-  padding:2px 6px;border-radius:6px;
+  display:none;white-space:nowrap;background:rgba(0,0,0,.6);padding:2px 6px;border-radius:6px;
 }
 .graph-bar:hover span{display:block;}
 @keyframes pulseBar{0%,100%{opacity:.7;}50%{opacity:1;}}
 
-/* QUICK ACTIONS */
+/* QUICK ACTION BUTTONS */
 .actions{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-top:4px;
 }
 .actions button{
-  border:none;border-radius:16px;padding:18px;
-  font-family:Orbitron;
+  border:none;border-radius:18px;padding:18px;font-family:Orbitron;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   cursor:pointer;color:#050015;font-weight:600;font-size:.95rem;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -136,14 +144,13 @@ header{
 }
 .actions button:hover{
   transform:translateY(-4px);
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  box-shadow:0 0 22px var(--zep-blue),0 0 38px var(--zep-violet);
 }
 .actions button span{font-size:1.8rem;margin-bottom:6px;}
 
 /* FLOATING ZEP AI BUTTON */
 #zepAIButton{
-  position:fixed;bottom:20px;right:20px;
-  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  position:fixed;bottom:20px;right:20px;background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   border:none;border-radius:50%;width:60px;height:60px;
   cursor:pointer;font-size:24px;display:flex;justify-content:center;align-items:center;color:#050015;
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
@@ -152,10 +159,10 @@ header{
 @keyframes orbPulse{0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
 
 /* RESPONSIVE */
-@media(max-width:600px){
+@media(max-width:768px){
   .profile-summary{flex-direction:column;align-items:center;text-align:center;}
-  .actions{grid-template-columns:1fr;}
   .horizontal-cards{grid-template-columns:1fr;}
+  .actions{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -163,7 +170,7 @@ header{
 
 <header>
   <div class="brand" onclick="location.href='student-dashboard.html'">
-    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe Logo">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png" alt="Zep Swipe Logo">
     <span>Zep Swipe</span>
   </div>
   <button class="logout-btn" onclick="logout()">⎋</button>
@@ -197,11 +204,11 @@ header{
 
   <!-- QUICK ACTION BUTTONS -->
   <div class="section actions">
-    <button onclick="location.href='learn-earn.html'"><span>📚</span>Earn & Verify</button>
-    <button onclick="location.href='swipe-merchants.html'"><span>💼</span>Jobs</button>
+    <button onclick="location.href='learn-earn.html'"><span>📚</span>Learn & Verify</button>
     <button onclick="location.href='wallet.html'"><span>💰</span>Wallet</button>
+    <button onclick="location.href='swipe-merchants.html'"><span>💼</span>Jobs</button>
     <button onclick="location.href='profile.html'"><span>👤</span>Profile</button>
-    <button onclick="location.href='deals.html'"><span>🎉</span>Deals Day</button>
+    <button onclick="location.href='deals.html'"><span>🛍️</span>Deals Day</button>
   </div>
 
 </div>
@@ -217,11 +224,9 @@ let users=JSON.parse(localStorage.getItem("users"))||{};
 let currentUserId=localStorage.getItem("currentUserId");
 if(!currentUserId||!users[currentUserId]) location.href="login.html";
 let user=users[currentUserId];
-
-// defaults
 user.walletBalance=user.walletBalance||0;
 user.zacBalance=user.zacBalance||0;
-user.learnEarn=user.learnEarn||{course:null,completed:[],zac:0,verifiedCourses:[]};
+user.learnEarn=user.learnEarn||{course:null,completed:[],zac:0,verifiedCourses:[],progress:{}};
 users[currentUserId]=user;
 localStorage.setItem("users",JSON.stringify(users));
 
@@ -245,25 +250,22 @@ readinessFill.style.width=`${user.freelancerReadiness||0}%`;
 walletBalance.innerText=`Wallet: ${user.zacBalance||0} ZAC (~$${(user.walletBalance*0.014).toFixed(2)})`;
 if(user.verified) verifiedBadge.style.display="inline-block";
 
-// =======================
 // COURSES GRID
-// =======================
-let coursesFromLearnEarn = Object.keys(user.learnEarn?.progress||{}) || [
-  "Virtual Assistant","Data Entry","Graphic Design Foundation","Web & No-Code Development","AI & Prompt Engineering","Digital Marketing & Ads","Remote Customer Support","Student Travel Agent 🌍"
-];
+let courses = Object.keys(user.learnEarn.progress||{
+  "Virtual Assistant":0,"Data Entry":0,"Graphic Design Foundation":0,"Web & No-Code Development":0,"AI & Prompt Engineering":0,
+  "Digital Marketing & Ads":0,"Remote Customer Support":0,"Student Travel Agent 🌍":0
+});
 
 horizontalCards.innerHTML="";
-coursesFromLearnEarn.forEach(course=>{
+courses.forEach(course=>{
   const card=document.createElement("div");
   card.className="card";
-  const progress = user.learnEarn.progress?.[course]||0;
+  const progress=user.learnEarn.progress?.[course]||0;
   card.innerHTML=`<h4>${course}</h4><p>Progress: ${progress}%</p><p>ZAC Earned: ${user.learnEarn.zac||0}</p>`;
   horizontalCards.appendChild(card);
 });
 
-// =======================
 // WEEKLY GRAPH
-// =======================
 let earnings=user.earningsHistory||[0,10,5,15,8,12,20];
 weeklyGraph.innerHTML="";
 earnings.forEach(val=>{
@@ -274,9 +276,7 @@ earnings.forEach(val=>{
   weeklyGraph.appendChild(bar);
 });
 
-// =======================
-// LIVE WALLET UPDATE & GLOW
-// =======================
+// WALLET UPDATE & GLOW
 function updateWallet(zacChange){
   if(zacChange){
     walletBalance.style.transition="all 0.6s ease";
@@ -287,9 +287,7 @@ function updateWallet(zacChange){
 }
 updateWallet();
 
-// =======================
 // LOGOUT
-// =======================
 function logout(){
   localStorage.removeItem("currentUserId");
   location.href="login.html";
