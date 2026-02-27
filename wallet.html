@@ -90,7 +90,7 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 
   </div>
 
   <!-- DAILY TASK BUTTON -->
-  <button onclick="completeDailyTask()">Complete Daily Task +25 ZAC</button>
+  <button onclick="redirectToLearnEarn()">Complete Daily Task</button>
 
   <!-- CREATE INVOICE -->
   <button class="create-invoice-btn" onclick="location.href='create-invoice.html'">Create Invoice</button>
@@ -130,15 +130,9 @@ function renderWallet(){
 }
 renderWallet();
 
-// Daily Task + ZAC
-function completeDailyTask(){
-  currentUser.zacBalance = (currentUser.zacBalance||0)+25;
-  users[currentUserId] = currentUser;
-  localStorage.setItem("users",JSON.stringify(users));
-
-  addNotification({type:"submitted",text:"Daily Learn & Earn task completed +25 ZAC",invoiceId:null});
-  updateChart();
-  renderWallet();
+// Redirect to Learn & Earn instead of auto-adding ZAC
+function redirectToLearnEarn(){
+  window.location.href = "learn-earn.html";
 }
 
 // Chart
