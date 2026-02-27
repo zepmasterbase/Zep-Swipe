@@ -23,34 +23,58 @@ body{background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-directio
 
 /* HEADER */
 header{
-  display:flex;justify-content:space-between;align-items:center;padding:16px;
-  background:radial-gradient(circle at center, rgba(0,240,255,.1), rgba(156,77,255,.1));
-  backdrop-filter:blur(14px);
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
-  flex-wrap: wrap;
+  display:flex;justify-content:space-between;align-items:center;padding:16px 20px;
+  backdrop-filter:blur(12px);
+  background:rgba(0,0,0,.35);
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
-.brand{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;cursor:pointer;}
+.brand{
+  display:flex;align-items:center;gap:10px;cursor:pointer;
+}
+.brand img{
+  width:44px;height:44px;object-fit:contain;
+}
+.brand span{
+  font-family:Orbitron;
+  font-size:1.4rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 .home-btn{
   width:50px;height:50px;border-radius:50%;
-  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   display:flex;align-items:center;justify-content:center;
   font-size:22px;cursor:pointer;color:#050015;
-  box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
-  transition:.3s;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+  border:none;transition:.3s;
 }
-.home-btn:hover{transform:scale(1.1);}
+.home-btn:hover{transform:scale(1.1);box-shadow:0 0 15px var(--zep-blue),0 0 25px var(--zep-violet);}
 
 /* CONTAINER */
-.container{max-width:1000px;margin:20px auto;padding:16px;display:flex;flex-direction:column;gap:20px;}
+.container{
+  max-width:1000px;margin:20px auto;padding:16px;display:flex;flex-direction:column;gap:20px;
+}
 
 /* BALANCE CARDS */
-.balance-card{background:var(--glass);padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+.balance-card{
+  background:var(--glass);padding:20px;border-radius:18px;
+  border:1px solid rgba(255,255,255,.12);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;
+  gap:20px;
+}
 .balance-card h3{font-family:Orbitron;}
 .balance-amount{font-family:Orbitron;font-size:1.6rem;}
 
 /* BUTTONS */
-button{padding:12px 20px;border:none;border-radius:999px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:.3s;}
-button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
+button{
+  padding:12px 20px;border:none;border-radius:999px;font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;cursor:pointer;transition:.3s;
+}
+button:hover{
+  transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
+}
 .create-invoice-btn{align-self:flex-start;margin-top:10px;}
 
 /* ZAC CHART */
@@ -58,7 +82,7 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 
 
 /* NOTIFICATIONS */
 .notification-center{background:var(--glass);padding:16px;border-radius:18px;border:1px solid rgba(255,255,255,.12);max-height:300px;overflow-y:auto;}
-.notification{padding:10px;border-radius:12px;margin-bottom:8px;cursor:pointer;transition:.2s;display:flex;justify-content:space-between;align-items:center;word-wrap:break-word;}
+.notification{padding:10px;border-radius:12px;margin-bottom:8px;cursor:pointer;transition:.2s;display:flex;justify-content:space-between;align-items:center;}
 .notification:hover{background:rgba(255,255,255,.1);}
 .notification.pending{border-left:4px solid var(--yellow);}
 .notification.escrow{border-left:4px solid var(--zep-blue);}
@@ -67,15 +91,17 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 
 
 /* RESPONSIVE */
 @media(max-width:600px){
-  .balance-card{flex-direction:column;align-items:flex-start;gap:12px;}
-  header{justify-content:center;gap:12px;}
+  .balance-card{flex-direction:column;align-items:flex-start;}
 }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand" onclick="location.href='student-dashboard.html'">Zep Swipe</div>
+  <div class="brand" onclick="location.href='student-dashboard.html'">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe Logo">
+    <span>Zep Swipe</span>
+  </div>
   <button class="home-btn" onclick="location.href='student-dashboard.html'">🏠</button>
 </header>
 
@@ -94,7 +120,7 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 
   </div>
 
   <!-- DAILY TASK BUTTON -->
-  <button onclick="redirectDailyTask()">Complete Daily Task</button>
+  <button onclick="goToLearnEarn()">Complete Daily Task</button>
 
   <!-- CREATE INVOICE -->
   <button class="create-invoice-btn" onclick="location.href='create-invoice.html'">Create Invoice</button>
@@ -120,38 +146,49 @@ let currentUserId = localStorage.getItem("currentUserId");
 if(!currentUserId || !users[currentUserId]) location.href="login.html";
 let currentUser = users[currentUserId];
 
-// ZAC & USD Balances
+// Initialize balances if undefined
+if(currentUser.walletBalance===undefined) currentUser.walletBalance=0;
+if(currentUser.zacBalance===undefined) currentUser.zacBalance=0;
+
+// Elements
 const usdBalanceEl = document.getElementById("usdBalance");
 const zacBalanceEl = document.getElementById("zacBalance");
+const notificationsList = document.getElementById("notificationsList");
 
-// Notifications
+// Notifications from localStorage
 let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
 
 // Render Wallet
 function renderWallet(){
-  usdBalanceEl.innerText = `$${currentUser.walletBalance?.toFixed(2)||0}`;
-  zacBalanceEl.innerText = `${currentUser.zacBalance||0} ZAC`;
+  usdBalanceEl.innerText = `$${currentUser.walletBalance.toFixed(2)}`;
+  zacBalanceEl.innerText = `${currentUser.zacBalance} ZAC`;
 }
 renderWallet();
 
-// Redirect Daily Task
-function redirectDailyTask(){
-  // Redirect to learn-earn page
+// Redirect to Learn & Earn instead of auto-adding ZAC
+function goToLearnEarn(){
   window.location.href = "learn-earn.html";
 }
 
-// Chart
+// Chart.js for ZAC history
 const ctx = document.getElementById('zacChart').getContext('2d');
+if(!currentUser.zacHistory) currentUser.zacHistory=[];
 let zacChart = new Chart(ctx,{
   type:'line',
-  data:{labels:[],datasets:[{label:'Daily ZAC',data:[],backgroundColor:'rgba(0,255,148,0.2)',borderColor:'var(--green)',borderWidth:2,tension:0.3}]},
-  options:{scales:{y:{beginAtZero:true}}}
+  data:{
+    labels:currentUser.zacHistory.map(e=>e.day),
+    datasets:[{
+      label:'Daily ZAC',
+      data:currentUser.zacHistory.map(e=>e.zac),
+      backgroundColor:'rgba(0,255,148,0.2)',
+      borderColor:'#00ff94',
+      borderWidth:2,
+      tension:0.3
+    }]
+  },
+  options:{scales:{y:{beginAtZero:true}},responsive:true,maintainAspectRatio:false}
 });
 function updateChart(){
-  if(!currentUser.zacHistory) currentUser.zacHistory=[];
-  users[currentUserId]=currentUser;
-  localStorage.setItem("users",JSON.stringify(users));
-
   zacChart.data.labels = currentUser.zacHistory.map(e=>e.day);
   zacChart.data.datasets[0].data = currentUser.zacHistory.map(e=>e.zac);
   zacChart.update();
@@ -159,10 +196,9 @@ function updateChart(){
 updateChart();
 
 // Notifications
-const notificationsList = document.getElementById("notificationsList");
 function renderNotifications(){
   notificationsList.innerHTML="";
-  notifications.forEach((n,i)=>{
+  notifications.forEach(n=>{
     const div = document.createElement("div");
     div.className=`notification ${n.type}`;
     div.innerHTML=`<span>${n.text}</span>`;
@@ -177,27 +213,16 @@ function addNotification(n){
 }
 renderNotifications();
 
-// Live Wallet Update from Invoices
-window.addEventListener("storage",(e)=>{
+// Listen to storage changes for invoices
+window.addEventListener("storage",e=>{
   if(e.key && e.key.startsWith("invoice_")){
     const inv = JSON.parse(e.newValue);
     if(inv.status==="Released" && inv.studentId===currentUserId){
-      currentUser.walletBalance = (currentUser.walletBalance||0)+inv.total;
+      currentUser.walletBalance += inv.total||0;
       users[currentUserId]=currentUser;
       localStorage.setItem("users",JSON.stringify(users));
       addNotification({type:"released",text:`Invoice ${inv.id} funds released!`,invoiceId:inv.id});
       renderWallet();
-    }
-  }
-});
-
-// Initial demo invoice notifications
-Object.keys(localStorage).forEach(k=>{
-  if(k.startsWith("invoice_")){
-    const inv = JSON.parse(localStorage.getItem(k));
-    if(inv.studentId===currentUserId){
-      const colorType = inv.status.toLowerCase();
-      addNotification({type:colorType,text:`Invoice ${inv.id} status: ${inv.status}`,invoiceId:inv.id});
     }
   }
 });
