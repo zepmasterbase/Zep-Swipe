@@ -7,20 +7,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --zep-blue:#00f0ff;
-  --zep-violet:#9c4dff;
-  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,.08);
+  --blue:#00f0ff;
+  --violet:#9c4dff;
   --green:#00ff94;
   --yellow:#ffcc00;
-  --red:#ff4d4d;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,.08);
   --text-light:rgba(255,255,255,.85);
 }
 
 /* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
 body{background:var(--bg);color:#fff;min-height:100vh;}
-button{cursor:pointer;}
+button{cursor:pointer;transition:.3s;}
 
 /* HEADER */
 header{
@@ -30,84 +29,86 @@ header{
 }
 .brand{
   font-family:Orbitron;font-size:1.5rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  background:linear-gradient(90deg,var(--blue),var(--violet));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 .home-btn{
   width:46px;height:46px;border-radius:50%;
   border:none;
-  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  color:#050015;font-size:18px;
+  background:linear-gradient(135deg,var(--blue),var(--violet));
+  color:#050015;font-size:20px;
 }
 
 /* CONTAINER */
-.container{max-width:1200px;margin:auto;padding:16px;display:flex;flex-direction:column;gap:22px;}
+.container{max-width:1200px;margin:auto;padding:16px;display:flex;flex-direction:column;gap:24px}
 
 /* PROFILE */
 .profile{
-  display:flex;align-items:center;gap:14px;background:var(--glass);padding:14px;border-radius:14px;
+  display:flex;align-items:center;gap:14px;
+  background:var(--glass);padding:14px;border-radius:14px;
 }
-.profile img{
-  width:70px;height:70px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;
-}
-.profile h3{font-family:Orbitron}
+.profile img{width:70px;height:70px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
+.profile h3{font-family:Orbitron;margin-bottom:2px;}
 
-/* COURSES */
+/* COURSES GRID */
 .courses{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
 }
 .course{
   background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));
-  border-radius:18px;border:1px solid rgba(255,255,255,.12);
-  padding:18px;cursor:pointer;position:relative;overflow:hidden;
-  transition:transform .4s, box-shadow .4s;
-  animation:pulseBG 2s infinite alternate;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.12);
+  padding:18px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  transition:transform .3s, box-shadow .3s;
+  animation: pulseBG 2s infinite alternate;
 }
-.course:hover{transform:translateY(-6px);box-shadow:0 0 30px var(--zep-blue),0 0 50px var(--zep-violet);}
+.course:hover{transform:translateY(-6px);box-shadow:0 0 30px var(--blue),0 0 50px var(--violet);}
 .course.selected{border:2px solid var(--green);box-shadow:0 0 40px var(--green);}
-@keyframes pulseBG {
-  0% {background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));}
-  50% {background:linear-gradient(135deg, rgba(0,240,255,0.25), rgba(156,77,255,0.25));}
-  100% {background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));}
+@keyframes pulseBG{
+  0%{background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));}
+  50%{background:linear-gradient(135deg, rgba(0,240,255,0.25), rgba(156,77,255,0.25));}
+  100%{background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));}
 }
-.course h4{font-family:Orbitron;margin-bottom:6px;font-size:1.1rem;}
-.course span{font-size:.85rem;opacity:.8;}
 
 /* TASKS */
-.tasks{background:var(--glass);padding:18px;border-radius:18px;display:flex;flex-direction:column;gap:12px;}
-.task{background:rgba(255,255,255,.05);padding:14px;border-radius:14px;position:relative;}
+.tasks{background:var(--glass);padding:18px;border-radius:18px;}
+.task{background:rgba(255,255,255,.05);padding:14px;border-radius:14px;margin-bottom:12px;position:relative;}
 .task.completed{opacity:.6;}
-.task input[type="url"]{width:100%;padding:10px;border-radius:8px;border:none;margin-top:6px;}
-.task button{margin-top:10px;padding:10px 14px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;transition:.3s;}
-.task button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
+.task button{margin-top:10px;padding:10px 14px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--violet));color:#050015;font-family:Orbitron;}
 
-/* PROGRESS & READINESS */
+/* PROGRESS & PORTFOLIO */
 .progress-bar{height:12px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:6px;}
-.progress-fill{height:100%;width:0%;background:var(--green);transition:width .5s;}
-.readiness{margin-top:8px;font-family:Orbitron;font-size:.9rem;color:var(--green);}
+.progress-fill{height:100%;border-radius:999px;background:var(--green);width:0%;transition:.5s;}
+.portfolio{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:.85rem;}
 
-/* ZAC & COUNTDOWN */
-.zac{text-align:center;font-family:Orbitron;color:var(--green);animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
-.countdown{font-family:Orbitron;color:var(--yellow);margin-top:4px;font-size:.85rem;}
+/* FREELANCER READINESS */
+.freelancer-score{
+  background:var(--glass);padding:16px;border-radius:18px;text-align:center;margin-top:12px;
+}
 
-@media(max-width:600px){.profile{flex-direction:column;text-align:center}}
+/* MOBILE */
+@media(max-width:600px){.profile{flex-direction:column;text-align:center;}.courses{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
+
 <header>
   <div class="brand">Zep Swipe</div>
   <button class="home-btn" onclick="location.href='student-dashboard.html'">🏠</button>
 </header>
 
 <div class="container">
+
   <!-- PROFILE -->
   <div class="profile">
     <img id="profileImg">
     <div>
       <h3 id="studentName"></h3>
       <span id="studentUniversity"></span>
-      <div id="readinessScore" class="readiness"></div>
     </div>
   </div>
 
@@ -118,146 +119,172 @@ header{
   <div class="tasks" id="taskSection" style="display:none">
     <h3 id="courseTitle"></h3>
     <div id="tasksContainer"></div>
-    <div class="zac" id="zacCounter"></div>
+    <div class="freelancer-score">
+      <strong>Freelancer Readiness:</strong> <span id="readinessScore">0%</span>
+    </div>
   </div>
 </div>
 
 <script>
-/* ====================== SESSION ====================== */
-let users = JSON.parse(localStorage.getItem("users")) || {};
-let currentUserId = localStorage.getItem("currentUserId");
-if(!currentUserId || !users[currentUserId]) location.href="login.html";
-let user = users[currentUserId];
+/* ======================
+   SESSION
+====================== */
+let users=JSON.parse(localStorage.getItem("users"))||{};
+let currentUserId=localStorage.getItem("currentUserId");
+if(!currentUserId||!users[currentUserId]) location.href="login.html";
+let user=users[currentUserId];
 
-/* ====================== PROFILE ====================== */
-profileImg.src = user.profileImage || "https://via.placeholder.com/80";
-studentName.innerText = user.name;
-studentUniversity.innerText = user.university || "";
+/* ======================
+   PROFILE
+====================== */
+profileImg.src=user.profileImage||"https://via.placeholder.com/80";
+studentName.innerText=user.name;
+studentUniversity.innerText=user.university||"";
 
-/* ====================== COURSES DATA ====================== */
-const courses = {
-  "Virtual Assistant": ["Inbox & calendar management","Client research","Scheduling tools","Admin workflow","Client simulation","Client email draft","Project follow-up","Task prioritization","Reporting & analytics","Remote meeting setup","CRM practice","Process documentation","Client roleplay","Feedback integration","Task automation","Time tracking","Mini project delivery","Client case study","Portfolio upload","Freelance mock task","Final evaluation"],
-  "Data Entry": ["Spreadsheet basics","CRM tools","Accuracy training","Speed drills","Client simulation","Data validation","Database entry","Form automation","Data cleaning","Client project mock","Report generation","Data audit","Advanced formulas","Workflow optimization","Project compilation","Portfolio build","Review & feedback","Mock client delivery","Task showcase","Portfolio submission","Final evaluation"],
-  "Student Travel Agent 🌍": ["Record intro video + Zora verification","Local sightseeing research","Customer service basics","Promote local experiences online","Booking & payment simulation","Cultural tips","Create local guide","Content creation for tours","Safety checklist","Virtual tour practice","Marketing services on Zep Swipe","Transport planning","Sample package design","Roleplay traveler interaction","Collect feedback & improve plan","Pricing & payment setup","List first real offer","Promote offer","Receive payment proof","Next 3 tours prep","Final verification"],
-  "Graphic Design Foundation": ["Design basics","Color theory","Typography practice","Layout principles","Logo design","Brand identity","Illustration practice","Poster creation","Portfolio piece 1","Portfolio piece 2","Portfolio piece 3","Client mock project 1","Client mock project 2","Presentation design","Infographic creation","Design critique","Design system setup","Portfolio compilation","Portfolio review","Showcase project","Final evaluation"],
-  "Web & No-Code Development": ["HTML & CSS basics","JavaScript intro","Web layout practice","Responsive design","Front-end project 1","No-code platform intro","Build landing page","Database & API integration","Automation setup","Web project 1","Web project 2","Portfolio build","User testing","Mock client project","Deploy website","Portfolio showcase","Task optimization","Client feedback","Project review","Final evaluation","Verified freelancer readiness"],
-  "AI & Prompt Engineering": ["Intro to AI & prompts","Prompt writing basics","Use AI tools","Text-to-image prompt","Text-to-text prompt","Prompt optimization","AI for content","AI for analytics","Mini project 1","Mini project 2","Portfolio project","Mock client prompt","Task automation","Prompt evaluation","AI workflow integration","Portfolio build","Advanced prompt 1","Advanced prompt 2","Final showcase","Client simulation","Final evaluation"],
-  "Digital Marketing & Ads": ["Marketing basics","Social media setup","Content planning","Ad platforms intro","Campaign creation","Target audience research","Analytics review","Campaign optimization","Email marketing","SEO basics","Influencer collaboration","Mini project 1","Mini project 2","Portfolio project","Client mock campaign","Paid ads practice","Analytics report","Presentation","Portfolio compilation","Showcase project","Final evaluation"],
-  "Remote Customer Support": ["Support tools intro","Customer communication","Ticket management","FAQ creation","Live chat practice","Email handling","CRM integration","Client roleplay","Feedback collection","Reporting","Knowledge base creation","Advanced support scenarios","Multi-channel handling","Escalation practice","Project task delivery","Portfolio entry 1","Portfolio entry 2","Portfolio review","Client simulation","Final showcase","Verified readiness"]
+/* ======================
+   COURSES & TASKS
+====================== */
+const coursesData = {
+  "Virtual Assistant":[],
+  "Data Entry":[],
+  "Student Travel Agent 🌍":[],
+  "Graphic Design Foundation":[],
+  "Web & No-Code Development":[],
+  "AI & Prompt Engineering":[],
+  "Digital Marketing & Ads":[],
+  "Remote Customer Support":[]
 };
 
-/* ====================== INIT USER LEARN EARN ====================== */
-if(!user.learnEarn){user.learnEarn={course:null,completed:[],lastCompletion:null};users[currentUserId]=user;localStorage.setItem("users",JSON.stringify(users));}
+// Generate 21-day structured tasks dynamically per course
+for(let course in coursesData){
+  for(let day=1;day<=21;day++){
+    if(day===1){
+      coursesData[course].push(`Post an intro video of yourself and why you chose ${course} on Zora & submit the link here`);
+    } else {
+      coursesData[course].push(`Day ${day}: Complete a portfolio exercise related to ${course} on Zora & submit the link`);
+    }
+  }
+}
 
-/* ====================== RENDER COURSES ====================== */
+// Initialize user.learnEarn if not exist
+if(!user.learnEarn){
+  user.learnEarn={course:null,completed:[],portfolio:[],zac:0,freelancerScore:0};
+  users[currentUserId]=user;
+  localStorage.setItem("users",JSON.stringify(users));
+}
+
+/* ======================
+   RENDER COURSES
+====================== */
 const courseList=document.getElementById("courseList");
 let currentCourse=null;
 
-Object.keys(courses).forEach(c=>{
-  const div=document.createElement("div");
-  div.className="course";
-  div.innerHTML=`<h4>${c}</h4><span>21-Day Client-Ready Program</span>`;
-  div.onclick=()=>selectCourse(c);
-  courseList.appendChild(div);
-});
+function renderCourses(){
+  courseList.innerHTML="";
+  Object.keys(coursesData).forEach(course=>{
+    const div=document.createElement("div");
+    div.className="course";
+    div.innerHTML=`<h4>${course}</h4><span>21-Day Client-Ready Program</span>`;
+    if(currentCourse===course) div.classList.add("selected");
+    div.onclick=()=>selectCourse(course);
+    courseList.appendChild(div);
+  });
+}
 
 function selectCourse(course){
   currentCourse=course;
+  // highlight selected
   document.querySelectorAll('.course').forEach(c=>c.classList.remove('selected'));
-  const card = Array.from(document.querySelectorAll('.course')).find(c=>c.querySelector('h4').innerText===course);
-  if(card) card.classList.add('selected');
+  document.querySelectorAll('.course').forEach(c=>{
+    if(c.querySelector('h4').innerText===course) c.classList.add('selected');
+  });
   user.learnEarn.course=course;
   users[currentUserId]=user;
   localStorage.setItem("users",JSON.stringify(users));
   renderTasks();
 }
 
-/* ====================== TASKS ====================== */
-const taskSection=document.getElementById("taskSection");
-const courseTitle=document.getElementById("courseTitle");
-const tasksContainer=document.getElementById("tasksContainer");
-const zacCounter=document.getElementById("zacCounter");
-const readinessScore=document.getElementById("readinessScore");
-
+/* ======================
+   RENDER TASKS
+====================== */
 function renderTasks(){
   if(!currentCourse) return;
-  taskSection.style.display="block";
-  courseTitle.innerText=currentCourse;
+  document.getElementById("taskSection").style.display="block";
+  document.getElementById("courseTitle").innerText=currentCourse;
+  const tasksContainer=document.getElementById("tasksContainer");
   tasksContainer.innerHTML="";
-  zacCounter.innerText=`Total ZAC: ${user.walletBalance||0}`;
-  
-  const completedCount=user.learnEarn.completed.length;
-  const readiness=Math.floor((completedCount/21)*100);
-  readinessScore.innerText=`Freelancer Readiness Score: ${readiness}%`;
 
-  const now=new Date().getTime();
-  let lastTime=new Date(user.learnEarn.lastCompletion||0).getTime();
-  
-  courses[currentCourse].forEach((task,idx)=>{
+  const completedDays=user.learnEarn.completed.filter(c=>c.course===currentCourse).map(c=>c.day);
+  let readiness=Math.floor((completedDays.length/21)*100);
+  document.getElementById("readinessScore").innerText=readiness+"%";
+
+  const lastCompleted=user.learnEarn.completed.filter(c=>c.course===currentCourse).sort((a,b)=>b.day-a.day)[0];
+  const nextDay=(lastCompleted?lastCompleted.day:0)+1;
+
+  coursesData[currentCourse].forEach((task,idx)=>{
     const day=idx+1;
-    const completed=user.learnEarn.completed.includes(day);
     const div=document.createElement("div");
-    div.className="task"+(completed?" completed":"");
-    
-    div.innerHTML=`<strong>Day ${day}</strong><p>${task}</p>`;
-    
-    if(!completed){
-      const btn=document.createElement("button");
-      const input=document.createElement("input");
-      input.type="url";input.placeholder="Paste task link here";
-      div.appendChild(input);
-      
-      // Unlock logic: Day1 always unlock, Day>1 after 24h
-      let canUnlock=day===1 || (lastTime && (now - lastTime)>=86400000);
-      const countdown=document.createElement("div");countdown.className="countdown";
-      div.appendChild(countdown);
-      if(!canUnlock){
-        btn.disabled=true;countdown.innerText="Next task unlocks in 24h from previous completion";
-      } else {
-        btn.innerText="Submit Task";
-        btn.onclick=()=>submitTask(day,input.value);
-      }
-      div.appendChild(btn);
-    } else {
-      div.innerHTML+=`<span style="color:var(--green)">✔ Completed</span>`;
+    div.className="task"+(completedDays.includes(day)?" completed":"");
+
+    let taskContent=`<strong>Day ${day}</strong><p>${task}</p>`;
+    if(completedDays.includes(day)){
+      taskContent+=`<span style="color:#00ff94">✔ Completed</span>`;
+    } else if(day>nextDay){
+      // Locked, show countdown
+      let unlockTime=user.learnEarn.completed.find(c=>c.course===currentCourse && c.day===day-1)?.timestamp+24*60*60*1000 || Date.now()+24*60*60*1000;
+      let remaining=unlockTime-Date.now();
+      const timerId=setInterval(()=>{
+        remaining=unlockTime-Date.now();
+        if(remaining<=0){clearInterval(timerId); renderTasks(); return;}
+        let h=Math.floor(remaining/3600000), m=Math.floor((remaining%3600000)/60000), s=Math.floor((remaining%60000)/1000);
+        div.querySelector('.countdown')? div.querySelector('.countdown').innerText=`Unlocks in ${h}h ${m}m ${s}s` : null;
+      },1000);
+      taskContent+=`<div class="countdown">Unlocks in calculating...</div>`;
     }
-    
+
+    div.innerHTML=taskContent;
+
+    if(day===nextDay){
+      const btn=document.createElement("button");
+      btn.innerText="Submit Task Link";
+      btn.onclick=()=>submitTask(day,div);
+      div.appendChild(btn);
+    }
+
     tasksContainer.appendChild(div);
   });
 }
 
-/* ====================== SUBMIT TASK ====================== */
-function submitTask(day,link){
-  if(!link){alert("Please paste your task link to submit.");return;}
-  
-  // TODO: Verify link via Zora API or simulate verification
-  // For now, simple URL validation
-  try{new URL(link);}catch(e){alert("Invalid link.");return;}
-  
-  if(user.learnEarn.completed.includes(day)) return;
-  
-  user.learnEarn.completed.push(day);
-  user.learnEarn.lastCompletion=new Date().toISOString();
-  user.walletBalance=(user.walletBalance||0)+25;
-  user.tasksCompleted=user.learnEarn.completed.length;
-  
-  // Day 21 verification payment
+/* ======================
+   COMPLETE TASK
+====================== */
+function submitTask(day,div){
+  const link=prompt("Paste your Zora/Portfolio link for Day "+day);
+  if(!link || !link.startsWith("http")){
+    alert("Please submit a valid link.");
+    return;
+  }
+
+  user.learnEarn.completed.push({course:currentCourse,day,timestamp:Date.now(),link});
+  user.learnEarn.zac=(user.learnEarn.zac||0)+25;
+  user.learnEarn.freelancerScore=Math.floor((user.learnEarn.completed.filter(c=>c.course===currentCourse).length/21)*100);
+
+  // Day 21 verification
   if(day===21){
     const userLocation=user.country||"GH";
-    alert(`Final verification payment required. Processing via ${userLocation==="GH"?"Momo/Paystack (local currency)":"Paystack (USD)"}`);
+    alert(`Day 21 reached! Pay verification fee via ${userLocation==='GH'?'Momo or Paystack':'Paystack'} (currency adjusted automatically).`);
+    user.learnEarn.verified=true;
     // TODO: Integrate Paystack/Momo API here
-    user.verified=true;
   }
-  
+
   users[currentUserId]=user;
   localStorage.setItem("users",JSON.stringify(users));
-  
   renderTasks();
-  alert("+25 ZAC earned for completing Day "+day);
+  renderCourses();
 }
 
-/* ====================== INITIAL LOAD ====================== */
-if(user.learnEarn.course){currentCourse=user.learnEarn.course;renderTasks();}
+renderCourses();
+if(user.learnEarn.course) selectCourse(user.learnEarn.course);
 </script>
 </body>
 </html>
