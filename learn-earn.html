@@ -5,20 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Learn & Earn</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
-
 <style>
 :root{
-  --blue:#00f0ff;
-  --violet:#9c4dff;
-  --green:#00ff94;
-  --yellow:#ffcc00;
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,.08);
+  --green:#00ff94;
+  --yellow:#ffcc00;
+  --red:#ff4d4d;
   --text-light:rgba(255,255,255,.85);
 }
 
+/* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
 body{background:var(--bg);color:#fff;min-height:100vh;}
+button{cursor:pointer;}
 
 /* HEADER */
 header{
@@ -28,87 +30,84 @@ header{
 }
 .brand{
   font-family:Orbitron;font-size:1.5rem;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 .home-btn{
-  width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
-  background:linear-gradient(135deg,var(--blue),var(--violet));
+  width:46px;height:46px;border-radius:50%;
+  border:none;
+  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   color:#050015;font-size:18px;
 }
 
 /* CONTAINER */
-.container{max-width:1100px;margin:auto;padding:16px;display:flex;flex-direction:column;gap:24px;}
+.container{max-width:1200px;margin:auto;padding:16px;display:flex;flex-direction:column;gap:22px;}
 
 /* PROFILE */
-.profile{display:flex;align-items:center;gap:16px;background:var(--glass);padding:16px;border-radius:16px;}
-.profile img{width:70px;height:70px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
-.profile h3{font-family:Orbitron;font-size:1.3rem;}
-.profile span{opacity:.8;font-size:.9rem;}
+.profile{
+  display:flex;align-items:center;gap:14px;background:var(--glass);padding:14px;border-radius:14px;
+}
+.profile img{
+  width:70px;height:70px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;
+}
+.profile h3{font-family:Orbitron}
 
-/* COURSES GRID */
-.courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+/* COURSES */
+.courses{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;
+}
 .course{
   background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,.12);
-  padding:18px;
-  cursor:pointer;
-  overflow:hidden;
+  border-radius:18px;border:1px solid rgba(255,255,255,.12);
+  padding:18px;cursor:pointer;position:relative;overflow:hidden;
   transition:transform .4s, box-shadow .4s;
   animation:pulseBG 2s infinite alternate;
-  position:relative;
 }
-.course:hover{transform:translateY(-6px);box-shadow:0 0 30px var(--blue),0 0 50px var(--violet);}
+.course:hover{transform:translateY(-6px);box-shadow:0 0 30px var(--zep-blue),0 0 50px var(--zep-violet);}
 .course.selected{border:2px solid var(--green);box-shadow:0 0 40px var(--green);}
-.course h4{font-family:Orbitron;margin-bottom:8px;font-size:1.1rem;}
-.course span{font-size:.85rem;color:var(--text-light);}
+@keyframes pulseBG {
+  0% {background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));}
+  50% {background:linear-gradient(135deg, rgba(0,240,255,0.25), rgba(156,77,255,0.25));}
+  100% {background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));}
+}
+.course h4{font-family:Orbitron;margin-bottom:6px;font-size:1.1rem;}
+.course span{font-size:.85rem;opacity:.8;}
 
 /* TASKS */
-.tasks{background:var(--glass);padding:18px;border-radius:18px;animation:fadeIn 0.5s;}
-.task{background:rgba(255,255,255,.05);padding:14px;border-radius:14px;margin-bottom:14px;position:relative;transition:transform .3s;}
+.tasks{background:var(--glass);padding:18px;border-radius:18px;display:flex;flex-direction:column;gap:12px;}
+.task{background:rgba(255,255,255,.05);padding:14px;border-radius:14px;position:relative;}
 .task.completed{opacity:.6;}
-.task button{margin-top:10px;padding:10px 14px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--violet));cursor:pointer;font-family:Orbitron;transition:.3s;}
-.task button:hover{transform:translateY(-2px);box-shadow:0 0 10px var(--blue),0 0 20px var(--violet);}
+.task input[type="url"]{width:100%;padding:10px;border-radius:8px;border:none;margin-top:6px;}
+.task button{margin-top:10px;padding:10px 14px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;transition:.3s;}
+.task button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);}
 
-/* PROGRESS BAR */
-.progress-container{background:rgba(255,255,255,.05);border-radius:12px;height:12px;margin-top:8px;}
-.progress-bar{height:100%;border-radius:12px;background:var(--green);width:0%;transition:width .4s;}
+/* PROGRESS & READINESS */
+.progress-bar{height:12px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:6px;}
+.progress-fill{height:100%;width:0%;background:var(--green);transition:width .5s;}
+.readiness{margin-top:8px;font-family:Orbitron;font-size:.9rem;color:var(--green);}
 
-/* PORTFOLIO DASHBOARD */
-.portfolio{display:flex;flex-wrap:wrap;gap:12px;}
-.portfolio-card{flex:1 1 200px;background:var(--glass);padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,.12);}
-.portfolio-card h4{font-family:Orbitron;margin-bottom:6px;}
-.portfolio-card span{font-size:.85rem;color:var(--text-light);}
-.score-bar{height:10px;background:var(--yellow);border-radius:12px;width:0%;transition:width .5s;}
+/* ZAC & COUNTDOWN */
+.zac{text-align:center;font-family:Orbitron;color:var(--green);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+.countdown{font-family:Orbitron;color:var(--yellow);margin-top:4px;font-size:.85rem;}
 
-/* ANIMATIONS */
-@keyframes pulseBG{
-  0%{background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));}
-  50%{background:linear-gradient(135deg, rgba(0,240,255,0.25), rgba(156,77,255,0.25));}
-  100%{background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));}
-}
-@keyframes fadeIn{0%{opacity:0;}100%{opacity:1;}}
-
-@media(max-width:600px){.profile{flex-direction:column;text-align:center;}}
+@media(max-width:600px){.profile{flex-direction:column;text-align:center}}
 </style>
 </head>
 <body>
-
 <header>
   <div class="brand">Zep Swipe</div>
   <button class="home-btn" onclick="location.href='student-dashboard.html'">🏠</button>
 </header>
 
 <div class="container">
-
   <!-- PROFILE -->
   <div class="profile">
     <img id="profileImg">
     <div>
       <h3 id="studentName"></h3>
-      <span id="studentUniversity"></span><br>
-      <span id="walletBalance"></span>
+      <span id="studentUniversity"></span>
+      <div id="readinessScore" class="readiness"></div>
     </div>
   </div>
 
@@ -119,11 +118,8 @@ header{
   <div class="tasks" id="taskSection" style="display:none">
     <h3 id="courseTitle"></h3>
     <div id="tasksContainer"></div>
+    <div class="zac" id="zacCounter"></div>
   </div>
-
-  <!-- PORTFOLIO DASHBOARD -->
-  <div class="portfolio" id="portfolioDashboard"></div>
-
 </div>
 
 <script>
@@ -135,42 +131,41 @@ let user = users[currentUserId];
 
 /* ====================== PROFILE ====================== */
 profileImg.src = user.profileImage || "https://via.placeholder.com/80";
-document.getElementById("studentName").innerText = user.name;
-document.getElementById("studentUniversity").innerText = user.university || "";
-document.getElementById("walletBalance").innerText = `Wallet: ${user.walletBalance||0} ZAC`;
+studentName.innerText = user.name;
+studentUniversity.innerText = user.university || "";
 
-/* ====================== COURSES ====================== */
+/* ====================== COURSES DATA ====================== */
 const courses = {
-  "Virtual Assistant": ["Inbox & calendar mgmt","Client research","Scheduling tools","Admin workflow","Client simulation"],
-  "Data Entry": ["Spreadsheet basics","CRM tools","Accuracy training","Speed drills","Client simulation"],
-  "Student Travel Agent": ["Record intro video + submit Zora link","Local sightseeing research","Customer service basics","Promote local experiences","Simulate booking workflow"],
-  "Graphic Design Foundation":["Color theory","Typography","Layout design","Branding basics","Portfolio build"],
-  "Web & No-Code Development":["HTML/CSS basics","No-code tools intro","Build landing page","Responsive design","Portfolio project"],
-  "AI & Prompt Engineering":["AI basics","Prompt writing","Tool experimentation","AI project","Portfolio showcase"],
-  "Digital Marketing & Ads":["SEO fundamentals","Ad campaigns","Social media strategy","Analytics review","Portfolio project"],
-  "Remote Customer Support":["Ticket management","CRM use","Customer communication","Conflict resolution","Simulation project"]
+  "Virtual Assistant": ["Inbox & calendar management","Client research","Scheduling tools","Admin workflow","Client simulation","Client email draft","Project follow-up","Task prioritization","Reporting & analytics","Remote meeting setup","CRM practice","Process documentation","Client roleplay","Feedback integration","Task automation","Time tracking","Mini project delivery","Client case study","Portfolio upload","Freelance mock task","Final evaluation"],
+  "Data Entry": ["Spreadsheet basics","CRM tools","Accuracy training","Speed drills","Client simulation","Data validation","Database entry","Form automation","Data cleaning","Client project mock","Report generation","Data audit","Advanced formulas","Workflow optimization","Project compilation","Portfolio build","Review & feedback","Mock client delivery","Task showcase","Portfolio submission","Final evaluation"],
+  "Student Travel Agent 🌍": ["Record intro video + Zora verification","Local sightseeing research","Customer service basics","Promote local experiences online","Booking & payment simulation","Cultural tips","Create local guide","Content creation for tours","Safety checklist","Virtual tour practice","Marketing services on Zep Swipe","Transport planning","Sample package design","Roleplay traveler interaction","Collect feedback & improve plan","Pricing & payment setup","List first real offer","Promote offer","Receive payment proof","Next 3 tours prep","Final verification"],
+  "Graphic Design Foundation": ["Design basics","Color theory","Typography practice","Layout principles","Logo design","Brand identity","Illustration practice","Poster creation","Portfolio piece 1","Portfolio piece 2","Portfolio piece 3","Client mock project 1","Client mock project 2","Presentation design","Infographic creation","Design critique","Design system setup","Portfolio compilation","Portfolio review","Showcase project","Final evaluation"],
+  "Web & No-Code Development": ["HTML & CSS basics","JavaScript intro","Web layout practice","Responsive design","Front-end project 1","No-code platform intro","Build landing page","Database & API integration","Automation setup","Web project 1","Web project 2","Portfolio build","User testing","Mock client project","Deploy website","Portfolio showcase","Task optimization","Client feedback","Project review","Final evaluation","Verified freelancer readiness"],
+  "AI & Prompt Engineering": ["Intro to AI & prompts","Prompt writing basics","Use AI tools","Text-to-image prompt","Text-to-text prompt","Prompt optimization","AI for content","AI for analytics","Mini project 1","Mini project 2","Portfolio project","Mock client prompt","Task automation","Prompt evaluation","AI workflow integration","Portfolio build","Advanced prompt 1","Advanced prompt 2","Final showcase","Client simulation","Final evaluation"],
+  "Digital Marketing & Ads": ["Marketing basics","Social media setup","Content planning","Ad platforms intro","Campaign creation","Target audience research","Analytics review","Campaign optimization","Email marketing","SEO basics","Influencer collaboration","Mini project 1","Mini project 2","Portfolio project","Client mock campaign","Paid ads practice","Analytics report","Presentation","Portfolio compilation","Showcase project","Final evaluation"],
+  "Remote Customer Support": ["Support tools intro","Customer communication","Ticket management","FAQ creation","Live chat practice","Email handling","CRM integration","Client roleplay","Feedback collection","Reporting","Knowledge base creation","Advanced support scenarios","Multi-channel handling","Escalation practice","Project task delivery","Portfolio entry 1","Portfolio entry 2","Portfolio review","Client simulation","Final showcase","Verified readiness"]
 };
 
-if(!user.learnEarn) user.learnEarn={course:null,completed:{},lastCompleted:Date.now()}; 
+/* ====================== INIT USER LEARN EARN ====================== */
+if(!user.learnEarn){user.learnEarn={course:null,completed:[],lastCompletion:null};users[currentUserId]=user;localStorage.setItem("users",JSON.stringify(users));}
 
 /* ====================== RENDER COURSES ====================== */
 const courseList=document.getElementById("courseList");
 let currentCourse=null;
 
-function renderCourses(){
-  courseList.innerHTML="";
-  Object.keys(courses).forEach(c=>{
-    const div=document.createElement("div");
-    div.className="course";
-    div.innerHTML=`<h4>${c}</h4><span>21-Day Client-Ready Program</span>`;
-    if(currentCourse===c) div.classList.add("selected");
-    div.onclick=()=>{currentCourse=c;selectCourse(c);};
-    courseList.appendChild(div);
-  });
-}
-renderCourses();
+Object.keys(courses).forEach(c=>{
+  const div=document.createElement("div");
+  div.className="course";
+  div.innerHTML=`<h4>${c}</h4><span>21-Day Client-Ready Program</span>`;
+  div.onclick=()=>selectCourse(c);
+  courseList.appendChild(div);
+});
 
 function selectCourse(course){
+  currentCourse=course;
+  document.querySelectorAll('.course').forEach(c=>c.classList.remove('selected'));
+  const card = Array.from(document.querySelectorAll('.course')).find(c=>c.querySelector('h4').innerText===course);
+  if(card) card.classList.add('selected');
   user.learnEarn.course=course;
   users[currentUserId]=user;
   localStorage.setItem("users",JSON.stringify(users));
@@ -179,123 +174,90 @@ function selectCourse(course){
 
 /* ====================== TASKS ====================== */
 const taskSection=document.getElementById("taskSection");
+const courseTitle=document.getElementById("courseTitle");
 const tasksContainer=document.getElementById("tasksContainer");
+const zacCounter=document.getElementById("zacCounter");
+const readinessScore=document.getElementById("readinessScore");
 
 function renderTasks(){
+  if(!currentCourse) return;
   taskSection.style.display="block";
-  document.getElementById("courseTitle").innerText = user.learnEarn.course;
+  courseTitle.innerText=currentCourse;
   tasksContainer.innerHTML="";
+  zacCounter.innerText=`Total ZAC: ${user.walletBalance||0}`;
+  
+  const completedCount=user.learnEarn.completed.length;
+  const readiness=Math.floor((completedCount/21)*100);
+  readinessScore.innerText=`Freelancer Readiness Score: ${readiness}%`;
 
-  const courseTasks=courses[user.learnEarn.course];
-  const completedDays=user.learnEarn.completed[user.learnEarn.course]||[];
-
-  for(let day=1;day<=21;day++){
+  const now=new Date().getTime();
+  let lastTime=new Date(user.learnEarn.lastCompletion||0).getTime();
+  
+  courses[currentCourse].forEach((task,idx)=>{
+    const day=idx+1;
+    const completed=user.learnEarn.completed.includes(day);
     const div=document.createElement("div");
-    div.className="task";
-
-    // Determine task text
-    let taskText="";
-    if(day===1){
-      taskText=`Record intro video, submit Zora link, then complete on Zep Swipe to earn.`;
-    }else{
-      taskText=`Day ${day}: ${courseTasks[(day-2)%courseTasks.length]}`;
-    }
-
-    // Check time lock
-    let unlocked=true;
-    if(day>1){
-      const last=completedDays[completedDays.length-1]||0;
-      const nextUnlock=last+24*60*60*1000;
-      if(Date.now()<nextUnlock) unlocked=false;
-    }
-
-    if(completedDays.includes(day)) div.classList.add("completed");
-
-    div.innerHTML=`<strong>Day ${day}</strong><p>${taskText}</p>`;
-
-    if(!completedDays.includes(day)){
+    div.className="task"+(completed?" completed":"");
+    
+    div.innerHTML=`<strong>Day ${day}</strong><p>${task}</p>`;
+    
+    if(!completed){
       const btn=document.createElement("button");
-      btn.innerText=unlocked?"Submit Task":"Locked - Countdown";
-      if(!unlocked){
-        // Countdown timer
-        const interval=setInterval(()=>{
-          const last=completedDays[completedDays.length-1]||0;
-          const nextUnlock=last+24*60*60*1000;
-          const remaining=Math.max(0,nextUnlock-Date.now());
-          const hrs=Math.floor(remaining/3600000);
-          const mins=Math.floor((remaining%3600000)/60000);
-          const secs=Math.floor((remaining%60000)/1000);
-          btn.innerText=`Locked - ${hrs}h ${mins}m ${secs}s`;
-          if(remaining<=0){
-            clearInterval(interval);
-            btn.innerText="Submit Task";
-          }
-        },1000);
+      const input=document.createElement("input");
+      input.type="url";input.placeholder="Paste task link here";
+      div.appendChild(input);
+      
+      // Unlock logic: Day1 always unlock, Day>1 after 24h
+      let canUnlock=day===1 || (lastTime && (now - lastTime)>=86400000);
+      const countdown=document.createElement("div");countdown.className="countdown";
+      div.appendChild(countdown);
+      if(!canUnlock){
+        btn.disabled=true;countdown.innerText="Next task unlocks in 24h from previous completion";
       } else {
-        btn.onclick=()=>completeTask(day);
+        btn.innerText="Submit Task";
+        btn.onclick=()=>submitTask(day,input.value);
       }
       div.appendChild(btn);
-    } else div.innerHTML+=`<span style="color:#00ff94">✔ Completed</span>`;
-
+    } else {
+      div.innerHTML+=`<span style="color:var(--green)">✔ Completed</span>`;
+    }
+    
     tasksContainer.appendChild(div);
-  }
-}
-
-/* ====================== COMPLETE TASK ====================== */
-function completeTask(day){
-  const completedDays=user.learnEarn.completed[user.learnEarn.course]||[];
-  if(completedDays.includes(day)) return;
-
-  // For Day 1, verify Zora link (simulate verification)
-  if(day===1){
-    const valid=confirm("Have you submitted the Zora link? Click OK to verify.");
-    if(!valid){ alert("Day 1 task requires Zora link verification."); return; }
-  }
-
-  completedDays.push(day);
-  user.learnEarn.completed[user.learnEarn.course]=completedDays;
-  user.learnEarn.lastCompleted=Date.now();
-  user.tasksCompleted = (user.tasksCompleted||0)+1;
-  user.walletBalance = (user.walletBalance||0)+25;
-
-  // Day 21 verification payment
-  if(day===21){
-    if(user.country==="GH") alert("Pay 15 GHS via Momo/Paystack.");
-    else alert("Pay $15 via Paystack (converted to local currency).");
-    user.verified=true;
-  }
-
-  users[currentUserId]=user;
-  localStorage.setItem("users",JSON.stringify(users));
-
-  alert("+25 ZAC earned!");
-  renderTasks();
-  renderPortfolio();
-}
-
-/* ====================== PORTFOLIO DASHBOARD ====================== */
-const portfolioDashboard=document.getElementById("portfolioDashboard");
-function renderPortfolio(){
-  portfolioDashboard.innerHTML="";
-  Object.keys(courses).forEach(c=>{
-    const total=21;
-    const completed=(user.learnEarn.completed[c]||[]).length;
-    const percent=Math.floor((completed/total)*100);
-    const card=document.createElement("div");
-    card.className="portfolio-card";
-    card.innerHTML=`
-      <h4>${c}</h4>
-      <div class="progress-container">
-        <div class="progress-bar" style="width:${percent}%"></div>
-      </div>
-      <span>${percent}% Complete | ${completed*25} ZAC | ${user.verified?"✔ Verified":""}</span>
-    `;
-    portfolioDashboard.appendChild(card);
   });
 }
-renderPortfolio();
-if(user.learnEarn.course) renderTasks();
 
+/* ====================== SUBMIT TASK ====================== */
+function submitTask(day,link){
+  if(!link){alert("Please paste your task link to submit.");return;}
+  
+  // TODO: Verify link via Zora API or simulate verification
+  // For now, simple URL validation
+  try{new URL(link);}catch(e){alert("Invalid link.");return;}
+  
+  if(user.learnEarn.completed.includes(day)) return;
+  
+  user.learnEarn.completed.push(day);
+  user.learnEarn.lastCompletion=new Date().toISOString();
+  user.walletBalance=(user.walletBalance||0)+25;
+  user.tasksCompleted=user.learnEarn.completed.length;
+  
+  // Day 21 verification payment
+  if(day===21){
+    const userLocation=user.country||"GH";
+    alert(`Final verification payment required. Processing via ${userLocation==="GH"?"Momo/Paystack (local currency)":"Paystack (USD)"}`);
+    // TODO: Integrate Paystack/Momo API here
+    user.verified=true;
+  }
+  
+  users[currentUserId]=user;
+  localStorage.setItem("users",JSON.stringify(users));
+  
+  renderTasks();
+  alert("+25 ZAC earned for completing Day "+day);
+}
+
+/* ====================== INITIAL LOAD ====================== */
+if(user.learnEarn.course){currentCourse=user.learnEarn.course;renderTasks();}
 </script>
 </body>
 </html>
