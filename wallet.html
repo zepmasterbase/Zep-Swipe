@@ -25,18 +25,18 @@ body{background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-directio
 header{
   display:flex;justify-content:space-between;align-items:center;padding:16px 20px;
   backdrop-filter:blur(12px);
-  background:rgba(0,0,0,.35);
+  background:linear-gradient(135deg,#050018,#1a0a3e);
   border-bottom:1px solid rgba(255,255,255,.08);
 }
 .brand{
   display:flex;align-items:center;gap:10px;cursor:pointer;
 }
 .brand img{
-  width:44px;height:44px;object-fit:contain;
+  width:50px;height:50px;object-fit:contain;
 }
 .brand span{
   font-family:Orbitron;
-  font-size:1.4rem;
+  font-size:1.6rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -89,6 +89,23 @@ button:hover{
 .notification.submitted{border-left:4px solid var(--purple);}
 .notification.released{border-left:4px solid var(--green);}
 
+/* WITHDRAW MODAL */
+.modal-bg{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:999;
+}
+.modal{
+  background:var(--glass);padding:24px;border-radius:16px;max-width:400px;width:90%;position:relative;
+}
+.modal h3{margin-bottom:12px;}
+.modal input, .modal select{
+  width:100%;padding:10px;margin-bottom:12px;border:none;border-radius:10px;
+}
+.modal button{
+  padding:10px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;width:100%;
+}
+.modal .close-btn{position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;font-weight:700;color:#fff;}
+
 /* RESPONSIVE */
 @media(max-width:600px){
   .balance-card{flex-direction:column;align-items:flex-start;}
@@ -99,7 +116,7 @@ button:hover{
 
 <header>
   <div class="brand" onclick="location.href='student-dashboard.html'">
-    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Zep Swipe Logo">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png" alt="Zep Swipe Logo">
     <span>Zep Swipe</span>
   </div>
   <button class="home-btn" onclick="location.href='student-dashboard.html'">🏠</button>
@@ -119,11 +136,10 @@ button:hover{
     </div>
   </div>
 
-  <!-- DAILY TASK BUTTON -->
+  <!-- ACTION BUTTONS -->
   <button onclick="goToLearnEarn()">Complete Daily Task</button>
-
-  <!-- CREATE INVOICE -->
   <button class="create-invoice-btn" onclick="location.href='create-invoice.html'">Create Invoice</button>
+  <button onclick="openWithdrawModal()">Withdraw Funds</button>
 
   <!-- ZAC CHART -->
   <div id="zacChartContainer">
@@ -136,6 +152,27 @@ button:hover{
     <div id="notificationsList"></div>
   </div>
 
+</div>
+
+<!-- WITHDRAW MODAL -->
+<div class="modal-bg" id="withdrawModal">
+  <div class="modal">
+    <span class="close-btn" onclick="closeWithdrawModal()">×</span>
+    <h3>Withdraw Funds</h3>
+    <label for="country">Select Country</label>
+    <select id="country">
+      <option value="">--Select Country--</option>
+      <option value="Ghana">Ghana</option>
+      <option value="Zambia">Zambia</option>
+      <option value="Namibia">Namibia</option>
+      <option value="Malawi">Malawi</option>
+      <option value="Other">Other African Country</option>
+    </select>
+    <div id="withdrawInfo" style="margin-bottom:12px;color:var(--text-light);"></div>
+    <input type="text" id="accountInput" placeholder="Enter Mobile Number / Bank Account">
+    <input type="number" id="amountInput" placeholder="Amount to Withdraw">
+    <button onclick="submitWithdraw()">Submit Withdrawal</button>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -154,9 +191,11 @@ if(currentUser.zacBalance===undefined) currentUser.zacBalance=0;
 const usdBalanceEl = document.getElementById("usdBalance");
 const zacBalanceEl = document.getElementById("zacBalance");
 const notificationsList = document.getElementById("notificationsList");
-
-// Notifications from localStorage
-let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
+const withdrawModal = document.getElementById("withdrawModal");
+const countrySelect = document.getElementById("country");
+const withdrawInfo = document.getElementById("withdrawInfo");
+const accountInput = document.getElementById("accountInput");
+const amountInput = document.getElementById("amountInput");
 
 // Render Wallet
 function renderWallet(){
@@ -165,10 +204,8 @@ function renderWallet(){
 }
 renderWallet();
 
-// Redirect to Learn & Earn instead of auto-adding ZAC
-function goToLearnEarn(){
-  window.location.href = "learn-earn.html";
-}
+// Redirect to Learn & Earn
+function goToLearnEarn(){ window.location.href = "learn-earn.html"; }
 
 // Chart.js for ZAC history
 const ctx = document.getElementById('zacChart').getContext('2d');
@@ -198,6 +235,7 @@ updateChart();
 // Notifications
 function renderNotifications(){
   notificationsList.innerHTML="";
+  let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
   notifications.forEach(n=>{
     const div = document.createElement("div");
     div.className=`notification ${n.type}`;
@@ -206,26 +244,60 @@ function renderNotifications(){
     notificationsList.appendChild(div);
   });
 }
+renderNotifications();
+
+// Withdraw Modal Logic
+countrySelect.addEventListener("change",()=>{
+  const country = countrySelect.value;
+  if(["Ghana","Zambia","Namibia","Malawi"].includes(country)){
+    withdrawInfo.innerText = "Mobile Money withdrawals supported. Enter your mobile number.";
+    accountInput.placeholder = "Mobile Number";
+  } else if(country==="Other"){
+    withdrawInfo.innerText = "Bank transfer supported for all other African countries. Enter your bank account number.";
+    accountInput.placeholder = "Bank Account Number";
+  } else {
+    withdrawInfo.innerText="";
+    accountInput.placeholder="Enter Mobile/Bank";
+  }
+});
+
+function openWithdrawModal(){
+  withdrawModal.style.display="flex";
+}
+function closeWithdrawModal(){
+  withdrawModal.style.display="none";
+  accountInput.value="";
+  amountInput.value="";
+  countrySelect.value="";
+  withdrawInfo.innerText="";
+}
+
+function submitWithdraw(){
+  const country = countrySelect.value;
+  const account = accountInput.value.trim();
+  const amount = parseFloat(amountInput.value);
+  if(!country){alert("Select your country.");return;}
+  if(!account){alert("Enter mobile/bank account.");return;}
+  if(!amount || amount <=0){alert("Enter valid amount.");return;}
+  if(amount > currentUser.walletBalance){alert("Insufficient balance.");return;}
+
+  // Deduct balance (simulate)
+  currentUser.walletBalance -= amount;
+  users[currentUserId] = currentUser;
+  localStorage.setItem("users",JSON.stringify(users));
+  renderWallet();
+
+  addNotification({type:"pending",text:`Withdrawal of $${amount.toFixed(2)} initiated via ${country}`});
+  closeWithdrawModal();
+}
+
+// Notification helper
 function addNotification(n){
+  let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
   notifications.push(n);
   localStorage.setItem("notifications",JSON.stringify(notifications));
   renderNotifications();
 }
-renderNotifications();
-
-// Listen to storage changes for invoices
-window.addEventListener("storage",e=>{
-  if(e.key && e.key.startsWith("invoice_")){
-    const inv = JSON.parse(e.newValue);
-    if(inv.status==="Released" && inv.studentId===currentUserId){
-      currentUser.walletBalance += inv.total||0;
-      users[currentUserId]=currentUser;
-      localStorage.setItem("users",JSON.stringify(users));
-      addNotification({type:"released",text:`Invoice ${inv.id} funds released!`,invoiceId:inv.id});
-      renderWallet();
-    }
-  }
-});
 </script>
 </body>
 </html>
