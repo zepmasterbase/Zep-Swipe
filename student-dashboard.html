@@ -29,15 +29,11 @@ header{
 .brand{
   display:flex;align-items:center;gap:10px;cursor:pointer;
 }
-.brand img{
-  width:44px;height:44px;object-fit:contain;
-}
+.brand img{width:44px;height:44px;object-fit:contain;}
 .brand span{
-  font-family:Orbitron;
-  font-size:1.5rem;
+  font-family:Orbitron;font-size:1.5rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 .logout-btn{
   background:rgba(255,255,255,.1);border:none;border-radius:50%;
@@ -76,45 +72,31 @@ header{
 
 /* FREELANCER READINESS METER */
 .readiness-meter{
-  margin-top:8px;
-  height:12px;
-  width:100%;
+  margin-top:8px;height:12px;width:100%;
   background:rgba(255,255,255,.1);
   border-radius:999px;
   overflow:hidden;
 }
 .readiness-fill{
-  height:100%;
-  border-radius:999px;
+  height:100%;border-radius:999px;
   background:var(--wallet-glow);
-  width:0%;
-  transition:.6s;
+  width:0%;transition:.6s;
 }
 
-/* HORIZONTAL CARD PLACEHOLDER SECTION */
+/* HORIZONTAL CARDS GRID */
 .horizontal-cards{
-  display:flex;
-  overflow-x:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:16px;
-  padding-bottom:8px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(156,77,255,.4) transparent;
 }
-.horizontal-cards::-webkit-scrollbar{height:8px;}
-.horizontal-cards::-webkit-scrollbar-track{background:transparent;}
-.horizontal-cards::-webkit-scrollbar-thumb{background:rgba(156,77,255,.4);border-radius:4px;}
-
 .card{
-  flex:0 0 220px;
   background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.12);
-  padding:14px;
-  transition:transform .3s, box-shadow .3s;
+  border-radius:16px;border:1px solid rgba(255,255,255,.12);
+  padding:16px;transition:transform .3s, box-shadow .3s;
 }
 .card:hover{transform:translateY(-4px);box-shadow:0 0 20px var(--zep-blue),0 0 30px var(--zep-violet);}
 .card h4{margin-bottom:6px;font-family:Orbitron;}
-.card p{font-size:.85rem;color:var(--text-light);line-height:1.2;}
+.card p{font-size:.85rem;color:var(--text-light);line-height:1.3;}
 
 /* WEEKLY GRAPH */
 .graph-box{
@@ -124,80 +106,56 @@ header{
   display:flex;align-items:flex-end;gap:8px;padding:16px;
 }
 .graph-bar{
-  flex:1;
-  margin:0 4px;
+  flex:1;margin:0 4px;
   background:linear-gradient(180deg,var(--zep-blue),var(--zep-violet));
-  border-radius:8px 8px 0 0;
-  position:relative;
-  animation:pulseBar 2s infinite;
-  cursor:pointer;
-  transition:.3s;
+  border-radius:8px 8px 0 0;position:relative;
+  animation:pulseBar 2s infinite;cursor:pointer;transition:.3s;
 }
 .graph-bar:hover{transform:scaleY(1.1);}
 .graph-bar span{
-  position:absolute;
-  top:-22px;
-  left:50%;
+  position:absolute;top:-22px;left:50%;
   transform:translateX(-50%);
-  font-size:.75rem;
-  color:var(--text-light);
-  display:none;
-  white-space:nowrap;
-  background:rgba(0,0,0,.6);
-  padding:2px 6px;
-  border-radius:6px;
+  font-size:.75rem;color:var(--text-light);
+  display:none;white-space:nowrap;background:rgba(0,0,0,.6);
+  padding:2px 6px;border-radius:6px;
 }
 .graph-bar:hover span{display:block;}
 @keyframes pulseBar{0%,100%{opacity:.7;}50%{opacity:1;}}
 
 /* QUICK ACTIONS */
 .actions{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:16px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;
 }
 .actions button{
   border:none;border-radius:16px;padding:18px;
   font-family:Orbitron;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  cursor:pointer;
-  color:#050015;
-  font-weight:600;
-  font-size:.95rem;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  transition:.3s;
-  box-shadow:0 0 12px var(--zep-blue),0 0 24px var(--zep-violet);
+  cursor:pointer;color:#050015;font-weight:600;font-size:.95rem;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:.3s;box-shadow:0 0 12px var(--zep-blue),0 0 24px var(--zep-violet);
 }
 .actions button:hover{
   transform:translateY(-4px);
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
 }
-.actions button span{
-  font-size:1.8rem;margin-bottom:6px;
-}
+.actions button span{font-size:1.8rem;margin-bottom:6px;}
 
 /* FLOATING ZEP AI BUTTON */
 #zepAIButton{
   position:fixed;bottom:20px;right:20px;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  border:none;border-radius:50%;
-  width:60px;height:60px;cursor:pointer;
-  font-size:24px;display:flex;justify-content:center;align-items:center;color:#050015;
+  border:none;border-radius:50%;width:60px;height:60px;
+  cursor:pointer;font-size:24px;display:flex;justify-content:center;align-items:center;color:#050015;
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
-  animation:orbPulse 2s infinite;
-  z-index:1000;
+  animation:orbPulse 2s infinite;z-index:1000;
 }
 @keyframes orbPulse{0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
 
 /* RESPONSIVE */
 @media(max-width:600px){
   .profile-summary{flex-direction:column;align-items:center;text-align:center;}
-  .horizontal-cards{gap:12px;}
-  .card{flex:0 0 180px;}
   .actions{grid-template-columns:1fr;}
+  .horizontal-cards{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -225,12 +183,10 @@ header{
     </div>
   </div>
 
-  <!-- HORIZONTAL CARDS -->
+  <!-- COURSES GRID -->
   <div class="section">
     <h3>Courses & Progress</h3>
-    <div class="horizontal-cards" id="horizontalCards">
-      <!-- JS will populate cards -->
-    </div>
+    <div class="horizontal-cards" id="horizontalCards"></div>
   </div>
 
   <!-- WEEKLY EARNINGS GRAPH -->
@@ -257,53 +213,60 @@ header{
 // =======================
 // USER SESSION
 // =======================
-let users = JSON.parse(localStorage.getItem("users"))||{};
-let currentUserId = localStorage.getItem("currentUserId");
-if(!currentUserId || !users[currentUserId]) location.href="login.html";
-let user = users[currentUserId];
+let users=JSON.parse(localStorage.getItem("users"))||{};
+let currentUserId=localStorage.getItem("currentUserId");
+if(!currentUserId||!users[currentUserId]) location.href="login.html";
+let user=users[currentUserId];
 
-// default balances
-if(user.walletBalance===undefined) user.walletBalance=0;
-if(user.zacBalance===undefined) user.zacBalance=0;
+// defaults
+user.walletBalance=user.walletBalance||0;
+user.zacBalance=user.zacBalance||0;
+user.learnEarn=user.learnEarn||{course:null,completed:[],zac:0,verifiedCourses:[]};
+users[currentUserId]=user;
+localStorage.setItem("users",JSON.stringify(users));
 
-// elements
-const profileImg = document.getElementById("profileImg");
-const studentName = document.getElementById("studentName");
-const studentLevel = document.getElementById("studentLevel");
-const completionText = document.getElementById("completionText");
-const walletBalance = document.getElementById("walletBalance");
-const verifiedBadge = document.getElementById("verifiedBadge");
-const readinessFill = document.getElementById("readinessFill");
-const horizontalCards = document.getElementById("horizontalCards");
-const weeklyGraph = document.getElementById("weeklyGraph");
+// ELEMENTS
+const profileImg=document.getElementById("profileImg");
+const studentName=document.getElementById("studentName");
+const studentLevel=document.getElementById("studentLevel");
+const completionText=document.getElementById("completionText");
+const walletBalance=document.getElementById("walletBalance");
+const verifiedBadge=document.getElementById("verifiedBadge");
+const readinessFill=document.getElementById("readinessFill");
+const horizontalCards=document.getElementById("horizontalCards");
+const weeklyGraph=document.getElementById("weeklyGraph");
 
-// profile
-profileImg.src = user.profileImage || "https://via.placeholder.com/80";
-studentName.innerText = user.name || "Student Name";
-studentLevel.innerText = user.level || "Beginner Freelancer";
-completionText.innerText = `Profile Completion: ${user.profileCompletion || 0}%`;
-readinessFill.style.width = `${user.freelancerReadiness || 0}%`;
-walletBalance.innerText = `Wallet: ${user.zacBalance || 0} ZAC (~$${((user.walletBalance||0)*0.014).toFixed(2)})`;
+// PROFILE
+profileImg.src=user.profileImage||"https://via.placeholder.com/80";
+studentName.innerText=user.name||"Student Name";
+studentLevel.innerText=user.level||"Beginner Freelancer";
+completionText.innerText=`Profile Completion: ${user.profileCompletion||0}%`;
+readinessFill.style.width=`${user.freelancerReadiness||0}%`;
+walletBalance.innerText=`Wallet: ${user.zacBalance||0} ZAC (~$${(user.walletBalance*0.014).toFixed(2)})`;
 if(user.verified) verifiedBadge.style.display="inline-block";
 
 // =======================
-// Horizontal course cards
+// COURSES GRID
 // =======================
-let courses = ["Virtual Assistant","Data Entry","Travel Agent","Graphic Design","Web Dev","AI & Prompt","Digital Marketing","Remote Support"];
+let coursesFromLearnEarn = Object.keys(user.learnEarn?.progress||{}) || [
+  "Virtual Assistant","Data Entry","Graphic Design Foundation","Web & No-Code Development","AI & Prompt Engineering","Digital Marketing & Ads","Remote Customer Support","Student Travel Agent 🌍"
+];
+
 horizontalCards.innerHTML="";
-courses.forEach(course=>{
-  const card = document.createElement("div");
+coursesFromLearnEarn.forEach(course=>{
+  const card=document.createElement("div");
   card.className="card";
-  card.innerHTML=`<h4>${course}</h4><p>Progress: ${Math.floor(Math.random()*100)}%</p><p>ZAC Earned: ${Math.floor(Math.random()*525)}</p>`;
+  const progress = user.learnEarn.progress?.[course]||0;
+  card.innerHTML=`<h4>${course}</h4><p>Progress: ${progress}%</p><p>ZAC Earned: ${user.learnEarn.zac||0}</p>`;
   horizontalCards.appendChild(card);
 });
 
 // =======================
 // WEEKLY GRAPH
 // =======================
-let earnings = user.earningsHistory || [0,10,5,15,8,12,20];
+let earnings=user.earningsHistory||[0,10,5,15,8,12,20];
 weeklyGraph.innerHTML="";
-earnings.forEach((val)=>{
+earnings.forEach(val=>{
   const bar=document.createElement("div");
   bar.className="graph-bar";
   bar.style.height=`${val*5}px`;
@@ -312,15 +275,15 @@ earnings.forEach((val)=>{
 });
 
 // =======================
-// LIVE WALLET UPDATE & GLOW ANIMATION
+// LIVE WALLET UPDATE & GLOW
 // =======================
 function updateWallet(zacChange){
-  if(zacChange) {
+  if(zacChange){
     walletBalance.style.transition="all 0.6s ease";
-    walletBalance.style.textShadow=`0 0 12px var(--wallet-glow), 0 0 24px var(--wallet-glow)`;
+    walletBalance.style.textShadow=`0 0 12px var(--wallet-glow),0 0 24px var(--wallet-glow)`;
     setTimeout(()=>walletBalance.style.textShadow="none",800);
   }
-  walletBalance.innerText = `Wallet: ${user.zacBalance || 0} ZAC (~$${((user.walletBalance||0)*0.014).toFixed(2)})`;
+  walletBalance.innerText=`Wallet: ${user.zacBalance||0} ZAC (~$${(user.walletBalance*0.014).toFixed(2)})`;
 }
 updateWallet();
 
