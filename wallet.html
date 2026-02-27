@@ -27,13 +27,14 @@ header{
   background:radial-gradient(circle at center, rgba(0,240,255,.1), rgba(156,77,255,.1));
   backdrop-filter:blur(14px);
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
+  flex-wrap: wrap;
 }
 .brand{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;cursor:pointer;}
 .home-btn{
-  width:60px;height:60px;border-radius:50%;
+  width:50px;height:50px;border-radius:50%;
   background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
   display:flex;align-items:center;justify-content:center;
-  font-size:24px;cursor:pointer;color:#050015;
+  font-size:22px;cursor:pointer;color:#050015;
   box-shadow:0 0 20px var(--zep-blue),0 0 40px var(--zep-violet);
   transition:.3s;
 }
@@ -43,7 +44,7 @@ header{
 .container{max-width:1000px;margin:20px auto;padding:16px;display:flex;flex-direction:column;gap:20px;}
 
 /* BALANCE CARDS */
-.balance-card{background:var(--glass);padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;align-items:center;box-shadow:0 0 20px rgba(0,240,255,.1);}
+.balance-card{background:var(--glass);padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
 .balance-card h3{font-family:Orbitron;}
 .balance-amount{font-family:Orbitron;font-size:1.6rem;}
 
@@ -53,11 +54,11 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 
 .create-invoice-btn{align-self:flex-start;margin-top:10px;}
 
 /* ZAC CHART */
-#zacChartContainer{background:var(--glass);padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.12);}
+#zacChartContainer{background:var(--glass);padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.12);overflow-x:auto;}
 
 /* NOTIFICATIONS */
 .notification-center{background:var(--glass);padding:16px;border-radius:18px;border:1px solid rgba(255,255,255,.12);max-height:300px;overflow-y:auto;}
-.notification{padding:10px;border-radius:12px;margin-bottom:8px;cursor:pointer;transition:.2s;display:flex;justify-content:space-between;align-items:center;}
+.notification{padding:10px;border-radius:12px;margin-bottom:8px;cursor:pointer;transition:.2s;display:flex;justify-content:space-between;align-items:center;word-wrap:break-word;}
 .notification:hover{background:rgba(255,255,255,.1);}
 .notification.pending{border-left:4px solid var(--yellow);}
 .notification.escrow{border-left:4px solid var(--zep-blue);}
@@ -65,7 +66,10 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 
 .notification.released{border-left:4px solid var(--green);}
 
 /* RESPONSIVE */
-@media(max-width:600px){.balance-card{flex-direction:column;align-items:flex-start;gap:12px;}}
+@media(max-width:600px){
+  .balance-card{flex-direction:column;align-items:flex-start;gap:12px;}
+  header{justify-content:center;gap:12px;}
+}
 </style>
 </head>
 <body>
@@ -90,7 +94,7 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 
   </div>
 
   <!-- DAILY TASK BUTTON -->
-  <button onclick="redirectToLearnEarn()">Complete Daily Task</button>
+  <button onclick="redirectDailyTask()">Complete Daily Task</button>
 
   <!-- CREATE INVOICE -->
   <button class="create-invoice-btn" onclick="location.href='create-invoice.html'">Create Invoice</button>
@@ -130,8 +134,9 @@ function renderWallet(){
 }
 renderWallet();
 
-// Redirect to Learn & Earn instead of auto-adding ZAC
-function redirectToLearnEarn(){
+// Redirect Daily Task
+function redirectDailyTask(){
+  // Redirect to learn-earn page
   window.location.href = "learn-earn.html";
 }
 
@@ -144,7 +149,6 @@ let zacChart = new Chart(ctx,{
 });
 function updateChart(){
   if(!currentUser.zacHistory) currentUser.zacHistory=[];
-  currentUser.zacHistory.push({day:new Date().toLocaleDateString(),zac:currentUser.zacBalance});
   users[currentUserId]=currentUser;
   localStorage.setItem("users",JSON.stringify(users));
 
@@ -152,6 +156,7 @@ function updateChart(){
   zacChart.data.datasets[0].data = currentUser.zacHistory.map(e=>e.zac);
   zacChart.update();
 }
+updateChart();
 
 // Notifications
 const notificationsList = document.getElementById("notificationsList");
