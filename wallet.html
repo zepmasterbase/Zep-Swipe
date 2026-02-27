@@ -25,7 +25,7 @@ body{background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-directio
 header{
   display:flex;justify-content:space-between;align-items:center;padding:16px 20px;
   backdrop-filter:blur(12px);
-  background:linear-gradient(90deg, rgba(0,240,255,.15), rgba(156,77,255,.15));
+  background:linear-gradient(90deg,#050018,#1a0033);
   border-bottom:1px solid rgba(255,255,255,.08);
 }
 .brand{
@@ -60,7 +60,8 @@ header{
   background:var(--glass);padding:20px;border-radius:18px;
   border:1px solid rgba(255,255,255,.12);
   display:flex;justify-content:space-between;align-items:center;
-  flex-wrap:wrap;gap:20px;
+  flex-wrap:wrap;
+  gap:20px;
 }
 .balance-card h3{font-family:Orbitron;}
 .balance-amount{font-family:Orbitron;font-size:1.6rem;}
@@ -74,7 +75,7 @@ button{
 button:hover{
   transform:translateY(-2px);box-shadow:0 0 15px var(--zep-blue),0 0 30px var(--zep-violet);
 }
-.create-invoice-btn, .withdraw-btn{align-self:flex-start;margin-top:10px;}
+.create-invoice-btn{align-self:flex-start;margin-top:10px;}
 
 /* ZAC CHART */
 #zacChartContainer{background:var(--glass);padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.12);overflow-x:auto;}
@@ -91,19 +92,22 @@ button:hover{
 /* MODAL */
 .modal-bg{
   position:fixed;top:0;left:0;width:100%;height:100%;
-  background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:999;
+  background:rgba(0,0,0,.85);
+  display:none;align-items:center;justify-content:center;
+  z-index:999;
 }
 .modal{
   background:var(--glass);padding:24px;border-radius:16px;max-width:400px;width:90%;position:relative;
 }
 .modal input, .modal select{
-  width:100%;padding:10px;border-radius:10px;border:none;margin-bottom:12px;
-  background:rgba(255,255,255,.05);color:#fff;
+  width:100%;padding:10px;border-radius:10px;border:none;margin-bottom:12px;font-family:Poppins;
 }
 .modal button{
   padding:10px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;font-family:Orbitron;width:100%;
 }
-.modal .close-btn{position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;font-weight:700;color:#fff;}
+.modal .close-btn{
+  position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;font-weight:700;color:#fff;
+}
 
 /* RESPONSIVE */
 @media(max-width:600px){
@@ -135,14 +139,10 @@ button:hover{
     </div>
   </div>
 
-  <!-- DAILY TASK BUTTON -->
+  <!-- ACTION BUTTONS -->
   <button onclick="goToLearnEarn()">Complete Daily Task</button>
-
-  <!-- CREATE INVOICE -->
   <button class="create-invoice-btn" onclick="location.href='create-invoice.html'">Create Invoice</button>
-
-  <!-- WITHDRAW BUTTON -->
-  <button class="withdraw-btn" onclick="openWithdrawModal()">Withdraw Funds</button>
+  <button onclick="openWithdrawModal()">Withdraw Funds</button>
 
   <!-- ZAC CHART -->
   <div id="zacChartContainer">
@@ -157,122 +157,46 @@ button:hover{
 
 </div>
 
-<!-- Withdraw Modal -->
+<!-- WITHDRAW MODAL -->
 <div class="modal-bg" id="withdrawModal">
   <div class="modal">
     <span class="close-btn" onclick="closeWithdrawModal()">×</span>
     <h3>Withdraw Funds</h3>
-    <p>Available USD Balance: $<span id="availableUSD">0.00</span></p>
-    <input type="number" id="withdrawAmount" placeholder="Enter amount to withdraw ($100 min)" min="100"/>
-    <select id="withdrawMethod"></select>
-    <input type="text" id="accountInfo" placeholder="Enter Account / Mobile Number"/>
+    <p id="withdrawInfo"></p>
+    <input type="number" id="withdrawAmount" placeholder="Enter amount in USD" min="100">
+    <select id="withdrawMethod">
+      <option value="">Select withdrawal method</option>
+    </select>
     <button onclick="confirmWithdraw()">Confirm Withdrawal</button>
-    <p id="withdrawMsg" style="color:#ffcc00;margin-top:10px;"></p>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-// SESSION INIT
+// USER SESSION
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUserId = localStorage.getItem("currentUserId");
 if(!currentUserId || !users[currentUserId]) location.href="login.html";
 let currentUser = users[currentUserId];
 
 // INIT BALANCES
-currentUser.walletBalance = currentUser.walletBalance || 0;
-currentUser.zacBalance = currentUser.zacBalance || 0;
+if(currentUser.walletBalance===undefined) currentUser.walletBalance=0;
+if(currentUser.zacBalance===undefined) currentUser.zacBalance=0;
 
 // ELEMENTS
 const usdBalanceEl = document.getElementById("usdBalance");
 const zacBalanceEl = document.getElementById("zacBalance");
 const notificationsList = document.getElementById("notificationsList");
 
-// RENDER WALLET
 function renderWallet(){
   usdBalanceEl.innerText = `$${currentUser.walletBalance.toFixed(2)}`;
   zacBalanceEl.innerText = `${currentUser.zacBalance} ZAC`;
 }
 renderWallet();
 
-// Withdraw modal
-const withdrawModal = document.getElementById("withdrawModal");
-const withdrawAmount = document.getElementById("withdrawAmount");
-const withdrawMethod = document.getElementById("withdrawMethod");
-const accountInfo = document.getElementById("accountInfo");
-const withdrawMsg = document.getElementById("withdrawMsg");
-const availableUSD = document.getElementById("availableUSD");
+function goToLearnEarn(){ window.location.href = "learn-earn.html"; }
 
-function openWithdrawModal(){
-  availableUSD.innerText = currentUser.walletBalance.toFixed(2);
-  withdrawAmount.value="";
-  accountInfo.value="";
-  withdrawMsg.innerText="";
-  
-  // Populate withdraw methods based on country
-  const userCountry = currentUser.country || "";
-  withdrawMethod.innerHTML = "";
-  if(["Ghana","Zambia","Namibia","Malawi"].includes(userCountry)){
-    withdrawMethod.innerHTML = `<option value="momo">Mobile Money (${userCountry})</option>`;
-  } else {
-    withdrawMethod.innerHTML = `<option value="bank">Bank Transfer (${userCountry || "Other"})</option>`;
-  }
-  
-  withdrawModal.style.display="flex";
-}
-
-function closeWithdrawModal(){
-  withdrawModal.style.display="none";
-}
-
-// Confirm withdrawal
-function confirmWithdraw(){
-  const amount = parseFloat(withdrawAmount.value);
-  if(isNaN(amount) || amount<100){
-    withdrawMsg.innerText="Minimum withdrawal is $100";
-    return;
-  }
-  if(amount>currentUser.walletBalance){
-    withdrawMsg.innerText="Insufficient balance";
-    return;
-  }
-  
-  const method = withdrawMethod.value;
-  const account = accountInfo.value.trim();
-  if(!account){withdrawMsg.innerText="Enter valid account info"; return;}
-  
-  // Deduct balance
-  currentUser.walletBalance -= amount;
-  users[currentUserId] = currentUser;
-  localStorage.setItem("users", JSON.stringify(users));
-  renderWallet();
-  
-  withdrawMsg.innerText=`Withdrawal request of $${amount.toFixed(2)} via ${method.toUpperCase()} submitted!`;
-}
-
-// Redirect to Learn & Earn
-function goToLearnEarn(){ window.location.href="learn-earn.html"; }
-
-// Notifications
-let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
-function renderNotifications(){
-  notificationsList.innerHTML="";
-  notifications.forEach(n=>{
-    const div = document.createElement("div");
-    div.className=`notification ${n.type}`;
-    div.innerHTML=`<span>${n.text}</span>`;
-    if(n.invoiceId) div.onclick=()=>{window.location.href=`invoice.html?invoice_id=${n.invoiceId}`;};
-    notificationsList.appendChild(div);
-  });
-}
-function addNotification(n){
-  notifications.push(n);
-  localStorage.setItem("notifications",JSON.stringify(notifications));
-  renderNotifications();
-}
-renderNotifications();
-
-// ZAC Chart
+// ZAC CHART
 const ctx = document.getElementById('zacChart').getContext('2d');
 if(!currentUser.zacHistory) currentUser.zacHistory=[];
 let zacChart = new Chart(ctx,{
@@ -297,6 +221,82 @@ function updateChart(){
 }
 updateChart();
 
+// NOTIFICATIONS
+let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
+function renderNotifications(){
+  notificationsList.innerHTML="";
+  notifications.forEach(n=>{
+    const div = document.createElement("div");
+    div.className=`notification ${n.type}`;
+    div.innerHTML=`<span>${n.text}</span>`;
+    if(n.invoiceId) div.onclick=()=>{window.location.href=`invoice.html?invoice_id=${n.invoiceId}`;};
+    notificationsList.appendChild(div);
+  });
+}
+function addNotification(n){
+  notifications.push(n);
+  localStorage.setItem("notifications",JSON.stringify(notifications));
+  renderNotifications();
+}
+renderNotifications();
+
+// STORAGE LISTENER FOR INVOICES
+window.addEventListener("storage",e=>{
+  if(e.key && e.key.startsWith("invoice_")){
+    const inv = JSON.parse(e.newValue);
+    if(inv.status==="Released" && inv.studentId===currentUserId){
+      currentUser.walletBalance += inv.total||0;
+      users[currentUserId]=currentUser;
+      localStorage.setItem("users",JSON.stringify(users));
+      addNotification({type:"released",text:`Invoice ${inv.id} funds released!`,invoiceId:inv.id});
+      renderWallet();
+    }
+  }
+});
+
+// WITHDRAW LOGIC
+const withdrawModal = document.getElementById("withdrawModal");
+const withdrawInfo = document.getElementById("withdrawInfo");
+const withdrawAmount = document.getElementById("withdrawAmount");
+const withdrawMethod = document.getElementById("withdrawMethod");
+
+function openWithdrawModal(){
+  withdrawModal.style.display="flex";
+  withdrawInfo.innerText = `Your USD balance: $${currentUser.walletBalance.toFixed(2)} | Minimum withdrawal: $100`;
+
+  // Clear previous options
+  withdrawMethod.innerHTML = '<option value="">Select withdrawal method</option>';
+
+  const momoCountries = ["Ghana","Zambia","Namibia","Malawi"];
+  if(momoCountries.includes(currentUser.country)){
+    withdrawMethod.innerHTML += '<option value="momo">Mobile Money (Momo)</option>';
+  }
+  withdrawMethod.innerHTML += '<option value="bank">Bank Transfer</option>';
+}
+
+function closeWithdrawModal(){
+  withdrawModal.style.display="none";
+  withdrawAmount.value="";
+  withdrawMethod.value="";
+}
+
+function confirmWithdraw(){
+  const amt = parseFloat(withdrawAmount.value);
+  const method = withdrawMethod.value;
+  if(isNaN(amt) || amt < 100){alert("Minimum withdrawal is $100."); return;}
+  if(!method){alert("Please select a withdrawal method."); return;}
+  if(amt > currentUser.walletBalance){alert("Insufficient balance."); return;}
+
+  // Deduct balance
+  currentUser.walletBalance -= amt;
+  users[currentUserId] = currentUser;
+  localStorage.setItem("users",JSON.stringify(users));
+  renderWallet();
+
+  addNotification({type:"pending",text:`Withdrawal of $${amt} via ${method.toUpperCase()} requested.`});
+  closeWithdrawModal();
+  alert("Withdrawal request submitted. It will be processed shortly.");
+}
 </script>
 </body>
 </html>
