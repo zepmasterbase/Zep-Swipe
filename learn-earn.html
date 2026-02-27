@@ -13,14 +13,11 @@
   --yellow:#ffcc00;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,.08);
-  --text-light:rgba(255,255,255,.85);
 }
-
 /* RESET */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
 body{background:var(--bg);color:#fff;min-height:100vh;}
 button{cursor:pointer;transition:.3s;}
-
 /* HEADER */
 header{
   display:flex;justify-content:space-between;align-items:center;
@@ -38,10 +35,8 @@ header{
   background:linear-gradient(135deg,var(--blue),var(--violet));
   color:#050015;font-size:20px;
 }
-
 /* CONTAINER */
 .container{max-width:1200px;margin:auto;padding:16px;display:flex;flex-direction:column;gap:24px}
-
 /* PROFILE */
 .profile{
   display:flex;align-items:center;gap:14px;
@@ -49,7 +44,6 @@ header{
 }
 .profile img{width:70px;height:70px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
 .profile h3{font-family:Orbitron;margin-bottom:2px;}
-
 /* COURSES GRID */
 .courses{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
@@ -73,7 +67,6 @@ header{
   50%{background:linear-gradient(135deg, rgba(0,240,255,0.25), rgba(156,77,255,0.25));}
   100%{background:linear-gradient(135deg, rgba(0,240,255,0.15), rgba(156,77,255,0.15));}
 }
-
 /* TASKS */
 .tasks{background:var(--glass);padding:18px;border-radius:18px;}
 .task{background:rgba(255,255,255,.05);padding:14px;border-radius:14px;margin-bottom:12px;position:relative;}
@@ -83,7 +76,8 @@ header{
 /* PROGRESS & PORTFOLIO */
 .progress-bar{height:12px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:6px;}
 .progress-fill{height:100%;border-radius:999px;background:var(--green);width:0%;transition:.5s;}
-.portfolio{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:.85rem;}
+.zac-bar{height:12px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:6px;}
+.zac-fill{height:100%;border-radius:999px;background:var(--yellow);width:0%;transition:.5s;}
 
 /* FREELANCER READINESS */
 .freelancer-score{
@@ -102,8 +96,6 @@ header{
 .modal input{width:100%;padding:10px;border-radius:10px;border:none;margin-bottom:12px;}
 .modal button{padding:10px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--violet));color:#050015;font-family:Orbitron;cursor:pointer;}
 .modal .close-btn{position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;font-weight:700;color:#fff;}
-
-/* MOBILE */
 @media(max-width:600px){.profile{flex-direction:column;text-align:center;}.courses{grid-template-columns:1fr;}}
 </style>
 </head>
@@ -115,7 +107,6 @@ header{
 </header>
 
 <div class="container">
-
   <!-- PROFILE -->
   <div class="profile">
     <img id="profileImg">
@@ -135,251 +126,140 @@ header{
     <div class="freelancer-score">
       <strong>Freelancer Readiness:</strong> <span id="readinessScore">0%</span>
     </div>
+    <div class="zac-bar"><div class="zac-fill" id="zacFill"></div></div>
+    <span id="totalZac">ZAC Earned: 0</span>
   </div>
 
-  <!-- DASHBOARD PROGRESS -->
-  <div class="dashboard-progress" id="dashboardProgress"></div>
 </div>
 
-<!-- MODAL FOR LINK SUBMISSION -->
+<!-- MODAL -->
 <div class="modal-bg" id="modalBg">
   <div class="modal">
     <span class="close-btn" onclick="closeModal()">×</span>
-    <h3 id="modalTitle">Submit Your Portfolio Link</h3>
-    <input type="url" id="taskLinkInput" placeholder="Paste your Zora portfolio link" />
+    <h3 id="modalTitle">Submit Your Zora Portfolio Link</h3>
+    <input type="url" id="taskLinkInput" placeholder="Paste your Zora portfolio link"/>
     <button onclick="confirmLink()">Submit</button>
   </div>
 </div>
 
 <script>
-/* ======================
-   SESSION & PROFILE
-====================== */
+// ========== SESSION ==========
 let users=JSON.parse(localStorage.getItem("users"))||{};
 let currentUserId=localStorage.getItem("currentUserId");
 if(!currentUserId||!users[currentUserId]) location.href="login.html";
 let user=users[currentUserId];
-
 profileImg.src=user.profileImage||"https://via.placeholder.com/80";
 document.getElementById('studentName').innerText=user.name;
 document.getElementById('studentUniversity').innerText=user.university||"";
 
-/* ======================
-   COURSES DATA - Realistic 21 portfolio exercises
-====================== */
+// ========== COURSES ==========
 const coursesData = {
-"Virtual Assistant":[
-"Day 1: Post intro video on Zora",
-"Day 2: Organize a mock client's inbox and submit screenshot",
-"Day 3: Calendar management example for a client",
-"Day 4: Create a scheduling workflow and share link",
-"Day 5: Conduct client research and submit report",
-"Day 6: Draft a professional email campaign example",
-"Day 7: Simulate virtual client support session & submit link",
-"Day 8: Prepare weekly activity summary report",
-"Day 9: Data entry & CRM management task",
-"Day 10: Manage multiple client requests workflow",
-"Day 11: Automate repetitive admin tasks & post screenshot",
-"Day 12: Track project deadlines & share example",
-"Day 13: Client meeting simulation & summary submission",
-"Day 14: Manage virtual appointments & confirmations",
-"Day 15: Conduct competitor analysis & submit report",
-"Day 16: Draft FAQ & SOP for client",
-"Day 17: Simulate onboarding of new client & share link",
-"Day 18: Manage sample project workflow & submit",
-"Day 19: Client communication scenario & solution submission",
-"Day 20: Final client simulation task for portfolio",
-"Day 21: Consolidate all tasks into portfolio for verification"
-],
-"Data Entry":[
-"Day 1: Post intro video on Zora",
-"Day 2: Spreadsheet formatting exercise",
-"Day 3: Data cleaning & validation task",
-"Day 4: Import/export data example",
-"Day 5: CRM data entry simulation",
-"Day 6: Create pivot tables & charts",
-"Day 7: Handle multiple datasets & submit link",
-"Day 8: Simulate real client project & report",
-"Day 9: Speed typing challenge & submit result",
-"Day 10: Organize large dataset & share link",
-"Day 11: Create formulas & macros example",
-"Day 12: Merge & split datasets task",
-"Day 13: Advanced filtering & sorting exercise",
-"Day 14: Generate reports & dashboards",
-"Day 15: Data validation & error checking task",
-"Day 16: Client simulation dataset submission",
-"Day 17: Import/Export automated task & submit",
-"Day 18: Secure & anonymize data example",
-"Day 19: Large dataset management simulation",
-"Day 20: Prepare final data entry project",
-"Day 21: Consolidate portfolio for verification"
-],
-"Student Travel Agent 🌍":[
-"Day 1: Post intro video on Zora",
-"Day 2: Research local attractions & create itinerary",
-"Day 3: Simulate booking workflow & submit link",
-"Day 4: Create travel package example",
-"Day 5: Design travel marketing post",
-"Day 6: Budgeting & cost planning task",
-"Day 7: Plan multi-city trip & submit",
-"Day 8: Customer communication roleplay",
-"Day 9: Travel safety checklist task",
-"Day 10: Virtual tour content creation",
-"Day 11: Collect traveler feedback simulation",
-"Day 12: Update travel guide for a destination",
-"Day 13: Sample booking & payment proof",
-"Day 14: Marketing campaign for a package",
-"Day 15: Photography & video creation task",
-"Day 16: Draft SOP for travel bookings",
-"Day 17: Local transport planning example",
-"Day 18: Launch sample tour & submit proof",
-"Day 19: Feedback & improvements task",
-"Day 20: Promote tour & document results",
-"Day 21: Final portfolio & verification submission"
-],
-"Graphic Design Foundation":[
-"Day 1: Post intro video on Zora",
-"Day 2: Logo design exercise",
-"Day 3: Brand identity sample",
-"Day 4: Social media post design",
-"Day 5: Flyer or poster mockup",
-"Day 6: UI/UX interface example",
-"Day 7: Typography composition exercise",
-"Day 8: Color palette creation",
-"Day 9: Infographic design task",
-"Day 10: Marketing banner creation",
-"Day 11: Digital illustration task",
-"Day 12: Portfolio layout & design",
-"Day 13: Motion graphics demo",
-"Day 14: Presentation slide deck design",
-"Day 15: Web mockup submission",
-"Day 16: Package design example",
-"Day 17: Print ready poster task",
-"Day 18: Branding case study",
-"Day 19: Portfolio refinement",
-"Day 20: Final graphic design project",
-"Day 21: Consolidated portfolio submission for verification"
-],
-"Web & No-Code Development":[
-"Day 1: Post intro video on Zora",
-"Day 2: Landing page creation",
-"Day 3: Interactive form demo",
-"Day 4: Multi-page website example",
-"Day 5: Build e-commerce sample page",
-"Day 6: Responsive web design task",
-"Day 7: UI/UX web element design",
-"Day 8: Connect API example & submit",
-"Day 9: Deploy website on hosting",
-"Day 10: Create blog page demo",
-"Day 11: No-code automation workflow",
-"Day 12: Data visualization dashboard",
-"Day 13: Portfolio web project example",
-"Day 14: Create dynamic website feature",
-"Day 15: Optimize website for speed",
-"Day 16: SEO setup & testing task",
-"Day 17: Integrate payment gateway demo",
-"Day 18: User authentication simulation",
-"Day 19: Build client dashboard sample",
-"Day 20: Prepare full web project",
-"Day 21: Final portfolio submission for verification"
-],
-"AI & Prompt Engineering":[
-"Day 1: Post intro video on Zora",
-"Day 2: Prompt engineering example",
-"Day 3: AI-generated content task",
-"Day 4: Chatbot conversation demo",
-"Day 5: AI writing assistant submission",
-"Day 6: Dataset preprocessing task",
-"Day 7: Automate report generation",
-"Day 8: Experiment with GPT API",
-"Day 9: AI workflow design & submit",
-"Day 10: Build custom AI pipeline",
-"Day 11: Image generation task",
-"Day 12: Natural language task example",
-"Day 13: Sentiment analysis submission",
-"Day 14: AI automation workflow demo",
-"Day 15: AI data analysis project",
-"Day 16: Prompt refinement & test",
-"Day 17: Build predictive model sample",
-"Day 18: Chatbot implementation demo",
-"Day 19: AI portfolio submission task",
-"Day 20: AI project refinement & submit",
-"Day 21: Final portfolio verification"
-],
-"Digital Marketing & Ads":[
-"Day 1: Post intro video on Zora",
-"Day 2: Create marketing campaign example",
-"Day 3: Social media content planning",
-"Day 4: Ad copywriting exercise",
-"Day 5: Google Ads demo setup",
-"Day 6: Facebook Ads creative task",
-"Day 7: Email marketing sample",
-"Day 8: Analytics dashboard submission",
-"Day 9: Content calendar creation",
-"Day 10: Influencer marketing task",
-"Day 11: SEO optimization project",
-"Day 12: Paid ads campaign demo",
-"Day 13: Lead generation task",
-"Day 14: Marketing strategy simulation",
-"Day 15: Branding campaign design",
-"Day 16: Campaign performance report",
-"Day 17: Marketing automation workflow",
-"Day 18: A/B testing ads demo",
-"Day 19: Social media audit task",
-"Day 20: Full marketing project submission",
-"Day 21: Consolidated portfolio verification"
-],
-"Remote Customer Support":[
-"Day 1: Post intro video on Zora",
-"Day 2: Handle support ticket simulation",
-"Day 3: Respond to customer inquiry",
-"Day 4: Live chat support task",
-"Day 5: Troubleshooting guide submission",
-"Day 6: Create FAQ & submit",
-"Day 7: Customer satisfaction survey demo",
-"Day 8: Process returns & refunds example",
-"Day 9: Multi-channel support task",
-"Day 10: Escalation handling example",
-"Day 11: Knowledge base article submission",
-"Day 12: Manage CRM task demo",
-"Day 13: Call center scenario submission",
-"Day 14: Conflict resolution exercise",
-"Day 15: Support workflow automation demo",
-"Day 16: Report customer metrics task",
-"Day 17: Simulate onboarding client support",
-"Day 18: Analyze support tickets & submit",
-"Day 19: Build support dashboard example",
-"Day 20: Final customer support portfolio",
-"Day 21: Consolidated portfolio verification"
-]
+  "Virtual Assistant": [...Array(21)].map((_,i)=>`Virtual Assistant Portfolio Task Day ${i+1} - Post result on Zora & submit link`),
+  "Data Entry": [...Array(21)].map((_,i)=>`Data Entry Portfolio Task Day ${i+1} - Post result on Zora & submit link`),
+  "Student Travel Agent 🌍": [...Array(21)].map((_,i)=>`Travel Agent Portfolio Task Day ${i+1} - Post result on Zora & submit link`),
+  "Graphic Design Foundation": [...Array(21)].map((_,i)=>`Graphic Design Portfolio Task Day ${i+1} - Post result on Zora & submit link`),
+  "Web & No-Code Development": [...Array(21)].map((_,i)=>`Web/No-Code Portfolio Task Day ${i+1} - Post result on Zora & submit link`),
+  "AI & Prompt Engineering": [...Array(21)].map((_,i)=>`AI/Prompt Portfolio Task Day ${i+1} - Post result on Zora & submit link`),
+  "Digital Marketing & Ads": [...Array(21)].map((_,i)=>`Digital Marketing Portfolio Task Day ${i+1} - Post result on Zora & submit link`),
+  "Remote Customer Support": [...Array(21)].map((_,i)=>`Remote Customer Support Portfolio Task Day ${i+1} - Post result on Zora & submit link`)
 };
 
-// Initialize user.learnEarn if missing
-if(!user.learnEarn){
-  user.learnEarn={course:null,completed:[],portfolio:[],zac:0,freelancerScore:0,verifiedCourses:[]};
-  users[currentUserId]=user;
-  localStorage.setItem("users",JSON.stringify(users));
-}
+// ========== INIT USER DATA ==========
+if(!user.learnEarn) user.learnEarn={course:null,completed:[],portfolio:[],zac:0,verifiedCourses:[]};
+localStorage.setItem("users",JSON.stringify(users));
 
-/* ======================
-   RENDER COURSES
-====================== */
-const courseList=document.getElementById("courseList");
+const courseListEl=document.getElementById("courseList");
 let currentCourse=null;
-let currentDay=null;
+let modalDay=null;
 
+// RENDER COURSES
 function renderCourses(){
-  courseList.innerHTML="";
+  courseListEl.innerHTML="";
   Object.keys(coursesData).forEach(course=>{
     const div=document.createElement("div");
     div.className="course";
-    div.innerHTML=`<h4>${course}</h4><span>21-Day Client-Ready Program</span>`;
+    div.innerHTML=`<h4>${course}</h4><span>21-Day Portfolio Program</span>`;
     if(currentCourse===course) div.classList.add("selected");
     div.onclick=()=>selectCourse(course);
-    courseList.appendChild(div);
+    courseListEl.appendChild(div);
+  });
+}
+renderCourses();
+
+// SELECT COURSE
+function selectCourse(course){
+  currentCourse=course;
+  document.querySelectorAll('.course').forEach(c=>c.classList.remove('selected'));
+  document.querySelectorAll('.course').forEach(c=>{
+    if(c.querySelector('h4').innerText===course) c.classList.add('selected');
+  });
+  user.learnEarn.course=course;
+  localStorage.setItem("users",JSON.stringify(users));
+  renderTasks();
+}
+
+// ========== RENDER TASKS ==========
+function renderTasks(){
+  if(!currentCourse) return;
+  const taskSection=document.getElementById("taskSection");
+  taskSection.style.display="block";
+  document.getElementById("courseTitle").innerText=currentCourse;
+  const tasksContainer=document.getElementById("tasksContainer");
+  tasksContainer.innerHTML="";
+
+  const completedDays=user.learnEarn.completed.filter(c=>c.course===currentCourse).map(c=>c.day);
+  let readiness=Math.floor((completedDays.length/21*100));
+  document.getElementById("readinessScore").innerText=readiness+"%";
+  document.getElementById("totalZac").innerText=`ZAC Earned: ${user.learnEarn.zac||0}`;
+  document.getElementById("zacFill").style.width=((user.learnEarn.zac||0)/525*100)+"%";
+
+  const lastCompleted = Math.max(0,...completedDays);
+  const nextDay=lastCompleted+1;
+
+  coursesData[currentCourse].forEach((task,idx)=>{
+    const day=idx+1;
+    const div=document.createElement("div");
+    div.className="task"+(completedDays.includes(day)?" completed":"");
+
+    let locked=false;
+    if(day>nextDay) locked=true;
+
+    div.innerHTML=`<strong>Day ${day}</strong><p>${task}</p>`;
+    if(completedDays.includes(day)){
+      div.innerHTML+=`<span style="color:var(--green)">✔ Completed</span>`;
+    } else if(!locked){
+      const btn=document.createElement("button");
+      btn.innerText="Submit Zora Link";
+      btn.onclick=()=>openModal(day);
+      div.appendChild(btn);
+    } else {
+      const unlockTime=new Date((user.learnEarn.completed.find(c=>c.day===day-1)?.timestamp||Date.now())+24*3600*1000);
+      div.innerHTML+=`<span style="opacity:.7">Unlocks at ${unlockTime.toLocaleString()}</span>`;
+    }
+    tasksContainer.appendChild(div);
   });
 }
 
-function selectCourse(course){
-  currentCourse=course;
-  document.querySelectorAll('.course').forEach(c=>
+// ========== MODAL ==========
+const modalBg=document.getElementById("modalBg");
+function openModal(day){ modalDay=day; modalBg.style.display="flex"; }
+function closeModal(){ modalBg.style.display="none"; document.getElementById("taskLinkInput").value=""; }
+function confirmLink(){
+  const link=document.getElementById("taskLinkInput").value.trim();
+  if(!link.startsWith("https://www.zora.co")) return alert("Invalid Zora link!");
+  // Mark task as complete
+  user.learnEarn.completed.push({course:currentCourse,day:modalDay,timestamp:Date.now()});
+  user.learnEarn.portfolio.push({course:currentCourse,day:modalDay,link:link});
+  user.learnEarn.zac=(user.learnEarn.zac||0)+25;
+  // Verify Day 21 => mark verified
+  if(modalDay===21 && !user.learnEarn.verifiedCourses.includes(currentCourse)) user.learnEarn.verifiedCourses.push(currentCourse);
+  localStorage.setItem("users",JSON.stringify(users));
+  closeModal();
+  renderTasks();
+}
+
+renderTasks();
+</script>
+
+</body>
+</html>
