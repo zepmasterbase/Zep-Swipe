@@ -4,22 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Learn & Earn</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500,600&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --zep-blue:#00f0ff;
-  --zep-violet:#9c4dff;
+  --blue:#00f0ff;
+  --violet:#9c4dff;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,.08);
   --green:#00ff94;
   --yellow:#ffcc00;
-  --text-light:rgba(255,255,255,.85);
+  --light:#fff;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
-body{background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-direction:column;}
+body{background:var(--bg);color:var(--light);min-height:100vh;display:flex;flex-direction:column;}
 
 /* HEADER */
 header{
@@ -29,12 +28,12 @@ header{
 }
 .brand{
   font-family:Orbitron;font-size:1.5rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  background:linear-gradient(90deg,var(--blue),var(--violet));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 .home-btn{
   width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
-  background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));color:#050015;font-size:18px;
+  background:linear-gradient(135deg,var(--blue),var(--violet));color:#050015;font-size:18px;
 }
 
 /* CONTAINER */
@@ -42,27 +41,12 @@ header{
 
 /* PROFILE */
 .profile{
-  display:flex;align-items:center;gap:14px;background:var(--glass);padding:14px;border-radius:14px;
+  display:flex;align-items:center;gap:14px;background:var(--glass);padding:14px;border-radius:14px;flex-wrap:wrap;
 }
 .profile img{width:70px;height:70px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;}
 .profile h3{font-family:Orbitron;}
 .profile .stats{margin-left:auto;text-align:right;}
 .profile .stats div{margin-bottom:4px;}
-
-/* COURSES */
-.courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;}
-.course{background:var(--glass);padding:18px;border-radius:18px;border:1px solid rgba(255,255,255,.12);cursor:pointer;transition:.3s;position:relative;}
-.course:hover{transform:translateY(-6px);box-shadow:0 0 25px var(--zep-blue),0 0 40px var(--zep-violet);}
-.course h4{font-family:Orbitron;margin-bottom:6px;}
-.course span{font-size:.85rem;opacity:.8;}
-
-/* TASKS */
-.tasks{background:var(--glass);padding:18px;border-radius:18px;}
-.task{background:rgba(255,255,255,.05);padding:14px;border-radius:14px;margin-bottom:12px;position:relative;}
-.task.completed{opacity:.5;}
-.task.locked{opacity:.4;}
-.task button{margin-top:10px;padding:10px 14px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));cursor:pointer;font-family:Orbitron;}
-.task .timer{font-size:.8rem;color:var(--yellow);margin-top:6px;}
 
 /* PORTFOLIO DASHBOARD */
 .portfolio{background:var(--glass);padding:16px;border-radius:18px;margin-bottom:20px;}
@@ -72,12 +56,31 @@ header{
 .portfolio .progress-fill{height:100%;background:var(--green);width:0%;transition:.5s;}
 .portfolio .verified-badge{color:var(--green);font-weight:600;}
 
+/* COURSES GRID */
+.courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;}
+.course{background:var(--glass);padding:18px;border-radius:18px;border:1px solid rgba(255,255,255,.12);cursor:pointer;transition:.3s;position:relative;}
+.course:hover{transform:translateY(-6px);box-shadow:0 0 25px var(--blue),0 0 40px var(--violet);}
+.course h4{font-family:Orbitron;margin-bottom:6px;}
+.course span{font-size:.85rem;opacity:.8;}
+
+/* TASKS */
+.tasks{background:var(--glass);padding:18px;border-radius:18px;}
+.task{background:rgba(255,255,255,.05);padding:14px;border-radius:14px;margin-bottom:12px;position:relative;}
+.task.completed{opacity:.5;}
+.task.locked{opacity:.4;}
+.task button{margin-top:10px;padding:10px 14px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--violet));cursor:pointer;font-family:Orbitron;}
+.task .timer{font-size:.8rem;color:var(--yellow);margin-top:6px;}
+
 /* ZAC */
 .zac{text-align:center;font-family:Orbitron;color:var(--green);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
 
 /* RESPONSIVE */
-@media(max-width:600px){.profile{flex-direction:column;text-align:center}.profile .stats{text-align:center;margin-left:0;}}
+@media(max-width:600px){
+  .profile{flex-direction:column;text-align:center}
+  .profile .stats{text-align:center;margin-left:0;}
+  .courses{grid-template-columns:1fr;}
+}
 </style>
 </head>
 
@@ -130,17 +133,16 @@ if(!currentUserId || !users[currentUserId]) location.href="login.html";
 let user = users[currentUserId];
 
 // Initialize Learn & Earn if not exists
+const courseNames = [
+  "Virtual Assistant","Data Entry","Student Travel Agent 🌍",
+  "Graphic Design Foundation","Web & No-Code Development",
+  "AI & Prompt Engineering","Digital Marketing & Ads","Remote Customer Support"
+];
+
 if(!user.learnEarn){
   user.learnEarn = {};
-  Object.keys({
-    "Virtual Assistant":[], "Data Entry":[], "Student Travel Agent 🌍":[],
-    "Graphic Design Foundation":[], "Web & No-Code Development":[],
-    "AI & Prompt Engineering":[], "Digital Marketing & Ads":[], "Remote Customer Support":[]
-  }).forEach(course=>user.learnEarn[course]={
-    completed:[],
-    lastCompleted:null,
-    zac:0,
-    verified:false
+  courseNames.forEach(course=>user.learnEarn[course]={
+    completed:[], lastCompleted:null, zac:0, verified:false
   });
   localStorage.setItem("users",JSON.stringify(users));
 }
@@ -216,7 +218,7 @@ function renderCourses(){
   Object.keys(coursesData).forEach(course=>{
     const div=document.createElement("div");
     div.className="course";
-    let completed = user.learnEarn[course].completed.length;
+    const completed=user.learnEarn[course].completed.length;
     div.innerHTML=`<h4>${course}</h4><span>${completed}/21 Tasks Completed</span>`;
     div.onclick=()=>selectCourse(course);
     courseList.appendChild(div);
@@ -256,30 +258,28 @@ function selectCourse(course){
 const taskSection=document.getElementById("taskSection");
 const tasksContainer=document.getElementById("tasksContainer");
 function renderTasks(){
+  if(!currentCourse) return;
   taskSection.style.display="block";
   document.getElementById("courseTitle").innerText=currentCourse;
   tasksContainer.innerHTML="";
   const today = new Date();
   const courseData=user.learnEarn[currentCourse];
-  coursesData[currentCourse].forEach((taskText, index)=>{
+  coursesData[currentCourse].forEach((taskText,index)=>{
     const day=index+1;
     const completed=courseData.completed.includes(day);
-    const lastCompleted=courseData.lastCompleted ? new Date(courseData.lastCompleted) : null;
-    const nextUnlock=(lastCompleted? new Date(lastCompleted.getTime() + 24*60*60*1000) : null);
+    const lastCompleted=courseData.lastCompleted? new Date(courseData.lastCompleted):null;
+    const nextUnlock=(lastCompleted? new Date(lastCompleted.getTime()+24*60*60*1000):null);
     const div=document.createElement("div");
     div.className="task"+(completed?" completed":"");
-    let locked = false;
-
+    let locked=false;
     if(day>1 && nextUnlock){
       if(today < nextUnlock && !completed){
-        locked=true;
-        div.classList.add("locked");
+        locked=true; div.classList.add("locked");
         const diff=Math.floor((nextUnlock-today)/1000);
         const hrs=Math.floor(diff/3600); const mins=Math.floor((diff%3600)/60); const secs=diff%60;
         div.innerHTML=`<strong>Day ${day}</strong><p>${taskText}</p><div class="timer">Unlocks in ${hrs}h ${mins}m ${secs}s</div>`;
       }
     }
-
     if(!locked && !completed){
       div.innerHTML=`<strong>Day ${day}</strong><p>${taskText}</p>`;
       const btn=document.createElement("button");
@@ -287,11 +287,7 @@ function renderTasks(){
       btn.onclick=()=>submitTask(day);
       div.appendChild(btn);
     }
-
-    if(completed){
-      div.innerHTML+=`<span style="color:#00ff94">✔ Completed</span>`;
-    }
-
+    if(completed) div.innerHTML+=`<span style="color:#00ff94">✔ Completed</span>`;
     tasksContainer.appendChild(div);
   });
 }
@@ -302,42 +298,31 @@ function renderTasks(){
 function submitTask(day){
   const courseData=user.learnEarn[currentCourse];
   if(courseData.completed.includes(day)) return;
-
-  // Day 1 requires Zora link verification
   if(day===1){
     const zoraLink = prompt("Paste your Zora.co link for verification:");
     if(!zoraLink || !zoraLink.includes("zora.co")){
-      alert("Invalid Zora link. Please submit a valid link to complete Day 1.");
+      alert("Invalid Zora link. Submit valid Zora link to complete Day 1.");
       return;
     }
   }
-
   courseData.completed.push(day);
   courseData.lastCompleted=new Date();
   courseData.zac = (courseData.zac||0)+25;
-
-  // Auto-verify Student Travel Agent final day
   if(currentCourse==="Student Travel Agent 🌍" && day===21){
-    alert("🎉 Congrats! You completed Student Travel Agent. You are now eligible for verification and $15 payment.");
+    alert("🎉 Completed Student Travel Agent. $15 verification pending. Final badge unlocked.");
     courseData.verified=true;
   }
-
   users[currentUserId]=user;
   localStorage.setItem("users",JSON.stringify(users));
-
   document.getElementById("zacCounter").innerText="ZAC: "+Object.values(user.learnEarn).reduce((a,b)=>a.zac+a,0);
-  renderTasks();
-  renderPortfolio();
-  renderCourses();
+  renderTasks(); renderPortfolio(); renderCourses();
 }
 
 /* ======================
-   PERIODIC TIMER UPDATE
+   AUTO REFRESH TIMER
 ====================== */
-setInterval(()=>{
-  if(currentCourse) renderTasks();
-},1000);
-
+setInterval(()=>{if(currentCourse) renderTasks();},1000);
 </script>
+
 </body>
 </html>
