@@ -90,6 +90,19 @@ header{
   background:var(--glass);padding:16px;border-radius:18px;text-align:center;margin-top:12px;
 }
 
+/* DASHBOARD PROGRESS */
+.dashboard-progress{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;}
+.dashboard-course{flex:1 1 260px;background:var(--glass);padding:14px;border-radius:14px;position:relative;transition:.3s;}
+.dashboard-course h4{margin-bottom:6px;}
+.verified-badge{position:absolute;top:10px;right:10px;color:var(--green);font-weight:700;}
+
+/* MODAL */
+.modal-bg{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:999;}
+.modal{background:var(--glass);padding:24px;border-radius:16px;max-width:400px;width:90%;position:relative;}
+.modal input{width:100%;padding:10px;border-radius:10px;border:none;margin-bottom:12px;}
+.modal button{padding:10px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--violet));color:#050015;font-family:Orbitron;cursor:pointer;}
+.modal .close-btn{position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;font-weight:700;color:#fff;}
+
 /* MOBILE */
 @media(max-width:600px){.profile{flex-direction:column;text-align:center;}.courses{grid-template-columns:1fr;}}
 </style>
@@ -123,26 +136,36 @@ header{
       <strong>Freelancer Readiness:</strong> <span id="readinessScore">0%</span>
     </div>
   </div>
+
+  <!-- DASHBOARD PROGRESS -->
+  <div class="dashboard-progress" id="dashboardProgress"></div>
+</div>
+
+<!-- MODAL FOR LINK SUBMISSION -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <span class="close-btn" onclick="closeModal()">×</span>
+    <h3 id="modalTitle">Submit Your Link</h3>
+    <input type="url" id="taskLinkInput" placeholder="Paste your Zora or Portfolio link" />
+    <button onclick="confirmLink()">Submit</button>
+  </div>
 </div>
 
 <script>
 /* ======================
-   SESSION
+   SESSION & PROFILE
 ====================== */
 let users=JSON.parse(localStorage.getItem("users"))||{};
 let currentUserId=localStorage.getItem("currentUserId");
 if(!currentUserId||!users[currentUserId]) location.href="login.html";
 let user=users[currentUserId];
 
-/* ======================
-   PROFILE
-====================== */
 profileImg.src=user.profileImage||"https://via.placeholder.com/80";
-studentName.innerText=user.name;
-studentUniversity.innerText=user.university||"";
+document.getElementById('studentName').innerText=user.name;
+document.getElementById('studentUniversity').innerText=user.university||"";
 
 /* ======================
-   COURSES & TASKS
+   COURSES DATA
 ====================== */
 const coursesData = {
   "Virtual Assistant":[],
@@ -155,7 +178,7 @@ const coursesData = {
   "Remote Customer Support":[]
 };
 
-// Generate 21-day structured tasks dynamically per course
+// Generate 21-day structured tasks per course
 for(let course in coursesData){
   for(let day=1;day<=21;day++){
     if(day===1){
@@ -166,9 +189,9 @@ for(let course in coursesData){
   }
 }
 
-// Initialize user.learnEarn if not exist
+// Initialize user.learnEarn if missing
 if(!user.learnEarn){
-  user.learnEarn={course:null,completed:[],portfolio:[],zac:0,freelancerScore:0};
+  user.learnEarn={course:null,completed:[],portfolio:[],zac:0,freelancerScore:0,verifiedCourses:[]};
   users[currentUserId]=user;
   localStorage.setItem("users",JSON.stringify(users));
 }
@@ -178,6 +201,7 @@ if(!user.learnEarn){
 ====================== */
 const courseList=document.getElementById("courseList");
 let currentCourse=null;
+let currentDay=null;
 
 function renderCourses(){
   courseList.innerHTML="";
@@ -193,7 +217,6 @@ function renderCourses(){
 
 function selectCourse(course){
   currentCourse=course;
-  // highlight selected
   document.querySelectorAll('.course').forEach(c=>c.classList.remove('selected'));
   document.querySelectorAll('.course').forEach(c=>{
     if(c.querySelector('h4').innerText===course) c.classList.add('selected');
@@ -202,6 +225,7 @@ function selectCourse(course){
   users[currentUserId]=user;
   localStorage.setItem("users",JSON.stringify(users));
   renderTasks();
+  renderDashboard();
 }
 
 /* ======================
@@ -209,7 +233,8 @@ function selectCourse(course){
 ====================== */
 function renderTasks(){
   if(!currentCourse) return;
-  document.getElementById("taskSection").style.display="block";
+  const taskSection=document.getElementById("taskSection");
+  taskSection.style.display="block";
   document.getElementById("courseTitle").innerText=currentCourse;
   const tasksContainer=document.getElementById("tasksContainer");
   tasksContainer.innerHTML="";
@@ -230,14 +255,13 @@ function renderTasks(){
     if(completedDays.includes(day)){
       taskContent+=`<span style="color:#00ff94">✔ Completed</span>`;
     } else if(day>nextDay){
-      // Locked, show countdown
       let unlockTime=user.learnEarn.completed.find(c=>c.course===currentCourse && c.day===day-1)?.timestamp+24*60*60*1000 || Date.now()+24*60*60*1000;
       let remaining=unlockTime-Date.now();
       const timerId=setInterval(()=>{
         remaining=unlockTime-Date.now();
         if(remaining<=0){clearInterval(timerId); renderTasks(); return;}
         let h=Math.floor(remaining/3600000), m=Math.floor((remaining%3600000)/60000), s=Math.floor((remaining%60000)/1000);
-        div.querySelector('.countdown')? div.querySelector('.countdown').innerText=`Unlocks in ${h}h ${m}m ${s}s` : null;
+        if(div.querySelector('.countdown')) div.querySelector('.countdown').innerText=`Unlocks in ${h}h ${m}m ${s}s`;
       },1000);
       taskContent+=`<div class="countdown">Unlocks in calculating...</div>`;
     }
@@ -247,7 +271,7 @@ function renderTasks(){
     if(day===nextDay){
       const btn=document.createElement("button");
       btn.innerText="Submit Task Link";
-      btn.onclick=()=>submitTask(day,div);
+      btn.onclick=()=>openModal(day);
       div.appendChild(btn);
     }
 
@@ -256,35 +280,59 @@ function renderTasks(){
 }
 
 /* ======================
-   COMPLETE TASK
+   MODAL HANDLER
 ====================== */
-function submitTask(day,div){
-  const link=prompt("Paste your Zora/Portfolio link for Day "+day);
-  if(!link || !link.startsWith("http")){
-    alert("Please submit a valid link.");
-    return;
-  }
-
-  user.learnEarn.completed.push({course:currentCourse,day,timestamp:Date.now(),link});
+const modalBg=document.getElementById('modalBg');
+const taskLinkInput=document.getElementById('taskLinkInput');
+function openModal(day){currentDay=day; modalBg.style.display="flex";}
+function closeModal(){modalBg.style.display="none"; taskLinkInput.value="";}
+function confirmLink(){
+  const link=taskLinkInput.value.trim();
+  if(!link||!link.startsWith("http")){alert("Enter a valid link");return;}
+  // Save task completion
+  user.learnEarn.completed.push({course:currentCourse,day:currentDay,timestamp:Date.now(),link});
   user.learnEarn.zac=(user.learnEarn.zac||0)+25;
   user.learnEarn.freelancerScore=Math.floor((user.learnEarn.completed.filter(c=>c.course===currentCourse).length/21)*100);
 
   // Day 21 verification
-  if(day===21){
+  if(currentDay===21){
     const userLocation=user.country||"GH";
     alert(`Day 21 reached! Pay verification fee via ${userLocation==='GH'?'Momo or Paystack':'Paystack'} (currency adjusted automatically).`);
-    user.learnEarn.verified=true;
-    // TODO: Integrate Paystack/Momo API here
+    user.learnEarn.verifiedCourses.push(currentCourse);
   }
 
   users[currentUserId]=user;
   localStorage.setItem("users",JSON.stringify(users));
+  closeModal();
   renderTasks();
+  renderDashboard();
   renderCourses();
+}
+
+/* ======================
+   DASHBOARD PROGRESS
+====================== */
+function renderDashboard(){
+  const dashboard=document.getElementById("dashboardProgress");
+  dashboard.innerHTML="";
+  Object.keys(coursesData).forEach(course=>{
+    const completedDays=user.learnEarn.completed.filter(c=>c.course===course).map(c=>c.day).length;
+    const percent=Math.floor((completedDays/21)*100);
+    const div=document.createElement("div");
+    div.className="dashboard-course";
+    div.innerHTML=`
+      <h4>${course}</h4>
+      <div class="progress-bar"><div class="progress-fill" style="width:${percent}%"></div></div>
+      <div class="portfolio">ZAC: ${completedDays*25} | ${percent}% Completed</div>
+      ${user.learnEarn.verifiedCourses.includes(course)?'<div class="verified-badge">✔ Verified</div>':''}
+    `;
+    dashboard.appendChild(div);
+  });
 }
 
 renderCourses();
 if(user.learnEarn.course) selectCourse(user.learnEarn.course);
+renderDashboard();
 </script>
 </body>
 </html>
