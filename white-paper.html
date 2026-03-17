@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe Whitepaper</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+/* --- GLOBAL --- */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: #0b0f1a;
+  color: #fff;
+  scroll-behavior: smooth;
+}
+
+a {
+  color: #00d4ff;
+  text-decoration: none;
+}
+
+section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+h1, h2 {
+  margin-bottom: 20px;
+}
+
+p {
+  line-height: 1.6;
+}
+
+/* --- HERO --- */
+.hero {
+  background: linear-gradient(135deg, #0b0f1a, #111c3a);
+  padding: 100px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  animation: fadeInDown 1s ease forwards;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin: 10px 0;
+  animation: fadeIn 2s ease forwards;
+}
+
+.button {
+  padding: 14px 30px;
+  margin-top: 20px;
+  border: none;
+  background: #00d4ff;
+  color: #0b0f1a;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #00d4ff;
+}
+
+/* --- CARDS --- */
+.card {
+  background: rgba(255,255,255,0.05);
+  padding: 25px;
+  margin: 10px;
+  border-radius: 20px;
+  display: inline-block;
+  width: 250px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 30px #00d4ff;
+}
+
+/* --- TIMELINE --- */
+.timeline {
+  border-left: 3px solid #00d4ff;
+  margin: 40px auto;
+  max-width: 500px;
+  text-align: left;
+  position: relative;
+}
+
+.timeline div {
+  margin: 30px 0;
+  padding-left: 25px;
+  position: relative;
+}
+
+.timeline div::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: #00d4ff;
+  border-radius: 50%;
+  position: absolute;
+  left: -7px;
+  top: 5px;
+}
+
+/* --- FOUNDER --- */
+.founder img {
+  width: 160px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  border: 3px solid #00d4ff;
+  transition: transform 0.3s ease;
+}
+
+.founder img:hover {
+  transform: scale(1.05);
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeInDown {
+  0% {opacity: 0; transform: translateY(-50px);}
+  100% {opacity: 1; transform: translateY(0);}
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+/* --- MOBILE RESPONSIVE --- */
+@media screen and (max-width: 768px) {
+  .card {
+    width: 80%;
+  }
+  .hero h1 {
+    font-size: 2rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Zep Swipe Whitepaper</h1>
+  <p>Building Africa’s Student-Powered Digital Economy 🌍</p>
+  <p>Web2 → Web3 powered by Zukma Network</p>
+  <button class="button" onclick="window.open('https://t.me/+zU0iozk8eJQ2MDM0', '_blank')">Join Ecosystem</button>
+</section>
+
+<!-- PROBLEM -->
+<section>
+  <h2>The Problem</h2>
+  <p>• Limited income opportunities 💸</p>
+  <p>• Unsafe campus environments 🚨</p>
+  <p>• Lack of real-world skills 📉</p>
+</section>
+
+<!-- SOLUTION -->
+<section>
+  <h2>The Solution</h2>
+
+  <div class="card">📱 Campus Wave<br>Onboarding students</div>
+  <div class="card">💼 Zep Swipe<br>Learn & Earn platform</div>
+  <div class="card">🌐 Zukma Network<br>Future Web3 layer</div>
+</section>
+
+<!-- ECOSYSTEM -->
+<section>
+  <h2>Our Ecosystem</h2>
+  <div class="card">Zep Swipe</div>
+  <div class="card">Campus Wave</div>
+  <div class="card">Avaron AI</div>
+  <div class="card">Zep Cash 💰</div>
+  <div class="card">Clean Paths 🌱</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+  <h2>How It Works</h2>
+  <p>1. Join via Campus Wave</p>
+  <p>2. Learn & complete tasks</p>
+  <p>3. Earn Zep Cash</p>
+  <p>4. Build income</p>
+  <p>5. Transition to Web3</p>
+</section>
+
+<!-- ZEP CASH -->
+<section>
+  <h2>Zep Cash (ZAC)</h2>
+  <p>• Earn through tasks and learning</p>
+  <p>• Use for rewards, tipping, payments</p>
+  <p>• Future blockchain integration</p>
+
+  <br>
+  <button class="button" onclick="window.open('https://t.me/+zU0iozk8eJQ2MDM0', '_blank')">
+    🚀 Join Presale on Telegram
+  </button>
+</section>
+
+<!-- CLEAN PATHS -->
+<section>
+  <h2>Clean Paths 🌱</h2>
+  <p>• Track discipline & habits</p>
+  <p>• Reward consistency</p>
+  <p>• Encourage personal growth</p>
+</section>
+
+<!-- ROADMAP -->
+<section>
+  <h2>Roadmap</h2>
+  <div class="timeline">
+    <div><strong>Q2 2026</strong><br>Pilot in Ghana 🇬🇭 & Zambia 🇿🇲</div>
+    <div><strong>Q3 2026</strong><br>User growth + Avaron AI</div>
+    <div><strong>Q4 2026</strong><br>Zep Cash integration</div>
+    <div><strong>Q1 2027</strong><br>Web3 expansion</div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="founder">
+  <h2>Founder</h2>
+  <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jjume32e1ns3ael10lkpd4106p15.jpeg" alt="Pericles Ko">
+  <h3>Pericles Ko</h3>
+  <p>Founder, Zep Swipe & Zukma Network</p>
+  <p>“We are not just building a platform. We are building opportunity for a generation.”</p>
+</section>
+
+<!-- CTA -->
+<section>
+  <h2>🚀 Join the Movement</h2>
+  <button class="button" onclick="window.open('https://t.me/+zU0iozk8eJQ2MDM0', '_blank')">
+    Join Zep Cash Presale
+  </button>
+</section>
+
+</body>
+</html>
