@@ -11,93 +11,83 @@
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<meta name="description" content="Zep Swipe & Campus Wave White Paper — Powered by Zep Cash. Learn, Earn, and Join the Student Freelance Ecosystem.">
-
 <style>
-:root {
+:root{
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 20% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,.08);
+  --glass:rgba(255,255,255,.07);
   --text-light:rgba(255,255,255,.85);
-  --pulse: 0 0 8px var(--zep-blue),0 0 15px var(--zep-violet);
+  --pulse: 0 0 8px var(--zep-blue),0 0 18px var(--zep-violet);
+  --card-radius:16px;
 }
-
-* { box-sizing:border-box; margin:0; padding:0; font-family:Poppins,sans-serif; }
-body { background: var(--bg); color:#fff; min-height:100vh; line-height:1.6; overflow-x:hidden; }
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+body{background:var(--bg);color:#fff;overflow-x:hidden;line-height:1.5;}
 
 /* HEADER */
-header {
-  display:flex; justify-content:space-between; align-items:center;
-  padding:16px 28px; backdrop-filter:blur(14px);
-  background: rgba(0,0,0,.65); border-bottom:1px solid rgba(255,255,255,.08);
+header{
+  display:flex;justify-content:space-between;align-items:center;padding:16px 28px;
+  backdrop-filter:blur(16px);background:rgba(0,0,0,.7);border-bottom:1px solid rgba(255,255,255,.08);
 }
-.logo { display:flex; align-items:center; gap:10px; }
-.logo img { width:44px; height:44px; object-fit:contain; }
-.logo span { font-family:Orbitron; font-size:1.4rem;
-  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-}
-.icon-btn { width:44px; height:44px; border-radius:50%; display:flex;
-  align-items:center; justify-content:center; cursor:pointer;
-  background: linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-  border:none; color:#050015; font-size:20px; transition:.3s;
-}
-.icon-btn:hover { transform:scale(1.1); box-shadow:var(--pulse); }
+.logo{display:flex;align-items:center;gap:10px;}
+.logo img{width:44px;height:44px;object-fit:contain;}
+.logo span{font-family:Orbitron;font-size:1.4rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.icon-btn{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));border:none;color:#050015;font-size:20px;transition:.3s;}
+.icon-btn:hover{transform:scale(1.1);box-shadow:var(--pulse);}
 
 /* HERO */
-.hero { text-align:center; padding:90px 20px 50px; }
-.hero h1 { font-family:Orbitron; font-size:2.6rem;
-  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:16px;
-}
-.hero p { max-width:680px; margin:0 auto 30px; color:var(--text-light); font-size:1.1rem; }
-.cta-btn { padding:14px 34px; border-radius:999px; border:none;
-  font-family:Orbitron; background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015; cursor:pointer; transition:.3s;
-}
-.cta-btn:hover { transform:scale(1.05); box-shadow:var(--pulse); }
+.hero{text-align:center;padding:90px 20px 60px;}
+.hero h1{font-family:Orbitron;font-size:2.6rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px;}
+.hero p{max-width:680px;margin:0 auto 30px;color:var(--text-light);font-size:1.1rem;}
+.cta-btn{padding:14px 34px;border-radius:999px;border:none;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:.3s;display:inline-block;text-decoration:none;}
+.cta-btn:hover{transform:scale(1.05);box-shadow:var(--pulse);}
 
 /* COUNTDOWN */
-.countdown { display:flex; justify-content:center; gap:20px; font-family:Orbitron; margin-bottom:40px; font-size:1.4rem; }
-.countdown div { background:var(--glass); padding:16px 24px; border-radius:16px; text-align:center; transition:.3s; }
-.countdown div:hover { transform:scale(1.05); box-shadow:var(--pulse); }
+.countdown{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-bottom:50px;}
+.countdown div{background:var(--glass);padding:18px 24px;border-radius:var(--card-radius);text-align:center;transition:.3s;cursor:pointer;min-width:80px;}
+.countdown div:hover{transform:scale(1.1);box-shadow:var(--pulse);}
+.countdown span{display:block;font-size:1.6rem;font-family:Orbitron;margin-bottom:4px;}
 
 /* FEATURE CARDS */
-.features { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:22px; padding:40px 20px; max-width:1200px; margin:auto; }
-.feature-card { background:var(--glass); border-radius:18px; padding:26px;
-  text-align:center; border:1px solid rgba(255,255,255,.12); transition:.3s; }
-.feature-card:hover { transform:translateY(-6px); box-shadow:var(--pulse); }
-.feature-card h3 { font-family:Orbitron; margin-bottom:12px; }
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;padding:40px 20px;max-width:1200px;margin:auto;}
+.feature-card{background:var(--glass);border-radius:var(--card-radius);padding:26px;text-align:center;border:1px solid rgba(255,255,255,.12);transition:.3s;cursor:pointer;}
+.feature-card:hover{transform:translateY(-6px);box-shadow:var(--pulse);}
+.feature-card h3{font-family:Orbitron;margin-bottom:12px;}
+
+/* CAMPUS WAVE */
+.campus-wave{padding:60px 20px;text-align:center;}
+.campus-wave h2{font-family:Orbitron;margin-bottom:24px;}
+.campus-wave p{max-width:700px;margin:0 auto;color:var(--text-light);font-size:1rem;line-height:1.5;}
 
 /* ROADMAP */
-.roadmap { padding:60px 20px; max-width:1200px; margin:auto; }
-.roadmap h2 { font-family:Orbitron; text-align:center; margin-bottom:30px; }
-.timeline { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
-.milestone { background:var(--glass); padding:20px 16px; border-radius:16px; width:220px; text-align:center; transition:.3s; }
-.milestone:hover { transform:translateY(-5px); box-shadow:var(--pulse); }
+.roadmap{padding:60px 20px;max-width:1200px;margin:auto;}
+.roadmap h2{text-align:center;font-family:Orbitron;margin-bottom:30px;}
+.timeline{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
+.milestone{background:var(--glass);padding:20px 16px;border-radius:var(--card-radius);width:220px;text-align:center;transition:.3s;cursor:pointer;}
+.milestone:hover{transform:translateY(-5px);box-shadow:var(--pulse);}
 
 /* FOUNDER */
-.founder { text-align:center; padding:60px 20px; }
-.founder img { width:120px; height:120px; border-radius:50%; margin-bottom:16px; object-fit:cover; border:2px solid var(--zep-blue); }
-.founder p { max-width:600px; margin:0 auto 12px; color:var(--text-light); font-size:1rem; }
-.telegram-btn { display:inline-block; margin-top:16px; padding:12px 28px; border-radius:999px;
-  font-family:Orbitron; background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050015; text-decoration:none; transition:.3s; }
-.telegram-btn:hover { transform:scale(1.05); box-shadow:var(--pulse); }
-
-/* CAMPUS WAVE SECTION */
-.campus-wave { padding:60px 20px; text-align:center; }
-.campus-wave h2 { font-family:Orbitron; margin-bottom:24px; }
-.campus-wave p { max-width:700px; margin:0 auto; color:var(--text-light); font-size:1rem; }
+.founder{text-align:center;padding:60px 20px;}
+.founder img{width:120px;height:120px;border-radius:50%;margin-bottom:16px;object-fit:cover;border:2px solid var(--zep-blue);}
+.founder p{max-width:600px;margin:0 auto 12px;color:var(--text-light);font-size:1rem;}
+.telegram-btn{display:inline-block;margin-top:16px;padding:12px 28px;border-radius:999px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;text-decoration:none;transition:.3s;}
+.telegram-btn:hover{transform:scale(1.05);box-shadow:var(--pulse);}
 
 /* FOOTER */
-footer { padding:40px 20px; text-align:center; color:var(--text-light); border-top:1px solid rgba(255,255,255,.08); background:rgba(0,0,0,.3); }
-footer p { font-size:.85rem; }
+footer{padding:40px 20px;text-align:center;color:var(--text-light);border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.3);}
+footer p{font-size:.85rem;}
 
+/* FLOATING ZEP CASH COINS */
+.coin{position:absolute;width:30px;height:30px;border-radius:50%;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));animation:float 6s infinite ease-in-out;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
 </style>
 </head>
 <body>
+
+<!-- Floating coins -->
+<div class="coin" style="top:80px; left:10%;"></div>
+<div class="coin" style="top:200px; left:80%; animation-delay:2s;"></div>
+<div class="coin" style="top:400px; left:40%; animation-delay:4s;"></div>
 
 <header>
   <div class="logo">
@@ -109,39 +99,27 @@ footer p { font-size:.85rem; }
 
 <section class="hero">
   <h1>Zep Cash — Powering Zep Swipe & Campus Wave</h1>
-  <p>Learn, earn, and grow as a verified student freelancer. Join the presale now and start collecting ZAC tokens to unlock real opportunities.</p>
+  <p>Learn, earn, and grow as a verified student freelancer. Presale starts April 21, 2026. Join now to collect ZAC tokens and unlock real opportunities.</p>
   <a href="https://t.me/+zU0iozk8eJQ2MDM0" class="cta-btn">Join Presale on Telegram</a>
 </section>
 
 <div class="countdown">
-  <div><span id="days">00</span><br>Days</div>
-  <div><span id="hours">00</span><br>Hours</div>
-  <div><span id="minutes">00</span><br>Minutes</div>
-  <div><span id="seconds">00</span><br>Seconds</div>
+  <div><span id="days">00</span>Days</div>
+  <div><span id="hours">00</span>Hours</div>
+  <div><span id="minutes">00</span>Minutes</div>
+  <div><span id="seconds">00</span>Seconds</div>
 </div>
 
 <section class="features">
-  <div class="feature-card">
-    <h3>Learn Skills</h3>
-    <p>Hands-on tasks to master in-demand freelance skills for African students.</p>
-  </div>
-  <div class="feature-card">
-    <h3>Complete Tasks</h3>
-    <p>Proof-of-work assignments verified on Zep Swipe network.</p>
-  </div>
-  <div class="feature-card">
-    <h3>Earn ZAC</h3>
-    <p>Presale: $0.00041 | Launch Price: $0.0025. Collect tokens to unlock freelance opportunities.</p>
-  </div>
-  <div class="feature-card">
-    <h3>Verified Network</h3>
-    <p>Trusted marketplace and soon Campus Wave community.</p>
-  </div>
+  <div class="feature-card"><h3>Learn Skills</h3><p>Hands-on tasks to master in-demand freelance skills for African students.</p></div>
+  <div class="feature-card"><h3>Complete Tasks</h3><p>Proof-of-work assignments verified on Zep Swipe network.</p></div>
+  <div class="feature-card"><h3>Earn ZAC</h3><p>Presale: $0.00041 | Launch Price: $0.0025. Collect tokens for real freelance opportunities.</p></div>
+  <div class="feature-card"><h3>Verified Network</h3><p>Trusted marketplace and soon Campus Wave community.</p></div>
 </section>
 
 <section class="campus-wave">
   <h2>Campus Wave — Coming Soon</h2>
-  <p>Campus Wave will integrate with Zep Swipe using Zep Cash as the core currency. Students will earn, spend, and exchange ZAC across educational and freelance opportunities.</p>
+  <p>Campus Wave will integrate with Zep Swipe using Zep Cash as the core currency. Students earn, spend, and exchange ZAC across educational and freelance opportunities.</p>
 </section>
 
 <section class="roadmap">
@@ -149,9 +127,8 @@ footer p { font-size:.85rem; }
   <div class="timeline">
     <div class="milestone"><strong>April 21, 2026:</strong><br>Zep Cash Presale Launch</div>
     <div class="milestone"><strong>Q2 2026:</strong><br>Pilot Zep Swipe in Ghana & Zambia</div>
-    <div class="milestone"><strong>Q3 2026:</strong><br>Campus Wave Beta & ZAC reward integration</div>
-    <div class="milestone"><strong>Q4 2026:</strong><br>Web3 integration & NFT badges for students</div>
-    <div class="milestone"><strong>Q1 2027:</strong><br>Global ecosystem expansion</div>
+    <div class="milestone"><strong>Q3 2026:</strong><br>Campus Wave Beta & ZAC integration</div>
+    <div class="milestone"><strong>Q4 2026:</strong><br>Web3 badges & NFT verification</div>
   </div>
 </section>
 
@@ -177,10 +154,10 @@ function updateCountdown() {
   const now = new Date().getTime();
   const distance = countdownDate - now;
   if(distance < 0) return;
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-  const seconds = Math.floor((distance % (1000*60)) / 1000);
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+  const seconds = Math.floor((distance % (1000*60))/1000);
   daysEl.innerText = String(days).padStart(2,"0");
   hoursEl.innerText = String(hours).padStart(2,"0");
   minutesEl.innerText = String(minutes).padStart(2,"0");
