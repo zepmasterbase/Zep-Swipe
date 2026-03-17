@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Cash White Paper — Investor Ready</title>
+<title>Zep Cash (ZAC) — Africa’s $100B Student Economy</title>
 
 <!-- Favicon -->
 <link rel="icon" href="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" type="image/png">
@@ -20,6 +20,7 @@
   --text-light:rgba(255,255,255,.85);
   --pulse:0 0 8px var(--zep-blue),0 0 18px var(--zep-violet);
   --card-radius:16px;
+  --accent:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
 }
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
 body{background:var(--bg);color:#fff;overflow-x:hidden;line-height:1.5;}
@@ -31,61 +32,77 @@ header{
 }
 .logo{display:flex;align-items:center;gap:10px;}
 .logo img{width:44px;height:44px;object-fit:contain;}
-.logo span{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.icon-btn{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));border:none;color:#050015;font-size:20px;transition:.3s;}
+.logo span{font-family:Orbitron;font-size:1.6rem;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.icon-btn{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--accent);border:none;color:#050015;font-size:20px;transition:.3s;}
 .icon-btn:hover{transform:scale(1.1);box-shadow:var(--pulse);}
 
 /* HERO */
-.hero{text-align:center;padding:100px 20px 60px;}
-.hero h1{font-family:Orbitron;font-size:3rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px;}
-.hero p{max-width:700px;margin:0 auto 30px;color:var(--text-light);font-size:1.1rem;line-height:1.6;}
-.cta-btn{padding:16px 40px;border-radius:999px;border:none;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;text-decoration:none;display:inline-block;transition:.3s;}
+.hero{text-align:center;padding:120px 20px 60px;}
+.hero h1{font-family:Orbitron;font-size:3.2rem;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px;}
+.hero p{max-width:750px;margin:0 auto 30px;color:var(--text-light);font-size:1.15rem;line-height:1.6;}
+.cta-btn{padding:18px 50px;border-radius:999px;border:none;font-family:Orbitron;background:var(--accent);color:#050015;text-decoration:none;display:inline-block;transition:.3s;}
 .cta-btn:hover{transform:scale(1.05);box-shadow:var(--pulse);}
 
 /* COUNTDOWN */
-.countdown{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-bottom:50px;}
-.countdown div{background:var(--glass);padding:20px 24px;border-radius:var(--card-radius);text-align:center;transition:.3s;cursor:pointer;min-width:90px;}
+.countdown{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin-bottom:50px;}
+.countdown div{background:var(--glass);padding:24px 28px;border-radius:var(--card-radius);text-align:center;transition:.3s;cursor:pointer;min-width:100px;}
 .countdown div:hover{transform:scale(1.1);box-shadow:var(--pulse);}
-.countdown span{display:block;font-size:1.8rem;font-family:Orbitron;margin-bottom:4px;}
+.countdown span{display:block;font-size:2rem;font-family:Orbitron;margin-bottom:6px;}
 
 /* PRESALE CARD */
-.presale-card{max-width:600px;margin:0 auto 50px;background:var(--glass);padding:28px;border-radius:var(--card-radius);border:1px solid rgba(255,255,255,.12);text-align:center;transition:.3s;cursor:pointer;}
-.presale-card:hover{transform:translateY(-5px);box-shadow:var(--pulse);}
-.presale-card h2{font-family:Orbitron;margin-bottom:16px;}
-.presale-card p{color:var(--text-light);font-size:1.05rem;margin-bottom:12px;}
+.presale-card{max-width:700px;margin:0 auto 60px;background:var(--glass);padding:32px;border-radius:var(--card-radius);border:1px solid rgba(255,255,255,.12);text-align:center;transition:.3s;cursor:pointer;}
+.presale-card:hover{transform:translateY(-6px);box-shadow:var(--pulse);}
+.presale-card h2{font-family:Orbitron;margin-bottom:20px;font-size:2rem;}
+.presale-card p{color:var(--text-light);font-size:1.1rem;margin-bottom:14px;}
 .presale-card strong{color:var(--zep-blue);}
+.fomo{background:rgba(255,0,80,.1);padding:12px 20px;margin-top:16px;border-radius:12px;font-weight:600;color:#ff47a5;}
 
 /* TOKENOMICS */
-.tokenomics{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;padding:40px 20px;max-width:1200px;margin:auto;}
-.token-card{background:var(--glass);border-radius:var(--card-radius);padding:26px;text-align:center;border:1px solid rgba(255,255,255,.12);transition:.3s;cursor:pointer;}
+.tokenomics{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;padding:40px 20px;max-width:1200px;margin:auto;}
+.token-card{background:var(--glass);border-radius:var(--card-radius);padding:30px;text-align:center;border:1px solid rgba(255,255,255,.12);transition:.3s;cursor:pointer;}
 .token-card:hover{transform:translateY(-6px);box-shadow:var(--pulse);}
-.token-card h3{font-family:Orbitron;margin-bottom:12px;}
+.token-card h3{font-family:Orbitron;margin-bottom:14px;font-size:1.25rem;}
 
 /* ECOSYSTEM */
 .ecosystem{padding:60px 20px;text-align:center;}
-.ecosystem h2{font-family:Orbitron;margin-bottom:24px;}
-.ecosystem p{max-width:700px;margin:0 auto;color:var(--text-light);font-size:1rem;line-height:1.5;}
+.ecosystem h2{font-family:Orbitron;margin-bottom:28px;}
+.ecosystem p{max-width:750px;margin:0 auto;color:var(--text-light);font-size:1rem;line-height:1.5;}
+
+/* STAKING & REWARDS */
+.staking{padding:60px 20px;text-align:center;background:rgba(255,255,255,.02);border-top:1px solid rgba(255,255,255,.1);}
+.staking h2{font-family:Orbitron;margin-bottom:30px;}
+.staking-card{background:var(--glass);border-radius:var(--card-radius);padding:28px;margin:20px auto;max-width:500px;text-align:center;border:1px solid rgba(255,255,255,.12);transition:.3s;cursor:pointer;}
+.staking-card:hover{transform:translateY(-5px);box-shadow:var(--pulse);}
+.staking-card h3{font-family:Orbitron;margin-bottom:12px;font-size:1.2rem;}
+
+/* ROI PROJECTIONS */
+.roi{padding:60px 20px;text-align:center;}
+.roi h2{font-family:Orbitron;margin-bottom:30px;}
+.roi-table{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;}
+.roi-card{background:var(--glass);border-radius:var(--card-radius);padding:22px 18px;text-align:center;border:1px solid rgba(255,255,255,.12);transition:.3s;cursor:pointer;}
+.roi-card:hover{transform:translateY(-5px);box-shadow:var(--pulse);}
+.roi-card h3{font-family:Orbitron;margin-bottom:10px;}
 
 /* ROADMAP */
 .roadmap{padding:60px 20px;max-width:1200px;margin:auto;}
 .roadmap h2{text-align:center;font-family:Orbitron;margin-bottom:30px;}
 .timeline{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
-.milestone{background:var(--glass);padding:20px 16px;border-radius:var(--card-radius);width:220px;text-align:center;transition:.3s;cursor:pointer;}
+.milestone{background:var(--glass);padding:22px 18px;border-radius:var(--card-radius);width:240px;text-align:center;transition:.3s;cursor:pointer;}
 .milestone:hover{transform:translateY(-5px);box-shadow:var(--pulse);}
 
 /* FOUNDER */
 .founder{text-align:center;padding:60px 20px;}
 .founder img{width:120px;height:120px;border-radius:50%;margin-bottom:16px;object-fit:cover;border:2px solid var(--zep-blue);}
-.founder p{max-width:600px;margin:0 auto 12px;color:var(--text-light);font-size:1rem;}
-.telegram-btn{display:inline-block;margin-top:16px;padding:12px 28px;border-radius:999px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;text-decoration:none;transition:.3s;}
+.founder p{max-width:650px;margin:0 auto 12px;color:var(--text-light);font-size:1rem;}
+.telegram-btn{display:inline-block;margin-top:16px;padding:14px 32px;border-radius:999px;font-family:Orbitron;background:var(--accent);color:#050015;text-decoration:none;transition:.3s;}
 .telegram-btn:hover{transform:scale(1.05);box-shadow:var(--pulse);}
 
 /* FOOTER */
-footer{padding:40px 20px;text-align:center;color:var(--text-light);border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.3);}
+footer{padding:50px 20px;text-align:center;color:var(--text-light);border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.3);}
 footer p{font-size:.85rem;}
 
 /* FLOATING ZEP COINS */
-.coin{position:absolute;width:30px;height:30px;border-radius:50%;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));animation:float 6s infinite ease-in-out;}
+.coin{position:absolute;width:30px;height:30px;border-radius:50%;background:var(--accent);animation:float 6s infinite ease-in-out;}
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
 </style>
 </head>
@@ -106,11 +123,13 @@ footer p{font-size:.85rem;}
 </header>
 
 <section class="hero">
-  <h1>Zep Cash (ZAC) — Africa’s Student Economy</h1>
-  <p>Zep Cash is the native token powering <strong>Zep Swipe</strong> & the upcoming <strong>Campus Wave</strong>. Join the presale to participate in Africa’s first student-powered freelance economy.</p>
+  <h1>Zep Cash (ZAC) — Africa’s $100B Student Economy</h1>
+  <p>Invest early in Zep Cash, powering <strong>Zep Swipe</strong> & <strong>Campus Wave</strong>. 
+  Earn, spend, stake, and grow your wealth in Africa’s first student freelance economy.</p>
   <a href="https://t.me/+zU0iozk8eJQ2MDM0" class="cta-btn">Join Presale on Telegram</a>
 </section>
 
+<!-- Countdown & FOMO -->
 <div class="countdown">
   <div><span id="days">00</span>Days</div>
   <div><span id="hours">00</span>Hours</div>
@@ -119,49 +138,71 @@ footer p{font-size:.85rem;}
 </div>
 
 <section class="presale-card">
-  <h2>Zep Cash Presale</h2>
+  <h2>Presale Details & FOMO</h2>
   <p>Presale Date: <strong>April 21, 2026</strong></p>
-  <p>Presale Price: <strong>$0.00041</strong> | Launch Price: <strong>$0.0025</strong></p>
+  <p>Presale Price: <strong>$0.00041</strong> | Launch Price: <strong>$0.041</strong></p>
   <p>Total Supply: <strong>1 Billion ZAC</strong></p>
-  <p>Use Zep Cash across Zep Swipe & Campus Wave for earning, spending, and exchange.</p>
-  <a href="https://t.me/+zU0iozk8eJQ2MDM0" class="cta-btn">Join Presale on Telegram</a>
+  <p class="fomo">🚀 First 100k buyers get +10% bonus tokens — Don’t miss out!</p>
+  <a href="https://t.me/+zU0iozk8eJQ2MDM0" class="cta-btn">Secure Your Tokens Now</a>
 </section>
 
 <section class="tokenomics">
   <div class="token-card">
-    <h3>Presale</h3><p>40% of total supply for early investors.</p>
+    <h3>Presale</h3><p>40% allocated to early investors.</p>
   </div>
   <div class="token-card">
-    <h3>Ecosystem</h3><p>30% reserved for platform growth & incentives.</p>
+    <h3>Ecosystem</h3><p>30% reserved for growth & staking rewards.</p>
   </div>
   <div class="token-card">
-    <h3>Team & Advisors</h3><p>15% to founders & advisors.</p>
+    <h3>Team & Advisors</h3><p>15% vested over 2 years.</p>
   </div>
   <div class="token-card">
-    <h3>Community Rewards</h3><p>15% for student achievements & campaigns.</p>
+    <h3>Community Rewards</h3><p>15% for student campaigns & ambassador incentives.</p>
+  </div>
+</section>
+
+<section class="staking">
+  <h2>Staking & Rewards</h2>
+  <div class="staking-card">
+    <h3>Stake ZAC</h3>
+    <p>Earn up to <strong>15% APY</strong> by staking tokens within the ecosystem.</p>
+  </div>
+  <div class="staking-card">
+    <h3>Achievement Rewards</h3>
+    <p>Students completing tasks earn badges & bonus tokens, boosting token velocity & community adoption.</p>
+  </div>
+</section>
+
+<section class="roi">
+  <h2>Investor ROI Projections</h2>
+  <div class="roi-table">
+    <div class="roi-card"><h3>Presale Investment</h3><p>$1,000</p></div>
+    <div class="roi-card"><h3>Expected Launch Value</h3><p>$100,000</p></div>
+    <div class="roi-card"><h3>Multiplier</h3><p>100x</p></div>
   </div>
 </section>
 
 <section class="ecosystem">
-  <h2>Our Ecosystem</h2>
-  <p><strong>Zep Swipe:</strong> Students earn ZAC completing tasks & building freelance skills.</p>
-  <p><strong>Campus Wave:</strong> Students spend ZAC in a verified student marketplace & earn badges, unlocking more opportunities.</p>
+  <h2>Ecosystem Overview</h2>
+  <p><strong>Zep Swipe:</strong> Earn ZAC completing tasks & learning digital skills.</p>
+  <p><strong>Campus Wave:</strong> Spend ZAC in the student marketplace, earn badges & unlock more opportunities.</p>
 </section>
 
 <section class="roadmap">
-  <h2>Roadmap</h2>
+  <h2>Roadmap to $100B Impact</h2>
   <div class="timeline">
-    <div class="milestone"><strong>April 21, 2026</strong><br>Zep Cash Presale Launch</div>
+    <div class="milestone"><strong>Apr 21, 2026</strong><br>Presale Launch</div>
     <div class="milestone"><strong>Q2 2026</strong><br>Pilot Zep Swipe in Ghana & Zambia</div>
     <div class="milestone"><strong>Q3 2026</strong><br>Campus Wave Beta & ZAC Integration</div>
     <div class="milestone"><strong>Q4 2026</strong><br>Web3 badges & NFT verification</div>
+    <div class="milestone"><strong>2027+</strong><br>Africa & Caribbean expansion</div>
   </div>
 </section>
 
 <section class="founder">
   <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jjume32e1ns3ael10lkpd4106p15.jpeg" alt="Founder Pericles Ko">
-  <p><strong>Pericles Ko</strong> — Founder of Zep Swipe & Zukma Network. Driving Africa’s student freelance economy.</p>
-  <a href="https://t.me/+zU0iozk8eJQ2MDM0" class="telegram-btn">Join Zep Cash Presale</a>
+  <p><strong>Pericles Ko</strong> — Founder of Zep Swipe & Zukma Network, driving Africa’s student freelance economy.</p>
+  <a href="https://t.me/+zU0iozk8eJQ2MDM0" class="telegram-btn">Join Presale Now</a>
 </section>
 
 <footer>
