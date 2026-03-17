@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe & Campus Wave White Paper</title>
+<title>Zep Cash White Paper — Zep Swipe & Campus Wave</title>
 
 <!-- Favicon -->
 <link rel="icon" href="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" type="image/png">
@@ -18,7 +18,7 @@
   --bg:radial-gradient(circle at 20% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,.07);
   --text-light:rgba(255,255,255,.85);
-  --pulse: 0 0 8px var(--zep-blue),0 0 18px var(--zep-violet);
+  --pulse:0 0 6px var(--zep-blue),0 0 14px var(--zep-violet);
   --card-radius:16px;
 }
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
@@ -27,7 +27,7 @@ body{background:var(--bg);color:#fff;overflow-x:hidden;line-height:1.5;}
 /* HEADER */
 header{
   display:flex;justify-content:space-between;align-items:center;padding:16px 28px;
-  backdrop-filter:blur(16px);background:rgba(0,0,0,.7);border-bottom:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(16px);background:rgba(0,0,0,.8);border-bottom:1px solid rgba(255,255,255,.08);
 }
 .logo{display:flex;align-items:center;gap:10px;}
 .logo img{width:44px;height:44px;object-fit:contain;}
@@ -38,15 +38,15 @@ header{
 /* HERO */
 .hero{text-align:center;padding:90px 20px 60px;}
 .hero h1{font-family:Orbitron;font-size:2.6rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px;}
-.hero p{max-width:680px;margin:0 auto 30px;color:var(--text-light);font-size:1.1rem;}
+.hero p{max-width:720px;margin:0 auto 30px;color:var(--text-light);font-size:1.1rem;}
 .cta-btn{padding:14px 34px;border-radius:999px;border:none;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:.3s;display:inline-block;text-decoration:none;}
 .cta-btn:hover{transform:scale(1.05);box-shadow:var(--pulse);}
 
 /* COUNTDOWN */
 .countdown{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-bottom:50px;}
-.countdown div{background:var(--glass);padding:18px 24px;border-radius:var(--card-radius);text-align:center;transition:.3s;cursor:pointer;min-width:80px;}
+.countdown div{background:var(--glass);padding:20px 26px;border-radius:var(--card-radius);text-align:center;transition:.3s;cursor:pointer;min-width:90px;}
 .countdown div:hover{transform:scale(1.1);box-shadow:var(--pulse);}
-.countdown span{display:block;font-size:1.6rem;font-family:Orbitron;margin-bottom:4px;}
+.countdown span{display:block;font-size:1.8rem;font-family:Orbitron;margin-bottom:4px;}
 
 /* FEATURE CARDS */
 .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;padding:40px 20px;max-width:1200px;margin:auto;}
@@ -58,6 +58,7 @@ header{
 .campus-wave{padding:60px 20px;text-align:center;}
 .campus-wave h2{font-family:Orbitron;margin-bottom:24px;}
 .campus-wave p{max-width:700px;margin:0 auto;color:var(--text-light);font-size:1rem;line-height:1.5;}
+.campus-wave-img{max-width:100%;border-radius:var(--card-radius);margin-top:24px;}
 
 /* ROADMAP */
 .roadmap{padding:60px 20px;max-width:1200px;margin:auto;}
@@ -72,6 +73,12 @@ header{
 .founder p{max-width:600px;margin:0 auto 12px;color:var(--text-light);font-size:1rem;}
 .telegram-btn{display:inline-block;margin-top:16px;padding:12px 28px;border-radius:999px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;text-decoration:none;transition:.3s;}
 .telegram-btn:hover{transform:scale(1.05);box-shadow:var(--pulse);}
+
+/* PRESALE CARD */
+.presale-card{background:var(--glass);padding:20px 24px;border-radius:var(--card-radius);text-align:center;max-width:320px;margin:0 auto 40px;border:1px solid rgba(255,255,255,.12);transition:.3s;cursor:pointer;}
+.presale-card:hover{transform:scale(1.05);box-shadow:var(--pulse);}
+.presale-card h3{font-family:Orbitron;margin-bottom:12px;}
+.presale-card p{margin-bottom:8px;}
 
 /* FOOTER */
 footer{padding:40px 20px;text-align:center;color:var(--text-light);border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.3);}
@@ -98,28 +105,36 @@ footer p{font-size:.85rem;}
 </header>
 
 <section class="hero">
-  <h1>Zep Cash (ZAC) – Powering Africa’s Uni Students</h1>
-  <p>Zep Cash (ZAC) is the native token powering Zep Swipe and the upcoming Campus Wave platform – Africa’s first student-centered Learn & Earn and freelance ecosystem. By participating in the presale, you’re joining a mission to unlock real income opportunities for students while supporting a rapidly growing digital economy.</p>
+  <h1>Zep Cash (ZAC) – Powering Africa’s Students</h1>
+  <p>Zep Cash (ZAC) is the native token powering Zep Swipe and Campus Wave. Earn ZAC for tasks, spend it on freelance opportunities, and support Africa’s growing student economy.</p>
   <a href="https://t.me/+zU0iozk8eJQ2MDM0" class="cta-btn">Join Presale on Telegram</a>
 </section>
 
-<div class="countdown">
-  <div><span id="days">00</span>Days</div>
-  <div><span id="hours">00</span>Hours</div>
-  <div><span id="minutes">00</span>Minutes</div>
-  <div><span id="seconds">00</span>Seconds</div>
+<!-- Presale Card -->
+<div class="presale-card">
+  <h3>Zep Cash Presale</h3>
+  <p>Start Date: April 21, 2026</p>
+  <p>Presale Price: $0.00041</p>
+  <p>Launch Price: $0.0025</p>
+  <div class="countdown">
+    <div><span id="days">00</span>Days</div>
+    <div><span id="hours">00</span>Hours</div>
+    <div><span id="minutes">00</span>Minutes</div>
+    <div><span id="seconds">00</span>Seconds</div>
+  </div>
 </div>
 
 <section class="features">
-  <div class="feature-card"><h3>Learn Skills</h3><p>Hands-on tasks to master in-demand freelance skills for African students.</p></div>
-  <div class="feature-card"><h3>Complete Tasks</h3><p>Proof-of-work assignments verified on Zep Swipe network.</p></div>
-  <div class="feature-card"><h3>Earn ZAC</h3><p>Presale: $0.00041 | Launch Price: $0.0025. Collect tokens for real freelance opportunities.</p></div>
+  <div class="feature-card"><h3>Learn Skills</h3><p>Hands-on tasks to master freelance skills for African students.</p></div>
+  <div class="feature-card"><h3>Complete Tasks</h3><p>Proof-of-work assignments verified on Zep Swipe.</p></div>
+  <div class="feature-card"><h3>Earn ZAC</h3><p>Collect tokens and unlock freelance opportunities.</p></div>
   <div class="feature-card"><h3>Verified Network</h3><p>Trusted marketplace and soon Campus Wave community.</p></div>
 </section>
 
 <section class="campus-wave">
   <h2>Campus Wave — Coming Soon</h2>
-  <p>Campus Wave will integrate with Zep Swipe using Zep Cash as the core currency. Students earn, spend, and exchange ZAC across educational and freelance opportunities.</p>
+  <p>Campus Wave will integrate with Zep Swipe using Zep Cash. Students can earn, spend, and exchange ZAC across learning and freelance tasks.</p>
+  <img class="campus-wave-img" src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Campus Wave Preview">
 </section>
 
 <section class="roadmap">
@@ -145,23 +160,17 @@ footer p{font-size:.85rem;}
 <script>
 // Countdown Timer
 const countdownDate = new Date("Apr 21, 2026 00:00:00").getTime();
-const daysEl = document.getElementById("days");
-const hoursEl = document.getElementById("hours");
-const minutesEl = document.getElementById("minutes");
-const secondsEl = document.getElementById("seconds");
-
 function updateCountdown() {
   const now = new Date().getTime();
   const distance = countdownDate - now;
-  if(distance < 0) return;
   const days = Math.floor(distance / (1000*60*60*24));
   const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
   const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
   const seconds = Math.floor((distance % (1000*60))/1000);
-  daysEl.innerText = String(days).padStart(2,"0");
-  hoursEl.innerText = String(hours).padStart(2,"0");
-  minutesEl.innerText = String(minutes).padStart(2,"0");
-  secondsEl.innerText = String(seconds).padStart(2,"0");
+  document.getElementById("days").innerText = String(days).padStart(2,"0");
+  document.getElementById("hours").innerText = String(hours).padStart(2,"0");
+  document.getElementById("minutes").innerText = String(minutes).padStart(2,"0");
+  document.getElementById("seconds").innerText = String(seconds).padStart(2,"0");
 }
 setInterval(updateCountdown,1000);
 updateCountdown();
