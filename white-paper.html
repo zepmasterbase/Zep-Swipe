@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Cash White Paper — Zep Swipe & Campus Wave</title>
+<title>Zep Cash White Paper — Investor Ready</title>
 
 <!-- Favicon -->
 <link rel="icon" href="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" type="image/png">
@@ -16,9 +16,9 @@
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 20% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,.07);
+  --glass:rgba(255,255,255,.08);
   --text-light:rgba(255,255,255,.85);
-  --pulse:0 0 6px var(--zep-blue),0 0 14px var(--zep-violet);
+  --pulse:0 0 8px var(--zep-blue),0 0 18px var(--zep-violet);
   --card-radius:16px;
 }
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
@@ -27,38 +27,44 @@ body{background:var(--bg);color:#fff;overflow-x:hidden;line-height:1.5;}
 /* HEADER */
 header{
   display:flex;justify-content:space-between;align-items:center;padding:16px 28px;
-  backdrop-filter:blur(16px);background:rgba(0,0,0,.8);border-bottom:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(16px);background:rgba(0,0,0,.75);border-bottom:1px solid rgba(255,255,255,.08);
 }
 .logo{display:flex;align-items:center;gap:10px;}
 .logo img{width:44px;height:44px;object-fit:contain;}
-.logo span{font-family:Orbitron;font-size:1.4rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logo span{font-family:Orbitron;font-size:1.5rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .icon-btn{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));border:none;color:#050015;font-size:20px;transition:.3s;}
 .icon-btn:hover{transform:scale(1.1);box-shadow:var(--pulse);}
 
 /* HERO */
-.hero{text-align:center;padding:90px 20px 60px;}
-.hero h1{font-family:Orbitron;font-size:2.6rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px;}
-.hero p{max-width:720px;margin:0 auto 30px;color:var(--text-light);font-size:1.1rem;}
-.cta-btn{padding:14px 34px;border-radius:999px;border:none;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;cursor:pointer;transition:.3s;display:inline-block;text-decoration:none;}
+.hero{text-align:center;padding:100px 20px 60px;}
+.hero h1{font-family:Orbitron;font-size:3rem;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px;}
+.hero p{max-width:700px;margin:0 auto 30px;color:var(--text-light);font-size:1.1rem;line-height:1.6;}
+.cta-btn{padding:16px 40px;border-radius:999px;border:none;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;text-decoration:none;display:inline-block;transition:.3s;}
 .cta-btn:hover{transform:scale(1.05);box-shadow:var(--pulse);}
 
 /* COUNTDOWN */
 .countdown{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-bottom:50px;}
-.countdown div{background:var(--glass);padding:20px 26px;border-radius:var(--card-radius);text-align:center;transition:.3s;cursor:pointer;min-width:90px;}
+.countdown div{background:var(--glass);padding:20px 24px;border-radius:var(--card-radius);text-align:center;transition:.3s;cursor:pointer;min-width:90px;}
 .countdown div:hover{transform:scale(1.1);box-shadow:var(--pulse);}
 .countdown span{display:block;font-size:1.8rem;font-family:Orbitron;margin-bottom:4px;}
 
-/* FEATURE CARDS */
-.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;padding:40px 20px;max-width:1200px;margin:auto;}
-.feature-card{background:var(--glass);border-radius:var(--card-radius);padding:26px;text-align:center;border:1px solid rgba(255,255,255,.12);transition:.3s;cursor:pointer;}
-.feature-card:hover{transform:translateY(-6px);box-shadow:var(--pulse);}
-.feature-card h3{font-family:Orbitron;margin-bottom:12px;}
+/* PRESALE CARD */
+.presale-card{max-width:600px;margin:0 auto 50px;background:var(--glass);padding:28px;border-radius:var(--card-radius);border:1px solid rgba(255,255,255,.12);text-align:center;transition:.3s;cursor:pointer;}
+.presale-card:hover{transform:translateY(-5px);box-shadow:var(--pulse);}
+.presale-card h2{font-family:Orbitron;margin-bottom:16px;}
+.presale-card p{color:var(--text-light);font-size:1.05rem;margin-bottom:12px;}
+.presale-card strong{color:var(--zep-blue);}
 
-/* CAMPUS WAVE */
-.campus-wave{padding:60px 20px;text-align:center;}
-.campus-wave h2{font-family:Orbitron;margin-bottom:24px;}
-.campus-wave p{max-width:700px;margin:0 auto;color:var(--text-light);font-size:1rem;line-height:1.5;}
-.campus-wave-img{max-width:100%;border-radius:var(--card-radius);margin-top:24px;}
+/* TOKENOMICS */
+.tokenomics{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;padding:40px 20px;max-width:1200px;margin:auto;}
+.token-card{background:var(--glass);border-radius:var(--card-radius);padding:26px;text-align:center;border:1px solid rgba(255,255,255,.12);transition:.3s;cursor:pointer;}
+.token-card:hover{transform:translateY(-6px);box-shadow:var(--pulse);}
+.token-card h3{font-family:Orbitron;margin-bottom:12px;}
+
+/* ECOSYSTEM */
+.ecosystem{padding:60px 20px;text-align:center;}
+.ecosystem h2{font-family:Orbitron;margin-bottom:24px;}
+.ecosystem p{max-width:700px;margin:0 auto;color:var(--text-light);font-size:1rem;line-height:1.5;}
 
 /* ROADMAP */
 .roadmap{padding:60px 20px;max-width:1200px;margin:auto;}
@@ -74,21 +80,16 @@ header{
 .telegram-btn{display:inline-block;margin-top:16px;padding:12px 28px;border-radius:999px;font-family:Orbitron;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050015;text-decoration:none;transition:.3s;}
 .telegram-btn:hover{transform:scale(1.05);box-shadow:var(--pulse);}
 
-/* PRESALE CARD */
-.presale-card{background:var(--glass);padding:20px 24px;border-radius:var(--card-radius);text-align:center;max-width:320px;margin:0 auto 40px;border:1px solid rgba(255,255,255,.12);transition:.3s;cursor:pointer;}
-.presale-card:hover{transform:scale(1.05);box-shadow:var(--pulse);}
-.presale-card h3{font-family:Orbitron;margin-bottom:12px;}
-.presale-card p{margin-bottom:8px;}
-
 /* FOOTER */
 footer{padding:40px 20px;text-align:center;color:var(--text-light);border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.3);}
 footer p{font-size:.85rem;}
 
-/* FLOATING ZEP CASH COINS */
+/* FLOATING ZEP COINS */
 .coin{position:absolute;width:30px;height:30px;border-radius:50%;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));animation:float 6s infinite ease-in-out;}
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
 </style>
 </head>
+
 <body>
 
 <!-- Floating coins -->
@@ -105,51 +106,61 @@ footer p{font-size:.85rem;}
 </header>
 
 <section class="hero">
-  <h1>Zep Cash (ZAC) – Powering Africa’s Students</h1>
-  <p>Zep Cash (ZAC) is the native token powering Zep Swipe and Campus Wave. Earn ZAC for tasks, spend it on freelance opportunities, and support Africa’s growing student economy.</p>
+  <h1>Zep Cash (ZAC) — Africa’s Student Economy</h1>
+  <p>Zep Cash is the native token powering <strong>Zep Swipe</strong> & the upcoming <strong>Campus Wave</strong>. Join the presale to participate in Africa’s first student-powered freelance economy.</p>
   <a href="https://t.me/+zU0iozk8eJQ2MDM0" class="cta-btn">Join Presale on Telegram</a>
 </section>
 
-<!-- Presale Card -->
-<div class="presale-card">
-  <h3>Zep Cash Presale</h3>
-  <p>Start Date: April 21, 2026</p>
-  <p>Presale Price: $0.00041</p>
-  <p>Launch Price: $0.0025</p>
-  <div class="countdown">
-    <div><span id="days">00</span>Days</div>
-    <div><span id="hours">00</span>Hours</div>
-    <div><span id="minutes">00</span>Minutes</div>
-    <div><span id="seconds">00</span>Seconds</div>
-  </div>
+<div class="countdown">
+  <div><span id="days">00</span>Days</div>
+  <div><span id="hours">00</span>Hours</div>
+  <div><span id="minutes">00</span>Minutes</div>
+  <div><span id="seconds">00</span>Seconds</div>
 </div>
 
-<section class="features">
-  <div class="feature-card"><h3>Learn Skills</h3><p>Hands-on tasks to master freelance skills for African students.</p></div>
-  <div class="feature-card"><h3>Complete Tasks</h3><p>Proof-of-work assignments verified on Zep Swipe.</p></div>
-  <div class="feature-card"><h3>Earn ZAC</h3><p>Collect tokens and unlock freelance opportunities.</p></div>
-  <div class="feature-card"><h3>Verified Network</h3><p>Trusted marketplace and soon Campus Wave community.</p></div>
+<section class="presale-card">
+  <h2>Zep Cash Presale</h2>
+  <p>Presale Date: <strong>April 21, 2026</strong></p>
+  <p>Presale Price: <strong>$0.00041</strong> | Launch Price: <strong>$0.0025</strong></p>
+  <p>Total Supply: <strong>1 Billion ZAC</strong></p>
+  <p>Use Zep Cash across Zep Swipe & Campus Wave for earning, spending, and exchange.</p>
+  <a href="https://t.me/+zU0iozk8eJQ2MDM0" class="cta-btn">Join Presale on Telegram</a>
 </section>
 
-<section class="campus-wave">
-  <h2>Campus Wave — Coming Soon</h2>
-  <p>Campus Wave will integrate with Zep Swipe using Zep Cash. Students can earn, spend, and exchange ZAC across learning and freelance tasks.</p>
-  <img class="campus-wave-img" src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png" alt="Campus Wave Preview">
+<section class="tokenomics">
+  <div class="token-card">
+    <h3>Presale</h3><p>40% of total supply for early investors.</p>
+  </div>
+  <div class="token-card">
+    <h3>Ecosystem</h3><p>30% reserved for platform growth & incentives.</p>
+  </div>
+  <div class="token-card">
+    <h3>Team & Advisors</h3><p>15% to founders & advisors.</p>
+  </div>
+  <div class="token-card">
+    <h3>Community Rewards</h3><p>15% for student achievements & campaigns.</p>
+  </div>
+</section>
+
+<section class="ecosystem">
+  <h2>Our Ecosystem</h2>
+  <p><strong>Zep Swipe:</strong> Students earn ZAC completing tasks & building freelance skills.</p>
+  <p><strong>Campus Wave:</strong> Students spend ZAC in a verified student marketplace & earn badges, unlocking more opportunities.</p>
 </section>
 
 <section class="roadmap">
   <h2>Roadmap</h2>
   <div class="timeline">
-    <div class="milestone"><strong>April 21, 2026:</strong><br>Zep Cash Presale Launch</div>
-    <div class="milestone"><strong>Q2 2026:</strong><br>Pilot Zep Swipe in Ghana & Zambia</div>
-    <div class="milestone"><strong>Q3 2026:</strong><br>Campus Wave Beta & ZAC integration</div>
-    <div class="milestone"><strong>Q4 2026:</strong><br>Web3 badges & NFT verification</div>
+    <div class="milestone"><strong>April 21, 2026</strong><br>Zep Cash Presale Launch</div>
+    <div class="milestone"><strong>Q2 2026</strong><br>Pilot Zep Swipe in Ghana & Zambia</div>
+    <div class="milestone"><strong>Q3 2026</strong><br>Campus Wave Beta & ZAC Integration</div>
+    <div class="milestone"><strong>Q4 2026</strong><br>Web3 badges & NFT verification</div>
   </div>
 </section>
 
 <section class="founder">
   <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jjume32e1ns3ael10lkpd4106p15.jpeg" alt="Founder Pericles Ko">
-  <p><strong>Pericles Ko</strong> — Founder of Zep Swipe & Zukma Network. Driving Africa’s first student-powered freelance economy.</p>
+  <p><strong>Pericles Ko</strong> — Founder of Zep Swipe & Zukma Network. Driving Africa’s student freelance economy.</p>
   <a href="https://t.me/+zU0iozk8eJQ2MDM0" class="telegram-btn">Join Zep Cash Presale</a>
 </section>
 
@@ -160,17 +171,29 @@ footer p{font-size:.85rem;}
 <script>
 // Countdown Timer
 const countdownDate = new Date("Apr 21, 2026 00:00:00").getTime();
+const daysEl = document.getElementById("days");
+const hoursEl = document.getElementById("hours");
+const minutesEl = document.getElementById("minutes");
+const secondsEl = document.getElementById("seconds");
+
 function updateCountdown() {
   const now = new Date().getTime();
   const distance = countdownDate - now;
+  if(distance < 0) {
+    daysEl.innerText = "00";
+    hoursEl.innerText = "00";
+    minutesEl.innerText = "00";
+    secondsEl.innerText = "00";
+    return;
+  }
   const days = Math.floor(distance / (1000*60*60*24));
   const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
   const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
   const seconds = Math.floor((distance % (1000*60))/1000);
-  document.getElementById("days").innerText = String(days).padStart(2,"0");
-  document.getElementById("hours").innerText = String(hours).padStart(2,"0");
-  document.getElementById("minutes").innerText = String(minutes).padStart(2,"0");
-  document.getElementById("seconds").innerText = String(seconds).padStart(2,"0");
+  daysEl.innerText = String(days).padStart(2,"0");
+  hoursEl.innerText = String(hours).padStart(2,"0");
+  minutesEl.innerText = String(minutes).padStart(2,"0");
+  secondsEl.innerText = String(seconds).padStart(2,"0");
 }
 setInterval(updateCountdown,1000);
 updateCountdown();
