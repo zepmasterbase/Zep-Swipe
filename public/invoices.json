@@ -1,0 +1,7 @@
+{
+  "id": 1,
+  "from_user": "1",
+  "to_user": "2",
+  "amount": 200,
+  "status": "pending"
+}
