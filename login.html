@@ -136,17 +136,16 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--blue),0 0 30px
 .home-btn:hover{opacity:.8;}
 </style>
 </head>
-
 <body>
 
 <div class="card">
 
   <a href="index.html" class="home-btn">🏠 Home</a>
-  
+    
   <div class="logo">
     <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png" alt="Zep Swipe Logo">
   </div>
-  
+    
   <h1 id="title">Login</h1>
 
   <input type="text" id="name" placeholder="Full Name" style="display:none">
@@ -171,7 +170,13 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--blue),0 0 30px
   </div>
 </div>
 
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const SUPABASE_URL = "https://kmntdmdyvbnzgewjlxcp.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttbnRkbWR5dmJuemdld2pseGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTQ3MjEsImV4cCI6MjA4OTA3MDcyMX0.BUMOfJpMmBx4RFUF8l5j8APYZBrGyVRUFluP5VKzTuo";
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 let mode = "login";
 
 /* Toggle Login/Signup */
@@ -197,7 +202,7 @@ function generateUserCode(){
 }
 
 /* Handle Login / Signup */
-function handleAuth(){
+async function handleAuth(){
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
@@ -208,44 +213,46 @@ function handleAuth(){
     return;
   }
 
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-
   if(mode==="signup"){
-    if(Object.values(users).some(u=>u.email===email)){
-      alert("Account already exists");
-      return;
-    }
+    // Check if user exists
+    const { data: existing, error: checkErr } = await supabase.from("users").select("*").eq("email", email).single();
+    if(checkErr && checkErr.code!=="PGRST116") { console.error(checkErr); alert("Error checking email"); return; }
+    if(existing) { alert("Account already exists"); return; }
+
+    // Insert new user
     const userId = generateUserCode();
-    const newUser = {
+    const { data: newUser, error } = await supabase.from("users").insert([{
       id: userId,
       name,
       email,
       password,
       referral: referral || "",
-      walletBalance: 0,
+      wallet_balance: 0,
+      zac_balance: 0,
       level: "Beginner Freelancer",
-      tasksCompleted: 0,
+      tasks_completed: 0,
       verified: false,
-      profileImage: "",
-      joined: new Date().toISOString(),
-      transactions: [],
-      tasks: Array(21).fill(false)
-    };
-    users[userId] = newUser;
-    localStorage.setItem("users", JSON.stringify(users));
-    localStorage.setItem("currentUserId", userId);
-  } else {
-    const userEntry = Object.entries(users).find(([id,u])=>u.email===email && u.password===password);
-    if(!userEntry){
-      alert("Invalid credentials");
-      return;
-    }
-    const [userId] = userEntry;
-    localStorage.setItem("currentUserId", userId);
-  }
+      profile_image: "",
+      joined_at: new Date().toISOString(),
+      tasks: Array(21).fill(false),
+      zac_history: []
+    }]).select().single();
 
-  showModal("Successfully logged in! Redirecting...");
-  setTimeout(()=>{ window.location.href = "student-dashboard.html"; },1200);
+    if(error){ console.error(error); alert("Error signing up"); return; }
+    localStorage.setItem("currentUserId", newUser.id);
+    showModal("Sign up successful! Redirecting...");
+    setTimeout(()=> window.location.href="student-dashboard.html",1200);
+
+  } else {
+    // Login
+    const { data: user, error } = await supabase.from("users")
+      .select("*").eq("email", email).eq("password", password).single();
+    if(error || !user){ alert("Invalid credentials"); return; }
+
+    localStorage.setItem("currentUserId", user.id);
+    showModal("Login successful! Redirecting...");
+    setTimeout(()=> window.location.href="student-dashboard.html",1200);
+  }
 }
 
 /* Persist form on reload */
@@ -274,16 +281,16 @@ window.addEventListener('load', ()=>{
     document.getElementById("referral").value = saved.referral || "";
   }
 
+  // Auto-redirect if user already logged in
   const currentUserId = localStorage.getItem("currentUserId");
-  const users = JSON.parse(localStorage.getItem("users")) || {};
-  if(currentUserId && users[currentUserId]) window.location.href = "student-dashboard.html";
+  if(currentUserId) window.location.href="student-dashboard.html";
 });
 
 /* Modal functions */
 const modalOverlay = document.getElementById("modalOverlay");
 function closeModal(){ modalOverlay.style.display="none"; }
 function showModal(text){ modalOverlay.style.display="flex"; if(text) modalOverlay.querySelector("p").innerText = text; }
-</script>
 
+</script>
 </body>
 </html>
