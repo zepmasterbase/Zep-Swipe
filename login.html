@@ -46,7 +46,6 @@ button{width:100%;padding:12px;border:none;border-radius:999px;background:linear
   </div>
 </div>
 
-<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
@@ -55,7 +54,7 @@ const { createClient } = window.supabase;
 
 const supabase = createClient(
   "https://kmntdmdyvbnzgewjlxcp.supabase.co",
-  "PASTE_YOUR_FULL_ANON_KEY_HERE"
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttbnRkbWR5dmJuemdld2pseGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTQ3MjEsImV4cCI6MjA4OTA3MDcyMX0.BUMOfJpMmBx4RFUF8l5j8APYZBrGyVRUFluP5VKzTuo"
 );
 
 // ================= STATE =================
@@ -100,26 +99,28 @@ async function handleAuth(){
 
     // ================= LOGIN =================
     if(mode==="login"){
-      console.log("Trying Supabase login...");
+      console.log("Trying login...");
 
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
       });
 
-      console.log(data, error);
+      console.log("Auth result:", data, error);
 
       if(!error && data?.user){
-        console.log("Login success");
-
-        const { data:userProfile } = await supabase
+        const { data:userProfile, error:profileError } = await supabase
           .from("users")
           .select("*")
           .eq("auth_uid", data.user.id)
           .single();
 
-        localStorage.setItem("currentUser", JSON.stringify(userProfile));
+        if(profileError){
+          alert("Profile not found");
+          return;
+        }
 
+        localStorage.setItem("currentUser", JSON.stringify(userProfile));
         window.location.href = "student-dashboard.html";
         return;
       }
@@ -150,7 +151,9 @@ async function handleAuth(){
             email: oldUser.email,
             auth_uid: newAuth.user.id,
             wallet_balance: oldUser.wallet || 0,
-            zac_balance: oldUser.zac_balance || 0
+            zac_balance: oldUser.zac_balance || 0,
+            level: oldUser.level || "Beginner",
+            tasks_completed: oldUser.tasks_completed || 0
           }])
           .select()
           .single();
@@ -167,7 +170,7 @@ async function handleAuth(){
         return;
       }
 
-      alert("Invalid credentials");
+      alert("Invalid login credentials");
     }
 
     // ================= SIGNUP =================
@@ -190,7 +193,10 @@ async function handleAuth(){
           full_name: name,
           email,
           auth_uid: data.user.id,
-          wallet_balance: 0
+          wallet_balance: 0,
+          zac_balance: 0,
+          level: "Beginner Freelancer",
+          tasks_completed: 0
         }])
         .select()
         .single();
@@ -207,7 +213,7 @@ async function handleAuth(){
     }
 
   } catch(err){
-    console.error(err);
+    console.error("Fatal error:", err);
     alert("Something went wrong");
   }
 }
