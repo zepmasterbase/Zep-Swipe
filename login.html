@@ -39,120 +39,176 @@ button{width:100%;padding:12px;border:none;border-radius:999px;background:linear
   <input id="email" placeholder="Email">
   <input id="password" type="password" placeholder="Password">
 
-  <button onclick="handleAuth()">Continue</button>
+  <button id="continueBtn">Continue</button>
 
-  <div class="switch" onclick="toggleMode()">
+  <div class="switch" id="switchMode">
     Don’t have an account? Sign up
   </div>
 </div>
 
+<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-// ================= SUPABASE =================
-const supabase = window.supabase.createClient(
+// ================= SUPABASE INIT =================
+const { createClient } = window.supabase;
+
+const supabase = createClient(
   "https://kmntdmdyvbnzgewjlxcp.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  "PASTE_YOUR_FULL_ANON_KEY_HERE"
 );
 
+// ================= STATE =================
 let mode = "login";
 
+// ================= ELEMENTS =================
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const title = document.getElementById("title");
+const switchMode = document.getElementById("switchMode");
+const continueBtn = document.getElementById("continueBtn");
+
 // ================= TOGGLE =================
-function toggleMode(){
-  mode = mode==="login"?"signup":"login";
-  document.getElementById("title").innerText = mode==="login"?"Login":"Sign Up";
-  document.getElementById("name").style.display = mode==="signup"?"block":"none";
-}
+switchMode.addEventListener("click", () => {
+  mode = mode === "login" ? "signup" : "login";
+
+  title.innerText = mode === "login" ? "Login" : "Sign Up";
+  nameInput.style.display = mode === "signup" ? "block" : "none";
+
+  switchMode.innerText = mode === "login"
+    ? "Don’t have an account? Sign up"
+    : "Already have an account? Login";
+});
 
 // ================= AUTH =================
+continueBtn.addEventListener("click", handleAuth);
+
 async function handleAuth(){
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
+  console.log("Clicked");
+
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
 
   if(!email || !password || (mode==="signup" && !name)){
-    alert("Fill all fields"); return;
+    alert("Please fill all fields");
+    return;
   }
 
-  // ================= LOGIN =================
-  if(mode==="login"){
+  try {
 
-    // 🔹 TRY SUPABASE AUTH
-    const { data:session, error } = await supabase.auth.signInWithPassword({
-      email, password
-    });
+    // ================= LOGIN =================
+    if(mode==="login"){
+      console.log("Trying Supabase login...");
 
-    if(!error && session?.user){
-      const { data:userProfile } = await supabase
-        .from("users")
-        .select("*")
-        .eq("auth_uid", session.user.id)
-        .single();
-
-      localStorage.setItem("currentUser", JSON.stringify(userProfile));
-      window.location.href = "student-dashboard.html";
-      return;
-    }
-
-    // 🔥 FALLBACK: OLD USERS
-    const localUsers = JSON.parse(localStorage.getItem("users")) || [];
-    const oldUser = localUsers.find(u => u.email === email && u.password === password);
-
-    if(oldUser){
-      // MIGRATE USER
-
-      // Create auth account
-      const { data:newAuth, error:authError } = await supabase.auth.signUp({
-        email, password
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
       });
 
-      if(authError){
-        alert(authError.message);
+      console.log(data, error);
+
+      if(!error && data?.user){
+        console.log("Login success");
+
+        const { data:userProfile } = await supabase
+          .from("users")
+          .select("*")
+          .eq("auth_uid", data.user.id)
+          .single();
+
+        localStorage.setItem("currentUser", JSON.stringify(userProfile));
+
+        window.location.href = "student-dashboard.html";
         return;
       }
 
-      // Insert profile
-      const { data:newProfile } = await supabase.from("users").insert([{
-        full_name: oldUser.name,
-        email: oldUser.email,
-        auth_uid: newAuth.user.id,
-        wallet_balance: oldUser.wallet || 0,
-        zac_balance: oldUser.zac_balance || 0,
-        level: oldUser.level || "Beginner",
-        tasks_completed: oldUser.tasks_completed || 0
-      }]).select().single();
+      // ================= OLD USERS =================
+      console.log("Checking old users...");
 
-      localStorage.setItem("currentUser", JSON.stringify(newProfile));
+      const localUsers = JSON.parse(localStorage.getItem("users")) || [];
+      const oldUser = localUsers.find(u => u.email === email && u.password === password);
 
-      alert("Account upgraded successfully!");
+      if(oldUser){
+        console.log("Migrating old user...");
+
+        const { data:newAuth, error:authError } = await supabase.auth.signUp({
+          email,
+          password
+        });
+
+        if(authError){
+          alert(authError.message);
+          return;
+        }
+
+        const { data:newProfile, error:insertError } = await supabase
+          .from("users")
+          .insert([{
+            full_name: oldUser.name,
+            email: oldUser.email,
+            auth_uid: newAuth.user.id,
+            wallet_balance: oldUser.wallet || 0,
+            zac_balance: oldUser.zac_balance || 0
+          }])
+          .select()
+          .single();
+
+        if(insertError){
+          alert(insertError.message);
+          return;
+        }
+
+        localStorage.setItem("currentUser", JSON.stringify(newProfile));
+
+        alert("Account upgraded!");
+        window.location.href = "student-dashboard.html";
+        return;
+      }
+
+      alert("Invalid credentials");
+    }
+
+    // ================= SIGNUP =================
+    if(mode==="signup"){
+      console.log("Signing up...");
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password
+      });
+
+      if(error){
+        alert(error.message);
+        return;
+      }
+
+      const { data:userProfile, error:insertError } = await supabase
+        .from("users")
+        .insert([{
+          full_name: name,
+          email,
+          auth_uid: data.user.id,
+          wallet_balance: 0
+        }])
+        .select()
+        .single();
+
+      if(insertError){
+        alert(insertError.message);
+        return;
+      }
+
+      localStorage.setItem("currentUser", JSON.stringify(userProfile));
+
+      alert("Signup successful!");
       window.location.href = "student-dashboard.html";
-      return;
     }
 
-    alert("Invalid login credentials");
-  }
-
-  // ================= SIGNUP =================
-  if(mode==="signup"){
-    const { data:userAuth, error } = await supabase.auth.signUp({
-      email, password
-    });
-
-    if(error){
-      alert(error.message);
-      return;
-    }
-
-    const { data:userProfile } = await supabase.from("users").insert([{
-      full_name: name,
-      email,
-      auth_uid: userAuth.user.id,
-      wallet_balance:0
-    }]).select().single();
-
-    localStorage.setItem("currentUser", JSON.stringify(userProfile));
-
-    alert("Signup successful!");
-    window.location.href = "student-dashboard.html";
+  } catch(err){
+    console.error(err);
+    alert("Something went wrong");
   }
 }
 
