@@ -1,296 +1,170 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>Zep Swipe — Access</title>  
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins&display=swap" rel="stylesheet">  
-<style>  
-:root{  
-  --blue:#00f0ff;  
-  --violet:#9c4dff;  
-  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);  
-  --glass:rgba(255,255,255,0.08);  
-  --text-light:rgba(255,255,255,.85);  
-}  
-  
-*{box-sizing:border-box;font-family:Poppins,sans-serif;margin:0;padding:0;}  
-body{  
-  min-height:100vh;  
-  display:flex;  
-  justify-content:center;  
-  align-items:center;  
-  background:var(--bg);  
-  color:#fff;  
-}  
-  
-.card{  
-  width:100%;  
-  max-width:420px;  
-  background:var(--glass);  
-  padding:28px;  
-  border-radius:18px;  
-  box-shadow:0 0 30px rgba(0,240,255,.25);  
-  animation:pulse 2s infinite;  
-}  
-@keyframes pulse{  
-  0%{box-shadow:0 0 20px rgba(0,240,255,.25),0 0 40px rgba(156,77,255,.25);}  
-  50%{box-shadow:0 0 30px rgba(0,240,255,.35),0 0 60px rgba(156,77,255,.35);}  
-  100%{box-shadow:0 0 20px rgba(0,240,255,.25),0 0 40px rgba(156,77,255,.25);}  
-}  
-  
-.logo{  
-  display:flex;  
-  justify-content:center;  
-  margin-bottom:20px;  
-}  
-.logo img{  
-  width:80px;  
-  height:80px;  
-  border-radius:50%;  
-  object-fit:cover;  
-  box-shadow:0 0 15px var(--blue),0 0 25px var(--violet);  
-}  
-  
-h1{  
-  font-family:Orbitron;  
-  text-align:center;  
-  margin-bottom:20px;  
-  background:linear-gradient(90deg,var(--blue),var(--violet));  
-  -webkit-background-clip:text;  
-  -webkit-text-fill-color:transparent;  
-}  
-  
-input{  
-  width:100%;  
-  padding:12px;  
-  border:none;  
-  border-radius:12px;  
-  margin-bottom:14px;  
-  background:rgba(255,255,255,0.05);  
-  color:#fff;  
-}  
-input::placeholder{color:rgba(255,255,255,0.6);}  
-  
-button{  
-  width:100%;  
-  padding:12px;  
-  border:none;  
-  border-radius:999px;  
-  font-family:Orbitron;  
-  background:linear-gradient(90deg,var(--blue),var(--violet));  
-  color:#050015;  
-  cursor:pointer;  
-  transition:.3s;  
-}  
-button:hover{transform:translateY(-2px);box-shadow:0 0 15px var(--blue),0 0 30px var(--violet);}  
-  
-.switch{  
-  text-align:center;  
-  margin-top:12px;  
-  font-size:14px;  
-  cursor:pointer;  
-  color:var(--blue);  
-}  
-  
-.password-toggle{  
-  display:flex;  
-  justify-content:flex-end;  
-  font-size:12px;  
-  margin-top:-10px;  
-  margin-bottom:14px;  
-  cursor:pointer;  
-  color:var(--blue);  
-}  
-  
-.modal-overlay{  
-  position:fixed;  
-  inset:0;  
-  background:rgba(0,0,0,.7);  
-  display:none;  
-  align-items:center;  
-  justify-content:center;  
-  z-index:1000;  
-}  
-.modal{  
-  background:var(--glass);  
-  padding:24px;  
-  border-radius:18px;  
-  max-width:400px;  
-  width:90%;  
-  text-align:center;  
-  box-shadow:0 0 20px var(--blue),0 0 40px var(--violet);  
-}  
-.modal button{margin-top:12px;width:fit-content;}  
-.modal a{color:var(--blue); text-decoration:none;}  
-.modal a:hover{text-decoration:underline;}  
-  
-.home-btn{  
-  display:block;  
-  text-align:center;  
-  margin-bottom:20px;  
-  color:var(--blue);  
-  text-decoration:none;  
-  font-weight:500;  
-}  
-.home-btn:hover{opacity:.8;}  
-</style>  
-</head>  
-<body>  
-  
-<div class="card">  
-  
-  <a href="index.html" class="home-btn">🏠 Home</a>  
-      
-  <div class="logo">  
-    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png" alt="Zep Swipe Logo">  
-  </div>  
-      
-  <h1 id="title">Login</h1>  
-  
-  <input type="text" id="name" placeholder="Full Name" style="display:none">  
-  <input type="text" id="referral" placeholder="Referral Code (optional)" style="display:none">  
-  <input type="email" id="email" placeholder="Email">  
-  <input type="password" id="password" placeholder="Password">  
-  <div class="password-toggle" onclick="togglePassword()">Show Password</div>  
-  
-  <button onclick="handleAuth()">Continue</button>  
-  
-  <div class="switch" onclick="toggleMode()">  
-    Don’t have an account? Sign up  
-  </div>  
-  
-</div>  
-  
-<!-- TERMS & PRIVACY MODAL -->  
-<div class="modal-overlay" id="modalOverlay">  
-  <div class="modal">  
-    <p>By signing up, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>  
-    <button onclick="closeModal()">Close</button>  
-  </div>  
-</div>  
-  
-<!-- SUPABASE -->  
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  
-<script>  
-const SUPABASE_URL = "https://kmntdmdyvbnzgewjlxcp.supabase.co";  
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttbnRkbWR5dmJuemdld2pseGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTQ3MjEsImV4cCI6MjA4OTA3MDcyMX0.BUMOfJpMmBx4RFUF8l5j8APYZBrGyVRUFluP5VKzTuo";  
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);  
-  
-let mode = "login";  
-  
-/* Toggle Login/Signup */  
-function toggleMode(){  
-  mode = mode === "login" ? "signup" : "login";  
-  document.getElementById("title").innerText = mode === "login" ? "Login" : "Sign Up";  
-  document.getElementById("name").style.display = mode === "signup" ? "block" : "none";  
-  document.getElementById("referral").style.display = mode === "signup" ? "block" : "none";  
-  document.querySelector(".switch").innerText = mode === "login"  
-    ? "Don’t have an account? Sign up"  
-    : "Already have an account? Login";  
-}  
-  
-/* Show/Hide Password */  
-function togglePassword(){  
-  const pw = document.getElementById("password");  
-  pw.type = pw.type==="password"?"text":"password";  
-}  
-  
-/* Generate unique user ID */  
-function generateUserCode(){  
-  return "ZEP-" + Math.random().toString(36).substring(2,8).toUpperCase();  
-}  
-  
-/* Handle Login / Signup */  
-async function handleAuth(){  
-  const name = document.getElementById("name").value.trim();  
-  const email = document.getElementById("email").value.trim();  
-  const password = document.getElementById("password").value;  
-  const referral = document.getElementById("referral").value.trim();  
-  
-  if(!email || !password || (mode==="signup" && !name)){  
-    alert("Please fill all required fields");  
-    return;  
-  }  
-  
-  if(mode==="signup"){  
-    // Check if user exists  
-    const { data: existing, error: checkErr } = await supabase.from("users").select("*").eq("email", email).single();  
-    if(checkErr && checkErr.code!=="PGRST116") { console.error(checkErr); alert("Error checking email"); return; }  
-    if(existing) { alert("Account already exists"); return; }  
-  
-    // Insert new user  
-    const userId = generateUserCode();  
-    const { data: newUser, error } = await supabase.from("users").insert([{  
-      id: userId,  
-      name,  
-      email,  
-      password,  
-      referral: referral || "",  
-      wallet_balance: 0,  
-      zac_balance: 0,  
-      level: "Beginner Freelancer",  
-      tasks_completed: 0,  
-      verified: false,  
-      profile_image: "",  
-      joined_at: new Date().toISOString(),  
-      tasks: Array(21).fill(false),  
-      zac_history: []  
-    }]).select().single();  
-  
-    if(error){ console.error(error); alert("Error signing up"); return; }  
-    localStorage.setItem("currentUserId", newUser.id);  
-    showModal("Sign up successful! Redirecting...");  
-    setTimeout(()=> window.location.href="student-dashboard.html",1200);  
-  
-  } else {  
-    // Login  
-    const { data: user, error } = await supabase.from("users")  
-      .select("*").eq("email", email).eq("password", password).single();  
-    if(error || !user){ alert("Invalid credentials"); return; }  
-  
-    localStorage.setItem("currentUserId", user.id);  
-    showModal("Login successful! Redirecting...");  
-    setTimeout(()=> window.location.href="student-dashboard.html",1200);  
-  }  
-}  
-  
-/* Persist form on reload */  
-window.addEventListener('beforeunload', ()=>{  
-  localStorage.setItem("loginFormState", JSON.stringify({  
-    name: document.getElementById("name").value,  
-    email: document.getElementById("email").value,  
-    password: document.getElementById("password").value,  
-    referral: document.getElementById("referral").value,  
-    mode  
-  }));  
-});  
-  
-/* Restore form state */  
-window.addEventListener('load', ()=>{  
-  const saved = JSON.parse(localStorage.getItem("loginFormState"));  
-  if(saved){  
-    mode = saved.mode || "login";  
-    document.getElementById("title").innerText = mode==="login"?"Login":"Sign Up";  
-    document.getElementById("name").style.display = mode==="signup"?"block":"none";  
-    document.getElementById("referral").style.display = mode==="signup"?"block":"none";  
-    document.querySelector(".switch").innerText = mode==="login"?"Don’t have an account? Sign up":"Already have an account? Login";  
-    document.getElementById("name").value = saved.name || "";  
-    document.getElementById("email").value = saved.email || "";  
-    document.getElementById("password").value = saved.password || "";  
-    document.getElementById("referral").value = saved.referral || "";  
-  }  
-  
-  // Auto-redirect if user already logged in  
-  const currentUserId = localStorage.getItem("currentUserId");  
-  if(currentUserId) window.location.href="student-dashboard.html";  
-});  
-  
-/* Modal functions */  
-const modalOverlay = document.getElementById("modalOverlay");  
-function closeModal(){ modalOverlay.style.display="none"; }  
-function showModal(text){ modalOverlay.style.display="flex"; if(text) modalOverlay.querySelector("p").innerText = text; }  
-  
-</script>  
-</body>  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Access</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --blue:#00f0ff;
+  --violet:#9c4dff;
+  --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
+  --glass:rgba(255,255,255,0.08);
+}
+*{box-sizing:border-box;font-family:Poppins;margin:0;padding:0;}
+body{min-height:100vh;display:flex;justify-content:center;align-items:center;background:var(--bg);color:#fff;}
+.card{width:100%;max-width:420px;background:var(--glass);padding:28px;border-radius:18px;box-shadow:0 0 30px rgba(0,240,255,.25);}
+.logo{text-align:center;margin-bottom:20px;}
+.logo img{width:80px;border-radius:50%;}
+h1{text-align:center;margin-bottom:20px;font-family:Orbitron;}
+input{width:100%;padding:12px;margin-bottom:14px;border:none;border-radius:10px;background:rgba(255,255,255,0.05);color:#fff;}
+button{width:100%;padding:12px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--violet));cursor:pointer;}
+.switch{text-align:center;margin-top:10px;color:var(--blue);cursor:pointer;}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="logo">
+    <img src="https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png">
+  </div>
+
+  <h1 id="title">Login</h1>
+
+  <input id="name" placeholder="Full Name" style="display:none">
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+
+  <button onclick="handleAuth()">Continue</button>
+
+  <div class="switch" onclick="toggleMode()">
+    Don’t have an account? Sign up
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ================= SUPABASE =================
+const supabase = window.supabase.createClient(
+  "https://kmntdmdyvbnzgewjlxcp.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+);
+
+let mode = "login";
+
+// ================= TOGGLE =================
+function toggleMode(){
+  mode = mode==="login"?"signup":"login";
+  document.getElementById("title").innerText = mode==="login"?"Login":"Sign Up";
+  document.getElementById("name").style.display = mode==="signup"?"block":"none";
+}
+
+// ================= AUTH =================
+async function handleAuth(){
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if(!email || !password || (mode==="signup" && !name)){
+    alert("Fill all fields"); return;
+  }
+
+  // ================= LOGIN =================
+  if(mode==="login"){
+
+    // 🔹 TRY SUPABASE AUTH
+    const { data:session, error } = await supabase.auth.signInWithPassword({
+      email, password
+    });
+
+    if(!error && session?.user){
+      const { data:userProfile } = await supabase
+        .from("users")
+        .select("*")
+        .eq("auth_uid", session.user.id)
+        .single();
+
+      localStorage.setItem("currentUser", JSON.stringify(userProfile));
+      window.location.href = "student-dashboard.html";
+      return;
+    }
+
+    // 🔥 FALLBACK: OLD USERS
+    const localUsers = JSON.parse(localStorage.getItem("users")) || [];
+    const oldUser = localUsers.find(u => u.email === email && u.password === password);
+
+    if(oldUser){
+      // MIGRATE USER
+
+      // Create auth account
+      const { data:newAuth, error:authError } = await supabase.auth.signUp({
+        email, password
+      });
+
+      if(authError){
+        alert(authError.message);
+        return;
+      }
+
+      // Insert profile
+      const { data:newProfile } = await supabase.from("users").insert([{
+        full_name: oldUser.name,
+        email: oldUser.email,
+        auth_uid: newAuth.user.id,
+        wallet_balance: oldUser.wallet || 0,
+        zac_balance: oldUser.zac_balance || 0,
+        level: oldUser.level || "Beginner",
+        tasks_completed: oldUser.tasks_completed || 0
+      }]).select().single();
+
+      localStorage.setItem("currentUser", JSON.stringify(newProfile));
+
+      alert("Account upgraded successfully!");
+      window.location.href = "student-dashboard.html";
+      return;
+    }
+
+    alert("Invalid login credentials");
+  }
+
+  // ================= SIGNUP =================
+  if(mode==="signup"){
+    const { data:userAuth, error } = await supabase.auth.signUp({
+      email, password
+    });
+
+    if(error){
+      alert(error.message);
+      return;
+    }
+
+    const { data:userProfile } = await supabase.from("users").insert([{
+      full_name: name,
+      email,
+      auth_uid: userAuth.user.id,
+      wallet_balance:0
+    }]).select().single();
+
+    localStorage.setItem("currentUser", JSON.stringify(userProfile));
+
+    alert("Signup successful!");
+    window.location.href = "student-dashboard.html";
+  }
+}
+
+// ================= AUTO LOGIN =================
+window.addEventListener("load", async ()=>{
+  const { data } = await supabase.auth.getSession();
+
+  if(data.session){
+    window.location.href = "student-dashboard.html";
+  }
+});
+</script>
+
+</body>
 </html>
