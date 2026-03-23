@@ -3,229 +3,252 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Access</title>
+<title>Zep Swipe — Access Portal</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --blue:#00f0ff;
-  --violet:#9c4dff;
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
   --bg:radial-gradient(circle at 30% 10%, #050018, #00000c);
-  --glass:rgba(255,255,255,0.08);
+  --glass:rgba(255,255,255,.08);
 }
-*{box-sizing:border-box;font-family:Poppins;margin:0;padding:0;}
-body{min-height:100vh;display:flex;justify-content:center;align-items:center;background:var(--bg);color:#fff;}
-.card{width:100%;max-width:420px;background:var(--glass);padding:28px;border-radius:18px;box-shadow:0 0 30px rgba(0,240,255,.25);}
-.logo{text-align:center;margin-bottom:20px;}
-.logo img{width:80px;border-radius:50%;}
-h1{text-align:center;margin-bottom:20px;font-family:Orbitron;}
-input{width:100%;padding:12px;margin-bottom:14px;border:none;border-radius:10px;background:rgba(255,255,255,0.05);color:#fff;}
-button{width:100%;padding:12px;border:none;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--violet));cursor:pointer;}
-.switch{text-align:center;margin-top:10px;color:var(--blue);cursor:pointer;}
+
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+
+body{
+  background:var(--bg);
+  color:#fff;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* CONTAINER */
+.container{
+  width:100%;
+  max-width:420px;
+  background:var(--glass);
+  padding:28px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 0 25px rgba(0,240,255,.15);
+}
+
+/* BRAND */
+.brand{
+  text-align:center;
+  font-family:Orbitron;
+  font-size:1.7rem;
+  margin-bottom:20px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* TABS */
+.tabs{
+  display:flex;
+  margin-bottom:20px;
+  border-radius:10px;
+  overflow:hidden;
+}
+.tabs button{
+  flex:1;
+  padding:10px;
+  border:none;
+  cursor:pointer;
+  background:rgba(255,255,255,0.05);
+  color:#fff;
+  font-family:Orbitron;
+}
+.tabs button.active{
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+}
+
+/* FORM */
+form{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+input{
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  background:rgba(255,255,255,.05);
+  color:#fff;
+}
+
+input::placeholder{color:#aaa;}
+
+/* BUTTON */
+.submit{
+  padding:12px;
+  border:none;
+  border-radius:999px;
+  font-family:Orbitron;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050015;
+  cursor:pointer;
+}
+
+/* MESSAGE */
+.message{
+  margin-top:12px;
+  text-align:center;
+  font-size:.85rem;
+  color:#aaa;
+}
+
+/* MOBILE */
+@media(max-width:480px){
+  .container{margin:12px;}
+}
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <div class="logo">
-    <img src="https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png">
+<div class="container">
+
+  <div class="brand">Zep Swipe</div>
+
+  <div class="tabs">
+    <button id="loginTab" class="active">Login</button>
+    <button id="signupTab">Sign Up</button>
   </div>
 
-  <h1 id="title">Login</h1>
+  <!-- LOGIN -->
+  <form id="loginForm">
+    <input type="email" id="loginEmail" placeholder="Email" required>
+    <input type="password" id="loginPassword" placeholder="Password" required>
+    <button class="submit">Login</button>
+  </form>
 
-  <input id="name" placeholder="Full Name" style="display:none">
-  <input id="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
+  <!-- SIGNUP -->
+  <form id="signupForm" style="display:none;">
+    <input type="text" id="signupName" placeholder="Full Name" required>
+    <input type="email" id="signupEmail" placeholder="Email" required>
+    <input type="password" id="signupPassword" placeholder="Password" required>
+    <button class="submit">Create Account</button>
+  </form>
 
-  <button id="continueBtn">Continue</button>
+  <div class="message" id="msg"></div>
 
-  <div class="switch" id="switchMode">
-    Don’t have an account? Sign up
-  </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-// ================= SUPABASE INIT =================
-const { createClient } = window.supabase;
+// ===== SAFE LOAD USERS (NO DATA LOSS) =====
+let users = JSON.parse(localStorage.getItem("users"));
 
-const supabase = createClient(
-  "https://kmntdmdyvbnzgewjlxcp.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttbnRkbWR5dmJuemdld2pseGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTQ3MjEsImV4cCI6MjA4OTA3MDcyMX0.BUMOfJpMmBx4RFUF8l5j8APYZBrGyVRUFluP5VKzTuo"
-);
+// If corrupted or empty, safely reset
+if(!users || typeof users !== "object"){
+  users = {};
+}
 
-// ================= STATE =================
-let mode = "login";
+// ===== ELEMENTS =====
+const loginTab = document.getElementById("loginTab");
+const signupTab = document.getElementById("signupTab");
+const loginForm = document.getElementById("loginForm");
+const signupForm = document.getElementById("signupForm");
+const msg = document.getElementById("msg");
 
-// ================= ELEMENTS =================
-const nameInput = document.getElementById("name");
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const title = document.getElementById("title");
-const switchMode = document.getElementById("switchMode");
-const continueBtn = document.getElementById("continueBtn");
+// ===== SWITCH TABS =====
+loginTab.onclick = ()=>{
+  loginTab.classList.add("active");
+  signupTab.classList.remove("active");
+  loginForm.style.display="flex";
+  signupForm.style.display="none";
+  msg.innerText="";
+};
 
-// ================= TOGGLE =================
-switchMode.addEventListener("click", () => {
-  mode = mode === "login" ? "signup" : "login";
+signupTab.onclick = ()=>{
+  signupTab.classList.add("active");
+  loginTab.classList.remove("active");
+  signupForm.style.display="flex";
+  loginForm.style.display="none";
+  msg.innerText="";
+};
 
-  title.innerText = mode === "login" ? "Login" : "Sign Up";
-  nameInput.style.display = mode === "signup" ? "block" : "none";
+// ===== SIGNUP (SAFE MERGE) =====
+signupForm.addEventListener("submit", e=>{
+  e.preventDefault();
 
-  switchMode.innerText = mode === "login"
-    ? "Don’t have an account? Sign up"
-    : "Already have an account? Login";
-});
+  const name = document.getElementById("signupName").value.trim();
+  const email = document.getElementById("signupEmail").value.trim().toLowerCase();
+  const password = document.getElementById("signupPassword").value;
 
-// ================= AUTH =================
-continueBtn.addEventListener("click", handleAuth);
-
-async function handleAuth(){
-  console.log("Clicked");
-
-  const name = nameInput.value.trim();
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
-
-  if(!email || !password || (mode==="signup" && !name)){
-    alert("Please fill all fields");
+  if(users[email]){
+    msg.innerText="Account already exists. Please login.";
     return;
   }
 
-  try {
+  const newUser = {
+    id:"user_"+Date.now(),
+    name,
+    email,
+    password,
+    createdAt:new Date().toISOString(),
+    verified:false,
+    tasksCompleted:0,
+    walletBalance:0,
+    zacBalance:0,
+    profileImage:"",
+    university:"",
+    country:"",
+    level:"Beginner Freelancer"
+  };
 
-    // ================= LOGIN =================
-    if(mode==="login"){
-      console.log("Trying login...");
+  // 🔒 SAFE ADD (DOES NOT TOUCH EXISTING USERS)
+  users[email] = newUser;
 
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
+  localStorage.setItem("users", JSON.stringify(users));
 
-      console.log("Auth result:", data, error);
-
-      if(!error && data?.user){
-        const { data:userProfile, error:profileError } = await supabase
-          .from("users")
-          .select("*")
-          .eq("auth_uid", data.user.id)
-          .single();
-
-        if(profileError){
-          alert("Profile not found");
-          return;
-        }
-
-        localStorage.setItem("currentUser", JSON.stringify(userProfile));
-        window.location.href = "student-dashboard.html";
-        return;
-      }
-
-      // ================= OLD USERS =================
-      console.log("Checking old users...");
-
-      const localUsers = JSON.parse(localStorage.getItem("users")) || [];
-      const oldUser = localUsers.find(u => u.email === email && u.password === password);
-
-      if(oldUser){
-        console.log("Migrating old user...");
-
-        const { data:newAuth, error:authError } = await supabase.auth.signUp({
-          email,
-          password
-        });
-
-        if(authError){
-          alert(authError.message);
-          return;
-        }
-
-        const { data:newProfile, error:insertError } = await supabase
-          .from("users")
-          .insert([{
-            full_name: oldUser.name,
-            email: oldUser.email,
-            auth_uid: newAuth.user.id,
-            wallet_balance: oldUser.wallet || 0,
-            zac_balance: oldUser.zac_balance || 0,
-            level: oldUser.level || "Beginner",
-            tasks_completed: oldUser.tasks_completed || 0
-          }])
-          .select()
-          .single();
-
-        if(insertError){
-          alert(insertError.message);
-          return;
-        }
-
-        localStorage.setItem("currentUser", JSON.stringify(newProfile));
-
-        alert("Account upgraded!");
-        window.location.href = "student-dashboard.html";
-        return;
-      }
-
-      alert("Invalid login credentials");
-    }
-
-    // ================= SIGNUP =================
-    if(mode==="signup"){
-      console.log("Signing up...");
-
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password
-      });
-
-      if(error){
-        alert(error.message);
-        return;
-      }
-
-      const { data:userProfile, error:insertError } = await supabase
-        .from("users")
-        .insert([{
-          full_name: name,
-          email,
-          auth_uid: data.user.id,
-          wallet_balance: 0,
-          zac_balance: 0,
-          level: "Beginner Freelancer",
-          tasks_completed: 0
-        }])
-        .select()
-        .single();
-
-      if(insertError){
-        alert(insertError.message);
-        return;
-      }
-
-      localStorage.setItem("currentUser", JSON.stringify(userProfile));
-
-      alert("Signup successful!");
-      window.location.href = "student-dashboard.html";
-    }
-
-  } catch(err){
-    console.error("Fatal error:", err);
-    alert("Something went wrong");
-  }
-}
-
-// ================= AUTO LOGIN =================
-window.addEventListener("load", async ()=>{
-  const { data } = await supabase.auth.getSession();
-
-  if(data.session){
-    window.location.href = "student-dashboard.html";
-  }
+  msg.innerText="Account created successfully. Please login.";
+  signupForm.reset();
 });
+
+// ===== LOGIN =====
+loginForm.addEventListener("submit", e=>{
+  e.preventDefault();
+
+  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+  const password = document.getElementById("loginPassword").value;
+
+  const user = users[email];
+
+  if(!user){
+    msg.innerText="No account found.";
+    return;
+  }
+
+  if(user.password !== password){
+    msg.innerText="Incorrect password.";
+    return;
+  }
+
+  // ✅ SESSION SAVE
+  localStorage.setItem("currentUserId", user.id);
+  localStorage.setItem("currentUserEmail", email);
+
+  msg.innerText="Login successful...";
+
+  setTimeout(()=>{
+    window.location.href = "student-dashboard.html";
+  },800);
+});
+
+// ===== AUTO LOGIN =====
+const currentUserId = localStorage.getItem("currentUserId");
+if(currentUserId){
+  window.location.href = "student-dashboard.html";
+}
 </script>
 
 </body>
