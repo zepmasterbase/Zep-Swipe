@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Campus Nexus | Zep Swipe System</title>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #0b0f2a, #050611);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .glow {
+      color: #00f7ff;
+      text-shadow: 0 0 10px #00f7ff;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(0,247,255,0.2);
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn {
+      padding: 10px 15px;
+      background: linear-gradient(90deg, #00f7ff, #7c4dff);
+      border: none;
+      color: black;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      opacity: 0.8;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .mission {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      background: rgba(0,247,255,0.2);
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 8px;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1 class="glow">🎓 Campus Nexus</h1>
+  <p>Learn • Earn • Level Up</p>
+</header>
+
+<div class="container">
+
+  <!-- LOGIN SECTION -->
+  <div class="card">
+    <h3>⚡ Agent Access</h3>
+    <input id="email" placeholder="Email"/>
+    <input id="password" type="password" placeholder="Password"/>
+    <button class="btn" onclick="signUp()">Sign Up</button>
+    <button class="btn" onclick="signIn()">Login</button>
+  </div>
+
+  <!-- USER DASHBOARD -->
+  <div class="card">
+    <h3>👤 Agent Dashboard</h3>
+
+    <div class="row">
+      <div class="stat">
+        <h2 id="zac">0</h2>
+        <p>ZAC Balance</p>
+      </div>
+
+      <div class="stat">
+        <h2 id="level">1</h2>
+        <p>Level</p>
+      </div>
+
+      <div class="stat">
+        <h2 id="streak">0</h2>
+        <p>Streak</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORY MODE -->
+  <div class="card">
+    <h3>🌌 Mission Story</h3>
+    <p id="story">
+      “Campus Nexus is activating agents across the network… your journey begins now.”
+    </p>
+  </div>
+
+  <!-- DAILY MISSIONS -->
+  <div class="card">
+    <h3>🎯 Daily Missions</h3>
+
+    <div class="mission">
+      <span>Invite 3 Agents</span>
+      <span class="tag">+2 ZAC</span>
+    </div>
+
+    <div class="mission">
+      <span>Follow Twitter Page</span>
+      <span class="tag">+1 ZAC</span>
+    </div>
+
+    <div class="mission">
+      <span>Complete Learning Task</span>
+      <span class="tag">+2 ZAC</span>
+    </div>
+
+    <button class="btn" onclick="claimRewards()">Claim Rewards</button>
+  </div>
+
+  <!-- INVITE -->
+  <div class="card">
+    <h3>👥 Invite System</h3>
+    <p>Your referral link:</p>
+    <input id="refLink" readonly />
+  </div>
+
+</div>
+
+<script>
+  // ===============================
+  // SUPABASE CONFIG (REPLACE THIS)
+  // ===============================
+  const SUPABASE_URL = "YOUR_SUPABASE_URL";
+  const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+  const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+  let user = null;
+
+  // ===============================
+  // AUTH FUNCTIONS
+  // ===============================
+  async function signUp() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password
+    });
+
+    alert(error ? error.message : "Check email to confirm account");
+  }
+
+  async function signIn() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    user = data.user;
+    loadUser();
+  }
+
+  // ===============================
+  // LOAD USER DATA
+  // ===============================
+  async function loadUser() {
+    if (!user) return;
+
+    document.getElementById("refLink").value =
+      "https://t.me/campusnexus_bot?start=" + user.id;
+
+    // Example fetch (you will create table later)
+    let { data } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+
+    if (!data) {
+      await supabase.from("users").insert({
+        id: user.id,
+        zac: 0,
+        level: 1,
+        streak: 0
+      });
+
+      data = { zac: 0, level: 1, streak: 0 };
+    }
+
+    document.getElementById("zac").innerText = data.zac;
+    document.getElementById("level").innerText = data.level;
+    document.getElementById("streak").innerText = data.streak;
+  }
+
+  // ===============================
+  // CLAIM REWARDS (SIMULATION)
+  // ===============================
+  async function claimRewards() {
+    if (!user) return alert("Login first");
+
+    let { data } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+
+    let newZac = (data.zac || 0) + 5;
+
+    await supabase
+      .from("users")
+      .update({ zac: newZac })
+      .eq("id", user.id);
+
+    alert("+5 ZAC claimed!");
+    loadUser();
+  }
+
+</script>
+
+</body>
+</html>
