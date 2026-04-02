@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe – Learn & Earn</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0A0F2C, #1A2AFF);
+  color: white;
+  margin: 0;
+  text-align: center;
+}
+
+.container {
+  padding: 30px;
+  max-width: 420px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+p {
+  opacity: 0.8;
+}
+
+.card {
+  background: rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 16px;
+  margin-top: 20px;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: none;
+}
+
+button {
+  background: #FFD700;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.step { display: none; }
+.step.active { display: block; }
+
+.progress {
+  height: 6px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.progress-bar {
+  height: 6px;
+  background: #FFD700;
+  width: 0%;
+  border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Your Phone Should Pay You 💸</h1>
+<p>Learn skills. Earn daily. Withdraw instantly.</p>
+
+<div class="card">
+
+<div class="progress"><div id="bar" class="progress-bar"></div></div>
+
+<!-- STEP 1 -->
+<div class="step active">
+<input id="name" placeholder="Your Name">
+<input id="country" placeholder="Country">
+<input id="university" placeholder="University">
+<button onclick="nextStep()">Next</button>
+</div>
+
+<!-- STEP 2 -->
+<div class="step">
+<select id="intent">
+<option>Learn & Earn</option>
+<option>Freelancing</option>
+<option>Referrals</option>
+</select>
+<button onclick="nextStep()">Next</button>
+</div>
+
+<!-- STEP 3 -->
+<div class="step">
+<select id="payout">
+<option>Mobile Money</option>
+<option>Bank</option>
+<option>Crypto</option>
+</select>
+
+<select id="provider">
+<option>MTN MoMo</option>
+<option>Vodacom M-Pesa</option>
+<option>Airtel Money</option>
+</select>
+
+<button onclick="nextStep()">Next</button>
+</div>
+
+<!-- STEP 4 -->
+<div class="step">
+<select id="readiness">
+<option>Ready Now 🔥</option>
+<option>Interested</option>
+<option>Just Exploring</option>
+</select>
+
+<button onclick="submitForm()">Join Waitlist</button>
+</div>
+
+</div>
+
+<div id="success" style="display:none;">
+<h2>You're In 🚀</h2>
+<p>Invite 5 friends to unlock early access</p>
+<input id="refLink" readonly>
+</div>
+
+</div>
+
+<script>
+const SUPABASE_URL = "YOUR_URL";
+const SUPABASE_KEY = "YOUR_KEY";
+
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let step = 0;
+const steps = document.querySelectorAll(".step");
+
+function nextStep() {
+  steps[step].classList.remove("active");
+  step++;
+  steps[step].classList.add("active");
+  document.getElementById("bar").style.width = ((step+1)*25)+"%";
+}
+
+function generateCode() {
+  return Math.random().toString(36).substring(2,8);
+}
+
+async function submitForm() {
+
+  const referralCode = generateCode();
+
+  const params = new URLSearchParams(window.location.search);
+  const referredBy = params.get("ref");
+
+  const { error } = await supabase
+    .from("waitlist_users")
+    .insert([{
+      name: document.getElementById("name").value,
+      country: document.getElementById("country").value,
+      university: document.getElementById("university").value,
+      intent: document.getElementById("intent").value,
+      payout_method: document.getElementById("payout").value,
+      provider: document.getElementById("provider").value,
+      readiness: document.getElementById("readiness").value,
+      referral_code: referralCode,
+      referred_by: referredBy
+    }]);
+
+  if (!error) {
+    document.querySelector(".card").style.display = "none";
+    document.getElementById("success").style.display = "block";
+
+    const link = window.location.origin + "?ref=" + referralCode;
+    document.getElementById("refLink").value = link;
+  } else {
+    alert("Error submitting form");
+  }
+}
+</script>
+
+</body>
+</html>
