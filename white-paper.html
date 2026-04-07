@@ -10,6 +10,9 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
 <style>
 :root{
   --blue:#00f0ff;
@@ -21,7 +24,12 @@
 }
 
 /* GLOBAL */
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Poppins,sans-serif;
+}
 
 body{
   background: var(--bg);
@@ -29,7 +37,7 @@ body{
   overflow-x:hidden;
 }
 
-/* animated grid background */
+/* GRID BACKGROUND */
 body::before{
   content:"";
   position:fixed;
@@ -38,9 +46,9 @@ body::before{
     linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
   background-size:60px 60px;
-  pointer-events:none;
   opacity:.25;
   animation: drift 18s linear infinite;
+  pointer-events:none;
 }
 
 @keyframes drift{
@@ -48,7 +56,7 @@ body::before{
   to{transform:translateY(60px);}
 }
 
-/* glow orbs */
+/* GLOW ORBS */
 body::after{
   content:"";
   position:fixed;
@@ -56,8 +64,8 @@ body::after{
   background:
     radial-gradient(circle at 20% 20%, rgba(0,240,255,.15), transparent 40%),
     radial-gradient(circle at 80% 40%, rgba(156,77,255,.15), transparent 40%);
+  filter: blur(30px);
   pointer-events:none;
-  filter: blur(20px);
 }
 
 /* HEADER */
@@ -66,12 +74,18 @@ header{
   justify-content:space-between;
   align-items:center;
   padding:16px 24px;
-  background:rgba(0,0,0,.6);
-  backdrop-filter:blur(14px);
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(16px);
   border-bottom:1px solid var(--border);
   position:sticky;
   top:0;
   z-index:10;
+  animation: headerGlow 6s infinite;
+}
+
+@keyframes headerGlow{
+  0%,100%{box-shadow:0 0 10px rgba(0,240,255,.05);}
+  50%{box-shadow:0 0 25px rgba(156,77,255,.2);}
 }
 
 .logo{
@@ -80,14 +94,16 @@ header{
   gap:10px;
 }
 
-.logo img{width:42px;height:42px;}
+.logo img{
+  width:42px;
+  height:42px;
+}
 
 .logo span{
   font-family:Orbitron;
   background:linear-gradient(90deg,var(--blue),var(--violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  letter-spacing:1px;
 }
 
 /* HERO */
@@ -95,18 +111,6 @@ header{
   text-align:center;
   padding:100px 20px 40px;
   position:relative;
-}
-
-.hero::before{
-  content:"";
-  position:absolute;
-  width:400px;
-  height:400px;
-  background: radial-gradient(circle, rgba(0,240,255,.15), transparent 60%);
-  top:10%;
-  left:50%;
-  transform:translateX(-50%);
-  filter:blur(30px);
 }
 
 .hero h1{
@@ -124,7 +128,7 @@ header{
   line-height:1.6;
 }
 
-/* GIVEAWAY */
+/* FOUNDERS BOX */
 .giveaway{
   max-width:900px;
   margin:40px auto;
@@ -133,8 +137,14 @@ header{
   background:var(--glass);
   border:1px solid var(--border);
   text-align:center;
-  backdrop-filter:blur(14px);
+  backdrop-filter:blur(16px);
   box-shadow:0 0 30px rgba(0,240,255,.08);
+  transition:0.3s;
+}
+
+.giveaway:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 40px rgba(156,77,255,.25);
 }
 
 .giveaway h2{
@@ -144,8 +154,11 @@ header{
   -webkit-text-fill-color:transparent;
 }
 
+/* CTA BUTTON */
 .cta{
-  display:inline-block;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
   padding:14px 30px;
   border-radius:999px;
   background:linear-gradient(90deg,var(--blue),var(--violet));
@@ -153,23 +166,23 @@ header{
   font-weight:bold;
   text-decoration:none;
   margin-top:15px;
-  transition:0.3s;
-  box-shadow:0 0 20px rgba(0,240,255,.25);
+  transition:0.25s;
+  box-shadow:0 0 18px rgba(0,240,255,.2);
 }
 
 .cta:hover{
-  transform:translateY(-2px) scale(1.02);
-  box-shadow:0 0 35px rgba(156,77,255,.35);
+  transform:scale(1.05);
+  box-shadow:0 0 35px rgba(156,77,255,.4);
 }
 
 /* DISABLED */
 .disabled{
-  opacity:0.35;
+  opacity:0.3;
   pointer-events:none;
   filter:blur(1px);
 }
 
-/* TOKENOMICS */
+/* GRID CARDS */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -185,13 +198,15 @@ header{
   border-radius:14px;
   text-align:center;
   border:1px solid var(--border);
+  backdrop-filter:blur(12px);
   transition:0.3s;
-  backdrop-filter:blur(10px);
+  cursor:pointer;
 }
 
 .card:hover{
   transform:translateY(-5px);
   box-shadow:0 0 25px rgba(0,240,255,.12);
+  border-color:rgba(0,240,255,.3);
 }
 
 /* ROADMAP */
@@ -208,24 +223,27 @@ header{
   padding:18px;
   border-radius:12px;
   border:1px solid var(--border);
-  backdrop-filter:blur(10px);
+  backdrop-filter:blur(12px);
   transition:0.3s;
 }
 
 .step:hover{
   transform:scale(1.02);
-  box-shadow:0 0 20px rgba(156,77,255,.15);
+  box-shadow:0 0 25px rgba(156,77,255,.2);
 }
 
-/* subtle pulse animation for CTA sections */
-@keyframes pulse{
-  0%{box-shadow:0 0 10px rgba(0,240,255,.1);}
-  50%{box-shadow:0 0 25px rgba(156,77,255,.25);}
-  100%{box-shadow:0 0 10px rgba(0,240,255,.1);}
+/* ICONS */
+.icon{
+  width:22px;
+  height:22px;
+  margin-bottom:8px;
+  color:rgba(255,255,255,.7);
+  transition:0.3s;
 }
 
-.giveaway{
-  animation:pulse 6s infinite ease-in-out;
+.card:hover .icon{
+  color:var(--blue);
+  transform:scale(1.15);
 }
 </style>
 </head>
@@ -245,11 +263,10 @@ header{
   <p>
     Zukma Network is a digital ecosystem powering Africa’s student and freelancer economy through real-world blockchain utility.
     At its core, Zep Cash enables fast, practical transactions across the network. In Zep Swipe, it powers freelancer payments for tasks and gigs. On Campus Wave, it is used for tipping and peer-to-peer rewards within student communities.
-    Together, Zukma Network and Zep Cash turn everyday student activity into a connected, value-driven digital economy.
   </p>
 </section>
 
-<!-- GIVEAWAY -->
+<!-- FOUNDERS DROP -->
 <section id="giveawayBox" class="giveaway">
 
   <h2>🚨 Founders Drop (10–12 April)</h2>
@@ -258,12 +275,10 @@ header{
 
   <p><strong>Earn up to 5,000 ZEP</strong></p>
 
-  <p id="statusText" style="margin-top:10px;"></p>
+  <p id="statusText"></p>
 
-  <a id="formLink"
-     href="https://forms.gle/EnCapgzDEeYyZFJLA"
-     class="cta">
-     🚀 Claim Early Allocation
+  <a id="formLink" href="https://forms.gle/EnCapgzDEeYyZFJLA" class="cta">
+    <i data-lucide="rocket"></i> Claim Early Allocation
   </a>
 
 </section>
@@ -271,12 +286,35 @@ header{
 <!-- TOKENOMICS -->
 <section class="grid">
 
-  <div class="card">🌱 45% Ecosystem</div>
-  <div class="card">💰 10% Presale</div>
-  <div class="card">🧠 15% Team</div>
-  <div class="card">💧 15% Liquidity</div>
-  <div class="card">📣 10% Marketing</div>
-  <div class="card">🏦 5% Treasury</div>
+  <div class="card">
+    <i data-lucide="leaf" class="icon"></i>
+    <div>45% Ecosystem</div>
+  </div>
+
+  <div class="card">
+    <i data-lucide="wallet" class="icon"></i>
+    <div>10% Presale</div>
+  </div>
+
+  <div class="card">
+    <i data-lucide="users" class="icon"></i>
+    <div>15% Team</div>
+  </div>
+
+  <div class="card">
+    <i data-lucide="droplets" class="icon"></i>
+    <div>15% Liquidity</div>
+  </div>
+
+  <div class="card">
+    <i data-lucide="megaphone" class="icon"></i>
+    <div>10% Marketing</div>
+  </div>
+
+  <div class="card">
+    <i data-lucide="banknote" class="icon"></i>
+    <div>5% Treasury</div>
+  </div>
 
 </section>
 
@@ -285,15 +323,16 @@ header{
 
   <h2>🚀 Roadmap</h2>
 
-  <div class="step">📅 10–12 April: Founders Drop (Early Allocation)</div>
+  <div class="step">📅 10–12 April: Founders Drop</div>
   <div class="step">🚀 21 April: Presale Launch</div>
-  <div class="step">📲 Q2: Zep Swipe Ghana Launch</div>
-  <div class="step">🌍 Q3: Campus Wave Beta Launch</div>
-  <div class="step">📈 Q4: Full Ecosystem Scaling</div>
+  <div class="step">📲 Q2: Zep Swipe Launch</div>
+  <div class="step">🌍 Q3: Campus Wave Beta</div>
+  <div class="step">📈 Q4: Ecosystem Scaling</div>
 
 </section>
 
 <script>
+lucide.createIcons();
 
 const start = new Date("Apr 10, 2026 00:00:00").getTime();
 const end = new Date("Apr 12, 2026 23:59:59").getTime();
@@ -302,31 +341,28 @@ const button = document.getElementById("formLink");
 const statusText = document.getElementById("statusText");
 
 function updateAccess(){
+  const now = Date.now();
 
-  const current = new Date().getTime();
-
-  if(current < start){
+  if(now < start){
     button.classList.add("disabled");
     button.href = "https://t.me/zepcashnetwork";
-    statusText.innerText = "⏳ Access opens on 10 April 2026";
+    statusText.innerText = "⏳ Access opens soon";
   }
 
-  else if(current >= start && current <= end){
+  else if(now >= start && now <= end){
     button.classList.remove("disabled");
-    button.href = "https://forms.gle/EnCapgzDEeYyZFJLA";
-    statusText.innerText = "🔥 LIVE — Founders Drop is active";
+    statusText.innerText = "🔥 LIVE — Founders Drop Active";
   }
 
   else{
     button.classList.remove("disabled");
     button.href = "https://t.me/zepcashnetwork";
-    statusText.innerText = "🚀 Allocation closed — Join Telegram for updates";
+    statusText.innerText = "🚀 Closed — Join Telegram";
   }
 }
 
 updateAccess();
 setInterval(updateAccess, 1000);
-
 </script>
 
 </body>
