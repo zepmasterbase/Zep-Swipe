@@ -3,30 +3,51 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Zep Cash Whitepaper</title>
+<title>Zep Cash Protocol Whitepaper</title>
 
-<!-- Lucide Icons -->
 <script src="https://unpkg.com/lucide@latest"></script>
 
 <style>
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #0b0f1a, #05070d);
+  background: radial-gradient(circle at top, #060814, #000);
   color: white;
   overflow-x: hidden;
 }
 
+/* BACKGROUND GLOW LAYERS */
+.bg-glow {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0,255,255,0.15), transparent 60%);
+  filter: blur(80px);
+  animation: float 8s infinite ease-in-out;
+}
+
+.bg-glow:nth-child(2) {
+  top: 40%;
+  left: 60%;
+  background: radial-gradient(circle, rgba(160,0,255,0.15), transparent 60%);
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(40px); }
+}
+
 /* HEADER */
 header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   padding: 15px 25px;
   background: rgba(255,255,255,0.05);
   backdrop-filter: blur(12px);
-  position: sticky;
-  top: 0;
   border-bottom: 1px solid rgba(0,255,255,0.2);
 }
 
@@ -37,35 +58,35 @@ header {
 }
 
 .logo img {
-  width: 40px;
+  width: 42px;
   border-radius: 50%;
-  box-shadow: 0 0 20px cyan;
+  box-shadow: 0 0 25px cyan;
 }
 
-/* GLOW TITLE */
-.title-glow {
-  font-size: 20px;
+.title {
+  font-size: 18px;
   font-weight: bold;
-  animation: pulse 3s infinite;
+  animation: glow 3s infinite;
 }
 
-@keyframes pulse {
+@keyframes glow {
   0% { text-shadow: 0 0 5px cyan; }
   50% { text-shadow: 0 0 20px cyan, 0 0 40px violet; }
   100% { text-shadow: 0 0 5px cyan; }
 }
 
-/* DASHBOARD */
-.dashboard {
+/* GRID */
+.container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 15px;
   padding: 20px;
 }
 
+/* CARD */
 .card {
   background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(0,255,255,0.2);
+  border: 1px solid rgba(0,255,255,0.15);
   border-radius: 15px;
   padding: 15px;
   backdrop-filter: blur(10px);
@@ -74,22 +95,28 @@ header {
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 0 20px cyan;
+  box-shadow: 0 0 25px rgba(0,255,255,0.3);
 }
 
 /* BUTTON */
-.btn {
-  padding: 10px 15px;
+button {
+  width: 100%;
+  padding: 12px;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(90deg, cyan, violet);
-  color: black;
+  border-radius: 12px;
   font-weight: bold;
   cursor: pointer;
+  background: linear-gradient(90deg, cyan, violet);
+  color: black;
+  transition: 0.3s;
 }
 
-/* CHATBOT */
-.chatbot {
+button:hover {
+  transform: scale(1.03);
+}
+
+/* AI BOX */
+.ai-box {
   margin: 20px;
   padding: 15px;
   border-radius: 15px;
@@ -100,29 +127,33 @@ header {
 input {
   width: 100%;
   padding: 10px;
+  margin-top: 10px;
   border-radius: 10px;
   border: none;
-  margin-top: 10px;
 }
 </style>
 </head>
 
 <body>
 
+<div class="bg-glow"></div>
+<div class="bg-glow"></div>
+
+<!-- HEADER -->
 <header>
   <div class="logo">
     <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jlk4qfbj1v1v3dh1lvb1bd9g881j.png"/>
-    <div class="title-glow">Zep Cash Whitepaper</div>
+    <div class="title">Zep Cash Protocol</div>
   </div>
 </header>
 
 <!-- DASHBOARD -->
-<section class="dashboard">
+<section class="container">
 
   <div class="card">
     <h3>🪙 Supply</h3>
     <p><b>500,000,000 ZEP</b></p>
-    <small>No inflation. Fixed supply.</small>
+    <small>Fixed supply — no inflation</small>
   </div>
 
   <div class="card">
@@ -137,7 +168,7 @@ input {
     <ul>
       <li>45% Ecosystem</li>
       <li>10% Presale</li>
-      <li>15% Team (vested)</li>
+      <li>15% Team (locked)</li>
       <li>15% Liquidity</li>
       <li>10% Marketing</li>
       <li>5% Treasury</li>
@@ -145,67 +176,69 @@ input {
   </div>
 
   <div class="card">
-    <h3>📈 Live Mock Dashboard</h3>
+    <h3>📈 Live Dashboard</h3>
     <p>Price: <b>$0.010</b></p>
+    <p>Holders: <b>12,450+</b></p>
     <p>Market Cap: <b>$5M (simulated)</b></p>
-    <p>Holders: <b>12,430</b></p>
-    <button class="btn">View Chart</button>
   </div>
 
 </section>
 
-<!-- PRESALE TIMER LOGIC -->
-<script>
-const now = new Date();
-const start = new Date("2026-04-10");
-const midStart = new Date("2026-04-10");
-const midEnd = new Date("2026-04-12");
-
-if (now < start) {
-  window.redirectMode = "telegram";
-} else if (now >= midStart && now <= midEnd) {
-  window.redirectMode = "form";
-} else {
-  window.redirectMode = "telegram";
-}
-
-function handlePresaleClick() {
-  if (window.redirectMode === "form") {
-    window.location.href = "https://forms.gle/EnCapgzDEeYyZFJLA";
-  } else {
-    window.location.href = "https://t.me/zepcashnetwork";
-  }
-}
-</script>
-
-<!-- ACTION SECTION -->
+<!-- PRESALE ACCESS -->
 <section class="card" style="margin:20px;">
-  <h2>⚡ Join Presale System</h2>
-  <button class="btn" onclick="handlePresaleClick()">Enter Presale</button>
+  <h2>⚡ Presale Access Gate</h2>
+  <button onclick="handleAccess()">Enter Presale System</button>
 </section>
 
-<!-- AI CHATBOT -->
-<section class="chatbot">
+<!-- AI EXPLAINER -->
+<section class="ai-box">
   <h2>🤖 AI Whitepaper Explainer</h2>
-  <p>Ask anything about Zep Cash:</p>
-  <input placeholder="e.g. What is Zep Cash used for?"/>
+  <p>Ask anything about Zep Cash ecosystem:</p>
+  <input placeholder="e.g. What is Zep Cash used for?" />
 </section>
 
 <!-- ROADMAP -->
 <section class="card" style="margin:20px;">
   <h2>🚀 Roadmap</h2>
-  <p>Phase 1: Community + Presale</p>
+  <p>Phase 1: Community + Awareness</p>
   <p>Phase 2: Zep Swipe Integration</p>
   <p>Phase 3: Exchange Listings</p>
 </section>
 
 <!-- FOOTER -->
 <footer style="text-align:center; padding:20px; opacity:0.6;">
-  <p>© Zep Cash Network</p>
+  <p>© Zep Cash Network — First Student Economy Currency</p>
 </footer>
 
 <script>
 lucide.createIcons();
+
+/* TRUE TIME LOCK SYSTEM (APRIL LOGIC) */
+
+const now = new Date();
+
+// Adjust year if needed (2026 assumed)
+const beforeUnlock = new Date("2026-04-10");
+const formActiveStart = new Date("2026-04-10");
+const formActiveEnd = new Date("2026-04-12");
+
+function handleAccess() {
+
+  if (now < beforeUnlock) {
+    // BEFORE APRIL 10 → TELEGRAM
+    window.location.href = "https://t.me/zepcashnetwork";
+  }
+
+  else if (now >= formActiveStart && now <= formActiveEnd) {
+    // APRIL 10–12 → GOOGLE FORM
+    window.location.href = "https://forms.gle/EnCapgzDEeYyZFJLA";
+  }
+
+  else {
+    // AFTER APRIL 12 → BACK TO TELEGRAM
+    window.location.href = "https://t.me/zepcashnetwork";
+  }
+}
 </script>
 
 </body>
