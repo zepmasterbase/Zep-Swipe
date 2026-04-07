@@ -17,7 +17,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== 3D CANVAS ===== */
+/* BACKGROUND CANVAS */
 #bg {
   position: fixed;
   top: 0;
@@ -27,7 +27,7 @@ body {
   z-index: -1;
 }
 
-/* ===== HEADER ===== */
+/* HEADER */
 header {
   display: flex;
   justify-content: space-between;
@@ -63,7 +63,7 @@ header {
   100% { text-shadow: 0 0 5px cyan; }
 }
 
-/* ===== GRID ===== */
+/* GRID */
 .container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -71,7 +71,7 @@ header {
   padding: 20px;
 }
 
-/* ===== CARD ===== */
+/* CARD */
 .card {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(0,255,255,0.15);
@@ -86,7 +86,7 @@ header {
   box-shadow: 0 0 25px cyan;
 }
 
-/* ===== BUTTON ===== */
+/* BUTTON */
 button {
   width: 100%;
   padding: 12px;
@@ -97,7 +97,7 @@ button {
   cursor: pointer;
 }
 
-/* ===== AI CHAT ===== */
+/* AI BOX */
 .ai-box {
   margin: 20px;
   padding: 15px;
@@ -114,7 +114,7 @@ input {
   border: none;
 }
 
-/* LIVE DATA PULSE */
+/* LIVE PULSE */
 .pulse {
   animation: pulse 2s infinite;
 }
@@ -131,7 +131,6 @@ input {
 
 <canvas id="bg"></canvas>
 
-<!-- HEADER -->
 <header>
   <div class="logo">
     <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jlk4qfbj1v1v3dh1lvb1bd9g881j.png"/>
@@ -144,7 +143,7 @@ input {
   <h2>🌍 What is Zep Cash?</h2>
   <p>
     Zep Cash is the first <b>student-powered digital currency</b> built for the world’s emerging student economy.
-    It enables students to <b>earn from learning, complete gigs, and participate in real digital work</b> through Zep Swipe.
+    It enables students to earn from learning, complete gigs, and participate in real digital work through Zep Swipe.
   </p>
 
   <p>
@@ -171,10 +170,11 @@ input {
     <small>Updating market sentiment</small>
   </div>
 
+  <!-- ✅ FIXED SECTION -->
   <div class="card">
     <h3>👥 Network Growth</h3>
-    <p><b>14,820 Students</b></p>
-    <small>Zep Swipe + Campus Wave users</small>
+    <p><b>Early Pilot Network</b></p>
+    <small>Growing with first users in Ghana</small>
   </div>
 
   <div class="card">
@@ -200,14 +200,14 @@ input {
   </ul>
 </section>
 
-<!-- AI CHAT -->
+<!-- AI -->
 <section class="ai-box">
   <h2>🤖 Zep AI Whitepaper Assistant</h2>
   <p>Ask anything about the ecosystem:</p>
   <input placeholder="e.g. How do students earn Zep Cash?" />
 </section>
 
-<!-- PRESALE BUTTON -->
+<!-- PRESALE -->
 <section class="card" style="margin:20px;">
   <h2>⚡ Presale Access System</h2>
   <button onclick="handleAccess()">Enter Presale</button>
@@ -221,7 +221,6 @@ input {
   <p>Phase 3: Exchange listing + global expansion</p>
 </section>
 
-<!-- FOOTER -->
 <footer style="text-align:center; padding:20px; opacity:0.6;">
   Zep Cash — Powering the Global Student Economy
 </footer>
@@ -229,23 +228,27 @@ input {
 <script>
 lucide.createIcons();
 
-/* ===== TIME LOCK SYSTEM ===== */
+/* TIME LOCK */
 const now = new Date();
 const before = new Date("2026-04-10");
 const midStart = new Date("2026-04-10");
 const midEnd = new Date("2026-04-12");
 
 function handleAccess() {
+  const now = new Date();
+
   if (now < before) {
     window.location.href = "https://t.me/zepcashnetwork";
-  } else if (now >= midStart && now <= midEnd) {
+  } 
+  else if (now >= midStart && now <= midEnd) {
     window.location.href = "https://forms.gle/EnCapgzDEeYyZFJLA";
-  } else {
+  } 
+  else {
     window.location.href = "https://t.me/zepcashnetwork";
   }
 }
 
-/* ===== THREE.JS 3D BACKGROUND ===== */
+/* 3D BACKGROUND */
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 
