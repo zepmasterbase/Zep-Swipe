@@ -4,68 +4,41 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Zep Cash (ZAC) — Student Economy</title>
+<title>Zep Cash (ZAC) — Web3 Student Economy</title>
 
 <link rel="icon" href="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33b641h.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<!-- Lucide Icons -->
 <script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <style>
 :root{
   --blue:#00f0ff;
   --violet:#9c4dff;
-  --bg: radial-gradient(circle at 20% 10%, #070018, #000010);
-  --glass: rgba(255,255,255,.06);
-  --border: rgba(255,255,255,.12);
-  --text: rgba(255,255,255,.85);
+  --bg:#050010;
+  --glass:rgba(255,255,255,.06);
+  --border:rgba(255,255,255,.12);
 }
 
-/* GLOBAL */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Poppins,sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
 
 body{
-  background: var(--bg);
-  color:#fff;
+  background: radial-gradient(circle at 20% 10%, #070018, #000010);
+  color:white;
   overflow-x:hidden;
 }
 
-/* GRID BACKGROUND */
-body::before{
-  content:"";
+/* THREE BACKGROUND */
+#three-bg{
   position:fixed;
-  inset:0;
-  background:
-    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-  background-size:60px 60px;
-  opacity:.25;
-  animation: drift 18s linear infinite;
-  pointer-events:none;
-}
-
-@keyframes drift{
-  from{transform:translateY(0);}
-  to{transform:translateY(60px);}
-}
-
-/* GLOW ORBS */
-body::after{
-  content:"";
-  position:fixed;
-  inset:-100px;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(0,240,255,.15), transparent 40%),
-    radial-gradient(circle at 80% 40%, rgba(156,77,255,.15), transparent 40%);
-  filter: blur(30px);
-  pointer-events:none;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-2;
 }
 
 /* HEADER */
@@ -74,18 +47,18 @@ header{
   justify-content:space-between;
   align-items:center;
   padding:16px 24px;
-  background:rgba(0,0,0,.55);
-  backdrop-filter:blur(16px);
+  background:rgba(0,0,0,.5);
+  backdrop-filter:blur(14px);
   border-bottom:1px solid var(--border);
   position:sticky;
   top:0;
   z-index:10;
-  animation: headerGlow 6s infinite;
+  animation:glow 6s infinite;
 }
 
-@keyframes headerGlow{
+@keyframes glow{
   0%,100%{box-shadow:0 0 10px rgba(0,240,255,.05);}
-  50%{box-shadow:0 0 25px rgba(156,77,255,.2);}
+  50%{box-shadow:0 0 25px rgba(156,77,255,.25);}
 }
 
 .logo{
@@ -94,23 +67,16 @@ header{
   gap:10px;
 }
 
-.logo img{
-  width:42px;
-  height:42px;
-}
-
 .logo span{
   font-family:Orbitron;
   background:linear-gradient(90deg,var(--blue),var(--violet));
   -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
 }
 
 /* HERO */
 .hero{
   text-align:center;
-  padding:100px 20px 40px;
-  position:relative;
+  padding:90px 20px 30px;
 }
 
 .hero h1{
@@ -118,251 +84,205 @@ header{
   font-size:3rem;
   background:linear-gradient(90deg,var(--blue),var(--violet));
   -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
 }
 
-.hero p{
-  max-width:820px;
-  margin:15px auto;
-  color:var(--text);
-  line-height:1.6;
-}
-
-/* FOUNDERS BOX */
-.giveaway{
-  max-width:900px;
-  margin:40px auto;
-  padding:30px;
-  border-radius:18px;
-  background:var(--glass);
-  border:1px solid var(--border);
-  text-align:center;
-  backdrop-filter:blur(16px);
-  box-shadow:0 0 30px rgba(0,240,255,.08);
-  transition:0.3s;
-}
-
-.giveaway:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 40px rgba(156,77,255,.25);
-}
-
-.giveaway h2{
-  font-family:Orbitron;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-/* CTA BUTTON */
-.cta{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:14px 30px;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
-  color:#000;
-  font-weight:bold;
-  text-decoration:none;
-  margin-top:15px;
-  transition:0.25s;
-  box-shadow:0 0 18px rgba(0,240,255,.2);
-}
-
-.cta:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 35px rgba(156,77,255,.4);
-}
-
-/* DISABLED */
-.disabled{
-  opacity:0.3;
-  pointer-events:none;
-  filter:blur(1px);
-}
-
-/* GRID CARDS */
-.grid{
+/* DASHBOARD */
+.dashboard{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:18px;
+  gap:15px;
   max-width:1100px;
-  margin:40px auto;
+  margin:20px auto;
   padding:0 20px;
 }
 
 .card{
   background:var(--glass);
+  border:1px solid var(--border);
   padding:18px;
   border-radius:14px;
+  backdrop-filter:blur(10px);
+  transition:.3s;
   text-align:center;
-  border:1px solid var(--border);
-  backdrop-filter:blur(12px);
-  transition:0.3s;
-  cursor:pointer;
 }
 
 .card:hover{
   transform:translateY(-5px);
-  box-shadow:0 0 25px rgba(0,240,255,.12);
-  border-color:rgba(0,240,255,.3);
+  box-shadow:0 0 20px rgba(0,240,255,.15);
 }
 
-/* ROADMAP */
-.roadmap{
+/* CHART */
+.chart-box{
   max-width:900px;
-  margin:60px auto;
-  padding:20px;
-  text-align:center;
-}
-
-.step{
+  margin:40px auto;
   background:var(--glass);
-  margin:10px;
-  padding:18px;
-  border-radius:12px;
   border:1px solid var(--border);
-  backdrop-filter:blur(12px);
-  transition:0.3s;
+  padding:20px;
+  border-radius:14px;
+  backdrop-filter:blur(10px);
 }
 
-.step:hover{
-  transform:scale(1.02);
-  box-shadow:0 0 25px rgba(156,77,255,.2);
+/* AI SECTION */
+.ai-box{
+  max-width:900px;
+  margin:40px auto;
+  padding:20px;
+  background:var(--glass);
+  border-radius:14px;
+  border:1px solid var(--border);
 }
 
-/* ICONS */
-.icon{
-  width:22px;
-  height:22px;
-  margin-bottom:8px;
-  color:rgba(255,255,255,.7);
-  transition:0.3s;
+.ai-input{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:rgba(0,0,0,.4);
+  color:white;
 }
 
-.card:hover .icon{
-  color:var(--blue);
-  transform:scale(1.15);
+.ai-btn{
+  margin-top:10px;
+  padding:10px 20px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--blue),var(--violet));
+  cursor:pointer;
+}
+
+.response{
+  margin-top:15px;
+  padding:10px;
+  border-left:2px solid var(--blue);
+  color:rgba(255,255,255,.85);
 }
 </style>
 </head>
 
 <body>
 
+<canvas id="three-bg"></canvas>
+
 <header>
   <div class="logo">
-    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png" width="40">
     <span>Zep Cash</span>
   </div>
 </header>
 
-<!-- HERO -->
 <section class="hero">
-  <h1>The Student Economy Starts Here</h1>
-  <p>
-    Zukma Network is a digital ecosystem powering Africa’s student and freelancer economy through real-world blockchain utility.
-    At its core, Zep Cash enables fast, practical transactions across the network. In Zep Swipe, it powers freelancer payments for tasks and gigs. On Campus Wave, it is used for tipping and peer-to-peer rewards within student communities.
-  </p>
+  <h1>Web3 Student Economy Protocol</h1>
+  <p>Zukma Network powers real utility for freelancers, students & digital earners.</p>
 </section>
 
-<!-- FOUNDERS DROP -->
-<section id="giveawayBox" class="giveaway">
-
-  <h2>🚨 Founders Drop (10–12 April)</h2>
-
-  <p>Early access allocation for founding supporters only.</p>
-
-  <p><strong>Earn up to 5,000 ZEP</strong></p>
-
-  <p id="statusText"></p>
-
-  <a id="formLink" href="https://forms.gle/EnCapgzDEeYyZFJLA" class="cta">
-    <i data-lucide="rocket"></i> Claim Early Allocation
-  </a>
-
-</section>
-
-<!-- TOKENOMICS -->
-<section class="grid">
+<!-- TOKEN DASHBOARD -->
+<section class="dashboard">
 
   <div class="card">
-    <i data-lucide="leaf" class="icon"></i>
-    <div>45% Ecosystem</div>
+    <i data-lucide="coins"></i>
+    <h3>Supply</h3>
+    <p id="supply">1,000,000,000 ZAC</p>
   </div>
 
   <div class="card">
-    <i data-lucide="wallet" class="icon"></i>
-    <div>10% Presale</div>
+    <i data-lucide="trending-up"></i>
+    <h3>Price</h3>
+    <p id="price">$0.041</p>
   </div>
 
   <div class="card">
-    <i data-lucide="users" class="icon"></i>
-    <div>15% Team</div>
+    <i data-lucide="banknote"></i>
+    <h3>Market Cap</h3>
+    <p>$41,000,000</p>
   </div>
 
   <div class="card">
-    <i data-lucide="droplets" class="icon"></i>
-    <div>15% Liquidity</div>
-  </div>
-
-  <div class="card">
-    <i data-lucide="megaphone" class="icon"></i>
-    <div>10% Marketing</div>
-  </div>
-
-  <div class="card">
-    <i data-lucide="banknote" class="icon"></i>
-    <div>5% Treasury</div>
+    <i data-lucide="activity"></i>
+    <h3>Network Status</h3>
+    <p>LIVE</p>
   </div>
 
 </section>
 
-<!-- ROADMAP -->
-<section class="roadmap">
+<!-- CHART -->
+<section class="chart-box">
+  <canvas id="chart"></canvas>
+</section>
 
-  <h2>🚀 Roadmap</h2>
-
-  <div class="step">📅 10–12 April: Founders Drop</div>
-  <div class="step">🚀 21 April: Presale Launch</div>
-  <div class="step">📲 Q2: Zep Swipe Launch</div>
-  <div class="step">🌍 Q3: Campus Wave Beta</div>
-  <div class="step">📈 Q4: Ecosystem Scaling</div>
-
+<!-- AI WHITEPAPER EXPLAINER -->
+<section class="ai-box">
+  <h2>🧠 Zep AI Whitepaper Assistant</h2>
+  <input class="ai-input" id="question" placeholder="Ask about Zep Cash, Zukma Network, token utility...">
+  <button class="ai-btn" onclick="askAI()">Ask Protocol</button>
+  <div class="response" id="response"></div>
 </section>
 
 <script>
 lucide.createIcons();
 
-const start = new Date("Apr 10, 2026 00:00:00").getTime();
-const end = new Date("Apr 12, 2026 23:59:59").getTime();
-
-const button = document.getElementById("formLink");
-const statusText = document.getElementById("statusText");
-
-function updateAccess(){
-  const now = Date.now();
-
-  if(now < start){
-    button.classList.add("disabled");
-    button.href = "https://t.me/zepcashnetwork";
-    statusText.innerText = "⏳ Access opens soon";
-  }
-
-  else if(now >= start && now <= end){
-    button.classList.remove("disabled");
-    statusText.innerText = "🔥 LIVE — Founders Drop Active";
-  }
-
-  else{
-    button.classList.remove("disabled");
-    button.href = "https://t.me/zepcashnetwork";
-    statusText.innerText = "🚀 Closed — Join Telegram";
-  }
+/* FAKE AI */
+function askAI(){
+  const q = document.getElementById("question").value;
+  document.getElementById("response").innerText =
+  "Zep AI Protocol: " + q + " relates to Zep Cash utility across Zep Swipe, Campus Wave and the Zukma Network ecosystem.";
 }
 
-updateAccess();
-setInterval(updateAccess, 1000);
+/* CHART */
+const ctx = document.getElementById('chart');
+
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ["Day 1","Day 2","Day 3","Day 4","Day 5","Day 6"],
+    datasets: [{
+      label: "ZAC Price Movement",
+      data: [0.01,0.02,0.03,0.028,0.035,0.041],
+      borderColor: "#00f0ff",
+      tension: 0.4
+    }]
+  }
+});
+
+/* THREE JS BACKGROUND */
+const canvas = document.getElementById("three-bg");
+const renderer = new THREE.WebGLRenderer({canvas});
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+
+camera.position.z = 5;
+
+const geometry = new THREE.BufferGeometry();
+const particles = 800;
+const positions = [];
+
+for(let i=0;i<particles;i++){
+  positions.push((Math.random()-0.5)*10);
+  positions.push((Math.random()-0.5)*10);
+  positions.push((Math.random()-0.5)*10);
+}
+
+geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions,3));
+
+const material = new THREE.PointsMaterial({color:0x00f0ff, size:0.02});
+const points = new THREE.Points(geometry, material);
+scene.add(points);
+
+function animate(){
+  requestAnimationFrame(animate);
+  points.rotation.y += 0.0015;
+  points.rotation.x += 0.0005;
+  renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener("resize", ()=>{
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+});
 </script>
 
 </body>
