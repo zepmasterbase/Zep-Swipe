@@ -1,292 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Zep Cash Whitepaper</title>
 
-<title>Zep Cash (ZAC) — Web3 Student Economy</title>
-
-<link rel="icon" href="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33b641h.png">
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<!-- Lucide Icons -->
 <script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <style>
-:root{
-  --blue:#00f0ff;
-  --violet:#9c4dff;
-  --bg:#050010;
-  --glass:rgba(255,255,255,.06);
-  --border:rgba(255,255,255,.12);
-}
-
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
-
-body{
-  background: radial-gradient(circle at 20% 10%, #070018, #000010);
-  color:white;
-  overflow-x:hidden;
-}
-
-/* 3D BACKGROUND */
-#three-bg{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  z-index:-2;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #0b0f1a, #05070d);
+  color: white;
+  overflow-x: hidden;
 }
 
 /* HEADER */
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:16px 24px;
-  background:rgba(0,0,0,.55);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--border);
-  position:sticky;
-  top:0;
-  z-index:10;
-  animation:glow 6s infinite;
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 25px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid rgba(0,255,255,0.2);
 }
 
-@keyframes glow{
-  0%,100%{box-shadow:0 0 10px rgba(0,240,255,.05);}
-  50%{box-shadow:0 0 25px rgba(156,77,255,.25);}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
+.logo img {
+  width: 40px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px cyan;
 }
 
-.logo img{
-  width:42px;
-  height:42px;
+/* GLOW TITLE */
+.title-glow {
+  font-size: 20px;
+  font-weight: bold;
+  animation: pulse 3s infinite;
 }
 
-.logo span{
-  font-family:Orbitron;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
-  -webkit-background-clip:text;
-}
-
-/* HERO */
-.hero{
-  text-align:center;
-  padding:90px 20px 30px;
-}
-
-.hero h1{
-  font-family:Orbitron;
-  font-size:3rem;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
-  -webkit-background-clip:text;
+@keyframes pulse {
+  0% { text-shadow: 0 0 5px cyan; }
+  50% { text-shadow: 0 0 20px cyan, 0 0 40px violet; }
+  100% { text-shadow: 0 0 5px cyan; }
 }
 
 /* DASHBOARD */
-.dashboard{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
-  max-width:1100px;
-  margin:20px auto;
-  padding:0 20px;
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  padding: 20px;
 }
 
-.card{
-  background:var(--glass);
-  border:1px solid var(--border);
-  padding:18px;
-  border-radius:14px;
-  backdrop-filter:blur(10px);
-  transition:.3s;
-  text-align:center;
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(0,255,255,0.2);
+  border-radius: 15px;
+  padding: 15px;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
 }
 
-.card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 0 20px rgba(0,240,255,.15);
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px cyan;
 }
 
-/* CHART */
-.chart-box{
-  max-width:900px;
-  margin:40px auto;
-  background:var(--glass);
-  border:1px solid var(--border);
-  padding:20px;
-  border-radius:14px;
-  backdrop-filter:blur(10px);
+/* BUTTON */
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, cyan, violet);
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-/* AI */
-.ai-box{
-  max-width:900px;
-  margin:40px auto;
-  padding:20px;
-  background:var(--glass);
-  border-radius:14px;
-  border:1px solid var(--border);
+/* CHATBOT */
+.chatbot {
+  margin: 20px;
+  padding: 15px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
-.ai-input{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  background:rgba(0,0,0,.4);
-  color:white;
-}
-
-.ai-btn{
-  margin-top:10px;
-  padding:10px 20px;
-  border:none;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
-  cursor:pointer;
-}
-
-.response{
-  margin-top:15px;
-  padding:10px;
-  border-left:2px solid var(--blue);
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  margin-top: 10px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 3D BACKGROUND -->
-<canvas id="three-bg"></canvas>
-
 <header>
   <div class="logo">
-    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jlk4qfbj1v1v3dh1lvb1bd9g881j.png">
-    <span>Zep Cash</span>
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jlk4qfbj1v1v3dh1lvb1bd9g881j.png"/>
+    <div class="title-glow">Zep Cash Whitepaper</div>
   </div>
 </header>
 
-<section class="hero">
-  <h1>Web3 Student Economy Protocol</h1>
-  <p>Zukma Network powers real utility for students, freelancers & digital earners.</p>
-</section>
-
-<!-- LIVE DASHBOARD -->
+<!-- DASHBOARD -->
 <section class="dashboard">
 
   <div class="card">
-    <i data-lucide="coins"></i>
-    <h3>Supply</h3>
-    <p id="supply">500,000,000 ZEP (Fixed)</p>
+    <h3>🪙 Supply</h3>
+    <p><b>500,000,000 ZEP</b></p>
+    <small>No inflation. Fixed supply.</small>
   </div>
 
   <div class="card">
-    <i data-lucide="trending-up"></i>
-    <h3>Price</h3>
-    <p id="price">$0.041 (Est. Launch)</p>
+    <h3>💰 Presale</h3>
+    <p>Starts: <b>21 April</b></p>
+    <p>Price: <b>$0.01</b></p>
+    <p>Launch: <b>$0.051</b></p>
   </div>
 
   <div class="card">
-    <i data-lucide="activity"></i>
-    <h3>Status</h3>
-    <p>PRE-LAUNCH</p>
+    <h3>📊 Tokenomics</h3>
+    <ul>
+      <li>45% Ecosystem</li>
+      <li>10% Presale</li>
+      <li>15% Team (vested)</li>
+      <li>15% Liquidity</li>
+      <li>10% Marketing</li>
+      <li>5% Treasury</li>
+    </ul>
   </div>
 
   <div class="card">
-    <i data-lucide="globe"></i>
-    <h3>Network</h3>
-    <p>Zukma Protocol</p>
+    <h3>📈 Live Mock Dashboard</h3>
+    <p>Price: <b>$0.010</b></p>
+    <p>Market Cap: <b>$5M (simulated)</b></p>
+    <p>Holders: <b>12,430</b></p>
+    <button class="btn">View Chart</button>
   </div>
 
 </section>
 
-<!-- CHART -->
-<section class="chart-box">
-  <canvas id="chart"></canvas>
+<!-- PRESALE TIMER LOGIC -->
+<script>
+const now = new Date();
+const start = new Date("2026-04-10");
+const midStart = new Date("2026-04-10");
+const midEnd = new Date("2026-04-12");
+
+if (now < start) {
+  window.redirectMode = "telegram";
+} else if (now >= midStart && now <= midEnd) {
+  window.redirectMode = "form";
+} else {
+  window.redirectMode = "telegram";
+}
+
+function handlePresaleClick() {
+  if (window.redirectMode === "form") {
+    window.location.href = "https://forms.gle/EnCapgzDEeYyZFJLA";
+  } else {
+    window.location.href = "https://t.me/zepcashnetwork";
+  }
+}
+</script>
+
+<!-- ACTION SECTION -->
+<section class="card" style="margin:20px;">
+  <h2>⚡ Join Presale System</h2>
+  <button class="btn" onclick="handlePresaleClick()">Enter Presale</button>
 </section>
 
-<!-- AI SECTION -->
-<section class="ai-box">
-  <h2>🧠 Zep AI Whitepaper Assistant</h2>
-
-  <input class="ai-input" id="question" placeholder="Ask about Zep Cash ecosystem...">
-  <button class="ai-btn" onclick="askAI()">Ask Protocol</button>
-
-  <div class="response" id="response"></div>
+<!-- AI CHATBOT -->
+<section class="chatbot">
+  <h2>🤖 AI Whitepaper Explainer</h2>
+  <p>Ask anything about Zep Cash:</p>
+  <input placeholder="e.g. What is Zep Cash used for?"/>
 </section>
+
+<!-- ROADMAP -->
+<section class="card" style="margin:20px;">
+  <h2>🚀 Roadmap</h2>
+  <p>Phase 1: Community + Presale</p>
+  <p>Phase 2: Zep Swipe Integration</p>
+  <p>Phase 3: Exchange Listings</p>
+</section>
+
+<!-- FOOTER -->
+<footer style="text-align:center; padding:20px; opacity:0.6;">
+  <p>© Zep Cash Network</p>
+</footer>
 
 <script>
 lucide.createIcons();
-
-/* AI SIM */
-function askAI(){
-  const q = document.getElementById("question").value;
-  document.getElementById("response").innerText =
-  "Zep AI Protocol: " + q + " is part of the Zep Cash utility layer powering payments, rewards, and student freelance economies across Zep Swipe and Campus Wave.";
-}
-
-/* CHART */
-new Chart(document.getElementById("chart"), {
-  type:"line",
-  data:{
-    labels:["T1","T2","T3","T4","T5","T6"],
-    datasets:[{
-      label:"ZEP Projection",
-      data:[0.01,0.018,0.025,0.03,0.037,0.041],
-      borderColor:"#00f0ff",
-      tension:0.4
-    }]
-  }
-});
-
-/* 3D BACKGROUND */
-const canvas = document.getElementById("three-bg");
-const renderer = new THREE.WebGLRenderer({canvas});
-renderer.setSize(window.innerWidth, window.innerHeight);
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
-
-const geometry = new THREE.BufferGeometry();
-const particles = 700;
-const positions = [];
-
-for(let i=0;i<particles;i++){
-  positions.push((Math.random()-0.5)*10);
-  positions.push((Math.random()-0.5)*10);
-  positions.push((Math.random()-0.5)*10);
-}
-
-geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions,3));
-
-const material = new THREE.PointsMaterial({color:0x00f0ff, size:0.02});
-const points = new THREE.Points(geometry, material);
-
-scene.add(points);
-
-function animate(){
-  requestAnimationFrame(animate);
-  points.rotation.y += 0.0015;
-  renderer.render(scene, camera);
-}
-animate();
-
-window.addEventListener("resize", ()=>{
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  camera.aspect = window.innerWidth/window.innerHeight;
-  camera.updateProjectionMatrix();
-});
 </script>
 
 </body>
