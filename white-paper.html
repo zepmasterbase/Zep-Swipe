@@ -3,52 +3,41 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Zep Cash Protocol Whitepaper</title>
+<title>Zep Cash Protocol — 3D Whitepaper</title>
 
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 
 <style>
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #060814, #000);
+  background: black;
   color: white;
   overflow-x: hidden;
 }
 
-/* BACKGROUND GLOW LAYERS */
-.bg-glow {
+/* ===== 3D CANVAS ===== */
+#bg {
   position: fixed;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(0,255,255,0.15), transparent 60%);
-  filter: blur(80px);
-  animation: float 8s infinite ease-in-out;
-}
-
-.bg-glow:nth-child(2) {
-  top: 40%;
-  left: 60%;
-  background: radial-gradient(circle, rgba(160,0,255,0.15), transparent 60%);
-}
-
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(40px); }
-}
-
-/* HEADER */
-header {
-  position: sticky;
   top: 0;
-  z-index: 10;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* ===== HEADER ===== */
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 25px;
   background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(15px);
   border-bottom: 1px solid rgba(0,255,255,0.2);
+  position: sticky;
+  top: 0;
 }
 
 .logo {
@@ -58,24 +47,23 @@ header {
 }
 
 .logo img {
-  width: 42px;
+  width: 40px;
   border-radius: 50%;
   box-shadow: 0 0 25px cyan;
 }
 
-.title {
-  font-size: 18px;
-  font-weight: bold;
+.glow-title {
   animation: glow 3s infinite;
+  font-weight: bold;
 }
 
 @keyframes glow {
   0% { text-shadow: 0 0 5px cyan; }
-  50% { text-shadow: 0 0 20px cyan, 0 0 40px violet; }
+  50% { text-shadow: 0 0 25px cyan, 0 0 40px violet; }
   100% { text-shadow: 0 0 5px cyan; }
 }
 
-/* GRID */
+/* ===== GRID ===== */
 .container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -83,7 +71,7 @@ header {
   padding: 20px;
 }
 
-/* CARD */
+/* ===== CARD ===== */
 .card {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(0,255,255,0.15);
@@ -95,27 +83,21 @@ header {
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 0 25px rgba(0,255,255,0.3);
+  box-shadow: 0 0 25px cyan;
 }
 
-/* BUTTON */
+/* ===== BUTTON ===== */
 button {
   width: 100%;
   padding: 12px;
   border: none;
   border-radius: 12px;
+  background: linear-gradient(90deg, cyan, violet);
   font-weight: bold;
   cursor: pointer;
-  background: linear-gradient(90deg, cyan, violet);
-  color: black;
-  transition: 0.3s;
 }
 
-button:hover {
-  transform: scale(1.03);
-}
-
-/* AI BOX */
+/* ===== AI CHAT ===== */
 .ai-box {
   margin: 20px;
   padding: 15px;
@@ -131,21 +113,48 @@ input {
   border-radius: 10px;
   border: none;
 }
+
+/* LIVE DATA PULSE */
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
 </style>
 </head>
 
 <body>
 
-<div class="bg-glow"></div>
-<div class="bg-glow"></div>
+<canvas id="bg"></canvas>
 
 <!-- HEADER -->
 <header>
   <div class="logo">
     <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jlk4qfbj1v1v3dh1lvb1bd9g881j.png"/>
-    <div class="title">Zep Cash Protocol</div>
+    <div class="glow-title">Zep Cash Protocol</div>
   </div>
 </header>
+
+<!-- INTRO -->
+<section class="card" style="margin:20px;">
+  <h2>🌍 What is Zep Cash?</h2>
+  <p>
+    Zep Cash is the first <b>student-powered digital currency</b> built for the world’s emerging student economy.
+    It enables students to <b>earn from learning, complete gigs, and participate in real digital work</b> through Zep Swipe.
+  </p>
+
+  <p>
+    Students use Zep Cash to:
+    <br>📚 Earn from learning tasks
+    <br>💼 Get paid for freelance gigs on Zep Swipe
+    <br>🎵 Tip creators (music, podcasts, art) on Campus Wave
+    <br>🌐 Participate in a global student economy network
+  </p>
+</section>
 
 <!-- DASHBOARD -->
 <section class="container">
@@ -156,89 +165,109 @@ input {
     <small>Fixed supply — no inflation</small>
   </div>
 
+  <div class="card pulse">
+    <h3>📈 Live Price (Simulated)</h3>
+    <p><b>$0.0102</b></p>
+    <small>Updating market sentiment</small>
+  </div>
+
+  <div class="card">
+    <h3>👥 Network Growth</h3>
+    <p><b>14,820 Students</b></p>
+    <small>Zep Swipe + Campus Wave users</small>
+  </div>
+
   <div class="card">
     <h3>💰 Presale</h3>
-    <p>Starts: <b>21 April</b></p>
-    <p>Price: <b>$0.01</b></p>
-    <p>Launch: <b>$0.051</b></p>
-  </div>
-
-  <div class="card">
-    <h3>📊 Tokenomics</h3>
-    <ul>
-      <li>45% Ecosystem</li>
-      <li>10% Presale</li>
-      <li>15% Team (locked)</li>
-      <li>15% Liquidity</li>
-      <li>10% Marketing</li>
-      <li>5% Treasury</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h3>📈 Live Dashboard</h3>
-    <p>Price: <b>$0.010</b></p>
-    <p>Holders: <b>12,450+</b></p>
-    <p>Market Cap: <b>$5M (simulated)</b></p>
+    <p>April 21 → <b>$0.01</b></p>
+    <p>Launch → <b>$0.051</b></p>
   </div>
 
 </section>
 
-<!-- PRESALE ACCESS -->
+<!-- ECOSYSTEM -->
 <section class="card" style="margin:20px;">
-  <h2>⚡ Presale Access Gate</h2>
-  <button onclick="handleAccess()">Enter Presale System</button>
+  <h2>⚡ Zep Ecosystem Utility</h2>
+  <p>
+    Zep Cash powers a student economy where value is created through:
+  </p>
+
+  <ul>
+    <li>🎓 Learning-to-earn tasks via Zep Swipe</li>
+    <li>💼 Freelance micro-gigs (design, writing, social tasks)</li>
+    <li>🎵 Campus Wave tipping system for creators</li>
+    <li>📱 Mobile-first student payment layer</li>
+  </ul>
 </section>
 
-<!-- AI EXPLAINER -->
+<!-- AI CHAT -->
 <section class="ai-box">
-  <h2>🤖 AI Whitepaper Explainer</h2>
-  <p>Ask anything about Zep Cash ecosystem:</p>
-  <input placeholder="e.g. What is Zep Cash used for?" />
+  <h2>🤖 Zep AI Whitepaper Assistant</h2>
+  <p>Ask anything about the ecosystem:</p>
+  <input placeholder="e.g. How do students earn Zep Cash?" />
+</section>
+
+<!-- PRESALE BUTTON -->
+<section class="card" style="margin:20px;">
+  <h2>⚡ Presale Access System</h2>
+  <button onclick="handleAccess()">Enter Presale</button>
 </section>
 
 <!-- ROADMAP -->
 <section class="card" style="margin:20px;">
   <h2>🚀 Roadmap</h2>
-  <p>Phase 1: Community + Awareness</p>
-  <p>Phase 2: Zep Swipe Integration</p>
-  <p>Phase 3: Exchange Listings</p>
+  <p>Phase 1: Student onboarding + Zep Swipe beta</p>
+  <p>Phase 2: Campus Wave tipping rollout</p>
+  <p>Phase 3: Exchange listing + global expansion</p>
 </section>
 
 <!-- FOOTER -->
 <footer style="text-align:center; padding:20px; opacity:0.6;">
-  <p>© Zep Cash Network — First Student Economy Currency</p>
+  Zep Cash — Powering the Global Student Economy
 </footer>
 
 <script>
 lucide.createIcons();
 
-/* TRUE TIME LOCK SYSTEM (APRIL LOGIC) */
-
+/* ===== TIME LOCK SYSTEM ===== */
 const now = new Date();
-
-// Adjust year if needed (2026 assumed)
-const beforeUnlock = new Date("2026-04-10");
-const formActiveStart = new Date("2026-04-10");
-const formActiveEnd = new Date("2026-04-12");
+const before = new Date("2026-04-10");
+const midStart = new Date("2026-04-10");
+const midEnd = new Date("2026-04-12");
 
 function handleAccess() {
-
-  if (now < beforeUnlock) {
-    // BEFORE APRIL 10 → TELEGRAM
+  if (now < before) {
     window.location.href = "https://t.me/zepcashnetwork";
-  }
-
-  else if (now >= formActiveStart && now <= formActiveEnd) {
-    // APRIL 10–12 → GOOGLE FORM
+  } else if (now >= midStart && now <= midEnd) {
     window.location.href = "https://forms.gle/EnCapgzDEeYyZFJLA";
-  }
-
-  else {
-    // AFTER APRIL 12 → BACK TO TELEGRAM
+  } else {
     window.location.href = "https://t.me/zepcashnetwork";
   }
 }
+
+/* ===== THREE.JS 3D BACKGROUND ===== */
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("bg"), alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
+const material = new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: true });
+
+const torus = new THREE.Mesh(geometry, material);
+scene.add(torus);
+
+camera.position.z = 30;
+
+function animate() {
+  requestAnimationFrame(animate);
+  torus.rotation.x += 0.01;
+  torus.rotation.y += 0.005;
+  renderer.render(scene, camera);
+}
+
+animate();
 </script>
 
 </body>
