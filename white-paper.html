@@ -31,7 +31,7 @@ body{
   overflow-x:hidden;
 }
 
-/* THREE BACKGROUND */
+/* 3D BACKGROUND */
 #three-bg{
   position:fixed;
   top:0;
@@ -47,7 +47,7 @@ header{
   justify-content:space-between;
   align-items:center;
   padding:16px 24px;
-  background:rgba(0,0,0,.5);
+  background:rgba(0,0,0,.55);
   backdrop-filter:blur(14px);
   border-bottom:1px solid var(--border);
   position:sticky;
@@ -65,6 +65,11 @@ header{
   display:flex;
   align-items:center;
   gap:10px;
+}
+
+.logo img{
+  width:42px;
+  height:42px;
 }
 
 .logo span{
@@ -122,7 +127,7 @@ header{
   backdrop-filter:blur(10px);
 }
 
-/* AI SECTION */
+/* AI */
 .ai-box{
   max-width:900px;
   margin:40px auto;
@@ -155,52 +160,52 @@ header{
   margin-top:15px;
   padding:10px;
   border-left:2px solid var(--blue);
-  color:rgba(255,255,255,.85);
 }
 </style>
 </head>
 
 <body>
 
+<!-- 3D BACKGROUND -->
 <canvas id="three-bg"></canvas>
 
 <header>
   <div class="logo">
-    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png" width="40">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jlk4qfbj1v1v3dh1lvb1bd9g881j.png">
     <span>Zep Cash</span>
   </div>
 </header>
 
 <section class="hero">
   <h1>Web3 Student Economy Protocol</h1>
-  <p>Zukma Network powers real utility for freelancers, students & digital earners.</p>
+  <p>Zukma Network powers real utility for students, freelancers & digital earners.</p>
 </section>
 
-<!-- TOKEN DASHBOARD -->
+<!-- LIVE DASHBOARD -->
 <section class="dashboard">
 
   <div class="card">
     <i data-lucide="coins"></i>
     <h3>Supply</h3>
-    <p id="supply">1,000,000,000 ZAC</p>
+    <p id="supply">500,000,000 ZEP (Fixed)</p>
   </div>
 
   <div class="card">
     <i data-lucide="trending-up"></i>
     <h3>Price</h3>
-    <p id="price">$0.041</p>
-  </div>
-
-  <div class="card">
-    <i data-lucide="banknote"></i>
-    <h3>Market Cap</h3>
-    <p>$41,000,000</p>
+    <p id="price">$0.041 (Est. Launch)</p>
   </div>
 
   <div class="card">
     <i data-lucide="activity"></i>
-    <h3>Network Status</h3>
-    <p>LIVE</p>
+    <h3>Status</h3>
+    <p>PRE-LAUNCH</p>
+  </div>
+
+  <div class="card">
+    <i data-lucide="globe"></i>
+    <h3>Network</h3>
+    <p>Zukma Protocol</p>
   </div>
 
 </section>
@@ -210,52 +215,51 @@ header{
   <canvas id="chart"></canvas>
 </section>
 
-<!-- AI WHITEPAPER EXPLAINER -->
+<!-- AI SECTION -->
 <section class="ai-box">
   <h2>🧠 Zep AI Whitepaper Assistant</h2>
-  <input class="ai-input" id="question" placeholder="Ask about Zep Cash, Zukma Network, token utility...">
+
+  <input class="ai-input" id="question" placeholder="Ask about Zep Cash ecosystem...">
   <button class="ai-btn" onclick="askAI()">Ask Protocol</button>
+
   <div class="response" id="response"></div>
 </section>
 
 <script>
 lucide.createIcons();
 
-/* FAKE AI */
+/* AI SIM */
 function askAI(){
   const q = document.getElementById("question").value;
   document.getElementById("response").innerText =
-  "Zep AI Protocol: " + q + " relates to Zep Cash utility across Zep Swipe, Campus Wave and the Zukma Network ecosystem.";
+  "Zep AI Protocol: " + q + " is part of the Zep Cash utility layer powering payments, rewards, and student freelance economies across Zep Swipe and Campus Wave.";
 }
 
 /* CHART */
-const ctx = document.getElementById('chart');
-
-new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ["Day 1","Day 2","Day 3","Day 4","Day 5","Day 6"],
-    datasets: [{
-      label: "ZAC Price Movement",
-      data: [0.01,0.02,0.03,0.028,0.035,0.041],
-      borderColor: "#00f0ff",
-      tension: 0.4
+new Chart(document.getElementById("chart"), {
+  type:"line",
+  data:{
+    labels:["T1","T2","T3","T4","T5","T6"],
+    datasets:[{
+      label:"ZEP Projection",
+      data:[0.01,0.018,0.025,0.03,0.037,0.041],
+      borderColor:"#00f0ff",
+      tension:0.4
     }]
   }
 });
 
-/* THREE JS BACKGROUND */
+/* 3D BACKGROUND */
 const canvas = document.getElementById("three-bg");
 const renderer = new THREE.WebGLRenderer({canvas});
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-
 camera.position.z = 5;
 
 const geometry = new THREE.BufferGeometry();
-const particles = 800;
+const particles = 700;
 const positions = [];
 
 for(let i=0;i<particles;i++){
@@ -268,12 +272,12 @@ geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions,3))
 
 const material = new THREE.PointsMaterial({color:0x00f0ff, size:0.02});
 const points = new THREE.Points(geometry, material);
+
 scene.add(points);
 
 function animate(){
   requestAnimationFrame(animate);
   points.rotation.y += 0.0015;
-  points.rotation.x += 0.0005;
   renderer.render(scene, camera);
 }
 animate();
