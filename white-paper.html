@@ -6,7 +6,7 @@
 
 <title>Zep Cash (ZEP) — Africa’s Student Economy</title>
 
-<link rel="icon" href="https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png">
+<link rel="icon" href="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -30,7 +30,7 @@ header{
 }
 
 .logo{display:flex;align-items:center;gap:10px;}
-.logo img{width:42px;height:42px;}
+.logo img{width:44px;height:44px;}
 .logo span{
   font-family:Orbitron;
   background:linear-gradient(90deg,var(--blue),var(--violet));
@@ -38,6 +38,7 @@ header{
   -webkit-text-fill-color:transparent;
 }
 
+/* HERO */
 .hero{
   text-align:center;padding:90px 20px 40px;
 }
@@ -50,6 +51,7 @@ header{
 
 .hero p{max-width:750px;margin:15px auto;color:var(--text);}
 
+/* CTA */
 .cta{
   display:inline-block;margin-top:20px;
   padding:14px 32px;border-radius:999px;
@@ -60,7 +62,7 @@ header{
 /* DASHBOARD */
 .dashboard{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:20px;
   max-width:1100px;
   margin:40px auto;
@@ -73,29 +75,6 @@ header{
   border-radius:16px;
   padding:20px;
   text-align:center;
-  transition:.3s;
-}
-.card:hover{transform:translateY(-5px);box-shadow:var(--glow);}
-
-.card h3{font-family:Orbitron;margin-bottom:10px;}
-
-/* COUNTDOWN */
-.countdown{
-  display:flex;justify-content:center;gap:15px;flex-wrap:wrap;
-  margin-top:20px;
-}
-
-.timebox{
-  background:var(--glass);
-  padding:18px;
-  border-radius:12px;
-  min-width:90px;
-  text-align:center;
-}
-
-.timebox span{
-  font-size:2rem;font-family:Orbitron;
-  display:block;
 }
 
 /* GIVEAWAY */
@@ -115,6 +94,20 @@ header{
   -webkit-text-fill-color:transparent;
 }
 
+.countdown{
+  display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-top:20px;
+}
+
+.timebox{
+  background:var(--glass);
+  padding:16px;
+  border-radius:12px;
+  min-width:90px;
+}
+.timebox span{
+  font-size:2rem;font-family:Orbitron;display:block;
+}
+
 /* TOKENOMICS */
 .tokenomics{
   display:grid;
@@ -126,6 +119,36 @@ header{
 }
 
 .token{
+  background:var(--glass);
+  padding:20px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.1);
+  text-align:center;
+}
+
+/* ROADMAP */
+.roadmap{
+  max-width:1100px;
+  margin:60px auto;
+  padding:0 20px;
+}
+
+.roadmap h2{
+  text-align:center;
+  font-family:Orbitron;
+  margin-bottom:30px;
+  background:linear-gradient(90deg,var(--blue),var(--violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.timeline{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:20px;
+}
+
+.milestone{
   background:var(--glass);
   padding:20px;
   border-radius:16px;
@@ -148,15 +171,15 @@ footer{
 
 <header>
   <div class="logo">
-    <img src="https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png">
+    <img src="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jhp2503i1gm41unj1tlt1me117of15.png">
     <span>Zep Cash</span>
   </div>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <h1>The Student Economy Starts Here</h1>
-  <p>Zep Cash is Africa’s first student-powered digital economy — combining earning, learning, and spending into one ecosystem.</p>
+  <h1>Student Economy Starts Here</h1>
+  <p>Zep Cash is Africa’s student-powered digital economy built for earning, learning, and real financial participation.</p>
   <a class="cta" href="#giveaway">Join Early Access</a>
 </section>
 
@@ -169,12 +192,12 @@ footer{
   </div>
 
   <div class="card">
-    <h3>📈 Giveaway Starts</h3>
-    <p>10 April 2026</p>
+    <h3>🚨 Giveaway</h3>
+    <p>10–12 April 2026</p>
   </div>
 
   <div class="card">
-    <h3>🚀 Presale Launch</h3>
+    <h3>🚀 Presale</h3>
     <p>21 April 2026</p>
   </div>
 
@@ -185,20 +208,22 @@ footer{
 
   <h2>🚨 Founders Drop (10–12 April)</h2>
 
-  <p>Early supporters will receive ZEP allocation before public launch.</p>
+  <p>Early supporters receive ZEP allocation before public launch.</p>
 
   <p><b>Earn up to 5,000 ZEP</b></p>
 
-  <div class="countdown" id="giveawayCountdown">
-    <div class="timebox"><span id="g_days">00</span>Days</div>
-    <div class="timebox"><span id="g_hours">00</span>Hours</div>
-    <div class="timebox"><span id="g_minutes">00</span>Min</div>
-    <div class="timebox"><span id="g_seconds">00</span>Sec</div>
+  <div class="countdown">
+    <div class="timebox"><span id="g_d">00</span>Days</div>
+    <div class="timebox"><span id="g_h">00</span>Hours</div>
+    <div class="timebox"><span id="g_m">00</span>Min</div>
+    <div class="timebox"><span id="g_s">00</span>Sec</div>
   </div>
 
   <br>
 
-  <a class="cta" href="https://YOUR-GOOGLE-FORM-LINK">Claim Early Allocation</a>
+  <a class="cta" href="https://forms.gle/EnCapgzDEeYyZFJLA" target="_blank">
+    🚀 Claim Early Allocation
+  </a>
 
 </section>
 
@@ -214,58 +239,66 @@ footer{
 
 </section>
 
-<!-- PRESALE COUNTDOWN -->
-<section class="giveaway">
+<!-- ROADMAP -->
+<section class="roadmap">
 
-  <h2>🚀 Presale Launch Countdown</h2>
+  <h2>Roadmap to Adoption</h2>
 
-  <div class="countdown">
-    <div class="timebox"><span id="p_days">00</span>Days</div>
-    <div class="timebox"><span id="p_hours">00</span>Hours</div>
-    <div class="timebox"><span id="p_minutes">00</span>Min</div>
-    <div class="timebox"><span id="p_seconds">00</span>Sec</div>
+  <div class="timeline">
+
+    <div class="milestone">
+      <h3>April 2026</h3>
+      <p>Founders Drop + Community Growth</p>
+    </div>
+
+    <div class="milestone">
+      <h3>21 April 2026</h3>
+      <p>Presale Launch + Token Distribution</p>
+    </div>
+
+    <div class="milestone">
+      <h3>Q2 2026</h3>
+      <p>Zep Swipe MVP Rollout in Africa</p>
+    </div>
+
+    <div class="milestone">
+      <h3>Q3 2026</h3>
+      <p>Campus Wave Expansion + Partnerships</p>
+    </div>
+
+    <div class="milestone">
+      <h3>2027+</h3>
+      <p>Caribbean & Global Expansion</p>
+    </div>
+
   </div>
 
 </section>
 
+<!-- FOOTER -->
 <footer>
-© 2026 Zep Cash — Built for Africa’s Student Economy
+© 2026 Zep Cash — Powered by Zep Swipe Ecosystem
 </footer>
 
 <script>
 
-// GIVEAWAY TIMER (10 April 2026)
-const giveawayDate = new Date("Apr 10, 2026 00:00:00").getTime();
+// GIVEAWAY COUNTDOWN (10 April 2026)
+const giveaway = new Date("Apr 10, 2026 00:00:00").getTime();
 
-// PRESALE TIMER (21 April 2026)
-const presaleDate = new Date("Apr 21, 2026 00:00:00").getTime();
-
-function updateCountdowns(){
-
+function update(){
   let now = new Date().getTime();
+  let d = giveaway - now;
 
-  // GIVEAWAY
-  let g = giveawayDate - now;
-  if(g < 0) g = 0;
+  if(d < 0) d = 0;
 
-  document.getElementById("g_days").innerText = Math.floor(g/(1000*60*60*24));
-  document.getElementById("g_hours").innerText = Math.floor((g%(1000*60*60*24))/(1000*60*60));
-  document.getElementById("g_minutes").innerText = Math.floor((g%(1000*60*60))/(1000*60));
-  document.getElementById("g_seconds").innerText = Math.floor((g%(1000*60))/1000);
-
-  // PRESALE
-  let p = presaleDate - now;
-  if(p < 0) p = 0;
-
-  document.getElementById("p_days").innerText = Math.floor(p/(1000*60*60*24));
-  document.getElementById("p_hours").innerText = Math.floor((p%(1000*60*60*24))/(1000*60*60));
-  document.getElementById("p_minutes").innerText = Math.floor((p%(1000*60*60))/(1000*60));
-  document.getElementById("p_seconds").innerText = Math.floor((p%(1000*60))/1000);
-
+  document.getElementById("g_d").innerText = Math.floor(d/(1000*60*60*24));
+  document.getElementById("g_h").innerText = Math.floor((d%(1000*60*60*24))/(1000*60*60));
+  document.getElementById("g_m").innerText = Math.floor((d%(1000*60*60))/(1000*60));
+  document.getElementById("g_s").innerText = Math.floor((d%(1000*60))/1000);
 }
 
-setInterval(updateCountdowns,1000);
-updateCountdowns();
+setInterval(update,1000);
+update();
 
 </script>
 
