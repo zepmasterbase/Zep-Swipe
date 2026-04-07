@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Zep Cash (ZEP) — Africa’s Student Economy</title>
+<title>Zep Cash (ZEP) — Student Economy</title>
 
 <link rel="icon" href="https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1jfnua21qtu1vi2pfom33p641h.png">
 
@@ -17,7 +17,6 @@
   --bg:radial-gradient(circle at 20% 10%, #050018, #00000c);
   --glass:rgba(255,255,255,.06);
   --text:rgba(255,255,255,.85);
-  --glow:0 0 10px #00f0ff, 0 0 20px #9c4dff;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
@@ -25,12 +24,13 @@ body{background:var(--bg);color:#fff;overflow-x:hidden;}
 
 header{
   display:flex;justify-content:space-between;align-items:center;
-  padding:16px 25px;background:rgba(0,0,0,.7);
-  backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);
+  padding:16px 24px;background:rgba(0,0,0,.7);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .logo{display:flex;align-items:center;gap:10px;}
-.logo img{width:44px;height:44px;}
+.logo img{width:42px;height:42px;}
 .logo span{
   font-family:Orbitron;
   background:linear-gradient(90deg,var(--blue),var(--violet));
@@ -40,51 +40,30 @@ header{
 
 /* HERO */
 .hero{
-  text-align:center;padding:90px 20px 40px;
+  text-align:center;
+  padding:90px 20px 40px;
 }
 
 .hero h1{
-  font-family:Orbitron;font-size:3rem;
+  font-family:Orbitron;
+  font-size:3rem;
   background:linear-gradient(90deg,var(--blue),var(--violet));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
-.hero p{max-width:750px;margin:15px auto;color:var(--text);}
-
-/* CTA */
-.cta{
-  display:inline-block;margin-top:20px;
-  padding:14px 32px;border-radius:999px;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
-  color:#000;font-weight:bold;text-decoration:none;
-}
-
-/* DASHBOARD */
-.dashboard{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:20px;
-  max-width:1100px;
-  margin:40px auto;
-  padding:0 20px;
-}
-
-.card{
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:16px;
-  padding:20px;
-  text-align:center;
-}
+.hero p{max-width:800px;margin:15px auto;color:var(--text);}
 
 /* GIVEAWAY */
 .giveaway{
-  max-width:900px;margin:50px auto;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:16px;
+  max-width:900px;
+  margin:40px auto;
   padding:30px;
+  border-radius:16px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.12);
   text-align:center;
+  backdrop-filter:blur(12px);
 }
 
 .giveaway h2{
@@ -94,75 +73,56 @@ header{
   -webkit-text-fill-color:transparent;
 }
 
-.countdown{
-  display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-top:20px;
+.cta{
+  display:inline-block;
+  padding:14px 30px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--blue),var(--violet));
+  color:#000;
+  font-weight:bold;
+  text-decoration:none;
+  margin-top:15px;
 }
 
-.timebox{
-  background:var(--glass);
-  padding:16px;
-  border-radius:12px;
-  min-width:90px;
-}
-.timebox span{
-  font-size:2rem;font-family:Orbitron;display:block;
+/* DISABLED STATE */
+.disabled{
+  opacity:0.4;
+  pointer-events:none;
+  filter:blur(1px);
 }
 
 /* TOKENOMICS */
-.tokenomics{
+.grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-  padding:40px 20px;
+  gap:18px;
   max-width:1100px;
-  margin:auto;
+  margin:40px auto;
+  padding:0 20px;
 }
 
-.token{
+.card{
   background:var(--glass);
-  padding:20px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.1);
+  padding:18px;
+  border-radius:14px;
   text-align:center;
+  border:1px solid rgba(255,255,255,.1);
 }
 
 /* ROADMAP */
 .roadmap{
-  max-width:1100px;
+  max-width:900px;
   margin:60px auto;
-  padding:0 20px;
-}
-
-.roadmap h2{
-  text-align:center;
-  font-family:Orbitron;
-  margin-bottom:30px;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-.timeline{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:20px;
-}
-
-.milestone{
-  background:var(--glass);
   padding:20px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.1);
   text-align:center;
 }
 
-/* FOOTER */
-footer{
-  text-align:center;
-  padding:40px 20px;
-  font-size:.85rem;
-  color:var(--text);
-  border-top:1px solid rgba(255,255,255,.1);
+.step{
+  background:var(--glass);
+  margin:10px;
+  padding:18px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.1);
 }
 </style>
 </head>
@@ -178,127 +138,90 @@ footer{
 
 <!-- HERO -->
 <section class="hero">
-  <h1>Student Economy Starts Here</h1>
-  <p>Zep Cash is Africa’s student-powered digital economy built for earning, learning, and real financial participation.</p>
-  <a class="cta" href="#giveaway">Join Early Access</a>
+  <h1>The Student Economy Starts Here</h1>
+  <p>Zep Cash powers Africa’s student economy — earn, learn, and grow through Web3 participation.</p>
 </section>
 
-<!-- DASHBOARD -->
-<section class="dashboard">
-
-  <div class="card">
-    <h3>🪙 Supply</h3>
-    <p>500,000,000 ZEP (Fixed)</p>
-  </div>
-
-  <div class="card">
-    <h3>🚨 Giveaway</h3>
-    <p>10–12 April 2026</p>
-  </div>
-
-  <div class="card">
-    <h3>🚀 Presale</h3>
-    <p>21 April 2026</p>
-  </div>
-
-</section>
-
-<!-- GIVEAWAY -->
-<section id="giveaway" class="giveaway">
+<!-- GIVEAWAY SECTION -->
+<section id="giveawayBox" class="giveaway">
 
   <h2>🚨 Founders Drop (10–12 April)</h2>
 
-  <p>Early supporters receive ZEP allocation before public launch.</p>
+  <p>Early access allocation for founding supporters only.</p>
 
-  <p><b>Earn up to 5,000 ZEP</b></p>
+  <p><strong>Earn up to 5,000 ZEP</strong></p>
 
-  <div class="countdown">
-    <div class="timebox"><span id="g_d">00</span>Days</div>
-    <div class="timebox"><span id="g_h">00</span>Hours</div>
-    <div class="timebox"><span id="g_m">00</span>Min</div>
-    <div class="timebox"><span id="g_s">00</span>Sec</div>
-  </div>
+  <p id="statusText" style="margin-top:10px;"></p>
 
-  <br>
-
-  <a class="cta" href="https://forms.gle/EnCapgzDEeYyZFJLA" target="_blank">
-    🚀 Claim Early Allocation
+  <a id="formLink"
+     href="https://forms.gle/EnCapgzDEeYyZFJLA"
+     class="cta">
+     🚀 Claim Early Allocation
   </a>
 
 </section>
 
 <!-- TOKENOMICS -->
-<section class="tokenomics">
+<section class="grid">
 
-  <div class="token">🌱 45% Ecosystem</div>
-  <div class="token">💰 10% Presale</div>
-  <div class="token">🧠 15% Team</div>
-  <div class="token">💧 15% Liquidity</div>
-  <div class="token">📣 10% Marketing</div>
-  <div class="token">🏦 5% Treasury</div>
+  <div class="card">🌱 45% Ecosystem</div>
+  <div class="card">💰 10% Presale</div>
+  <div class="card">🧠 15% Team</div>
+  <div class="card">💧 15% Liquidity</div>
+  <div class="card">📣 10% Marketing</div>
+  <div class="card">🏦 5% Treasury</div>
 
 </section>
 
 <!-- ROADMAP -->
 <section class="roadmap">
 
-  <h2>Roadmap to Adoption</h2>
+  <h2>🚀 Roadmap</h2>
 
-  <div class="timeline">
-
-    <div class="milestone">
-      <h3>April 2026</h3>
-      <p>Founders Drop + Community Growth</p>
-    </div>
-
-    <div class="milestone">
-      <h3>21 April 2026</h3>
-      <p>Presale Launch + Token Distribution</p>
-    </div>
-
-    <div class="milestone">
-      <h3>Q2 2026</h3>
-      <p>Zep Swipe MVP Rollout in Africa</p>
-    </div>
-
-    <div class="milestone">
-      <h3>Q3 2026</h3>
-      <p>Campus Wave Expansion + Partnerships</p>
-    </div>
-
-    <div class="milestone">
-      <h3>2027+</h3>
-      <p>Caribbean & Global Expansion</p>
-    </div>
-
-  </div>
+  <div class="step">📅 10–12 April: Founders Drop (Early Allocation)</div>
+  <div class="step">🚀 21 April: Presale Launch</div>
+  <div class="step">📲 Q2: Zep Swipe Beta Launch</div>
+  <div class="step">🌍 Q3: Campus Wave Expansion</div>
+  <div class="step">📈 Q4: Full Ecosystem Scaling</div>
 
 </section>
 
-<!-- FOOTER -->
-<footer>
-© 2026 Zep Cash — Powered by Zep Swipe Ecosystem
-</footer>
-
 <script>
 
-// GIVEAWAY COUNTDOWN (10 April 2026)
-const giveaway = new Date("Apr 10, 2026 00:00:00").getTime();
+// DATE SETTINGS
+const start = new Date("Apr 10, 2026 00:00:00").getTime();
+const end = new Date("Apr 12, 2026 23:59:59").getTime();
+const now = new Date().getTime();
 
-function update(){
-  let now = new Date().getTime();
-  let d = giveaway - now;
+const button = document.getElementById("formLink");
+const statusText = document.getElementById("statusText");
 
-  if(d < 0) d = 0;
+function updateAccess(){
 
-  document.getElementById("g_d").innerText = Math.floor(d/(1000*60*60*24));
-  document.getElementById("g_h").innerText = Math.floor((d%(1000*60*60*24))/(1000*60*60));
-  document.getElementById("g_m").innerText = Math.floor((d%(1000*60*60))/(1000*60));
-  document.getElementById("g_s").innerText = Math.floor((d%(1000*60))/1000);
+  const current = new Date().getTime();
+
+  if(current < start){
+    button.classList.add("disabled");
+    button.href = "https://t.me/zepcashnetwork";
+    statusText.innerText = "⏳ Access opens on 10 April 2026";
+  }
+
+  else if(current >= start && current <= end){
+    button.classList.remove("disabled");
+    button.href = "https://forms.gle/EnCapgzDEeYyZFJLA";
+    statusText.innerText = "🔥 Live — Founders Drop is active";
+  }
+
+  else{
+    button.classList.remove("disabled");
+    button.href = "https://t.me/zepcashnetwork";
+    statusText.innerText = "🚀 Allocation closed — Join Telegram for updates";
+  }
+
 }
 
-setInterval(update,1000);
-update();
+updateAccess();
+setInterval(updateAccess, 1000);
 
 </script>
 
